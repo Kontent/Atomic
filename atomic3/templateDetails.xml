@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "https://www.joomla.org/xml/dtd/2.5/template-install.dtd">
+<extension version="3.1" type="template" client="site" method="upgrade">
+	<name>atomic3</name>
+	<version>3.0</version>
+	<creationDate>5/5/17</creationDate>
+	<author>Ron Severdia</author>
+	<authorEmail>severdia@gmail.com</authorEmail>
+	<authorUrl>https://www.severdia.com</authorUrl>
+	<copyright>Copyright (C) 2017 Ron Severdia. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<description>TPL_ATOMIC3_XML_DESCRIPTION</description>
+	<files>
+		<folder>html</folder>
+		<folder>css</folder>
+		<folder>fonts</folder>
+		<folder>images</folder>
+		<folder>language</folder>
+		<folder>js</folder>
+		<filename>index.php</filename>
+		<filename>index.html</filename>
+		<filename>favicon.ico</filename>
+		<filename>templateDetails.xml</filename>
+		<filename>template_preview.png</filename>
+		<filename>template_thumbnail.png</filename>
+		<filename>component.php</filename>
+		<filename>error.php</filename>
+	</files>
+
+	<positions>
+		<position>atomic-bottomleft</position>
+		<position>atomic-bottommiddle</position>
+		<position>atomic-search</position>
+		<position>atomic-sidebar</position>
+		<position>atomic-topmenu</position>
+		<position>atomic-topquote</position>
+	</positions>
+
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.tpl_atomic3.ini</language>
+		<language tag="en-GB">en-GB/en-GB.tpl_atomic3.sys.ini</language>
+	</languages>
+	
+	<config>
+	<fields name="params">
+			<fieldset name="advanced">
+				<field name="sitetitle"  type="text" default="" label="JGLOBAL_TITLE" description="JFIELD_ALT_PAGE_TITLE_LABEL" filter="string" />
+				<field name="sitedescription"  type="text" default="" label="JGLOBAL_DESCRIPTION" description="JGLOBAL_SUBHEADING_DESC" filter="string" />
+				
+				<field name="bootstraplocal" type="list" default="0" label="TPL_ATOMIC3_BOOTSTRAP_LABEL" description="TPL_ATOMIC3_BOOTSTRAP_DESC">
+					<option value="0">TPL_ATOMIC3_LOCAL</option>
+					<option value="1">TPL_ATOMIC3_REMOTE</option>
+					<option value="2">TPL_ATOMIC3_NONE</option>
+				</field>
+				
+				<field name="bootstrapcdn" type="textarea" label="TPL_ATOMIC3_BOOTSTRAPCDN_LABEL" description="TPL_ATOMIC3_BOOTSTRAPCDN_DESC" rows="4" columns="30" default="" />
+				
+				<field name="bootstraplocaltheme" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_BOOTSTRAPTHEME_LABEL" description="TPL_ATOMIC3_BOOTSTRAPTHEME_DESC">
+					<option value="0">TPL_ATOMIC3_NO</option>
+					<option value="1">TPL_ATOMIC3_YES</option>
+				</field>
+
+				<field name="bootswatch" type="list" default="default" label="TPL_ATOMIC3_BOOTSWATCH_LABEL" description="TPL_ATOMIC3_BOOTSWATCH_DESC" filter="word">
+					<option value="default">TPL_ATOMIC3_BOOTSWATCH_OPTION_DEFAULT</option>
+					<option value="cerulean">TPL_ATOMIC3_BOOTSWATCH_OPTION_CERULEAN</option>
+					<option value="cosmo">TPL_ATOMIC3_BOOTSWATCH_OPTION_COSMO</option>
+					<option value="cyborg">TPL_ATOMIC3_BOOTSWATCH_OPTION_CYBORG</option>
+					<option value="darkly">TPL_ATOMIC3_BOOTSWATCH_OPTION_DARKLY</option>
+					<option value="flatly">TPL_ATOMIC3_BOOTSWATCH_OPTION_FLATLY</option>
+					<option value="journal">TPL_ATOMIC3_BOOTSWATCH_OPTION_JOURNAL</option>
+					<option value="lumen">TPL_ATOMIC3_BOOTSWATCH_OPTION_LUMEN</option>
+					<option value="paper">TPL_ATOMIC3_BOOTSWATCH_OPTION_PAPER</option>
+					<option value="readable">TPL_ATOMIC3_BOOTSWATCH_OPTION_READABLE</option>
+					<option value="sandstone">TPL_ATOMIC3_BOOTSWATCH_OPTION_SANDSTONE</option>
+					<option value="simplex">TPL_ATOMIC3_BOOTSWATCH_OPTION_SIMPLEX</option>
+					<option value="slate">TPL_ATOMIC3_BOOTSWATCH_OPTION_SLATE</option>
+					<option value="solar">TPL_ATOMIC3_BOOTSWATCH_OPTION_SOLAR</option>
+					<option value="spacelab">TPL_ATOMIC3_BOOTSWATCH_OPTION_SPACELAB</option>
+					<option value="superhero">TPL_ATOMIC3_BOOTSWATCH_OPTION_SUPERHERO</option>
+					<option value="united">TPL_ATOMIC3_BOOTSWATCH_OPTION_UNITED</option>
+					<option value="yeti">TPL_ATOMIC3_BOOTSWATCH_OPTION_YETI</option>
+				</field>
+				
+				<field name="fluidcontainer" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_FLUID_LABEL" description="TPL_ATOMIC3_FLUID_DESC">
+					<option value="0">TPL_ATOMIC3_FIXED</option>
+					<option value="1">TPL_ATOMIC3_FLUID</option>
+				</field>
+				
+				<field name="jqlibrary" type="list" default="0" label="TPL_ATOMIC3_JQUERY_LABEL" description="TPL_ATOMIC3_JQUERY_DESC">
+					<option value="0">TPL_ATOMIC3_JQUERY_DEFAULT</option>
+					<option value="1">TPL_ATOMIC3_JQUERY_2</option>
+					<option value="2">TPL_ATOMIC3_JQUERY_3</option>
+					<option value="3">TPL_ATOMIC3_NONE</option>
+				</field>
+				
+				<field name="jquerycdn" type="textarea" label="TPL_ATOMIC3_JQUERYCDN_LABEL" description="TPL_ATOMIC3_JQUERYCDN_DESC" rows="4" columns="30" default="" />
+				
+				<field name="fontawesome" type="list" default="0" label="TPL_ATOMIC3_FONTAWESOME_LABEL" description="TPL_ATOMIC3_FONTAWESOME_DESC">
+					<option value="0">TPL_ATOMIC3_NONE</option>
+					<option value="1">TPL_ATOMIC3_LOCAL</option>
+					<option value="2">TPL_ATOMIC3_REMOTE</option>
+				</field>
+				
+				<!-- field name="fontawesome-cdn" type="textarea" label="TPL_ATOMIC3_FONTAWESOMECDN_LABEL" description="TPL_ATOMIC3_FONTAWESOMECDN_DESC" rows="4" columns="30"/ -->
+				
+				<field name="customcss" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_CUSTOMCSS_LABEL" description="TPL_ATOMIC3_CUSTOMCSS_DESC">
+					<option value="0">TPL_ATOMIC3_NO</option>
+					<option value="1">TPL_ATOMIC3_YES</option>
+				</field>
+				
+				<field name="customjs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_CUSTOMJS_LABEL" description="TPL_ATOMIC3_CUSTOMJS_DESC">
+					<option value="0">TPL_ATOMIC3_NO</option>
+					<option value="1">TPL_ATOMIC3_YES</option>
+				</field>
+				
+			</fieldset>
+		</fields>
+	</config>
+</extension>

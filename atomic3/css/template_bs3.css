@@ -1,0 +1,143 @@
+@charset "UTF-8";
+
+/* Below are the CSS styles that aren't included with Bootstrap . It's a good idea to keep them whether or not you use it unless you know what you're doing. */
+
+/* Text styles */
+.page-header h2, 
+.page-header .h2 {
+	font-size: 24px
+}
+dl.article-info.muted {
+	font-size: 90%;
+	color: #888;
+}
+.page-header h1,
+.page-header p,
+footer {
+	margin-left: 15px;
+}
+h3.page-header {
+	margin: 0;
+}
+.custom,
+.moduletable {
+	margin: 10px 0;
+}
+.element-invisible {
+	display: none;
+}
+#mod-search-searchword {
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+div.search {
+	margin-bottom: 20px;
+}
+
+/* Login styles */
+#login-form {
+	margin: 20px 0;
+}
+#login-form ul {
+	margin: 0;
+	padding: 0;
+}
+#login-form li {
+	list-style-type: none;
+	font-size: 80%;
+}
+input#modlgn-remember {
+	float: left;
+	margin-right: 10px;
+}
+#login-form .control-group {
+	margin: 8px 0;
+}
+#form-login-remember .control-label {
+	font-size: 90%;
+}
+#modlgn-username,
+#modlgn-passwd {
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+/* Contact form */
+#contact-form.form-horizontal .control-label {
+	text-align: left;
+}
+#contact-form input[type="text"],
+#contact-form input[type="email"] {
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+#contact-form textarea {
+	display: block;
+	width: 100%;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+#contact-form input[type="checkbox"] {
+	float: left;
+}
+#contact-form .control-group:nth-child(7) .control-label,
+#contact-form .control-group:nth-child(7) .controls {
+	display: inline-block;
+}
+
+
+
+
