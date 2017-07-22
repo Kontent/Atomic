@@ -36,6 +36,19 @@ $jquerycdn							= $this->params->get('jquerycdn');
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 	<head>
 		<jdoc:include type="head" />
+		
+		<?php if($killjoomlajs == 1) : ?>
+		<?php
+		// Remove Joomla head scripts
+		$doc = JFactory::getDocument();
+		unset($doc->_scripts[JURI::root(true) . '/media/system/js/caption.js']);
+		unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
+		unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-noconflict.js']);
+		unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-migrate.min.js']);
+		unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
+		?>
+		<?php endif; ?>
+		
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
    	 	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- Load the Bootstrap 3 CSS Framework. -->

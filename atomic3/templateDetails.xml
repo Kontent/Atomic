@@ -101,6 +101,11 @@
 					<option value="2">TPL_ATOMIC3_REMOTE</option>
 				</field>
 				
+				<field name="killjoomlajs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_KILLJOOMLAJS_LABEL" description="TPL_ATOMIC3_KILLJOOMLAJS_DESC">
+					<option value="0">TPL_ATOMIC3_NO</option>
+					<option value="1">TPL_ATOMIC3_YES</option>
+				</field>
+				
 				<!-- field name="fontawesome-cdn" type="textarea" label="TPL_ATOMIC3_FONTAWESOMECDN_LABEL" description="TPL_ATOMIC3_FONTAWESOMECDN_DESC" rows="4" columns="30"/ -->
 				
 				<field name="customcss" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_CUSTOMCSS_LABEL" description="TPL_ATOMIC3_CUSTOMCSS_DESC">
