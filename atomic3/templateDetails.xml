@@ -43,82 +43,140 @@
 	
 	<config>
 	<fields name="params">
-			<fieldset name="advanced">
-				<field name="sitetitle"  type="text" default="" label="JGLOBAL_TITLE" description="JFIELD_ALT_PAGE_TITLE_LABEL" filter="string" />
-				<field name="sitedescription"  type="text" default="" label="JGLOBAL_DESCRIPTION" description="JGLOBAL_SUBHEADING_DESC" filter="string" />
-				
-				<field name="bootstraplocal" type="list" default="0" label="TPL_ATOMIC3_BOOTSTRAP_LABEL" description="TPL_ATOMIC3_BOOTSTRAP_DESC">
-					<option value="0">TPL_ATOMIC3_LOCAL</option>
-					<option value="1">TPL_ATOMIC3_REMOTE</option>
-					<option value="2">TPL_ATOMIC3_NONE</option>
-				</field>
-				
-				<field name="bootstrapcdn" type="textarea" label="TPL_ATOMIC3_BOOTSTRAPCDN_LABEL" description="TPL_ATOMIC3_BOOTSTRAPCDN_DESC" rows="4" columns="30" default="" />
-				
-				<field name="bootstraplocaltheme" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_BOOTSTRAPTHEME_LABEL" description="TPL_ATOMIC3_BOOTSTRAPTHEME_DESC">
-					<option value="0">TPL_ATOMIC3_NO</option>
-					<option value="1">TPL_ATOMIC3_YES</option>
-				</field>
+		<fieldset name="BASIC_SETTINGS">
+			<field name="sitetitle"  type="text" default="" label="JGLOBAL_TITLE" description="JFIELD_ALT_PAGE_TITLE_LABEL" filter="string" />
+			<field name="sitedescription"  type="text" default="" label="JGLOBAL_DESCRIPTION" description="JGLOBAL_SUBHEADING_DESC" filter="string" />
+			<field name="gacode"  type="text" default="" label="TPL_ATOMIC3_GA_LABEL" description="TPL_ATOMIC3_GA_DESC" filter="string" />
+		</fieldset>
+		
+		<fieldset name="CSS_SETTINGS">
+			<field name="fluidcontainer" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_FLUID_LABEL" description="TPL_ATOMIC3_FLUID_DESC">
+				<option value="0">TPL_ATOMIC3_FIXED</option>
+				<option value="1">TPL_ATOMIC3_FLUID</option>
+			</field>
+			<field name="bootstraplocal" type="list" default="0" label="TPL_ATOMIC3_BOOTSTRAP_LABEL" description="TPL_ATOMIC3_BOOTSTRAP_DESC">
+				<option value="0">TPL_ATOMIC3_LOCAL</option>
+				<option value="1">TPL_ATOMIC3_REMOTE</option>
+				<option value="2">TPL_ATOMIC3_NONE</option>
+			</field>
+			<field name="bootstrapcdn" type="textarea" label="TPL_ATOMIC3_BOOTSTRAPCDN_LABEL" description="TPL_ATOMIC3_BOOTSTRAPCDN_DESC" rows="4" columns="30" default="" />
+			<field name="bootstraplocaltheme" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_BOOTSTRAPTHEME_LABEL" description="TPL_ATOMIC3_BOOTSTRAPTHEME_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
+			<field name="bootswatch" type="list" default="default" label="TPL_ATOMIC3_BOOTSWATCH_LABEL" description="TPL_ATOMIC3_BOOTSWATCH_DESC" filter="word">
+				<option value="default">TPL_ATOMIC3_BOOTSWATCH_OPTION_DEFAULT</option>
+				<option value="cerulean">TPL_ATOMIC3_BOOTSWATCH_OPTION_CERULEAN</option>
+				<option value="cosmo">TPL_ATOMIC3_BOOTSWATCH_OPTION_COSMO</option>
+				<option value="cyborg">TPL_ATOMIC3_BOOTSWATCH_OPTION_CYBORG</option>
+				<option value="darkly">TPL_ATOMIC3_BOOTSWATCH_OPTION_DARKLY</option>
+				<option value="flatly">TPL_ATOMIC3_BOOTSWATCH_OPTION_FLATLY</option>
+				<option value="journal">TPL_ATOMIC3_BOOTSWATCH_OPTION_JOURNAL</option>
+				<option value="lumen">TPL_ATOMIC3_BOOTSWATCH_OPTION_LUMEN</option>
+				<option value="paper">TPL_ATOMIC3_BOOTSWATCH_OPTION_PAPER</option>
+				<option value="readable">TPL_ATOMIC3_BOOTSWATCH_OPTION_READABLE</option>
+				<option value="sandstone">TPL_ATOMIC3_BOOTSWATCH_OPTION_SANDSTONE</option>
+				<option value="simplex">TPL_ATOMIC3_BOOTSWATCH_OPTION_SIMPLEX</option>
+				<option value="slate">TPL_ATOMIC3_BOOTSWATCH_OPTION_SLATE</option>
+				<option value="solar">TPL_ATOMIC3_BOOTSWATCH_OPTION_SOLAR</option>
+				<option value="spacelab">TPL_ATOMIC3_BOOTSWATCH_OPTION_SPACELAB</option>
+				<option value="superhero">TPL_ATOMIC3_BOOTSWATCH_OPTION_SUPERHERO</option>
+				<option value="united">TPL_ATOMIC3_BOOTSWATCH_OPTION_UNITED</option>
+				<option value="yeti">TPL_ATOMIC3_BOOTSWATCH_OPTION_YETI</option>
+			</field>
+			<field name="bs3joomla" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC3_TEMPLATEBS3_LABEL" description="TPL_ATOMIC3_TEMPLATEBS3_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
+			<field name="customcss" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_CUSTOMCSS_LABEL" description="TPL_ATOMIC3_CUSTOMCSS_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
+		</fieldset>
+		
+		<fieldset name="JAVASCRIPT_SETTINGS">
+			<field name="jqlibrary" type="list" default="0" label="TPL_ATOMIC3_JQUERY_LABEL" description="TPL_ATOMIC3_JQUERY_DESC">
+				<option value="0">TPL_ATOMIC3_JQUERY_DEFAULT</option>
+				<option value="1">TPL_ATOMIC3_JQUERY_2</option>
+				<option value="2">TPL_ATOMIC3_JQUERY_3</option>
+				<option value="3">TPL_ATOMIC3_NONE</option>
+			</field>
+			<field name="jquerycdn" type="textarea" label="TPL_ATOMIC3_JQUERYCDN_LABEL" description="TPL_ATOMIC3_JQUERYCDN_DESC" rows="4" columns="30" default="" />
+			<field name="customjs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_CUSTOMJS_LABEL" description="TPL_ATOMIC3_CUSTOMJS_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
+			<field name="killjoomlajs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_KILLJOOMLAJS_LABEL" description="TPL_ATOMIC3_KILLJOOMLAJS_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
+		</fieldset>
+		
+		<fieldset name="FONT_SETTINGS">
+			<field name="headerfont" type="list" default="0" label="TPL_ATOMIC3_HEADER_FONT_LABEL" description="TPL_ATOMIC3_HEADER_FONT_DESC">
+				<option value="0">TPL_ATOMIC3_BOOTSTRAPFONT</option>
+				<option value="1">TPL_ATOMIC3_GOOGLEFONT</option>
+			</field>
+			<field name="headerfontname"  type="text" default="" label="TPL_ATOMIC3_HEADER_FONTNAME_LABEL" description="TPL_ATOMIC3_HEADER_FONTNAME_DESC" filter="string" />
+			<field name="bodyfont" type="list" default="0" label="TPL_ATOMIC3_BODY_FONT_LABEL" description="TPL_ATOMIC3_BODY_FONT_DESC">
+				<option value="0">TPL_ATOMIC3_BOOTSTRAPFONT</option>
+				<option value="1">TPL_ATOMIC3_GOOGLEFONT</option>
+			</field>
+			<field name="bodyfontname"  type="text" default="" label="TPL_ATOMIC3_BODY_FONTNAME_LABEL" description="TPL_ATOMIC3_BODY_FONTNAME_DESC" filter="string" />
+		</fieldset>
+		
+		<fieldset name="ICON_SETTINGS">
+			<field name="fontawesome" type="list" default="0" label="TPL_ATOMIC3_FONTAWESOME_LABEL" description="TPL_ATOMIC3_FONTAWESOME_DESC">
+				<option value="0">TPL_ATOMIC3_NONE</option>
+				<option value="1">TPL_ATOMIC3_LOCAL</option>
+				<option value="2">TPL_ATOMIC3_REMOTE</option>
+			</field>
+			<!-- field name="fontawesome-cdn" type="textarea" label="TPL_ATOMIC3_FONTAWESOMECDN_LABEL" description="TPL_ATOMIC3_FONTAWESOMECDN_DESC" rows="4" columns="30"/ -->
+			<field name="elegantfont" type="list" default="0" label="TPL_ATOMIC3_ELEGANTFONT_LABEL" description="TPL_ATOMIC3_ELEGANTFONT_DESC">
+				<option value="0">TPL_ATOMIC3_NONE</option>
+				<option value="1">TPL_ATOMIC3_LOCAL</option>
+			</field>
+		</fieldset>
+		
+		<fieldset name="MODULE_SETTINGS">
+			<field name="pageheader" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC3_PAGEHEADER_LABEL" description="TPL_ATOMIC3_PAGEHEADER_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
+			<field name="topmenu" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC3_TOMPMENU_LABEL" description="TPL_ATOMIC3_TOPMENU_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
+			<field name="abovebody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC3_ABOVEBODY_LABEL" description="TPL_ATOMIC3_ABOVEBODY_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
+			<field name="leftbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC3_LEFTBODY_LABEL" description="TPL_ATOMIC3_LEFTBODY_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
+			<field name="rightbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC3_RIGHTBODY_LABEL" description="TPL_ATOMIC3_RIGHTBODY_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
+			<field name="belowbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC3_BELOWBODY_LABEL" description="TPL_ATOMIC3_BELOWBODY_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
+			<field name="footer" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC3_FOOTER_LABEL" description="TPL_ATOMIC3_FOOTER_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
+		</fieldset>
+		
+		<fieldset name="CUSTOM_CODE">
+			<field name="codeafterhead" type="textarea" label="TPL_ATOMIC3_CODEAFTERHEAD_LABEL" description="TPL_ATOMIC3_CODEAFTERHEAD_DESC" rows="4" columns="30" default="" />
+			<field name="codebeforehead" type="textarea" label="TPL_ATOMIC3_CODEBEFOREHEAD_LABEL" description="TPL_ATOMIC3_CODEBEFOREHEAD_DESC" rows="4" columns="30" default="" />
+			<field name="codeafterbody" type="textarea" label="TPL_ATOMIC3_CODEAFTERBODY_LABEL" description="TPL_ATOMIC3_CODEAFTERBODY_DESC" rows="4" columns="30" default="" />
+			<field name="codebeforebody" type="textarea" label="TPL_ATOMIC3_CODEBEFOREBODY_LABEL" description="TPL_ATOMIC3_CODEBEFOREBODY_DESC" rows="4" columns="30" default="" />
+		</fieldset>
+		
 
-				<field name="bootswatch" type="list" default="default" label="TPL_ATOMIC3_BOOTSWATCH_LABEL" description="TPL_ATOMIC3_BOOTSWATCH_DESC" filter="word">
-					<option value="default">TPL_ATOMIC3_BOOTSWATCH_OPTION_DEFAULT</option>
-					<option value="cerulean">TPL_ATOMIC3_BOOTSWATCH_OPTION_CERULEAN</option>
-					<option value="cosmo">TPL_ATOMIC3_BOOTSWATCH_OPTION_COSMO</option>
-					<option value="cyborg">TPL_ATOMIC3_BOOTSWATCH_OPTION_CYBORG</option>
-					<option value="darkly">TPL_ATOMIC3_BOOTSWATCH_OPTION_DARKLY</option>
-					<option value="flatly">TPL_ATOMIC3_BOOTSWATCH_OPTION_FLATLY</option>
-					<option value="journal">TPL_ATOMIC3_BOOTSWATCH_OPTION_JOURNAL</option>
-					<option value="lumen">TPL_ATOMIC3_BOOTSWATCH_OPTION_LUMEN</option>
-					<option value="paper">TPL_ATOMIC3_BOOTSWATCH_OPTION_PAPER</option>
-					<option value="readable">TPL_ATOMIC3_BOOTSWATCH_OPTION_READABLE</option>
-					<option value="sandstone">TPL_ATOMIC3_BOOTSWATCH_OPTION_SANDSTONE</option>
-					<option value="simplex">TPL_ATOMIC3_BOOTSWATCH_OPTION_SIMPLEX</option>
-					<option value="slate">TPL_ATOMIC3_BOOTSWATCH_OPTION_SLATE</option>
-					<option value="solar">TPL_ATOMIC3_BOOTSWATCH_OPTION_SOLAR</option>
-					<option value="spacelab">TPL_ATOMIC3_BOOTSWATCH_OPTION_SPACELAB</option>
-					<option value="superhero">TPL_ATOMIC3_BOOTSWATCH_OPTION_SUPERHERO</option>
-					<option value="united">TPL_ATOMIC3_BOOTSWATCH_OPTION_UNITED</option>
-					<option value="yeti">TPL_ATOMIC3_BOOTSWATCH_OPTION_YETI</option>
-				</field>
-				
-				<field name="fluidcontainer" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_FLUID_LABEL" description="TPL_ATOMIC3_FLUID_DESC">
-					<option value="0">TPL_ATOMIC3_FIXED</option>
-					<option value="1">TPL_ATOMIC3_FLUID</option>
-				</field>
-				
-				<field name="jqlibrary" type="list" default="0" label="TPL_ATOMIC3_JQUERY_LABEL" description="TPL_ATOMIC3_JQUERY_DESC">
-					<option value="0">TPL_ATOMIC3_JQUERY_DEFAULT</option>
-					<option value="1">TPL_ATOMIC3_JQUERY_2</option>
-					<option value="2">TPL_ATOMIC3_JQUERY_3</option>
-					<option value="3">TPL_ATOMIC3_NONE</option>
-				</field>
-				
-				<field name="jquerycdn" type="textarea" label="TPL_ATOMIC3_JQUERYCDN_LABEL" description="TPL_ATOMIC3_JQUERYCDN_DESC" rows="4" columns="30" default="" />
-				
-				<field name="fontawesome" type="list" default="0" label="TPL_ATOMIC3_FONTAWESOME_LABEL" description="TPL_ATOMIC3_FONTAWESOME_DESC">
-					<option value="0">TPL_ATOMIC3_NONE</option>
-					<option value="1">TPL_ATOMIC3_LOCAL</option>
-					<option value="2">TPL_ATOMIC3_REMOTE</option>
-				</field>
-				
-				<field name="killjoomlajs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_KILLJOOMLAJS_LABEL" description="TPL_ATOMIC3_KILLJOOMLAJS_DESC">
-					<option value="0">TPL_ATOMIC3_NO</option>
-					<option value="1">TPL_ATOMIC3_YES</option>
-				</field>
-				
-				<!-- field name="fontawesome-cdn" type="textarea" label="TPL_ATOMIC3_FONTAWESOMECDN_LABEL" description="TPL_ATOMIC3_FONTAWESOMECDN_DESC" rows="4" columns="30"/ -->
-				
-				<field name="customcss" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_CUSTOMCSS_LABEL" description="TPL_ATOMIC3_CUSTOMCSS_DESC">
-					<option value="0">TPL_ATOMIC3_NO</option>
-					<option value="1">TPL_ATOMIC3_YES</option>
-				</field>
-				
-				<field name="customjs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_CUSTOMJS_LABEL" description="TPL_ATOMIC3_CUSTOMJS_DESC">
-					<option value="0">TPL_ATOMIC3_NO</option>
-					<option value="1">TPL_ATOMIC3_YES</option>
-				</field>
-				
-			</fieldset>
 		</fields>
 	</config>
 </extension>

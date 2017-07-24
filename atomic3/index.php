@@ -24,12 +24,25 @@ $bootstraplocaltheme			= $this->params->get('bootstraplocaltheme');
 $bootstrapcdn						= $this->params->get('bootstrapcdn');
 $bootswatch						= $this->params->get('bootswatch');
 $fontawesome						= $this->params->get('fontawesome');
+$elegantfont						= $this->params->get('elegantfont');
 $customcss							= $this->params->get('customcss');
 $customjs							= $this->params->get('customjs');
 $fluidcontainer						= $this->params->get('fluidcontainer');
 $jqlibrary								= $this->params->get('jqlibrary');
 $jquerycdn							= $this->params->get('jquerycdn');
-
+$bs3joomla							= $this->params->get('bs3joomla');
+$gacode								= $this->params->get('gacode');
+$pageheader						= $this->params->get('pageheader');
+$topmenu							= $this->params->get('topmenu');
+$abovebody							= $this->params->get('abovebody');
+$leftbody								= $this->params->get('leftbody');
+$rightbody							= $this->params->get('rightbody');
+$belowbody							= $this->params->get('belowbody');
+$footer									= $this->params->get('footer');
+$headerfont							= $this->params->get('headerfont');
+$headerfontname				= $this->params->get('headerfontname');
+$bodyfont							= $this->params->get('bodyfont');
+$bodyfontname					= $this->params->get('bodyfontname');
 ?>
 
 <!DOCTYPE html>
@@ -38,15 +51,15 @@ $jquerycdn							= $this->params->get('jquerycdn');
 		<jdoc:include type="head" />
 		
 		<?php if($killjoomlajs == 1) : ?>
-		<?php
-		// Remove Joomla head scripts
-		$doc = JFactory::getDocument();
-		unset($doc->_scripts[JURI::root(true) . '/media/system/js/caption.js']);
-		unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
-		unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-noconflict.js']);
-		unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-migrate.min.js']);
-		unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
-		?>
+			<?php
+				// Remove Joomla head scripts
+				$doc = JFactory::getDocument();
+				unset($doc->_scripts[JURI::root(true) . '/media/system/js/caption.js']);
+				unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
+				unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-noconflict.js']);
+				unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-migrate.min.js']);
+				unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
+			?>
 		<?php endif; ?>
 		
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -107,12 +120,18 @@ $jquerycdn							= $this->params->get('jquerycdn');
 			<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" integrity="sha384-HzUaiJdCTIY/RL2vDPRGdEQHHahjzwoJJzGUkYjHVzTwXFQ2QN/nVgX7tzoMW3Ov" crossorigin="anonymous">
 		<?php endif; ?>		
 		
+		<?php if($bs3joomla == 1) : ?>
 		<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_bs3.css" type="text/css" />
+		<?php endif; ?>
 		
 		<?php if($fontawesome == 1) : ?>
 			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/bootstrap.min.css" type="text/css" />
 		<?php elseif($fontawesome == 2) : ?>
 			<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<?php endif; ?>
+		
+		<?php if($elegantfont == 1) : ?>
+		<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/elegant.css" type="text/css" />
 		<?php endif; ?>
 		
 		<?php if($this->direction == 'rtl') : ?>
@@ -122,6 +141,18 @@ $jquerycdn							= $this->params->get('jquerycdn');
 		<?php if($customcss == 1) : ?>
 			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css" />
 		<?php endif; ?>
+				
+		<?php if(($headerfont == 1) && ($bodyfont == 1) && ($headerfontname != null) && ($bodyfontname != null)) : ?>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=<?php echo $headerfontname; ?>|<?php echo $bodyfontname; ?>">
+			<style>h1,h2,h3,h4,h5,h6{font-family:'<?php echo $headerfontname; ?>',serif;}body{font-family:'<?php echo $bodyfontname; ?>',serif;}</style>
+		<?php elseif(($headerfont == 1) && ($bodyfont == 0) && ($headerfontname != null)) : ?>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=<?php echo $headerfontname; ?>">
+			<style>h1,h2,h3,h4,h5,h6{font-family:'<?php echo $headerfontname; ?>',serif;}</style>
+		<?php elseif(($headerfont == 0) && ($bodyfont == 1) && ($bodyfontname != null)) : ?>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=<?php echo $bodyfontname; ?>">
+			<style>body{font-family:'<?php echo $bodyfontname; ?>',serif;}</style>
+		<?php else : ?>
+		<?php endif; ?>		
 		
 		<?php if($customjs == 1) : ?>
 			<script type="text/javascript" src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
@@ -136,6 +167,7 @@ $jquerycdn							= $this->params->get('jquerycdn');
 		<div class="container">
 	<?php endif; ?>
 	
+		<?php if($pageheader == 1) : ?>
 		<div class="row">
 			<div class="page-header">
 				<h1><?php if($sitetitle == null) : ?><?php echo htmlspecialchars($app->getCfg('sitename')); ?>
@@ -143,41 +175,76 @@ $jquerycdn							= $this->params->get('jquerycdn');
 					<?php if($sitedescription != null) : ?><p><small><?php echo $sitedescription	; ?></small></p><?php endif; ?>
 			</div>
 		</div>
-		
+		<?php endif; ?>
+		<?php if($topmenu == 1) : ?>
 		<div class="row">
 			<div class="col-md-9">
 				<nav class="navigation" role="navigation">
 					<div class="nav-collapse">
-						<jdoc:include type="modules" name="position-1" style="none" />
+						<jdoc:include type="modules" name="navigation" style="none" />
 					</div>
 				</nav>
 			</div>
  			<div class="col-md-3">
- 				<jdoc:include type="modules" name="position-0" style="none" />
+ 				<jdoc:include type="modules" name="search" style="none" />
  			</div>
 		</div>
+		<?php endif; ?>
 		
 		<div class="row">
-			<div class="col-md-9">
-				<jdoc:include type="modules" name="position-3" style="xhtml" />
-				<jdoc:include type="modules" name="position-2" style="none" />
-				<jdoc:include type="message" />
-				<jdoc:include type="component" />
-			</div>
- 			<div class="col-md-3">
- 				<jdoc:include type="modules" name="position-7" style="well" />
- 			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-md-9">
-				<jdoc:include type="modules" name="banner" style="xhtml" />
-			</div>
- 			<div class="col-md-3">
- 				<jdoc:include type="modules" name="position-8" style="xhtml" />
- 			</div>
-		</div>
 
+			<?php if(($leftbody == 1) && ($rightbody == 1)) : ?>	
+			<div class="col-md-2">
+ 				<jdoc:include type="modules" name="leftbody" />
+ 			</div>
+ 			<div class="col-md-8">
+ 				<jdoc:include type="message" />
+				<jdoc:include type="component" />
+				<?php if($belowbody == 1) : ?>
+				<jdoc:include type="modules" name="belowbody" />
+				<?php endif; ?>
+ 			</div>
+			<div class="col-md-2">
+ 				<jdoc:include type="modules" name="rightbody" />
+ 			</div>
+ 			
+			<?php elseif(($leftbody == 0) && ($rightbody == 1)) : ?>
+ 			<div class="col-md-10">
+ 				<jdoc:include type="message" />
+				<jdoc:include type="component" />
+				<?php if($belowbody == 1) : ?>
+				<jdoc:include type="modules" name="belowbody" />
+				<?php endif; ?>
+ 			</div>
+			<div class="col-md-2">
+ 				<jdoc:include type="modules" name="rightbody"  />
+ 			</div>
+		
+			<?php elseif(($leftbody == 1) && ($rightbody == 0)) : ?>
+			<div class="col-md-2">
+ 				<jdoc:include type="modules" name="leftbody"  />
+ 			</div>
+ 			<div class="col-md-10">
+ 				<jdoc:include type="message" />
+				<jdoc:include type="component" />
+				<?php if($belowbody == 1) : ?>
+				<jdoc:include type="modules" name="belowbody" />
+				<?php endif; ?>
+ 			</div>
+ 			
+			<?php else : ?>
+ 			<div class="col-md-12">
+ 				<jdoc:include type="message" />
+				<jdoc:include type="component" />
+				<?php if($belowbody == 1) : ?>
+				<jdoc:include type="modules" name="belowbody" />
+				<?php endif; ?>
+ 			</div>
+			<?php endif; ?>
+				 			
+		</div>
+		
+		<?php if($footer == 1) : ?>
 		<div class="row">
 			<footer>
 				<jdoc:include type="modules" name="footer" style="none" />
@@ -185,7 +252,7 @@ $jquerycdn							= $this->params->get('jquerycdn');
 				&copy;<?php echo date('Y'); ?> <?php echo htmlspecialchars($app->getCfg('sitename')); ?>
 			</footer>
 		</div>
-		
+		<?php endif; ?>
 	</div>
 		
 		<jdoc:include type="modules" name="debug" style="none" />
@@ -206,7 +273,19 @@ $jquerycdn							= $this->params->get('jquerycdn');
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<?php else : ?>
 			<?php echo $jquerycdn ?>
-		<?php endif; ?>
+		<?php endif; ?>		
+		
+		
+		<?php if($gacode != null) : ?>
+		<script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+			  ga('create', '<?php echo $gacode; ?>', 'auto');
+			  ga('send', 'pageview');
+		</script>
+		<?php endif; ?>
 	</body>
 </html>
