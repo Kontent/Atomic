@@ -43,6 +43,7 @@ $headerfont							= $this->params->get('headerfont');
 $headerfontname				= $this->params->get('headerfontname');
 $bodyfont							= $this->params->get('bodyfont');
 $bodyfontname					= $this->params->get('bodyfontname');
+$killjoomlajs							= $this->params->get('killjoomlajs');
 ?>
 
 <!DOCTYPE html>
