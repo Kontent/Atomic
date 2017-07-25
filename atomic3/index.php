@@ -60,13 +60,18 @@ $killjoomlajs							= $this->params->get('killjoomlajs');
 				unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-noconflict.js']);
 				unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-migrate.min.js']);
 				unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
+				if (isset($this->_script['text/javascript'])) { 
+					$this->_script['text/javascript'] = preg_replace('%window\.addEvent\    (\'load\',\s*function\(\)\s*{\s*new\s*JCaption\(\'img.caption\'\);\s*}\);\s*%',     '', $this->_script['text/javascript']);
+					if (empty($this->_script['text/javascript']))
+						unset($this->_script['text/javascript']);
+					}
 			?>
 		<?php endif; ?>
 		
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
    	 	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<?php if(($bootstrapcdn == null) && ($bootstraplocal == 0)) : ?>
 		<!-- Load the Bootstrap 3 CSS Framework. -->
-		<?php if(($bootstrapcdn == null) && ($bootstraplocal == 0)) : ?>	
 		<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/bootstrap.min.css" type="text/css" />
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
