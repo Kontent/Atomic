@@ -44,6 +44,8 @@ $headerfontname				= $this->params->get('headerfontname');
 $bodyfont							= $this->params->get('bodyfont');
 $bodyfontname					= $this->params->get('bodyfontname');
 $killjoomlajs							= $this->params->get('killjoomlajs');
+$killgenerator						= $this->params->get('killgenerator');
+$copyright							= $this->params->get('copyright');
 ?>
 
 <!DOCTYPE html>
@@ -66,6 +68,9 @@ $killjoomlajs							= $this->params->get('killjoomlajs');
 						unset($this->_script['text/javascript']);
 					}
 			?>
+		<?php endif; ?>
+		<?php if($killgenerator == 1) : ?>
+			<?php $this->setGenerator(null); ?>
 		<?php endif; ?>
 		
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -254,8 +259,10 @@ $killjoomlajs							= $this->params->get('killjoomlajs');
 		<div class="row">
 			<footer>
 				<jdoc:include type="modules" name="footer" style="none" />
-				<hr />
-				&copy;<?php echo date('Y'); ?> <?php echo htmlspecialchars($app->getCfg('sitename')); ?>
+				<?php if($copyright == 1) : ?>
+					<hr />
+					&copy;<?php echo date('Y'); ?> <?php echo htmlspecialchars($app->getCfg('sitename')); ?>
+				<?php endif; ?>
 			</footer>
 		</div>
 		<?php endif; ?>

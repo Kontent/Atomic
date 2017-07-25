@@ -28,12 +28,12 @@
 	</files>
 
 	<positions>
-		<position>atomic-bottomleft</position>
-		<position>atomic-bottommiddle</position>
-		<position>atomic-search</position>
-		<position>atomic-sidebar</position>
-		<position>atomic-topmenu</position>
-		<position>atomic-topquote</position>
+		<position>navigation</position>
+		<position>search</position>
+		<position>leftbody</position>
+		<position>belowbody</position>
+		<position>rightbody</position>
+		<position>footer</position>
 	</positions>
 
 	<languages folder="language">
@@ -47,6 +47,10 @@
 			<field name="sitetitle"  type="text" default="" label="JGLOBAL_TITLE" description="JFIELD_ALT_PAGE_TITLE_LABEL" filter="string" />
 			<field name="sitedescription"  type="text" default="" label="JGLOBAL_DESCRIPTION" description="JGLOBAL_SUBHEADING_DESC" filter="string" />
 			<field name="gacode"  type="text" default="" label="TPL_ATOMIC3_GA_LABEL" description="TPL_ATOMIC3_GA_DESC" filter="string" />
+			<field name="killgenerator" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_KILLGENERATOR_LABEL" description="TPL_ATOMIC3_KILLGENERATOR_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
 		</fieldset>
 		
 		<fieldset name="CSS_SETTINGS">
@@ -167,6 +171,10 @@
 				<option value="0">TPL_ATOMIC3_NO</option>
 				<option value="1">TPL_ATOMIC3_YES</option>
 			</field>
+			<field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC3_COPYRIGHT_LABEL" description="TPL_ATOMIC3_COPYRIGHT_DESC">
+				<option value="0">TPL_ATOMIC3_NO</option>
+				<option value="1">TPL_ATOMIC3_YES</option>
+			</field>
 		</fieldset>
 		
 		<fieldset name="CUSTOM_CODE">
@@ -176,7 +184,6 @@
 			<field name="codebeforebody" type="textarea" label="TPL_ATOMIC3_CODEBEFOREBODY_LABEL" description="TPL_ATOMIC3_CODEBEFOREBODY_DESC" rows="4" columns="30" default="" />
 		</fieldset>
 		
-
 		</fields>
 	</config>
 </extension>
