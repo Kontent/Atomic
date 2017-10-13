@@ -29,6 +29,7 @@
 
 	<positions>
 		<position>navigation</position>
+		<position>menu</position>
 		<position>search</position>
 		<position>leftbody</position>
 		<position>abovebody</position>

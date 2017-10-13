@@ -213,6 +213,11 @@ $copyrighttxt						= $this->params->get('copyrighttxt');
 					<?php else : ?><?php echo $sitetitle	; ?><?php endif; ?></h1>
 					<?php if($sitedescription != null) : ?><p><small><?php echo $sitedescription	; ?></small></p><?php endif; ?>
 			</div>
+			<?php if ($this->countModules('menu')) : ?>
+			<div class="menu">
+				<jdoc:include type="modules" name="menu" />
+			</div>
+			<?php endif; ?>
 		</div>
 		<?php endif; ?>
 		
