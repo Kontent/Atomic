@@ -66,7 +66,6 @@
 				<option value="3">TPL_ATOMIC3_REMOTE_BS4</option>
 			</field>
 			<field name="bootstrapcdn" type="textarea" label="TPL_ATOMIC3_BOOTSTRAPCDN_LABEL" description="TPL_ATOMIC3_BOOTSTRAPCDN_DESC" rows="4" columns="30" filter="raw" default="" />
-			
 			<field name="bootstraplocaltheme" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_BOOTSTRAPTHEME_LABEL" description="TPL_ATOMIC3_BOOTSTRAPTHEME_DESC">
 				<option value="0">TPL_ATOMIC3_NO</option>
 				<option value="1">TPL_ATOMIC3_YES</option>
@@ -95,10 +94,6 @@
 				<option value="0">TPL_ATOMIC3_NO</option>
 				<option value="1">TPL_ATOMIC3_YES</option>
 			</field>
-			
-			<field name="ATOMIC_LINE" type="line" text="XXXXXX" />
-			<field name="gk_line_1" type="line" text="" />
-			
 			<field name="customcssfile" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_CUSTOMCSSFILE_LABEL" description="TPL_ATOMIC3_CUSTOMCSSFILE_DESC">
 				<option value="0">TPL_ATOMIC3_NO</option>
 				<option value="1">TPL_ATOMIC3_YES</option>
@@ -109,7 +104,6 @@
 				<option value="2">TPL_ATOMIC3_BODYMENU_OPTION_BODYID</option>
 				<option value="3">TPL_ATOMIC3_BODYMENU_OPTION_BODYCLASSID</option>
 			</field>
-			
 			<field name="customcsscode" type="textarea" default="" label="TPL_ATOMIC3_CUSTOMCSS_LABEL" description="TPL_ATOMIC3_CUSTOMCSS_DESC" rows="8" columns="40" filter="raw" />
 		</fieldset>
 		
@@ -190,6 +184,7 @@
 				<option value="0">TPL_ATOMIC3_NO</option>
 				<option value="1">TPL_ATOMIC3_YES</option>
 			</field>
+			<field name="copyrighttxt"  type="text" default="" label="TPL_ATOMIC3_COPYRIGHTTXT_LABEL" description="TPL_ATOMIC3_COPYRIGHTTXT_DESC" filter="string" />
 		</fieldset>
 		
 		<fieldset name="CUSTOM_CODE">

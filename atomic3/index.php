@@ -51,6 +51,7 @@ $bodyfontname					= $this->params->get('bodyfontname');
 $killjoomlajs							= $this->params->get('killjoomlajs');
 $killgenerator						= $this->params->get('killgenerator');
 $copyright							= $this->params->get('copyright');
+$copyrighttxt						= $this->params->get('copyrighttxt');
 ?>
 
 <!DOCTYPE html>
@@ -299,10 +300,12 @@ $copyright							= $this->params->get('copyright');
 		<div class="row">
 			<footer>
 				<jdoc:include type="modules" name="footer" style="none" />
-				<?php if($copyright == 1) : ?>
 					<hr />
+					<?php if(($copyrighttxt != null) && ($copyright == 1)) : ?>
+					&copy;<?php echo date('Y'); ?> <?php echo $copyrighttxt ?>
+					<?php else : ?>
 					&copy;<?php echo date('Y'); ?> <?php echo htmlspecialchars($app->getCfg('sitename')); ?>
-				<?php endif; ?>
+					<?php endif; ?>
 			</footer>
 		</div>
 		<?php endif; ?>
