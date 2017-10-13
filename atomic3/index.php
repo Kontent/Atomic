@@ -13,12 +13,16 @@ $user = JFactory::getUser();
 // Output as HTML5
 $this->setHtml5(true);
 
+// Get the alias of the current menu item
+$active = JFactory::getApplication()->getMenu()->getActive();
+
 // Getting params from template
 $params = $app->getTemplate(true)->params;
 
 // Assign params
 $sitetitle								= $this->params->get('sitetitle');
 $sitedescription					= $this->params->get('sitedescription');
+$bodymenu							= $this->params->get('bodymenu');
 $bootstraplocal					= $this->params->get('bootstraplocal');
 $bootstraplocaltheme			= $this->params->get('bootstraplocaltheme');
 $bootstrapcdn						= $this->params->get('bootstrapcdn');
@@ -181,9 +185,19 @@ $copyright							= $this->params->get('copyright');
 		<?php if($customjs == 1) : ?>
 			<script type="text/javascript" src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
 		<?php endif; ?>
-				
+
 	</head>
-	<body>
+	
+	<?php if($bodymenu == 1) : ?>
+		<body class="<?php echo $active->alias; ?> ">
+	<?php elseif($bodymenu == 2) : ?>
+		<body id="<?php echo $active->alias; ?> ">
+	<?php elseif($bodymenu == 3) : ?>
+		<body id="<?php echo $active->alias; ?>" class="<?php echo $active->alias; ?> ">
+	<?php else : ?>
+		<body>
+	<?php endif; ?>
+	
 	
 	<?php if($fluidcontainer == 1) : ?>
 		<div class="container-fluid">

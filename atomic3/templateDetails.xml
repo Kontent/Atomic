@@ -95,10 +95,21 @@
 				<option value="0">TPL_ATOMIC3_NO</option>
 				<option value="1">TPL_ATOMIC3_YES</option>
 			</field>
+			
+			<field name="ATOMIC_LINE" type="line" text="XXXXXX" />
+			<field name="gk_line_1" type="line" text="" />
+			
 			<field name="customcssfile" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_CUSTOMCSSFILE_LABEL" description="TPL_ATOMIC3_CUSTOMCSSFILE_DESC">
 				<option value="0">TPL_ATOMIC3_NO</option>
 				<option value="1">TPL_ATOMIC3_YES</option>
-			</field>			
+			</field>
+			<field name="bodymenu" type="list" default="0" label="TPL_ATOMIC3_BODYMENU_LABEL" description="TPL_ATOMIC3_BODYMENU_DESC">
+				<option value="0">TPL_ATOMIC3_BODYMENU_OPTION_DEFAULT</option>
+				<option value="1">TPL_ATOMIC3_BODYMENU_OPTION_BODYCLASS</option>
+				<option value="2">TPL_ATOMIC3_BODYMENU_OPTION_BODYID</option>
+				<option value="3">TPL_ATOMIC3_BODYMENU_OPTION_BODYCLASSID</option>
+			</field>
+			
 			<field name="customcsscode" type="textarea" default="" label="TPL_ATOMIC3_CUSTOMCSS_LABEL" description="TPL_ATOMIC3_CUSTOMCSS_DESC" rows="8" columns="40" filter="raw" />
 		</fieldset>
 		
