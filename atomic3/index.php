@@ -221,12 +221,12 @@ $copyrighttxt						= $this->params->get('copyrighttxt');
 			<div class="col-md-9">
 				<nav class="navigation" role="navigation">
 					<div class="nav-collapse">
-						<jdoc:include type="modules" name="navigation" style="none" />
+						<jdoc:include type="modules" name="navigation" />
 					</div>
 				</nav>
 			</div>
  			<div class="col-md-3">
- 				<jdoc:include type="modules" name="search" style="none" />
+ 				<jdoc:include type="modules" name="search" />
  			</div>
 		</div>
 		<?php endif; ?>
