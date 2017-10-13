@@ -2,7 +2,7 @@
 <!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "https://www.joomla.org/xml/dtd/2.5/template-install.dtd">
 <extension version="3.1" type="template" client="site" method="upgrade">
 	<name>atomic3</name>
-	<version>3.0</version>
+	<version>3.1</version>
 	<creationDate>5/5/17</creationDate>
 	<author>Ron Severdia</author>
 	<authorEmail>severdia@gmail.com</authorEmail>
@@ -31,6 +31,7 @@
 		<position>navigation</position>
 		<position>search</position>
 		<position>leftbody</position>
+		<position>abovebody</position>
 		<position>belowbody</position>
 		<position>rightbody</position>
 		<position>footer</position>
@@ -44,8 +45,8 @@
 	<config>
 	<fields name="params">
 		<fieldset name="BASIC_SETTINGS">
-			<field name="sitetitle"  type="text" default="" label="JGLOBAL_TITLE" description="JFIELD_ALT_PAGE_TITLE_LABEL" filter="string" />
-			<field name="sitedescription"  type="text" default="" label="JGLOBAL_DESCRIPTION" description="JGLOBAL_SUBHEADING_DESC" filter="string" />
+			<field name="sitetitle"  type="text" default="" label="JGLOBAL_TITLE" description="JFIELD_ALT_PAGE_TITLE_LABEL" filter="safehtml" />
+			<field name="sitedescription"  type="text" default="" label="JGLOBAL_DESCRIPTION" description="JGLOBAL_SUBHEADING_DESC" filter="safehtml" />
 			<field name="gacode"  type="text" default="" label="TPL_ATOMIC3_GA_LABEL" description="TPL_ATOMIC3_GA_DESC" filter="string" />
 			<field name="killgenerator" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_KILLGENERATOR_LABEL" description="TPL_ATOMIC3_KILLGENERATOR_DESC">
 				<option value="0">TPL_ATOMIC3_NO</option>
@@ -62,8 +63,10 @@
 				<option value="0">TPL_ATOMIC3_LOCAL</option>
 				<option value="1">TPL_ATOMIC3_REMOTE</option>
 				<option value="2">TPL_ATOMIC3_NONE</option>
+				<option value="3">TPL_ATOMIC3_REMOTE_BS4</option>
 			</field>
-			<field name="bootstrapcdn" type="textarea" label="TPL_ATOMIC3_BOOTSTRAPCDN_LABEL" description="TPL_ATOMIC3_BOOTSTRAPCDN_DESC" rows="4" columns="30" default="" />
+			<field name="bootstrapcdn" type="textarea" label="TPL_ATOMIC3_BOOTSTRAPCDN_LABEL" description="TPL_ATOMIC3_BOOTSTRAPCDN_DESC" rows="4" columns="30" filter="raw" default="" />
+			
 			<field name="bootstraplocaltheme" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_BOOTSTRAPTHEME_LABEL" description="TPL_ATOMIC3_BOOTSTRAPTHEME_DESC">
 				<option value="0">TPL_ATOMIC3_NO</option>
 				<option value="1">TPL_ATOMIC3_YES</option>
@@ -88,14 +91,15 @@
 				<option value="united">TPL_ATOMIC3_BOOTSWATCH_OPTION_UNITED</option>
 				<option value="yeti">TPL_ATOMIC3_BOOTSWATCH_OPTION_YETI</option>
 			</field>
-			<field name="bs3joomla" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC3_TEMPLATEBS3_LABEL" description="TPL_ATOMIC3_TEMPLATEBS3_DESC">
+			<field name="bsfixjoomla" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC3_TEMPLATEBSFIX_LABEL" description="TPL_ATOMIC3_TEMPLATEBSFIX_DESC">
 				<option value="0">TPL_ATOMIC3_NO</option>
 				<option value="1">TPL_ATOMIC3_YES</option>
 			</field>
-			<field name="customcss" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_CUSTOMCSS_LABEL" description="TPL_ATOMIC3_CUSTOMCSS_DESC">
+			<field name="customcssfile" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_CUSTOMCSSFILE_LABEL" description="TPL_ATOMIC3_CUSTOMCSSFILE_DESC">
 				<option value="0">TPL_ATOMIC3_NO</option>
 				<option value="1">TPL_ATOMIC3_YES</option>
-			</field>
+			</field>			
+			<field name="customcsscode" type="textarea" default="" label="TPL_ATOMIC3_CUSTOMCSS_LABEL" description="TPL_ATOMIC3_CUSTOMCSS_DESC" rows="8" columns="40" filter="raw" />
 		</fieldset>
 		
 		<fieldset name="JAVASCRIPT_SETTINGS">
@@ -105,7 +109,7 @@
 				<option value="2">TPL_ATOMIC3_JQUERY_3</option>
 				<option value="3">TPL_ATOMIC3_NONE</option>
 			</field>
-			<field name="jquerycdn" type="textarea" label="TPL_ATOMIC3_JQUERYCDN_LABEL" description="TPL_ATOMIC3_JQUERYCDN_DESC" rows="4" columns="30" default="" />
+			<field name="jquerycdn" type="textarea" label="TPL_ATOMIC3_JQUERYCDN_LABEL" description="TPL_ATOMIC3_JQUERYCDN_DESC" rows="4" columns="30" filter="raw" default="" />
 			<field name="customjs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC3_CUSTOMJS_LABEL" description="TPL_ATOMIC3_CUSTOMJS_DESC">
 				<option value="0">TPL_ATOMIC3_NO</option>
 				<option value="1">TPL_ATOMIC3_YES</option>
@@ -178,10 +182,10 @@
 		</fieldset>
 		
 		<fieldset name="CUSTOM_CODE">
-			<field name="codeafterhead" type="textarea" label="TPL_ATOMIC3_CODEAFTERHEAD_LABEL" description="TPL_ATOMIC3_CODEAFTERHEAD_DESC" rows="4" columns="30" default="" />
-			<field name="codebeforehead" type="textarea" label="TPL_ATOMIC3_CODEBEFOREHEAD_LABEL" description="TPL_ATOMIC3_CODEBEFOREHEAD_DESC" rows="4" columns="30" default="" />
-			<field name="codeafterbody" type="textarea" label="TPL_ATOMIC3_CODEAFTERBODY_LABEL" description="TPL_ATOMIC3_CODEAFTERBODY_DESC" rows="4" columns="30" default="" />
-			<field name="codebeforebody" type="textarea" label="TPL_ATOMIC3_CODEBEFOREBODY_LABEL" description="TPL_ATOMIC3_CODEBEFOREBODY_DESC" rows="4" columns="30" default="" />
+			<field name="codeafterhead" type="textarea" label="TPL_ATOMIC3_CODEAFTERHEAD_LABEL" description="TPL_ATOMIC3_CODEAFTERHEAD_DESC" rows="4" columns="30" filter="raw" default="" />
+			<field name="codebeforehead" type="textarea" label="TPL_ATOMIC3_CODEBEFOREHEAD_LABEL" description="TPL_ATOMIC3_CODEBEFOREHEAD_DESC" rows="4" columns="30" filter="raw" default="" />
+			<field name="codeafterbody" type="textarea" label="TPL_ATOMIC3_CODEAFTERBODY_LABEL" description="TPL_ATOMIC3_CODEAFTERBODY_DESC" rows="4" columns="30" filter="raw" default="" />
+			<field name="codebeforebody" type="textarea" label="TPL_ATOMIC3_CODEBEFOREBODY_LABEL" description="TPL_ATOMIC3_CODEBEFOREBODY_DESC" rows="4" columns="30" filter="raw" default="" />
 		</fieldset>
 		
 		</fields>

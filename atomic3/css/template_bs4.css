@@ -1,19 +1,14 @@
 @charset "UTF-8";
 
-/* Below are the CSS styles that aren't included with Bootstrap . It's a good idea to keep them whether or not you use it unless you know what you're doing. */
+/* Below are the CSS styles that aren't included with Bootstrap 4. It's a good idea to keep them whether or not you use it unless you know what you're doing. */
 
 /* Text styles */
-.page-header h2, 
-.page-header .h2 {
-	font-size: 24px
-}
-dl.article-info.muted {
-	font-size: 90%;
-	color: #888;
-}
+
 .page-header h1,
-.page-header p {
-	margin-left: 15px;
+.page-header p,
+footer {
+	padding-right: 15px;
+	padding-left: 15px
 }
 h3.page-header {
 	margin: 0;
@@ -22,12 +17,17 @@ h3.page-header {
 .moduletable {
 	margin: 10px 0;
 }
+dl.article-info.muted {
+	font-size: 90%;
+	color: #888;
+}
 .element-invisible {
 	display: none;
 }
 
 
-/* Search  */
+/* Search */
+
 #mod-search-searchword {
 	display: block;
 	width: 100%;
@@ -52,6 +52,7 @@ div.search {
 
 
 /* Login */
+
 #login-form {
 	margin: 20px 0;
 }
@@ -93,7 +94,9 @@ input#modlgn-remember {
 	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
+
 /* Contact form */
+
 #contact-form.form-horizontal .control-label {
 	text-align: left;
 }
@@ -141,23 +144,30 @@ input#modlgn-remember {
 	display: inline-block;
 }
 
-/* Bootstrap 3 Media Queries  */
 
-/* Extra small devices (phones, less than 768px) */
-/* No media query since this is the default in Bootstrap */
 
-/* Small devices (tablets, 768px and up) */
-@media (min-width: @screen-sm-min) {
+/* Bootstrap 4 Media Queries  */
 
-}
+/* Extra small devices (portrait phones, less than 576px)  */
+/* No media query since this is the default in Bootstrap  */
 
-/* Medium devices (desktops, 992px and up) */
-@media (min-width: @screen-md-min) {
+/* Small devices (landscape phones, 576px and up)  */
+@media (min-width: 576px) {
 
 }
 
-/* Large devices (large desktops, 1200px and up) */
-@media (min-width: @screen-lg-min) {
+/* Medium devices (tablets, 768px and up)  */
+@media (min-width: 768px) {
+
+}
+
+/* Large devices (desktops, 992px and up)  */
+@media (min-width: 992px) {
+
+}
+
+/* Extra large devices (large desktops, 1200px and up)  */
+@media (min-width: 1200px) {
 
 }
 
