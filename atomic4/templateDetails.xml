@@ -53,6 +53,7 @@
 				<option value="0">TPL_ATOMIC4_NO</option>
 				<option value="1">TPL_ATOMIC4_YES</option>
 			</field>
+			<field name="logo" type="media" label="TPL_ATOMIC4_LOGO_LABEL" description="TPL_ATOMIC4_LOGO_DESC" />
 		</fieldset>
 		
 		<fieldset name="CSS_SETTINGS">

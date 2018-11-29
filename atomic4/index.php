@@ -20,6 +20,7 @@ $active = JFactory::getApplication()->getMenu()->getActive();
 $params = $app->getTemplate(true)->params;
 
 // Assign template params
+$logo								= $this->params->get('logo');
 $sitetitle							= $this->params->get('sitetitle');
 $sitedescription					= $this->params->get('sitedescription');
 $bodymenu							= $this->params->get('bodymenu');
@@ -215,9 +216,9 @@ $codebeforebody						= $this->params->get('codebeforebody');
 	<?php endif; ?>
 	
 	<?php	// Add custom code after opening body tag
-			if($codeafterbody != null) : ?>
-			<?php echo $codeafterbody;
-		?>	
+		if($codeafterbody != null) : ?>
+		<?php echo $codeafterbody;
+	?>	
 	<?php endif; ?>
 
 	<?php 		// Choose either a fixed or fluid width container
@@ -227,12 +228,15 @@ $codebeforebody						= $this->params->get('codebeforebody');
 		<div class="container">
 	<?php endif; ?>
 	
-			<?php if($pageheader == 1) : ?>
+		<?php if($pageheader == 1) : ?>
 			<div class="row">
 				<div class="page-header">
-					<h1><?php if($sitetitle == null) : ?><?php echo htmlspecialchars($app->getCfg('sitename')); ?>
-						<?php else : ?><?php echo $sitetitle	; ?><?php endif; ?></h1>
-						<?php if($sitedescription != null) : ?><p><small><?php echo $sitedescription	; ?></small></p><?php endif; ?>
+					<h1>
+						<?php if ($logo) : ?>
+							<div id="logo"><img src="<?php echo $this->baseurl; ?>/<?php echo htmlspecialchars($logo); ?>" alt="<?php echo htmlspecialchars($this->params->get('sitetitle')); ?>" /></div>
+						<?php endif;?>
+						<?php if($sitetitle != null) : ?><?php echo $sitetitle	; ?><?php endif; ?></h1>
+						<?php if($sitedescription != null) : ?><p><small><?php echo $sitedescription; ?></small></p><?php endif; ?>
 				</div>
 				<?php if ($this->countModules('menu')) : ?>
 				<div class="menu">
@@ -386,6 +390,6 @@ $codebeforebody						= $this->params->get('codebeforebody');
 			if($codebeforebody != null) : ?>
 			<?php echo $codebeforebody;
 		?>	
-	<?php endif; ?>
+		<?php endif; ?>
 	</body>
 </html>
