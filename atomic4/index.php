@@ -52,21 +52,22 @@ $copyright							= $this->params->get('copyright');
 $copyrighttxt						= $this->params->get('copyrighttxt');
 $noconflict							= $this->params->get('noconflict');
 $jqmigrate							= $this->params->get('jqmigrate');
-$mootools							= $this->params->get('mootools');
+$loadfavicons						= $this->params->get('loadfavicons');
 ?>
 
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 	<head>
-		<jdoc:include type="head" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+   	 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   	 	<meta name="HandheldFriendly" content="true" />
+		<meta name="apple-mobile-web-app-capable" content="YES" />
 		
-		<?php		// Remove MooTools
-			if($mootools == 0)  : ?>
-				<?php $doc = JFactory::getDocument();
-					unset($doc->_scripts[JURI::root(true) . '/media/system/js/mootools-core.js']);
-					unset($doc->_scripts[JURI::root(true) . '/media/system/js/mootools-more.js']);
-			?>
-		<?php endif; ?>
+		<?php		// Output as HTML5
+			$this->setHtml5(true);
+		?>
+		<jdoc:include type="head" />
+
 		
 		<?php		// Use jQuery noConflict()
 			if($noconflict == 0)  : ?>
@@ -76,16 +77,18 @@ $mootools							= $this->params->get('mootools');
 		<?php endif; ?>
 		
 		<?php		// Use jQuery Migrate
-			if ($jqmigrate != 0) : ?>
+			if($jqmigrate >= 1) : ?>
 				<?php $doc = JFactory::getDocument();
 					unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-migrate.min.js']);
 			?>
+			<?php elseif($jqmigrate = 1) : ?>
+				<script defer src="https://code.jquery.com/jquery-migrate-3.0.1.min.js" crossorigin="anonymous"></script>
 		<?php endif; ?>
 		
 		<?php		// Use Joomla's jQuery 1.12.4 unless configured otherwise - Disabled for now
-		//	if($jqlibrary > 0)  : ?>
+				//	if($jqlibrary > 0)  : ?>
 				<?php //$doc = JFactory::getDocument();
-			//		unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
+				//		unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
 			?>
 		<?php // endif; ?>
 		
@@ -115,9 +118,6 @@ $mootools							= $this->params->get('mootools');
 			if($killgenerator == 1) : ?>
 			<?php $this->setGenerator(null); ?>
 		<?php endif; ?>
-		
-    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-   	 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    	 	
 		<?php 		// Load remote Bootstrap 4 CSS framework from CDN
 			if(($bootstrapcdn == null) && ($bootstrapsource == 1)) : ?>
@@ -168,7 +168,28 @@ $mootools							= $this->params->get('mootools');
 				<?php echo $customcsscode ?>
 			</style>
 		<?php endif; ?>
+		
+		<?php 		// Load template favicons, loaded by default
+			if($loadfavicons == 1) : ?>
+				<link rel="apple-touch-icon" sizes="180x180" href="/templates/<?php echo $this->template ?>/favicons/apple-touch-icon.png">
+				<link rel="icon" type="image/png" sizes="32x32" href="/templates/<?php echo $this->template ?>/favicons/favicon-32x32.png">
+				<link rel="icon" type="image/png" sizes="16x16" href="/templates/<?php echo $this->template ?>/favicons/favicon-16x16.png">
+				<link rel="manifest" href="/templates/<?php echo $this->template ?>/favicons/site.webmanifest">
+				<link rel="mask-icon" href="/templates/<?php echo $this->template ?>/favicons/safari-pinned-tab.svg" color="#5bbad5">
+				<link rel="shortcut icon" href="/templates/<?php echo $this->template ?>/favicons/favicon.ico">
+				<meta name="msapplication-TileColor" content="#da532c">
+				<meta name="msapplication-config" content="/templates/<?php echo $this->template ?>/favicons/browserconfig.xml">
+				<meta name="theme-color" content="#ffffff">
+		<?php endif; ?>
+		
+		<?php 		// Load custom local user JavaScript
+			if($customjs == 1) : ?>
+			<script type="text/javascript" src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
+		<?php endif; ?>
 	</head>
+		
+	
+	
 	
 	<?php		/* Add the menu item alias to the body ID, class, or both  */		?>
 	<?php if($bodymenu == 1) : ?>
@@ -284,7 +305,7 @@ $mootools							= $this->params->get('mootools');
 		
 			<?php if($footer == 1) : ?>
 			<div class="row">
-				<footer>
+				<footer><small>
 					<jdoc:include type="modules" name="footer" style="none" />
 						<hr />
 						<?php if(($copyrighttxt != null) && ($copyright == 1)) : ?>
@@ -292,7 +313,7 @@ $mootools							= $this->params->get('mootools');
 						<?php else : ?>
 						&copy;<?php echo date('Y'); ?> <?php echo htmlspecialchars($app->getCfg('sitename')); ?>
 						<?php endif; ?>
-				</footer>
+				</small></footer>
 			</div>
 			<?php endif; ?>
 		</div>
@@ -303,7 +324,7 @@ $mootools							= $this->params->get('mootools');
 		<?php if (($jquerycdn == null) && ($jqlibrary == 1)) : ?>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 		<?php elseif (($jquerycdn == null) && ($jqlibrary == 2)) : ?>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<?php else : ?>
 			<?php echo $jquerycdn ?>
 		<?php endif; ?>		
@@ -326,16 +347,11 @@ $mootools							= $this->params->get('mootools');
 			
 			<?php 		// If CDN empty and load BS 4 remotely, but full jQuery 3 is loaded
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3) && ($jqlibrary == 2)) : ?>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 		<?php else : ?>
 		<?php endif; ?>
-		
-		<?php 		// Load custom local user JavaScript
-			if($customjs == 1) : ?>
-			<script type="text/javascript" src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
-		<?php endif; ?>
-		
+				
 		<?php 		// Add Google Analytics tag if configured.
 			if($gacode != null) : ?>
 		<script>

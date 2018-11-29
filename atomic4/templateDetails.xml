@@ -17,9 +17,9 @@
 		<folder>images</folder>
 		<folder>language</folder>
 		<folder>js</folder>
+		<folder>favicons</folder>
 		<filename>index.php</filename>
 		<filename>index.html</filename>
-		<filename>favicon.ico</filename>
 		<filename>templateDetails.xml</filename>
 		<filename>template_preview.png</filename>
 		<filename>template_thumbnail.png</filename>
@@ -100,10 +100,6 @@
 				<option value="1">TPL_ATOMIC4_JQUERYMIGRATE_3</option>
 				<option value="2">TPL_ATOMIC4_JQUERYMIGRATE_NONE</option>
 			</field>
-			<field name="mootools" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_MOOTOOLS_LABEL" description="TPL_ATOMIC4_MOOTOOLS_DESC">
-				<option value="0">TPL_ATOMIC4_NO</option>
-				<option value="1">TPL_ATOMIC4_YES</option>
-			</field>			
 			<field name="noconflict" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_NOCONFLICT_LABEL" description="TPL_ATOMIC4_NOCONFLICT_DESC">
 				<option value="0">TPL_ATOMIC4_NO</option>
 				<option value="1">TPL_ATOMIC4_YES</option>
@@ -133,6 +129,10 @@
 		</fieldset>
 		
 		<fieldset name="ICON_SETTINGS">
+			<field name="loadfavicons" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_LOADFAVICONS_LABEL" description="TPL_ATOMIC4_LOADFAVICONS_DESC">
+				<option value="0">TPL_ATOMIC4_NO</option>
+				<option value="1">TPL_ATOMIC4_YES</option>
+			</field>
 			<field name="fontawesome" type="list" default="0" label="TPL_ATOMIC4_FONTAWESOME_LABEL" description="TPL_ATOMIC4_FONTAWESOME_DESC">
 				<option value="0">TPL_ATOMIC4_NONE</option>
 				<option value="1">TPL_ATOMIC4_FAREMOTEJS</option>
