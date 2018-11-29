@@ -2,11 +2,14 @@
 
 /* Below are the CSS styles that aren't included with Bootstrap 4. It's a good idea to keep them whether or not you use it unless you know what you're doing. */
 
+/* General styles */
 header,
 footer {
 	width: 100%;
 }
-
+footer {
+	text-align: center;
+}
 
 /* Text styles */
 .page-header h1 {
@@ -15,26 +18,88 @@ footer {
 }
 
 /* Top Menu */
-div.menu {
+.page-header + div.menu {
 	width: 100%;
 }
-.nav.menu.mod-list {
+.page-header + div.menu .nav.menu.mod-list {
 	border-bottom: 1px solid rgba(0,0,0,.1);
 	margin-bottom: 30px;
 	padding-bottom: 10px;
 }
-.nav.menu.mod-list li {
+.page-header + div.menu .nav.menu.mod-list li {
 	padding-right: 15px;
     padding-left: 15px;
 }
 
-
+/* Left Side Menu */
+.col-md-2 .nav.menu.mod-list {
+	display: block;
+}
+.col-md-2 .nav.menu.mod-list li {
+	padding: 5px;
+}
+.col-md-2 .nav.menu.mod-list li:hover,
+.col-md-2 .nav.menu.mod-list li:hover > a,
+.col-md-2 .nav.menu.mod-list li a:hover  {
+	background-color: #007bff;
+	color: #fff;
+	text-decoration: none; 
+}
+li.deeper.parent {
+	display: block;
+	position: relative:
+}
+li.deeper.parent:hover ul.nav-child.unstyled.small  {
+	display: block;
+	padding-left: 0;
+	position: absolute;
+	left: 120px;
+	top: 5px;
+	background-color: #fff;
+	width: 100%;
+	border: 1px solid #ccc;
+	z-index: 1;
+}
+li.deeper.parent ul.nav-child.unstyled.small {
+	display: none;
+	font-size: 100%;
+}
+ul.nav-child.unstyled.small li {
+	list-style-type: none;
+	padding: 0 5px;
+}
 
 /* Search */
 
 
 /* Login */
-
+#login-form {
+	margin: 30px 0;
+}
+.pretext, .posttext {
+	font-size: 80%;
+	font-weight: bold;
+}
+#form-login-username label,
+#form-login-password label,
+#form-login-remember label {
+	justify-content: left;
+	margin-top: 15px;
+	font-size: 90%;
+}
+#form-login-remember label {
+	font-size: 80%;
+	display: inline-block;
+	margin-bottom: 10px;
+}
+#login-form .userdata ul  {
+	padding-left: 0;
+	margin-top: 10px;
+}
+#login-form .userdata ul li {
+	list-style-type: none;
+	font-size: 80%;
+}
 
 /* Contact form */
 

@@ -147,7 +147,7 @@
 				<option value="0">TPL_ATOMIC4_NO</option>
 				<option value="1">TPL_ATOMIC4_YES</option>
 			</field>
-			<field name="topmenu" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_TOMPMENU_LABEL" description="TPL_ATOMIC4_TOPMENU_DESC">
+			<field name="topmenu" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_TOPMENU_LABEL" description="TPL_ATOMIC4_TOPMENU_DESC">
 				<option value="0">TPL_ATOMIC4_NO</option>
 				<option value="1">TPL_ATOMIC4_YES</option>
 			</field>

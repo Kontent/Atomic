@@ -53,11 +53,21 @@ $copyrighttxt						= $this->params->get('copyrighttxt');
 $noconflict							= $this->params->get('noconflict');
 $jqmigrate							= $this->params->get('jqmigrate');
 $loadfavicons						= $this->params->get('loadfavicons');
+$codeafterhead						= $this->params->get('codeafterhead');
+$codebeforehead						= $this->params->get('codebeforehead');
+$codeafterbody						= $this->params->get('codeafterbody');
+$codebeforebody						= $this->params->get('codebeforebody');
 ?>
 
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 	<head>
+		<?php		// Add custom code after opening head tag
+			if($codeafterhead != null) : ?>
+			<?php echo $codeafterhead;
+		?>	
+		<?php endif; ?>
+			
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
    	 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    	 	<meta name="HandheldFriendly" content="true" />
@@ -67,7 +77,6 @@ $loadfavicons						= $this->params->get('loadfavicons');
 			$this->setHtml5(true);
 		?>
 		<jdoc:include type="head" />
-
 		
 		<?php		// Use jQuery noConflict()
 			if($noconflict == 0)  : ?>
@@ -186,10 +195,13 @@ $loadfavicons						= $this->params->get('loadfavicons');
 			if($customjs == 1) : ?>
 			<script type="text/javascript" src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
 		<?php endif; ?>
-	</head>
 		
-	
-	
+		<?php		// Add custom code before closing head tag
+			if($codebeforehead != null) : ?>
+			<?php echo $codebeforehead;
+		?>	
+		<?php endif; ?>
+	</head>
 	
 	<?php		/* Add the menu item alias to the body ID, class, or both  */		?>
 	<?php if($bodymenu == 1) : ?>
@@ -202,6 +214,12 @@ $loadfavicons						= $this->params->get('loadfavicons');
 		<body>
 	<?php endif; ?>
 	
+	<?php	// Add custom code after opening body tag
+			if($codeafterbody != null) : ?>
+			<?php echo $codeafterbody;
+		?>	
+	<?php endif; ?>
+
 	<?php 		// Choose either a fixed or fluid width container
 		if($fluidcontainer == 1) : ?>
 		<div class="container-fluid">
@@ -363,5 +381,11 @@ $loadfavicons						= $this->params->get('loadfavicons');
 			  ga('send', 'pageview');
 		</script>
 		<?php endif; ?>
+		
+		<?php	// Add custom code before closing body tag
+			if($codebeforebody != null) : ?>
+			<?php echo $codebeforebody;
+		?>	
+	<?php endif; ?>
 	</body>
 </html>
