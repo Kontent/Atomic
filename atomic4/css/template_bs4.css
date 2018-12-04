@@ -34,17 +34,46 @@ footer {
 	padding-right: 15px;
     padding-left: 15px;
 }
+.menu .nav > li.active a:after, 
+.menu .nav > li.active .separator:after {
+    border-color: #4069ff;
+}
+.menu .nav>li:hover>.separator:after, 
+.menu .nav>li:hover>a:after, 
+.menu .nav>li>a:active:after, 
+.menu .nav>li>a:focus:after, 
+.menu .nav>li>a:hover:after {
+    border-bottom-width: 5px;
+}
+.menu .nav>.active>.separator:after, 
+.menu .nav>.active>a:after {
+    border-bottom-width: 2px;
+}
+.menu .nav>li>.separator:after, 
+.menu .nav>li>a:after {
+    content: '';
+    border-bottom: 0 solid #303030;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    -webkit-transition: ease .2s all;
+    -o-transition: ease .2s all;
+    transition: ease .2s all;
+}
+
 
 /* Left Side Menu */
-.col-md-2 .nav.menu.mod-list {
+.leftbody .nav.menu.mod-list {
 	display: block;
 }
-.col-md-2 .nav.menu.mod-list li {
+.leftbody .nav.menu.mod-list li {
 	padding: 5px;
 }
-.col-md-2 .nav.menu.mod-list li:hover,
-.col-md-2 .nav.menu.mod-list li:hover > a,
-.col-md-2 .nav.menu.mod-list li a:hover  {
+.leftbody .nav.menu.mod-list li:hover,
+.leftbody .nav.menu.mod-list li:hover > a,
+.leftbody .nav.menu.mod-list li a:hover  {
 	background-color: #007bff;
 	color: #fff;
 	text-decoration: none; 
@@ -72,6 +101,44 @@ ul.nav-child.unstyled.small li {
 	list-style-type: none;
 	padding: 0 5px;
 }
+
+
+/* Breadcrumbs */
+.breadcrumb {
+    margin: 0 0 6px;
+    padding: 0;
+    border-radius: 0;
+    line-height: normal;
+    background: 0 0;
+    font-size: 14px;
+    list-style: none;
+}
+.breadcrumb, 
+.pagination ul {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+}
+.breadcrumb>.active {
+    color: #606060;
+}
+.breadcrumb>li {
+    display: inline-block;
+    text-shadow: 0 1px 0 #fff;
+}
+.breadcrumb>li>.divider {
+    padding: 0;
+    color: #ccc;
+}
+[class*=" icon-"], 
+[class^=icon-] {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-right: .25em;
+    line-height: 14px;
+}
+
+
 
 /* Search */
 
@@ -108,7 +175,10 @@ ul.nav-child.unstyled.small li {
 /* Contact form */
 
 
-
+/* Edit article button menu */
+.icons {
+	text-align: right;
+}
 
 /* Bootstrap 4 Media Queries  */
 

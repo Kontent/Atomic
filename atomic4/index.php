@@ -145,8 +145,10 @@ $codebeforebody						= $this->params->get('codebeforebody');
 		<?php 		// Load FontAwesome 5.5
 			if($fontawesome == 1) : ?>
 			<script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
+			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css" />
 		<?php elseif($fontawesome == 2) : ?>
 			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css" />
 		<?php endif; ?>
 						
 		<?php		/* Load Google Fonts  */		?>
@@ -233,7 +235,9 @@ $codebeforebody						= $this->params->get('codebeforebody');
 				<div class="page-header">
 					<h1>
 						<?php if ($logo) : ?>
-							<div id="logo"><img src="<?php echo $this->baseurl; ?>/<?php echo htmlspecialchars($logo); ?>" alt="<?php echo htmlspecialchars($this->params->get('sitetitle')); ?>" /></div>
+							<div id="logo">
+								<a href="<?php echo $this->baseurl; ?>"><img src="<?php echo $this->baseurl; ?>/<?php echo htmlspecialchars($logo); ?>" alt="<?php echo htmlspecialchars($this->params->get('sitetitle')); ?>" /></a>
+							</div>
 						<?php endif;?>
 						<?php if($sitetitle != null) : ?><?php echo $sitetitle	; ?><?php endif; ?></h1>
 						<?php if($sitedescription != null) : ?><p><small><?php echo $sitedescription; ?></small></p><?php endif; ?>
@@ -263,7 +267,7 @@ $codebeforebody						= $this->params->get('codebeforebody');
 		
 			<div class="row">
 				<?php if(($leftbody == 1) && ($rightbody == 1)) : ?>	
-				<div class="col-md-2">
+				<div class="col-md-2 leftbody">
 					<jdoc:include type="modules" name="leftbody" />
 				</div>
 				<div class="col-md-8">
@@ -276,12 +280,12 @@ $codebeforebody						= $this->params->get('codebeforebody');
 					<jdoc:include type="modules" name="belowbody" />
 					<?php endif; ?>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-2 rightbody">
 					<jdoc:include type="modules" name="rightbody" />
 				</div>
 			
 				<?php elseif(($leftbody == 0) && ($rightbody == 1)) : ?>
-				<div class="col-md-10">
+				<div class="col-md-9">
 					<jdoc:include type="message" />
 					<?php if($abovebody == 1) : ?>
 					<jdoc:include type="modules" name="abovebody" />
@@ -291,15 +295,15 @@ $codebeforebody						= $this->params->get('codebeforebody');
 					<jdoc:include type="modules" name="belowbody" />
 					<?php endif; ?>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-3 rightbody">
 					<jdoc:include type="modules" name="rightbody"  />
 				</div>
 		
 				<?php elseif(($leftbody == 1) && ($rightbody == 0)) : ?>
-				<div class="col-md-2">
+				<div class="col-md-3 leftbody">
 					<jdoc:include type="modules" name="leftbody"  />
 				</div>
-				<div class="col-md-10">
+				<div class="col-md-9">
 					<jdoc:include type="message" />
 					<?php if($abovebody == 1) : ?>
 					<jdoc:include type="modules" name="abovebody" />
