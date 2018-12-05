@@ -31,41 +31,27 @@ code,xmp {
 .headermenu .nav.menu.mod-list {
 	border-bottom: 1px solid rgba(0,0,0,.1);
 	margin-bottom: 30px;
-	padding-bottom: 10px;
+	padding-bottom: 8px;
 }
 .headermenu .nav.menu.mod-list li {
 	padding-right: 15px;
     padding-left: 15px;
 }
-.headermenu .nav > li.active a:after, 
-.headermenu .nav > li.active .separator:after {
-    border-color: #4069ff;
+.headermenu .nav > li.active a {
+    border-bottom: 4px solid blue;
+    padding-bottom: 8px;
 }
-.headermenu .nav>li:hover>.separator:after, 
-.headermenu .nav>li:hover>a:after, 
-.headermenu .nav>li>a:active:after, 
-.headermenu .nav>li>a:focus:after, 
-.headermenu .nav>li>a:hover:after {
-    border-bottom-width: 5px;
+.headermenu .nav > li.active a:hover {
+    text-decoration: none;
 }
-.headermenu .nav>.active>.separator:after, 
-.headermenu .nav>.active>a:after {
-    border-bottom-width: 2px;
-}
-.headermenu .nav>li>.separator:after, 
-.headermenu .nav>li>a:after {
-    content: '';
-    border-bottom: 0 solid #303030;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
+.headermenu .nav > li a:hover {
+    text-decoration: none;
+    padding-bottom: 8px;
+    border-bottom: 4px solid blue;
     -webkit-transition: ease .2s all;
     -o-transition: ease .2s all;
     transition: ease .2s all;
 }
-
 
 /* Left Side Menu */
 .leftbody .nav.menu.mod-list {
