@@ -243,7 +243,7 @@ $codebeforebody						= $this->params->get('codebeforebody');
 						<?php if($sitedescription != null) : ?><p><small><?php echo $sitedescription; ?></small></p><?php endif; ?>
 				</div>
 				<?php if ($this->countModules('menu')) : ?>
-				<div class="menu">
+				<div class="headermenu">
 					<jdoc:include type="modules" name="menu" />
 				</div>
 				<?php endif; ?>
