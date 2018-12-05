@@ -134,8 +134,11 @@ ul.nav-child.unstyled.small li {
     text-shadow: 0 1px 0 #fff;
 }
 .breadcrumb>li>.divider {
-    padding: 0;
+    padding: 0 5px 0 0;
     color: #ccc;
+}
+.breadcrumb>li>.divider img {
+	vertical-align: baseline;
 }
 [class*=" icon-"], 
 [class^=icon-] {
