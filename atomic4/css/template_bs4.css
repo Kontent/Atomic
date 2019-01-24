@@ -9,6 +9,7 @@ footer {
 }
 footer {
 	text-align: center;
+	margin-bottom: 30px;
 }
 #logo{
 	display: inline-block;
@@ -133,8 +134,6 @@ ul.nav-child.unstyled.small li {
     margin-right: .25em;
     line-height: 14px;
 }
-
-
 
 /* Search */
 
