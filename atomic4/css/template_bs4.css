@@ -175,6 +175,12 @@ ul.nav-child.unstyled.small li {
 	text-align: right;
 }
 
+/* Component only view  */
+body.component-only {
+	margin-bottom: 60px;
+}
+
+    
 /* Bootstrap 4 Media Queries  */
 
 /* Extra small devices (portrait phones, less than 576px)  */
