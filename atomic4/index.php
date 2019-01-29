@@ -196,7 +196,7 @@ $codebeforebody						= $this->params->get('codebeforebody');
 		
 		<?php 		// Load custom local user JavaScript
 			if($customjs == 1) : ?>
-			<script type="text/javascript" src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
+			<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
 		<?php endif; ?>
 		
 		<?php		// Add custom code before closing head tag
@@ -235,9 +235,9 @@ $codebeforebody						= $this->params->get('codebeforebody');
 				<div class="page-header">
 					<h1>
 						<?php if ($logo) : ?>
-							<div id="logo">
+							<span id="logo">
 								<a href="<?php echo $this->baseurl; ?>"><img src="<?php echo $this->baseurl; ?>/<?php echo htmlspecialchars($logo); ?>" alt="<?php echo htmlspecialchars($this->params->get('sitetitle')); ?>" /></a>
-							</div>
+							</span>
 						<?php endif;?>
 						<?php if($sitetitle != null) : ?><?php echo $sitetitle	; ?><?php endif; ?></h1>
 						<?php if($sitedescription != null) : ?><p><small><?php echo $sitedescription; ?></small></p><?php endif; ?>
@@ -331,15 +331,17 @@ $codebeforebody						= $this->params->get('codebeforebody');
 		
 			<?php if($footer == 1) : ?>
 			<div class="row">
-				<footer><small>
+				<footer>
 					<jdoc:include type="modules" name="footer" style="none" />
-						<hr />
+					<hr />
+					<small>
 						<?php if(($copyrighttxt != null) && ($copyright == 1)) : ?>
 						&copy;<?php echo date('Y'); ?> <?php echo $copyrighttxt ?>
 						<?php else : ?>
 						&copy;<?php echo date('Y'); ?> <?php echo htmlspecialchars($app->getCfg('sitename')); ?>
 						<?php endif; ?>
-				</small></footer>
+					</small>
+				</footer>
 			</div>
 			<?php endif; ?>
 		</div>

@@ -9,6 +9,7 @@ footer {
 }
 footer {
 	text-align: center;
+	margin-bottom: 30px;
 }
 #logo{
 	display: inline-block;
@@ -134,8 +135,6 @@ ul.nav-child.unstyled.small li {
     line-height: 14px;
 }
 
-
-
 /* Search */
 
 
@@ -176,6 +175,12 @@ ul.nav-child.unstyled.small li {
 	text-align: right;
 }
 
+/* Component only view  */
+body.component-only {
+	margin-bottom: 60px;
+}
+
+    
 /* Bootstrap 4 Media Queries  */
 
 /* Extra small devices (portrait phones, less than 576px)  */
