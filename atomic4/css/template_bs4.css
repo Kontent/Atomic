@@ -96,6 +96,25 @@ ul.nav-child.unstyled.small li {
 	padding: 0 5px;
 }
 
+/* Frontend editing */
+
+.btn-group.pull-right:hover .dropdown-menu {
+	display: block;
+	right: 0;
+}
+.edit.item-page .nav.nav-tabs li {
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
+    padding: 10px 20px;
+}
+.nav.nav-tabs li.active{
+   background-color: #f9f7f7;
+}
+#adminForm .btn-toolbar .btn {
+	margin-right: 30px;
+}
+
 
 /* Breadcrumbs */
 .breadcrumb {
