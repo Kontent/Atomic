@@ -4,13 +4,11 @@ Atomic is a "skeleton" template for Joomla 3. It's a slim template with the abil
 
 It includes the following frameworks and each is customizable:
 
--Bootstrap 3  
--Bootstrap 4 (beta)  
--Bootswatch themes  
+
+-Bootstrap 4
 -jQuery  
 -Google Fonts  
 -Font Awesome icons  
--Elegant icons  
 
 You can load all of these locally from your server or from their respective CDNs. Atomic also has the following module positions predefined:
 
