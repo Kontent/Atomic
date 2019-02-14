@@ -20,33 +20,33 @@ $active = JFactory::getApplication()->getMenu()->getActive();
 $params = $app->getTemplate(true)->params;
 
 // Assign template params
-$logo								= $this->params->get('logo');
-$sitetitle							= $this->params->get('sitetitle');
+$logo									= $this->params->get('logo');
+$sitetitle								= $this->params->get('sitetitle');
 $sitedescription					= $this->params->get('sitedescription');
 $bodymenu							= $this->params->get('bodymenu');
-$bootstrapsource					= $this->params->get('bootstrapsource');
+$bootstrapsource				= $this->params->get('bootstrapsource');
 $bootstrapcdn						= $this->params->get('bootstrapcdn');
 $fontawesome						= $this->params->get('fontawesome');
-$customcsscode						= $this->params->get('customcsscode');
-$customcssfile						= $this->params->get('customcssfile');
+$customcsscode					= $this->params->get('customcsscode');
+$customcssfile					= $this->params->get('customcssfile');
 $customjs							= $this->params->get('customjs');
 $fluidcontainer						= $this->params->get('fluidcontainer');
-$jqlibrary							= $this->params->get('jqlibrary');
+$jqlibrary								= $this->params->get('jqlibrary');
 $jquerycdn							= $this->params->get('jquerycdn');
 $bsfixjoomla						= $this->params->get('bsfixjoomla');
 $gacode								= $this->params->get('gacode');
-$pageheader							= $this->params->get('pageheader');
+$pageheader						= $this->params->get('pageheader');
 $topmenu							= $this->params->get('topmenu');
 $abovebody							= $this->params->get('abovebody');
-$leftbody							= $this->params->get('leftbody');
+$leftbody								= $this->params->get('leftbody');
 $rightbody							= $this->params->get('rightbody');
 $belowbody							= $this->params->get('belowbody');
-$footer								= $this->params->get('footer');
+$footer									= $this->params->get('footer');
 $headerfont							= $this->params->get('headerfont');
-$headerfontname						= $this->params->get('headerfontname');
+$headerfontname				= $this->params->get('headerfontname');
 $bodyfont							= $this->params->get('bodyfont');
-$bodyfontname						= $this->params->get('bodyfontname');
-$killjoomlajs						= $this->params->get('killjoomlajs');
+$bodyfontname					= $this->params->get('bodyfontname');
+$killjoomlajs							= $this->params->get('killjoomlajs');
 $killjoomlacss						= $this->params->get('killjoomlacss');
 $killgenerator						= $this->params->get('killgenerator');
 $copyright							= $this->params->get('copyright');
@@ -54,10 +54,10 @@ $copyrighttxt						= $this->params->get('copyrighttxt');
 $noconflict							= $this->params->get('noconflict');
 $jqmigrate							= $this->params->get('jqmigrate');
 $loadfavicons						= $this->params->get('loadfavicons');
-$codeafterhead						= $this->params->get('codeafterhead');
-$codebeforehead						= $this->params->get('codebeforehead');
-$codeafterbody						= $this->params->get('codeafterbody');
-$codebeforebody						= $this->params->get('codebeforebody');
+$codeafterhead					= $this->params->get('codeafterhead');
+$codebeforehead				= $this->params->get('codebeforehead');
+$codeafterbody					= $this->params->get('codeafterbody');
+$codebeforebody				= $this->params->get('codebeforebody');
 ?>
 
 <!DOCTYPE html>
@@ -131,7 +131,7 @@ $codebeforebody						= $this->params->get('codebeforebody');
    	 	
 		<?php 		// Load remote Bootstrap 4.3 CSS framework from CDN
 			if(($bootstrapcdn == null) && ($bootstrapsource == 1)) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 			<?php elseif(($bootstrapcdn == null) && ($bootstrapsource == 2)) : ?>
 				<?php echo $bootstrapcdn ?>
 			<?php else : ?>
@@ -371,12 +371,12 @@ $codebeforebody						= $this->params->get('codebeforebody');
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3)) : ?>
 			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js" integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 			
 			<?php 		// If CDN empty and load BS 4 remotely, but full jQuery 3 is loaded
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3) && ($jqlibrary == 2)) : ?>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js" integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<?php else : ?>
 		<?php endif; ?>
 				
