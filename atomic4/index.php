@@ -58,6 +58,7 @@ $codeafterhead					= $this->params->get('codeafterhead');
 $codebeforehead				= $this->params->get('codebeforehead');
 $codeafterbody					= $this->params->get('codeafterbody');
 $codebeforebody				= $this->params->get('codebeforebody');
+$cssoverride						= $this->params->get('cssoverride');
 ?>
 
 <!DOCTYPE html>
@@ -171,6 +172,11 @@ $codebeforebody				= $this->params->get('codebeforebody');
 		
 		<?php 		// Load the local CSS file for custom user CSS.
 			if($customcssfile == 1) : ?>
+			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css" />
+		<?php endif; ?>
+		
+		<?php 		// Load the local CSS file for custom user CSS. 
+			if($cssoverride == 1) : ?>
 			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css" />
 		<?php endif; ?>
 		

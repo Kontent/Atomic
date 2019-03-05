@@ -3,7 +3,7 @@
 <extension version="3.1" type="template" client="site" method="upgrade">
 	<name>atomic4</name>
 	<version>4.0</version>
-	<creationDate>11/27/18</creationDate>
+	<creationDate>02/28/19</creationDate>
 	<author>Ron Severdia</author>
 	<authorEmail>severdia@gmail.com</authorEmail>
 	<authorUrl>https://www.severdia.com</authorUrl>
@@ -16,6 +16,8 @@
 		<folder>fonts</folder>
 		<folder>images</folder>
 		<folder>language</folder>
+		<folder>ajax</folder>
+		<folder>fields</folder>
 		<folder>js</folder>
 		<folder>favicons</folder>
 		<filename>index.php</filename>
@@ -82,6 +84,16 @@
 				<option value="0">TPL_ATOMIC4_NO</option>
 				<option value="1">TPL_ATOMIC4_YES</option>
 			</field>
+
+            <field name="cssoverride" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC4_CSSOVERRIDE_LABEL" description="TPL_ATOMIC4_CSSOVERRIDE_DESC" filter="integer">
+				<option value="1">TPL_ATOMIC4_ENABLED</option>
+				<option value="0">TPL_ATOMIC4_DISABLED</option>
+			</field>
+
+		<fieldset addfieldpath="/templates/atomic4/fields">
+				<field name="" type="button" class="btn" showon="cssoverride:1"></field>
+		</fieldset>
+
 			<field name="customcsscode" type="textarea" default="" label="TPL_ATOMIC4_CUSTOMCSS_LABEL" description="TPL_ATOMIC4_CUSTOMCSS_DESC" rows="8" columns="40" filter="raw" />
 			<field name="killjoomlacss" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC4_KILLJOOMLACSS_LABEL" description="TPL_ATOMIC4_KILLJOOMLACSS_DESC">
 				<option value="0">TPL_ATOMIC4_NO</option>
