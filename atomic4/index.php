@@ -403,5 +403,11 @@ $cssoverride						= $this->params->get('cssoverride');
 			<?php echo $codebeforebody;
 		?>	
 		<?php endif; ?>
+		
+		<?php 		// Use Instant.page
+			if($instant == 1) : ?>
+			<script src="//instant.page/2.0.0" type="module" integrity="sha384-D7B5eODAUd397+f4zNFAVlnDNDtO1ppV8rPnfygILQXhqu3cUndgHvlcJR2Bhig8"></script>
+		<?php endif; ?>
+		
 	</body>
 </html>
