@@ -187,6 +187,15 @@ $cssoverride						= $this->params->get('cssoverride');
 			</style>
 		<?php endif; ?>
 		
+		<?php 		// Add any custom dark mode CSS from the configuration.
+			if($customcsscode != null) : ?>
+			<style>
+				@media(prefers-color-scheme:dark) {
+				<?php echo $customdarkcsscode ?>
+				}
+			</style>
+		<?php endif; ?>
+		
 		<?php 		// Load template favicons, loaded by default
 			if($loadfavicons == 1) : ?>
 				<link rel="apple-touch-icon" sizes="180x180" href="/templates/<?php echo $this->template ?>/favicons/apple-touch-icon.png">

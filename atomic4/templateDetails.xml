@@ -90,15 +90,19 @@
 				<option value="0">TPL_ATOMIC4_DISABLED</option>
 			</field>
 
-		<fieldset addfieldpath="/templates/atomic4/fields">
+			<fieldset addfieldpath="/templates/atomic4/fields">
 				<field name="" type="button" class="btn" showon="cssoverride:1"></field>
-		</fieldset>
+			</fieldset>
 
 			<field name="customcsscode" type="textarea" default="" label="TPL_ATOMIC4_CUSTOMCSS_LABEL" description="TPL_ATOMIC4_CUSTOMCSS_DESC" rows="8" columns="40" filter="raw" />
+			
+			<field name="customdarkcsscode" type="textarea" default="" label="TPL_ATOMIC4_CUSTOMDARKCSS_LABEL" description="TPL_ATOMIC4_CUSTOMDARKCSS_DESC" rows="8" columns="40" filter="raw" />
+			
 			<field name="killjoomlacss" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC4_KILLJOOMLACSS_LABEL" description="TPL_ATOMIC4_KILLJOOMLACSS_DESC">
 				<option value="0">TPL_ATOMIC4_NO</option>
 				<option value="1">TPL_ATOMIC4_YES</option>
 			</field>
+			
 		</fieldset>
 		
 		<fieldset name="JAVASCRIPT_SETTINGS">

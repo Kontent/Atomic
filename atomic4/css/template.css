@@ -1,2 +1,10 @@
 @charset "UTF-8";
 /* Add your custom CSS here. */
+
+
+
+/* Native dark mode - Add customizations here for dark mode if browser supports it */
+@media(prefers-color-scheme:dark) {
+
+
+}
