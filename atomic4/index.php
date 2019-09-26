@@ -336,8 +336,8 @@ $cssoverride						= $this->params->get('cssoverride');
 			</div>
 		
 			<?php if($footer == 1) : ?>
-			<div class="row">
-				<footer>
+			<footer class="container">
+				<div class="row">
 					<jdoc:include type="modules" name="footer" style="none" />
 					<hr />
 					<small>
@@ -347,8 +347,8 @@ $cssoverride						= $this->params->get('cssoverride');
 						&copy;<?php echo date('Y'); ?> <?php echo htmlspecialchars($app->getCfg('sitename')); ?>
 						<?php endif; ?>
 					</small>
-				</footer>
-			</div>
+				</div>
+			</footer>
 			<?php endif; ?>
 		</div>
 		
