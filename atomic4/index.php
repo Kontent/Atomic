@@ -93,7 +93,7 @@ $cssoverride						= $this->params->get('cssoverride');
 					unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-migrate.min.js']);
 			?>
 			<?php elseif($jqmigrate = 1) : ?>
-				<script defer src="https://code.jquery.com/jquery-migrate-3.0.1.min.js" crossorigin="anonymous"></script>
+				<script defer src="https://code.jquery.com/jquery-migrate-3.1.0.min.js" crossorigin="anonymous"></script>
 		<?php endif; ?>
 		
 		<?php		// Use Joomla's jQuery 1.12.4 unless configured otherwise - Disabled for now
@@ -143,12 +143,12 @@ $cssoverride						= $this->params->get('cssoverride');
 				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_bs4.css" type="text/css" />
 		<?php endif; ?>
 		
-		<?php 		// Load FontAwesome 5.7
+		<?php 		// Load FontAwesome 5.11.2
 			if($fontawesome == 1) : ?>
-			<script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script>
+			<script defer src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" integrity="sha384-b3ua1l97aVGAPEIe48b4TC60WUQbQaGi2jqAWM90y0OZXZeyaTCWtBTKtjW2GXG1" crossorigin="anonymous"></script>
 			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css" />
 		<?php elseif($fontawesome == 2) : ?>
-			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
 			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css" />
 		<?php endif; ?>
 						
