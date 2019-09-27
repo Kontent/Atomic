@@ -232,7 +232,7 @@ $cssoverride						= $this->params->get('cssoverride');
 		<body>
 	<?php endif; ?>
 	
-	<?php	// Add custom code after opening body tag
+	<?php		// Add custom code after opening body tag
 		if($codeafterbody != null) : ?>
 		<?php echo $codeafterbody;
 	?>	
@@ -285,7 +285,7 @@ $cssoverride						= $this->params->get('cssoverride');
 				<div class="col-md-2 leftbody">
 					<jdoc:include type="modules" name="leftbody" />
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-8 mainbody">
 					<jdoc:include type="message" />
 					<?php if($abovebody == 1) : ?>
 					<jdoc:include type="modules" name="abovebody" />
@@ -300,7 +300,7 @@ $cssoverride						= $this->params->get('cssoverride');
 				</div>
 			
 				<?php elseif(($leftbody == 0) && ($rightbody == 1)) : ?>
-				<div class="col-md-9">
+				<div class="col-md-9 mainbody">
 					<jdoc:include type="message" />
 					<?php if($abovebody == 1) : ?>
 					<jdoc:include type="modules" name="abovebody" />
@@ -318,7 +318,7 @@ $cssoverride						= $this->params->get('cssoverride');
 				<div class="col-md-3 leftbody">
 					<jdoc:include type="modules" name="leftbody"  />
 				</div>
-				<div class="col-md-9">
+				<div class="col-md-9 mainbody">
 					<jdoc:include type="message" />
 					<?php if($abovebody == 1) : ?>
 					<jdoc:include type="modules" name="abovebody" />
@@ -330,7 +330,7 @@ $cssoverride						= $this->params->get('cssoverride');
 				</div>
 			
 				<?php else : ?>
-				<div class="col-md-12">
+				<div class="col-md-12 mainbody">
 					<jdoc:include type="message" />
 					<?php if($abovebody == 1) : ?>
 					<jdoc:include type="modules" name="abovebody" />
@@ -341,7 +341,6 @@ $cssoverride						= $this->params->get('cssoverride');
 					<?php endif; ?>
 				</div>
 				<?php endif; ?>
-							
 			</div>
 		
 			<?php if($footer == 1) : ?>

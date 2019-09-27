@@ -167,7 +167,7 @@
 		</fieldset>
 		
 		<fieldset name="MODULE_SETTINGS">
-			<field name="pageheader" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_PAGEHEADER_LABEL" description="TPL_ATOMIC4_PAGEHEADER_DESC">
+			<field name="pageheader" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC4_PAGEHEADER_LABEL" description="TPL_ATOMIC4_PAGEHEADER_DESC">
 				<option value="0">TPL_ATOMIC4_NO</option>
 				<option value="1">TPL_ATOMIC4_YES</option>
 			</field>
