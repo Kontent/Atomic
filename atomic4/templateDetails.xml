@@ -31,6 +31,7 @@
 
 	<positions>
 		<position>navigation</position>
+		<position>pageheader</position>
 		<position>menu</position>
 		<position>search</position>
 		<position>leftbody</position>
@@ -167,37 +168,41 @@
 		</fieldset>
 		
 		<fieldset name="MODULE_SETTINGS">
-			<field name="pageheader" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC4_PAGEHEADER_LABEL" description="TPL_ATOMIC4_PAGEHEADER_DESC">
-				<option value="0">TPL_ATOMIC4_NO</option>
-				<option value="1">TPL_ATOMIC4_YES</option>
+			<field name="pageheader" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_PAGEHEADER_LABEL" description="TPL_ATOMIC4_PAGEHEADER_DESC">
+				<option value="0">TPL_ATOMIC4_DISABLED</option>
+				<option value="1">TPL_ATOMIC4_ENABLED</option>
+			</field>
+			<field name="pageheadermod" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_PAGEHEADERMOD_LABEL" description="TPL_ATOMIC4_PAGEHEADERMOD_DESC">
+				<option value="0">TPL_ATOMIC4_DISABLED</option>
+				<option value="1">TPL_ATOMIC4_ENABLED</option>
 			</field>
 			<field name="topmenu" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_TOPMENU_LABEL" description="TPL_ATOMIC4_TOPMENU_DESC">
-				<option value="0">TPL_ATOMIC4_NO</option>
-				<option value="1">TPL_ATOMIC4_YES</option>
+				<option value="0">TPL_ATOMIC4_DISABLED</option>
+				<option value="1">TPL_ATOMIC4_ENABLED</option>
 			</field>
 			<field name="abovebody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_ABOVEBODY_LABEL" description="TPL_ATOMIC4_ABOVEBODY_DESC">
-				<option value="0">TPL_ATOMIC4_NO</option>
-				<option value="1">TPL_ATOMIC4_YES</option>
+				<option value="0">TPL_ATOMIC4_DISABLED</option>
+				<option value="1">TPL_ATOMIC4_ENABLED</option>
 			</field>
 			<field name="leftbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_LEFTBODY_LABEL" description="TPL_ATOMIC4_LEFTBODY_DESC">
-				<option value="0">TPL_ATOMIC4_NO</option>
-				<option value="1">TPL_ATOMIC4_YES</option>
+				<option value="0">TPL_ATOMIC4_DISABLED</option>
+				<option value="1">TPL_ATOMIC4_ENABLED</option>
 			</field>
 			<field name="rightbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_RIGHTBODY_LABEL" description="TPL_ATOMIC4_RIGHTBODY_DESC">
-				<option value="0">TPL_ATOMIC4_NO</option>
-				<option value="1">TPL_ATOMIC4_YES</option>
+				<option value="0">TPL_ATOMIC4_DISABLED</option>
+				<option value="1">TPL_ATOMIC4_ENABLED</option>
 			</field>
 			<field name="belowbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_BELOWBODY_LABEL" description="TPL_ATOMIC4_BELOWBODY_DESC">
-				<option value="0">TPL_ATOMIC4_NO</option>
-				<option value="1">TPL_ATOMIC4_YES</option>
+				<option value="0">TPL_ATOMIC4_DISABLED</option>
+				<option value="1">TPL_ATOMIC4_ENABLED</option>
 			</field>
 			<field name="footer" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_FOOTER_LABEL" description="TPL_ATOMIC4_FOOTER_DESC">
-				<option value="0">TPL_ATOMIC4_NO</option>
-				<option value="1">TPL_ATOMIC4_YES</option>
+				<option value="0">TPL_ATOMIC4_DISABLED</option>
+				<option value="1">TPL_ATOMIC4_ENABLED</option>
 			</field>
 			<field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_COPYRIGHT_LABEL" description="TPL_ATOMIC4_COPYRIGHT_DESC">
-				<option value="0">TPL_ATOMIC4_NO</option>
-				<option value="1">TPL_ATOMIC4_YES</option>
+				<option value="0">TPL_ATOMIC4_DISABLED</option>
+				<option value="1">TPL_ATOMIC4_ENABLED</option>
 			</field>
 			<field name="copyrighttxt" type="text" default="" label="TPL_ATOMIC4_COPYRIGHTTXT_LABEL" description="TPL_ATOMIC4_COPYRIGHTTXT_DESC" filter="string" />
 		</fieldset>

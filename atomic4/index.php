@@ -36,6 +36,7 @@ $jquerycdn							= $this->params->get('jquerycdn');
 $bsfixjoomla						= $this->params->get('bsfixjoomla');
 $gacode								= $this->params->get('gacode');
 $pageheader						= $this->params->get('pageheader');
+$pageheadermod				= $this->params->get('pageheadermod');
 $topmenu							= $this->params->get('topmenu');
 $abovebody							= $this->params->get('abovebody');
 $leftbody								= $this->params->get('leftbody');
@@ -130,9 +131,9 @@ $cssoverride						= $this->params->get('cssoverride');
 			<?php $this->setGenerator(null); ?>
 		<?php endif; ?>
    	 	
-		<?php 		// Load remote Bootstrap 4.3 CSS framework from CDN
+		<?php 		// Load remote Bootstrap 4.5 CSS framework from CDN
 			if(($bootstrapcdn == null) && ($bootstrapsource == 1)) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 			<?php elseif(($bootstrapcdn == null) && ($bootstrapsource == 2)) : ?>
 				<?php echo $bootstrapcdn ?>
 			<?php else : ?>
@@ -143,12 +144,12 @@ $cssoverride						= $this->params->get('cssoverride');
 				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_bs4.css" type="text/css" />
 		<?php endif; ?>
 		
-		<?php 		// Load FontAwesome 5.11.2
+		<?php 		// Load FontAwesome 5.13.1
 			if($fontawesome == 1) : ?>
-			<script defer src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" integrity="sha384-b3ua1l97aVGAPEIe48b4TC60WUQbQaGi2jqAWM90y0OZXZeyaTCWtBTKtjW2GXG1" crossorigin="anonymous"></script>
+			<script defer src="https://use.fontawesome.com/releases/v5.13.1/js/all.js" integrity="sha384-b3ua1l97aVGAPEIe48b4TC60WUQbQaGi2jqAWM90y0OZXZeyaTCWtBTKtjW2GXG1" crossorigin="anonymous"></script>
 			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css" />
 		<?php elseif($fontawesome == 2) : ?>
-			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
 			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css" />
 		<?php endif; ?>
 						
@@ -245,9 +246,12 @@ $cssoverride						= $this->params->get('cssoverride');
 		<div class="container">
 	<?php endif; ?>
 	
-		<?php if($pageheader == 1) : ?>
+		
+		<?php if(($pageheader == 1) || ($pageheadermod == 1)) : ?>	
 			<div class="row">
 				<div class="page-header">
+				
+				<?php if($pageheader == 1) : ?>
 					<h1>
 						<?php if ($logo) : ?>
 							<span id="logo">
@@ -256,7 +260,15 @@ $cssoverride						= $this->params->get('cssoverride');
 						<?php endif;?>
 						<?php if($sitetitle != null) : ?><?php echo $sitetitle	; ?><?php endif; ?></h1>
 						<?php if($sitedescription != null) : ?><p><small><?php echo $sitedescription; ?></small></p><?php endif; ?>
+				<?php endif; ?>
+						
+				<?php if($pageheadermod == 1) : ?>
+					<jdoc:include type="modules" name="pageheader" />
+					<!-- RocketTheme Module Positions: Update in modules when going live and remove this -->
+					<jdoc:include type="modules" name="top-a" />
+				<?php endif; ?>
 				</div>
+				
 				<?php if ($this->countModules('menu')) : ?>
 				<div class="headermenu">
 					<jdoc:include type="modules" name="menu" />
@@ -282,10 +294,10 @@ $cssoverride						= $this->params->get('cssoverride');
 		
 			<div class="row">
 				<?php if(($leftbody == 1) && ($rightbody == 1)) : ?>	
-				<div class="col-md-2 leftbody">
+				<div class="col-md-2 p-2 leftbody">
 					<jdoc:include type="modules" name="leftbody" />
 				</div>
-				<div class="col-md-8 mainbody">
+				<div class="col-12 col-md-7 p-5 mainbody">
 					<jdoc:include type="message" />
 					<?php if($abovebody == 1) : ?>
 					<jdoc:include type="modules" name="abovebody" />
@@ -295,7 +307,7 @@ $cssoverride						= $this->params->get('cssoverride');
 					<jdoc:include type="modules" name="belowbody" />
 					<?php endif; ?>
 				</div>
-				<div class="col-md-2 rightbody">
+				<div class="col-md-3 p-3 rightbody">
 					<jdoc:include type="modules" name="rightbody" />
 				</div>
 			
@@ -366,7 +378,7 @@ $cssoverride						= $this->params->get('cssoverride');
 		<?php if (($jquerycdn == null) && ($jqlibrary == 1)) : ?>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 		<?php elseif (($jquerycdn == null) && ($jqlibrary == 2)) : ?>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<?php else : ?>
 			<?php echo $jquerycdn ?>
 		<?php endif; ?>		
@@ -383,14 +395,14 @@ $cssoverride						= $this->params->get('cssoverride');
 			
 			<?php 		// If CDN empty and load BS 4 remotely
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3)) : ?>
-			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+			<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 			
 			<?php 		// If CDN empty and load BS 4 remotely, but full jQuery 3 is loaded
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3) && ($jqlibrary == 2)) : ?>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 		<?php else : ?>
 		<?php endif; ?>
 				
@@ -414,7 +426,7 @@ $cssoverride						= $this->params->get('cssoverride');
 		
 		<?php 		// Use Instant.page
 			if($instant == 1) : ?>
-			<script src="//instant.page/2.0.0" type="module" integrity="sha384-D7B5eODAUd397+f4zNFAVlnDNDtO1ppV8rPnfygILQXhqu3cUndgHvlcJR2Bhig8"></script>
+			<script src="//instant.page/5.1.0" type="module" integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
 		<?php endif; ?>
 		
 	</body>
