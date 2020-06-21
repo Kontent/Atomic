@@ -264,8 +264,6 @@ $cssoverride						= $this->params->get('cssoverride');
 						
 				<?php if($pageheadermod == 1) : ?>
 					<jdoc:include type="modules" name="pageheader" />
-					<!-- RocketTheme Module Positions: Update in modules when going live and remove this -->
-					<jdoc:include type="modules" name="top-a" />
 				<?php endif; ?>
 				</div>
 				
