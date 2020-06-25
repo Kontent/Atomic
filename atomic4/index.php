@@ -63,7 +63,6 @@ $codeafterbody					= $this->params->get('codeafterbody');
 $codebeforebody				= $this->params->get('codebeforebody');
 $cssoverride						= $this->params->get('cssoverride');
 ?>
-
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 	<head>
@@ -143,16 +142,16 @@ $cssoverride						= $this->params->get('cssoverride');
 		
 		<?php 		// Load the local CSS fixes for Joomla & Bootstrap 4.
 			if($bsfixjoomla == 1) : ?>
-				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_bs4.css" type="text/css" />
+				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_bs4.css" type="text/css">
 		<?php endif; ?>
 		
 		<?php 		// Load FontAwesome 5.13.1
 			if($fontawesome == 1) : ?>
 			<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
-			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css" />
+			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css">
 		<?php elseif($fontawesome == 2) : ?>
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
-			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css" />
+			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css">
 		<?php endif; ?>
 						
 		<?php		/* Load Google Fonts  */		?>
@@ -170,17 +169,17 @@ $cssoverride						= $this->params->get('cssoverride');
 		
 		<?php 		// Load the RTL CSS file.
 			if($this->direction == 'rtl') : ?>
-			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_rtl.css" type="text/css" />
+			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_rtl.css" type="text/css">
 		<?php endif; ?>
 		
 		<?php 		// Load the local CSS file for custom user CSS.
 			if($customcssfile == 1) : ?>
-			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css" />
+			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css">
 		<?php endif; ?>
 		
 		<?php 		// Load the local CSS file for custom user CSS. 
 			if($cssoverride == 1) : ?>
-			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css" />
+			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css">
 		<?php endif; ?>
 		
 		<?php 		// Add any custom user CSS from the configuration.
@@ -213,15 +212,15 @@ $cssoverride						= $this->params->get('cssoverride');
 		<?php endif; ?>
 		<?php 		// Load Apple/Android precomposed icons
 			if($loadappleicons == 1) : ?>
-				<link rel="icon" sizes="192x192" href="touch-icon-192x192.png" /><!-- Android -->
-				<link rel="apple-touch-icon-precomposed" sizes="180x180" href="<?php echo $this->baseurl ?>apple-touch-icon-180x180-precomposed.png" />
-				<link rel="apple-touch-icon-precomposed" sizes="152x152" href="<?php echo $this->baseurl ?>apple-touch-icon-152x152-precomposed.png" />
-				<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo $this->baseurl ?>apple-touch-icon-144x144-precomposed.png" />
-				<link rel="apple-touch-icon-precomposed" sizes="120x120" href="<?php echo $this->baseurl ?>apple-touch-icon-120x120-precomposed.png" />
-				<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo $this->baseurl ?>apple-touch-icon-114x114-precomposed.png" />
-				<link rel="apple-touch-icon-precomposed" sizes="76x76" href="<?php echo $this->baseurl ?>apple-touch-icon-76x76-precomposed.png" />
-				<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo $this->baseurl ?>apple-touch-icon-72x72-precomposed.png" />
-				<link rel="apple-touch-icon-precomposed" href="<?php echo $this->baseurl ?>apple-touch-icon-precomposed.png" /><!-- 57×57px -->
+				<link rel="icon" sizes="192x192" href="touch-icon-192x192.png" ><!-- Android -->
+				<link rel="apple-touch-icon-precomposed" sizes="180x180" href="<?php echo $this->baseurl ?>apple-touch-icon-180x180-precomposed.png">
+				<link rel="apple-touch-icon-precomposed" sizes="152x152" href="<?php echo $this->baseurl ?>apple-touch-icon-152x152-precomposed.png">
+				<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo $this->baseurl ?>apple-touch-icon-144x144-precomposed.png">
+				<link rel="apple-touch-icon-precomposed" sizes="120x120" href="<?php echo $this->baseurl ?>apple-touch-icon-120x120-precomposed.png">
+				<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo $this->baseurl ?>apple-touch-icon-114x114-precomposed.png">
+				<link rel="apple-touch-icon-precomposed" sizes="76x76" href="<?php echo $this->baseurl ?>apple-touch-icon-76x76-precomposed.png">
+				<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo $this->baseurl ?>apple-touch-icon-72x72-precomposed.png">
+				<link rel="apple-touch-icon-precomposed" href="<?php echo $this->baseurl ?>apple-touch-icon-precomposed.png"><!-- 57×57px -->
 		<?php endif; ?>
 		
 		<?php 		// Load custom local user JavaScript
