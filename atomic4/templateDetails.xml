@@ -39,6 +39,7 @@
 		<position>belowbody</position>
 		<position>rightbody</position>
 		<position>footer</position>
+		<position>alertbar</position>
 	</positions>
 
 	<languages folder="language">
@@ -200,6 +201,11 @@
 				<option value="0">TPL_ATOMIC4_DISABLED</option>
 				<option value="1">TPL_ATOMIC4_ENABLED</option>
 			</field>
+			<field name="alertbar" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_ALERTBAR_LABEL" description="TPL_ATOMIC4_ALERTBAR_DESC">
+				<option value="0">TPL_ATOMIC4_DISABLED</option>
+				<option value="1">TPL_ATOMIC4_ENABLED</option>
+			</field>
+			
 			<field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_COPYRIGHT_LABEL" description="TPL_ATOMIC4_COPYRIGHT_DESC">
 				<option value="0">TPL_ATOMIC4_DISABLED</option>
 				<option value="1">TPL_ATOMIC4_ENABLED</option>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package		Joomla.Site
- * @copyright	Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2020Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -31,64 +31,18 @@ function modChrome_default($module, &$params, &$attribs)
 {
 	if (!empty ($module->content)) : ?>
 		<?php if ($module->showtitle) : ?>
-			<h6><?php echo $module->title; ?></h6>
+			<h4><?php echo $module->title; ?></h4>
 		<?php endif; ?>
 		<?php echo $module->content; ?>
 	<?php endif;
 }
 
-function modChrome_container($module, &$params, &$attribs)
+function modChrome_basic($module, &$params, &$attribs)
 {
 	if (!empty ($module->content)) : ?>
-		<div class="container">
-			<?php echo $module->content; ?>
-		</div>
-	<?php endif;
-}
-function modChrome_bottommodule($module, &$params, &$attribs)
-{
-	if (!empty ($module->content)) : ?>
-		<?php if ($module->showtitle) : ?>
-			<h6><?php echo $module->title; ?></h6>
-		<?php endif; ?>
 		<?php echo $module->content; ?>
 	<?php endif;
 }
-function modChrome_sidebar($module, &$params, &$attribs)
-{
-	if (!empty ($module->content)) : ?>
-		<?php if ($module->showtitle) : ?>
-			<h3><?php echo $module->title; ?></h3>
-		<?php endif; ?>
-		<?php echo $module->content; ?>
-	<?php endif;
-}
-function modChrome_no($module, &$params, &$attribs)
-{
-	if ($module->content)
-	{
-		echo $module->content;
-	}
-}
 
-function modChrome_well($module, &$params, &$attribs)
-{
-	$moduleTag     = $params->get('module_tag', 'div');
-	$bootstrapSize = (int) $params->get('bootstrap_size', 0);
-	$moduleClass   = $bootstrapSize != 0 ? ' span' . $bootstrapSize : '';
-	$headerTag     = htmlspecialchars($params->get('header_tag', 'h3'), ENT_COMPAT, 'UTF-8');
-	$headerClass   = htmlspecialchars($params->get('header_class', 'page-header'), ENT_COMPAT, 'UTF-8');
 
-	if ($module->content)
-	{
-		echo '<' . $moduleTag . ' class="well ' . htmlspecialchars($params->get('moduleclass_sfx'), ENT_COMPAT, 'UTF-8') . $moduleClass . '">';
 
-			if ($module->showtitle)
-			{
-				echo '<' . $headerTag . ' class="' . $headerClass . '">' . $module->title . '</' . $headerTag . '>';
-			}
-
-			echo $module->content;
-		echo '</' . $moduleTag . '>';
-	}
-}

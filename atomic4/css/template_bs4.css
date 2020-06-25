@@ -163,9 +163,6 @@ ul.pager.pagenav li {
 	list-style-type: none;
 	display: inline-block;
 }
-ul.pager.pagenav li.previous {
-	
-}
 ul.pager.pagenav li.next {
 	float: right;
 }
@@ -174,6 +171,24 @@ ul.pager.pagenav li.next {
 }
 .icon-chevron-right::after {
 	content: " »";
+}
+.pagination {
+	margin-top: 40px;
+	display: block;
+	text-align: center;
+}
+.pagination p.counter {
+	float: none;
+	font-size: 90%;
+	text-align: center;
+	margin-bottom: 5px;
+}
+.pagination li {
+	display: inline-block;
+	padding: 0 5px;
+}
+.pagination span.pagenav {
+	font-weight: bold;
 }
 
 /* Search */

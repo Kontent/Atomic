@@ -43,6 +43,7 @@ $leftbody								= $this->params->get('leftbody');
 $rightbody							= $this->params->get('rightbody');
 $belowbody							= $this->params->get('belowbody');
 $footer									= $this->params->get('footer');
+$alertbar								= $this->params->get('alertbar');
 $headerfont							= $this->params->get('headerfont');
 $headerfontname				= $this->params->get('headerfontname');
 $bodyfont							= $this->params->get('bodyfont');
@@ -245,7 +246,6 @@ $cssoverride						= $this->params->get('cssoverride');
 	<?php else : ?>
 		<div class="container">
 	<?php endif; ?>
-	
 		
 		<?php if(($pageheader == 1) || ($pageheadermod == 1)) : ?>	
 			<div class="row">
@@ -292,10 +292,10 @@ $cssoverride						= $this->params->get('cssoverride');
 		
 			<div class="row">
 				<?php if(($leftbody == 1) && ($rightbody == 1)) : ?>	
-				<div class="col-md-2 p-2 leftbody">
+				<div class="col-md-2 leftbody">
 					<jdoc:include type="modules" name="leftbody" />
 				</div>
-				<div class="col-12 col-md-7 p-5 mainbody">
+				<div class="col-12 col-md-7 mainbody">
 					<jdoc:include type="message" />
 					<?php if($abovebody == 1) : ?>
 					<jdoc:include type="modules" name="abovebody" />
@@ -305,7 +305,7 @@ $cssoverride						= $this->params->get('cssoverride');
 					<jdoc:include type="modules" name="belowbody" />
 					<?php endif; ?>
 				</div>
-				<div class="col-md-3 p-3 rightbody">
+				<div class="col-md-3 rightbody">
 					<jdoc:include type="modules" name="rightbody" />
 				</div>
 			
@@ -369,6 +369,14 @@ $cssoverride						= $this->params->get('cssoverride');
 			</footer>
 			<?php endif; ?>
 		</div>
+		
+		<?php if ($this->countModules( 'alertbar' )) : ?>
+		<?php if($alertbar == 1) : ?>
+		<div id="alertbar">
+				<jdoc:include type="modules" name="alertbar" style="none" />
+		</div>
+		<?php endif; ?>
+		<?php endif; ?>
 		
 		<jdoc:include type="modules" name="debug" style="none" />
 		
