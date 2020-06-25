@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2019 Ron Severdia. All rights reserved.
+ * @copyright	Copyright (C) 2020 Ron Severdia. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -36,12 +36,14 @@ $jquerycdn							= $this->params->get('jquerycdn');
 $bsfixjoomla						= $this->params->get('bsfixjoomla');
 $gacode								= $this->params->get('gacode');
 $pageheader						= $this->params->get('pageheader');
+$pageheadermod				= $this->params->get('pageheadermod');
 $topmenu							= $this->params->get('topmenu');
 $abovebody							= $this->params->get('abovebody');
 $leftbody								= $this->params->get('leftbody');
 $rightbody							= $this->params->get('rightbody');
 $belowbody							= $this->params->get('belowbody');
 $footer									= $this->params->get('footer');
+$alertbar								= $this->params->get('alertbar');
 $headerfont							= $this->params->get('headerfont');
 $headerfontname				= $this->params->get('headerfontname');
 $bodyfont							= $this->params->get('bodyfont');
@@ -93,7 +95,7 @@ $cssoverride						= $this->params->get('cssoverride');
 					unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-migrate.min.js']);
 			?>
 			<?php elseif($jqmigrate = 1) : ?>
-				<script defer src="https://code.jquery.com/jquery-migrate-3.0.1.min.js" crossorigin="anonymous"></script>
+				<script defer src="https://code.jquery.com/jquery-migrate-3.1.0.min.js" crossorigin="anonymous"></script>
 		<?php endif; ?>
 		
 		<?php		// Use Joomla's jQuery 1.12.4 unless configured otherwise - Disabled for now
@@ -130,9 +132,9 @@ $cssoverride						= $this->params->get('cssoverride');
 			<?php $this->setGenerator(null); ?>
 		<?php endif; ?>
    	 	
-		<?php 		// Load remote Bootstrap 4.2.1 CSS framework from CDN
+		<?php 		// Load remote Bootstrap 4.5 CSS framework from CDN
 			if(($bootstrapcdn == null) && ($bootstrapsource == 1)) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 			<?php elseif(($bootstrapcdn == null) && ($bootstrapsource == 2)) : ?>
 				<?php echo $bootstrapcdn ?>
 			<?php else : ?>
@@ -143,12 +145,12 @@ $cssoverride						= $this->params->get('cssoverride');
 				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_bs4.css" type="text/css" />
 		<?php endif; ?>
 		
-		<?php 		// Load FontAwesome 5.11.2
+		<?php 		// Load FontAwesome 5.13.1
 			if($fontawesome == 1) : ?>
-			<script defer src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" integrity="sha384-b3ua1l97aVGAPEIe48b4TC60WUQbQaGi2jqAWM90y0OZXZeyaTCWtBTKtjW2GXG1" crossorigin="anonymous"></script>
+			<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
 			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css" />
 		<?php elseif($fontawesome == 2) : ?>
-			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
 			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css" />
 		<?php endif; ?>
 						
@@ -250,7 +252,7 @@ $cssoverride						= $this->params->get('cssoverride');
 		<?php if (($jquerycdn == null) && ($jqlibrary == 1)) : ?>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 		<?php elseif (($jquerycdn == null) && ($jqlibrary == 2)) : ?>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<?php else : ?>
 			<?php echo $jquerycdn ?>
 		<?php endif; ?>		
@@ -267,14 +269,14 @@ $cssoverride						= $this->params->get('cssoverride');
 			
 			<?php 		// If CDN empty and load BS 4 remotely
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3)) : ?>
-			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+			<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 			
 			<?php 		// If CDN empty and load BS 4 remotely, but full jQuery 3 is loaded
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3) && ($jqlibrary == 2)) : ?>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 		<?php else : ?>
 		<?php endif; ?>
 				

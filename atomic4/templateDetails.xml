@@ -159,6 +159,11 @@
 				<option value="0">TPL_ATOMIC4_NO</option>
 				<option value="1">TPL_ATOMIC4_YES</option>
 			</field>
+			<field name="loadappleicons" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC4_LOADAPPLEICONS_LABEL" description="TPL_ATOMIC4_LOADAPPLEICONS_DESC">
+				<option value="0">TPL_ATOMIC4_NO</option>
+				<option value="1">TPL_ATOMIC4_YES</option>
+			</field>
+			
 			<field name="fontawesome" type="list" default="0" label="TPL_ATOMIC4_FONTAWESOME_LABEL" description="TPL_ATOMIC4_FONTAWESOME_DESC">
 				<option value="0">TPL_ATOMIC4_NONE</option>
 				<option value="1">TPL_ATOMIC4_FAREMOTEJS</option>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2019 Ron Severdia. All rights reserved.
+ * @copyright	Copyright (C) 2020 Ron Severdia. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -56,6 +56,7 @@ $copyrighttxt						= $this->params->get('copyrighttxt');
 $noconflict							= $this->params->get('noconflict');
 $jqmigrate							= $this->params->get('jqmigrate');
 $loadfavicons						= $this->params->get('loadfavicons');
+$loadappleicons					= $this->params->get('loadappleicons');
 $codeafterhead					= $this->params->get('codeafterhead');
 $codebeforehead				= $this->params->get('codebeforehead');
 $codeafterbody					= $this->params->get('codeafterbody');
@@ -209,6 +210,18 @@ $cssoverride						= $this->params->get('cssoverride');
 				<meta name="msapplication-TileColor" content="#da532c">
 				<meta name="msapplication-config" content="/templates/<?php echo $this->template ?>/favicons/browserconfig.xml">
 				<meta name="theme-color" content="#ffffff">
+		<?php endif; ?>
+		<?php 		// Load Apple/Android precomposed icons
+			if($loadappleicons == 1) : ?>
+				<link rel="icon" sizes="192x192" href="touch-icon-192x192.png" /><!-- Android -->
+				<link rel="apple-touch-icon-precomposed" sizes="180x180" href="<?php echo $this->baseurl ?>apple-touch-icon-180x180-precomposed.png" />
+				<link rel="apple-touch-icon-precomposed" sizes="152x152" href="<?php echo $this->baseurl ?>apple-touch-icon-152x152-precomposed.png" />
+				<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo $this->baseurl ?>apple-touch-icon-144x144-precomposed.png" />
+				<link rel="apple-touch-icon-precomposed" sizes="120x120" href="<?php echo $this->baseurl ?>apple-touch-icon-120x120-precomposed.png" />
+				<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo $this->baseurl ?>apple-touch-icon-114x114-precomposed.png" />
+				<link rel="apple-touch-icon-precomposed" sizes="76x76" href="<?php echo $this->baseurl ?>apple-touch-icon-76x76-precomposed.png" />
+				<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo $this->baseurl ?>apple-touch-icon-72x72-precomposed.png" />
+				<link rel="apple-touch-icon-precomposed" href="<?php echo $this->baseurl ?>apple-touch-icon-precomposed.png" /><!-- 57×57px -->
 		<?php endif; ?>
 		
 		<?php 		// Load custom local user JavaScript
