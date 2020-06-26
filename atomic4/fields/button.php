@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright	Copyright (C) 2020 Ron Severdia. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
 defined('_JEXEC') or die('Restricted access');
 jimport('joomla.form.formfield');
