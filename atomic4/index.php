@@ -6,7 +6,7 @@
 
 defined('_JEXEC') or die;
 
-//	Get the application object for things like displaying the site name 
+//	Get the application object for things like displaying the site name
 $app  = JFactory::getApplication();
 $user = JFactory::getUser();
 
@@ -62,6 +62,7 @@ $codebeforehead				= $this->params->get('codebeforehead');
 $codeafterbody					= $this->params->get('codeafterbody');
 $codebeforebody				= $this->params->get('codebeforebody');
 $cssoverride						= $this->params->get('cssoverride');
+$instant = $this->params->get('instant');
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
@@ -69,26 +70,26 @@ $cssoverride						= $this->params->get('cssoverride');
 		<?php		//	 Add custom code after opening head tag
 			if($codeafterhead != null) : ?>
 			<?php echo $codeafterhead;
-		?>	
+		?>
 		<?php endif; ?>
-			
+
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
    	 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    	 	<meta name="HandheldFriendly" content="true" />
 		<meta name="apple-mobile-web-app-capable" content="YES" />
-		
+
 		<?php		//	 Output as HTML5
 			$this->setHtml5(true);
 		?>
 		<jdoc:include type="head" />
-		
+
 		<?php		//	 Use jQuery noConflict()
 			if($noconflict == 0)  : ?>
 				<?php $doc = JFactory::getDocument();
 					unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-noconflict.js']);
 			?>
 		<?php endif; ?>
-		
+
 		<?php		//	 Use jQuery Migrate
 			if($jqmigrate >= 1) : ?>
 				<?php $doc = JFactory::getDocument();
@@ -97,14 +98,14 @@ $cssoverride						= $this->params->get('cssoverride');
 			<?php elseif($jqmigrate = 1) : ?>
 				<script defer src="https://code.jquery.com/jquery-migrate-3.1.0.min.js" crossorigin="anonymous"></script>
 		<?php endif; ?>
-		
+
 		<?php		//	 Use Joomla's jQuery 1.12.4 unless configured otherwise - Disabled for now
 				//		if($jqlibrary > 0)  : ?>
 				<?php //$doc = JFactory::getDocument();
 				//			unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
 			?>
 		<?php // endif; ?>
-		
+
 		<?php		//	 Remove Joomla head scripts (third-party scripts will still load)
 			if($killjoomlajs == 1) : ?>
 				<?php $doc = JFactory::getDocument();
@@ -113,14 +114,14 @@ $cssoverride						= $this->params->get('cssoverride');
 					unset($doc->_scripts[JURI::root(true) . '/media/modals/js/script.min.js']);
 					unset($doc->_scripts[JURI::root(true) . '/media/system/js/core.js']);
 					unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
-					if (isset($this->_script['text/javascript'])) { 
-						$this->_script['text/javascript'] = preg_replace('%window\.addEvent\    (\'load\',\s*function\(\)\s*{\s*new\s*JCaption\(\'img.caption\'\);\s*}\);\s*%',     '', $this->_script['text/javascript']);
+					if (isset($this->_script['text/javascript'])) {
+						$this->_script['text/javascript'] = preg_replace('/jQuery\(window\).on\(\'load\'\,  function\(\) \{(.*);/is', '', $this->_script['text/javascript']);
 						if (empty($this->_script['text/javascript']))
 							unset($this->_script['text/javascript']);
 						}
 			?>
 		<?php endif; ?>
-		
+
 		<?php 		//	 Remove Joomla CSS file (Modal styles)
 			if($killjoomlacss == 1) : ?>
 			<?php $doc = JFactory::getDocument();
@@ -131,7 +132,7 @@ $cssoverride						= $this->params->get('cssoverride');
 			if($killgenerator == 1) : ?>
 			<?php $this->setGenerator(null); ?>
 		<?php endif; ?>
-   	 	
+
 		<?php		//	 Load remote Bootstrap 4.5 CSS framework from CDN
 			if(($bootstrapcdn == null) && ($bootstrapsource == 1)) : ?>
 				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -139,12 +140,12 @@ $cssoverride						= $this->params->get('cssoverride');
 				<?php echo $bootstrapcdn ?>
 			<?php else : ?>
 		<?php endif; ?>
-		
+
 		<?php		//	 Load the local CSS fixes for Joomla & Bootstrap 4.
 			if($bsfixjoomla == 1) : ?>
 				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_bs4.css" type="text/css">
 		<?php endif; ?>
-		
+
 		<?php 		//	 Load FontAwesome 5.13.1
 			if($fontawesome == 1) : ?>
 			<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
@@ -153,7 +154,7 @@ $cssoverride						= $this->params->get('cssoverride');
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
 			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css">
 		<?php endif; ?>
-						
+
 		<?php		//	  Load Google Fonts 	?>
 		<?php if(($headerfont == 1) && ($bodyfont == 1) && ($headerfontname != null) && ($bodyfontname != null)) : ?>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=<?php echo $headerfontname; ?>|<?php echo $bodyfontname; ?>">
@@ -165,30 +166,30 @@ $cssoverride						= $this->params->get('cssoverride');
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=<?php echo $bodyfontname; ?>">
 			<style>body{font-family:'<?php echo $bodyfontname; ?>',serif;}</style>
 		<?php else : ?>
-		<?php endif; ?>		
-		
+		<?php endif; ?>
+
 		<?php 		//	 Load the RTL CSS file.
 			if($this->direction == 'rtl') : ?>
 			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_rtl.css" type="text/css">
 		<?php endif; ?>
-		
+
 		<?php		//	 Load the local CSS file for custom user CSS.
 			if($customcssfile == 1) : ?>
 			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css">
 		<?php endif; ?>
-		
-		<?php		//	 Load the local CSS file for custom user CSS. 
+
+		<?php		//	 Load the local CSS file for custom user CSS.
 			if($cssoverride == 1) : ?>
 			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css">
 		<?php endif; ?>
-		
+
 		<?php		//	 Add any custom user CSS from the configuration.
 			if($customcsscode != null) : ?>
 			<style>
 				<?php echo $customcsscode ?>
 			</style>
 		<?php endif; ?>
-		
+
 		<?php		//	 Add any custom dark mode CSS from the configuration.
 			if($customcsscode != null) : ?>
 			<style>
@@ -197,7 +198,7 @@ $cssoverride						= $this->params->get('cssoverride');
 				}
 			</style>
 		<?php endif; ?>
-		
+
 		<?php		//	 Load template favicons, loaded by default
 			if($loadfavicons == 1) : ?>
 				<link rel="apple-touch-icon" sizes="180x180" href="/templates/<?php echo $this->template ?>/favicons/apple-touch-icon.png">
@@ -222,19 +223,19 @@ $cssoverride						= $this->params->get('cssoverride');
 				<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo $this->baseurl ?>apple-touch-icon-72x72-precomposed.png">
 				<link rel="apple-touch-icon-precomposed" href="<?php echo $this->baseurl ?>apple-touch-icon-precomposed.png"><!-- 57×57px -->
 		<?php endif; ?>
-		
+
 		<?php		//	 Load custom local user JavaScript
 			if($customjs == 1) : ?>
 			<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
 		<?php endif; ?>
-		
+
 		<?php		//	 Add custom code before closing head tag
 			if($codebeforehead != null) : ?>
 			<?php echo $codebeforehead;
-		?>	
+		?>
 		<?php endif; ?>
 	</head>
-	
+
 	<?php		//	 Add the menu item alias to the body ID, class, or both	?>
 	<?php if($bodymenu == 1) : ?>
 		<body class="<?php echo $active->alias; ?> ">
@@ -245,11 +246,11 @@ $cssoverride						= $this->params->get('cssoverride');
 	<?php else : ?>
 		<body>
 	<?php endif; ?>
-	
+
 	<?php		//	 Add custom code after opening body tag
 		if($codeafterbody != null) : ?>
 		<?php echo $codeafterbody;
-	?>	
+	?>
 	<?php endif; ?>
 
 	<?php 		//	 Choose either a fixed or fluid width container
@@ -258,11 +259,11 @@ $cssoverride						= $this->params->get('cssoverride');
 	<?php else : ?>
 		<div class="container">
 	<?php endif; ?>
-		
-		<?php if(($pageheader == 1) || ($pageheadermod == 1)) : ?>	
+
+		<?php if(($pageheader == 1) || ($pageheadermod == 1)) : ?>
 			<div class="row">
 				<div class="page-header">
-				
+
 				<?php if($pageheader == 1) : ?>
 					<h1>
 						<?php if ($logo) : ?>
@@ -273,12 +274,12 @@ $cssoverride						= $this->params->get('cssoverride');
 						<?php if($sitetitle != null) : ?><?php echo $sitetitle	; ?><?php endif; ?></h1>
 						<?php if($sitedescription != null) : ?><p><small><?php echo $sitedescription; ?></small></p><?php endif; ?>
 				<?php endif; ?>
-						
+
 				<?php if($pageheadermod == 1) : ?>
 					<jdoc:include type="modules" name="pageheader" />
 				<?php endif; ?>
 				</div>
-				
+
 				<?php if ($this->countModules('menu')) : ?>
 				<div class="headermenu">
 					<jdoc:include type="modules" name="menu" />
@@ -286,7 +287,7 @@ $cssoverride						= $this->params->get('cssoverride');
 				<?php endif; ?>
 			</div>
 			<?php endif; ?>
-		
+
 			<?php if($topmenu == 1) : ?>
 			<div class="row">
 				<div class="col-md-9">
@@ -301,9 +302,9 @@ $cssoverride						= $this->params->get('cssoverride');
 				</div>
 			</div>
 			<?php endif; ?>
-		
+
 			<div class="row">
-				<?php if(($leftbody == 1) && ($rightbody == 1)) : ?>	
+				<?php if(($leftbody == 1) && ($rightbody == 1)) : ?>
 				<div class="col-md-2 leftbody">
 					<jdoc:include type="modules" name="leftbody" />
 				</div>
@@ -320,7 +321,7 @@ $cssoverride						= $this->params->get('cssoverride');
 				<div class="col-md-3 rightbody">
 					<jdoc:include type="modules" name="rightbody" />
 				</div>
-			
+
 				<?php elseif(($leftbody == 0) && ($rightbody == 1)) : ?>
 				<div class="col-md-9 mainbody">
 					<jdoc:include type="message" />
@@ -335,7 +336,7 @@ $cssoverride						= $this->params->get('cssoverride');
 				<div class="col-md-3 rightbody">
 					<jdoc:include type="modules" name="rightbody"  />
 				</div>
-		
+
 				<?php elseif(($leftbody == 1) && ($rightbody == 0)) : ?>
 				<div class="col-md-3 leftbody">
 					<jdoc:include type="modules" name="leftbody"  />
@@ -350,7 +351,7 @@ $cssoverride						= $this->params->get('cssoverride');
 					<jdoc:include type="modules" name="belowbody" />
 					<?php endif; ?>
 				</div>
-			
+
 				<?php else : ?>
 				<div class="col-md-12 mainbody">
 					<jdoc:include type="message" />
@@ -364,7 +365,7 @@ $cssoverride						= $this->params->get('cssoverride');
 				</div>
 				<?php endif; ?>
 			</div>
-		
+
 			<?php if($footer == 1) : ?>
 			<footer class="container">
 				<div class="row">
@@ -381,7 +382,7 @@ $cssoverride						= $this->params->get('cssoverride');
 			</footer>
 			<?php endif; ?>
 		</div>
-		
+
 		<?php if ($this->countModules( 'alertbar' )) : ?>
 		<?php if($alertbar == 1) : ?>
 		<div id="alertbar">
@@ -389,9 +390,9 @@ $cssoverride						= $this->params->get('cssoverride');
 		</div>
 		<?php endif; ?>
 		<?php endif; ?>
-		
+
 		<jdoc:include type="modules" name="debug" style="none" />
-		
+
 		<?php		//	  Load jQuery 2 or 3 remotely	?>
 		<?php if (($jquerycdn == null) && ($jqlibrary == 1)) : ?>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -399,31 +400,31 @@ $cssoverride						= $this->params->get('cssoverride');
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<?php else : ?>
 			<?php echo $jquerycdn ?>
-		<?php endif; ?>		
+		<?php endif; ?>
 
 		<?php		//	 Use jQuery Migrate 3.0.1
 			if($jqmigrate == 1)  : ?>
 				<script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js" crossorigin="anonymous"></script>
 		<?php endif; ?>
-		
+
 		<?php 		//	 Load the local or remote Bootstrap 3 or 4 JavaScript dependency
-			 			//	 If CDN empty and load BS 3 remotely	
+			 			//	 If CDN empty and load BS 3 remotely
 			if(($bootstrapcdn == null) && ($bootstrapsource == 1)) : ?>
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-			
+
 			<?php 		//	 If CDN empty and load BS 4 remotely
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3)) : ?>
 			<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-			
+
 			<?php 		//	 If CDN empty and load BS 4 remotely, but full jQuery 3 is loaded
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3) && ($jqlibrary == 2)) : ?>
 			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 		<?php else : ?>
 		<?php endif; ?>
-				
+
 		<?php 		//	 Add Google Analytics tag if configured.
 			if($gacode != null) : ?>
 		<script>
@@ -435,17 +436,17 @@ $cssoverride						= $this->params->get('cssoverride');
 			  ga('send', 'pageview');
 		</script>
 		<?php endif; ?>
-		
+
 		<?php		//	 Add custom code before closing body tag
 			if($codebeforebody != null) : ?>
 			<?php echo $codebeforebody;
-		?>	
+		?>
 		<?php endif; ?>
-		
+
 		<?php		//	 Use Instant.page
 			if($instant == 1) : ?>
 			<script src="//instant.page/5.1.0" type="module" integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
 		<?php endif; ?>
-		
+
 	</body>
 </html>
