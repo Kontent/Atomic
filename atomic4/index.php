@@ -81,6 +81,39 @@ $cssoverride						= $this->params->get('cssoverride');
 			$this->setHtml5(true);
 		?>
 		
+		<?php		//	  Load jQuery 2 or 3 remotely	?>
+		<?php if (($jquerycdn == null) && ($jqlibrary == 1)) : ?>
+			<?php $doc = JFactory::getDocument();
+							unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']); ?>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		<?php elseif (($jquerycdn == null) && ($jqlibrary == 2)) : ?>
+			<?php $doc = JFactory::getDocument();
+							unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']); ?>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<?php elseif (($jquerycdn == null) && ($jqlibrary == 3)) : ?>
+			<?php $doc = JFactory::getDocument();
+							unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']); ?>
+		<?php else : ?>
+				<?php echo $jquerycdn ?>
+		<?php endif; ?>		
+		
+		<jdoc:include type="head" />
+		
+		<?php		//	 Remove Joomla head scripts (third-party scripts will still load)
+			if($killjoomlajs == 1) : ?>
+				<?php $doc = JFactory::getDocument();
+					unset($doc->_scripts[JURI::root(true) . '/media/system/js/caption.js']);
+					unset($doc->_scripts[JURI::root(true) . '/media/modals/js/script.min.js']);
+					unset($doc->_scripts[JURI::root(true) . '/media/system/js/core.js']);
+					unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
+					if (isset($this->_script['text/javascript'])) { 
+						$this->_script['text/javascript'] = preg_replace('%window\.addEvent\    (\'load\',\s*function\(\)\s*{\s*new\s*JCaption\(\'img.caption\'\);\s*}\);\s*%',     '', $this->_script['text/javascript']);
+						if (empty($this->_script['text/javascript']))
+							unset($this->_script['text/javascript']);
+						}
+			?>
+		<?php endif; ?>
+		
 		<?php		//	 Use jQuery noConflict()
 			if($noconflict == 0)  : ?>
 				<?php $doc = JFactory::getDocument();
@@ -97,29 +130,6 @@ $cssoverride						= $this->params->get('cssoverride');
 				<script defer src="https://code.jquery.com/jquery-migrate-3.1.0.min.js" crossorigin="anonymous"></script>
 		<?php endif; ?>
 		
-		<?php		//	 Use Joomla's jQuery 1.12.4 unless configured otherwise - Disabled for now
-				//		if($jqlibrary > 0)  : ?>
-				<?php //$doc = JFactory::getDocument();
-				//			unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
-			?>
-		<?php // endif; ?>
-		
-		<?php		//	 Remove Joomla head scripts (third-party scripts will still load)
-			if($killjoomlajs == 1) : ?>
-				<?php $doc = JFactory::getDocument();
-					unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
-					unset($doc->_scripts[JURI::root(true) . '/media/system/js/caption.js']);
-					unset($doc->_scripts[JURI::root(true) . '/media/modals/js/script.min.js']);
-					unset($doc->_scripts[JURI::root(true) . '/media/system/js/core.js']);
-					unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
-					if (isset($this->_script['text/javascript'])) { 
-						$this->_script['text/javascript'] = preg_replace('%window\.addEvent\    (\'load\',\s*function\(\)\s*{\s*new\s*JCaption\(\'img.caption\'\);\s*}\);\s*%',     '', $this->_script['text/javascript']);
-						if (empty($this->_script['text/javascript']))
-							unset($this->_script['text/javascript']);
-						}
-			?>
-		<?php endif; ?>
-		
 		<?php 		//	 Remove Joomla CSS file (Modal styles)
 			if($killjoomlacss == 1) : ?>
 			<?php $doc = JFactory::getDocument();
@@ -134,9 +144,7 @@ $cssoverride						= $this->params->get('cssoverride');
 			if($killgenerator == 1) : ?>
 			<?php $this->setGenerator(null); ?>
 		<?php endif; ?>
-   	 	
-   	 	<jdoc:include type="head" />
-   	 	
+   	 	   	 	
 		<?php		//	 Load remote Bootstrap 4.5 CSS framework from CDN
 			if(($bootstrapcdn == null) && ($bootstrapsource == 1)) : ?>
 				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -389,15 +397,6 @@ $cssoverride						= $this->params->get('cssoverride');
 		<jdoc:include type="modules" name="debug" style="basic" />
 
 		</div>
-			
-		<?php		//	  Load jQuery 2 or 3 remotely	?>
-		<?php if (($jquerycdn == null) && ($jqlibrary == 1)) : ?>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-		<?php elseif (($jquerycdn == null) && ($jqlibrary == 2)) : ?>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<?php else : ?>
-			<?php echo $jquerycdn ?>
-		<?php endif; ?>		
 
 		<?php		//	 Use jQuery Migrate 3.0.1
 			if($jqmigrate == 1)  : ?>
