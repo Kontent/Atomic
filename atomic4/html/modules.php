@@ -47,5 +47,20 @@ function modChrome_basic($module, &$params, &$attribs)
 	<?php endif;
 }
 
+/**  Add toggle to mobile menu  **/
+function modChrome_mobilemenu($module, &$params, &$attribs)
+{
+	if (!empty ($module->content)) : ?>
+	<div id="mobilemenu">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
+		<div class="collapse" id="navbarToggleExternalContent">
+			<?php if ($module->showtitle) : ?>
+				<h4><?php echo $module->title; ?></h4>
+			<?php endif; ?>
+			<div class="contents"><?php echo $module->content; ?></div>
+		</div>
+	</div>
+	<?php endif;
+}
 
 

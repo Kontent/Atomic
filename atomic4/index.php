@@ -283,10 +283,7 @@ $cssoverride						= $this->params->get('cssoverride');
 	<?php endif; ?>
 				
 	<?php if ($this->countModules( 'mobilemenu' )) : ?>
-		<div id="mobilemenu">
-			<i class="fas fa-bars"></i>
-		<jdoc:include type="modules" name="mobilemenu" style="basic" />
-		</div>
+		<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
 	<?php endif; ?>
 
 		<?php if(($pageheader == 1) || ($pageheadermod == 1)) : ?>	
