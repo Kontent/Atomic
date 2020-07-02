@@ -31,10 +31,12 @@ defined('_JEXEC') or die;
 function modChrome_default($module, &$params, &$attribs)
 {
 	if (!empty ($module->content)) : ?>
+	<div class="module">
 		<?php if ($module->showtitle) : ?>
 			<h4><?php echo $module->title; ?></h4>
 		<?php endif; ?>
 		<?php echo $module->content; ?>
+	</div>
 	<?php endif;
 }
 

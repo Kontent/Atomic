@@ -15,6 +15,12 @@ footer {
 	display: inline-block;
 	margin: 0 0 30px 15px;
 }
+.module {
+	margin: 20px 0;
+}
+.module h4 {
+	margin-bottom: 20px;
+}
 code,xmp {
 	font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
 }
@@ -95,6 +101,7 @@ ul.nav-child.unstyled.small li {
 	list-style-type: none;
 	padding: 0 5px;
 }
+
 
 /* Frontend editing */
 
@@ -222,6 +229,34 @@ ul.pager.pagenav li.next {
 	list-style-type: none;
 	font-size: 80%;
 }
+.login .control-label label {
+	margin-top: 20px;
+}
+.login .control-group:nth-child(3) .control-label,
+.login .control-group:nth-child(3) .controls {
+	display: inline-block;
+	margin-top: 15px;
+}
+.login + div .nav.nav-tabs {
+	display: block;
+	margin: 15px 0;
+	font-size: 85%;
+}
+
+
+/* System error messages  */
+
+#system-message .alert {
+	background-color: #eaecfc;
+}
+#system-message .alert.alert-error {
+	background-color: #fef0c7;
+}
+#system-message h4.alert-heading {
+	display: inline;
+	line-height: 32px;
+}
+
 
 /* Contact form */
 
@@ -257,6 +292,25 @@ ul.dropdown-menu a {
 h4.alert-heading {
 
 }
+
+/* -------------- Font Awesome Icons -------------- */
+
+.icon-location:before {
+    content:"\f3c5";
+}
+[class*=" icon-"], 
+[class^=icon-] {
+    font-family:"Font Awesome 5 Free";
+    font-weight: 900;
+}
+[class*=" icon-"]:before, 
+[class^=icon-]:before {
+    speak: none;
+    display:inline-block;
+	text-rendering:auto;
+	line-height:1
+}
+
 
 
 

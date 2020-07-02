@@ -80,7 +80,6 @@ $cssoverride						= $this->params->get('cssoverride');
 		<?php		//	 Output as HTML5
 			$this->setHtml5(true);
 		?>
-		<jdoc:include type="head" />
 		
 		<?php		//	 Use jQuery noConflict()
 			if($noconflict == 0)  : ?>
@@ -124,13 +123,19 @@ $cssoverride						= $this->params->get('cssoverride');
 		<?php 		//	 Remove Joomla CSS file (Modal styles)
 			if($killjoomlacss == 1) : ?>
 			<?php $doc = JFactory::getDocument();
-				unset($doc->_scripts[JURI::root(true) . '/media/modals/css/bootstrap.min.css']); ?>
+				unset($this->_stylesheets[JURI::root(true) . '/media/modals/css/bootstrap.min.css']); 
+				unset($this->_stylesheets[JURI::root(true) . '/media/jui/css/bootstrap.min.css']); 
+				unset($this->_stylesheets[JURI::root(true) . '/media/jui/css/bootstrap-responsive.min.css']); 
+				unset($this->_stylesheets[JURI::root(true) . '/media/jui/css/bootstrap-extended.css']); 
+				?>
 		<?php endif; ?>
 
 		<?php 		//	 Remove Joomla generator tag
 			if($killgenerator == 1) : ?>
 			<?php $this->setGenerator(null); ?>
 		<?php endif; ?>
+   	 	
+   	 	<jdoc:include type="head" />
    	 	
 		<?php		//	 Load remote Bootstrap 4.5 CSS framework from CDN
 			if(($bootstrapcdn == null) && ($bootstrapsource == 1)) : ?>
@@ -148,10 +153,8 @@ $cssoverride						= $this->params->get('cssoverride');
 		<?php 		//	 Load FontAwesome 5.13.1
 			if($fontawesome == 1) : ?>
 			<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
-			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css">
 		<?php elseif($fontawesome == 2) : ?>
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
-			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/fontawesome.css" type="text/css">
 		<?php endif; ?>
 						
 		<?php		//	  Load Google Fonts 	?>
@@ -227,12 +230,24 @@ $cssoverride						= $this->params->get('cssoverride');
 			if($customjs == 1) : ?>
 			<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
 		<?php endif; ?>
+				
+		<?php 		//	 Add Google Analytics tag if configured.
+		if($gacode != null) : ?>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-504090-1"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', '<?php echo $gacode; ?>');
+		</script>
+		<?php endif; ?>
 		
 		<?php		//	 Add custom code before closing head tag
 			if($codebeforehead != null) : ?>
 			<?php echo $codebeforehead;
 		?>	
 		<?php endif; ?>
+		
 	</head>
 	
 	<?php		//	 Add the menu item alias to the body ID, class, or both	?>
@@ -258,11 +273,17 @@ $cssoverride						= $this->params->get('cssoverride');
 	<?php else : ?>
 		<div class="container">
 	<?php endif; ?>
-		
+				
+	<?php if ($this->countModules( 'mobilemenu' )) : ?>
+		<div id="mobilemenu">
+			<i class="fas fa-bars"></i>
+		<jdoc:include type="modules" name="mobilemenu" style="basic" />
+		</div>
+	<?php endif; ?>
+
 		<?php if(($pageheader == 1) || ($pageheadermod == 1)) : ?>	
 			<div class="row">
 				<div class="page-header">
-				
 				<?php if($pageheader == 1) : ?>
 					<h1>
 						<?php if ($logo) : ?>
@@ -273,16 +294,12 @@ $cssoverride						= $this->params->get('cssoverride');
 						<?php if($sitetitle != null) : ?><?php echo $sitetitle	; ?><?php endif; ?></h1>
 						<?php if($sitedescription != null) : ?><p><small><?php echo $sitedescription; ?></small></p><?php endif; ?>
 				<?php endif; ?>
-						
 				<?php if($pageheadermod == 1) : ?>
-					<jdoc:include type="modules" name="pageheader" />
+					<jdoc:include type="modules" name="pageheader" style="basic" />
 				<?php endif; ?>
 				</div>
-				
 				<?php if ($this->countModules('menu')) : ?>
-				<div class="headermenu">
-					<jdoc:include type="modules" name="menu" />
-				</div>
+				<div class="headermenu"><jdoc:include type="modules" name="menu"style="basic" /></div>
 				<?php endif; ?>
 			</div>
 			<?php endif; ?>
@@ -291,84 +308,65 @@ $cssoverride						= $this->params->get('cssoverride');
 			<div class="row">
 				<div class="col-md-9">
 					<nav class="navigation">
-						<div class="nav-collapse">
-							<jdoc:include type="modules" name="navigation" />
-						</div>
+						<div class="nav-collapse"><jdoc:include type="modules" name="navigation" style="basic" /></div>
 					</nav>
 				</div>
-				<div class="col-md-3">
-					<jdoc:include type="modules" name="search" />
-				</div>
+				<div class="col-md-3"><jdoc:include type="modules" name="search" style="basic" /></div>
 			</div>
 			<?php endif; ?>
-		
+
 			<div class="row">
 				<?php if(($leftbody == 1) && ($rightbody == 1)) : ?>	
 				<div class="col-md-2 leftbody">
-					<jdoc:include type="modules" name="leftbody" />
+					<jdoc:include type="modules" name="leftbody"  style="default" />
 				</div>
 				<div class="col-12 col-md-7 mainbody">
 					<jdoc:include type="message" />
-					<?php if($abovebody == 1) : ?>
-					<jdoc:include type="modules" name="abovebody" />
-					<?php endif; ?>
+					<?php if($abovebody == 1) : ?><jdoc:include type="modules" name="abovebody" style="default" /><?php endif; ?>
 					<jdoc:include type="component" />
-					<?php if($belowbody == 1) : ?>
-					<jdoc:include type="modules" name="belowbody" />
-					<?php endif; ?>
+					<?php if($belowbody == 1) : ?><jdoc:include type="modules" name="belowbody" style="default" /><?php endif; ?>
 				</div>
 				<div class="col-md-3 rightbody">
-					<jdoc:include type="modules" name="rightbody" />
+					<jdoc:include type="modules" name="rightbody" style="default" />
 				</div>
 			
 				<?php elseif(($leftbody == 0) && ($rightbody == 1)) : ?>
 				<div class="col-md-9 mainbody">
 					<jdoc:include type="message" />
-					<?php if($abovebody == 1) : ?>
-					<jdoc:include type="modules" name="abovebody" />
-					<?php endif; ?>
+					<?php if($abovebody == 1) : ?><jdoc:include type="modules" name="abovebody"style="default" /><?php endif; ?>
 					<jdoc:include type="component" />
-					<?php if($belowbody == 1) : ?>
-					<jdoc:include type="modules" name="belowbody" />
-					<?php endif; ?>
+					<?php if($belowbody == 1) : ?><jdoc:include type="modules" name="belowbody" style="default" /><?php endif; ?>
 				</div>
 				<div class="col-md-3 rightbody">
-					<jdoc:include type="modules" name="rightbody"  />
+					<jdoc:include type="modules" name="rightbody" style="default" />
 				</div>
 		
 				<?php elseif(($leftbody == 1) && ($rightbody == 0)) : ?>
 				<div class="col-md-3 leftbody">
-					<jdoc:include type="modules" name="leftbody"  />
+					<jdoc:include type="modules" name="leftbody" style="default" />
 				</div>
 				<div class="col-md-9 mainbody">
 					<jdoc:include type="message" />
-					<?php if($abovebody == 1) : ?>
-					<jdoc:include type="modules" name="abovebody" />
-					<?php endif; ?>
+					<?php if($abovebody == 1) : ?><jdoc:include type="modules" name="abovebody" style="default" /><?php endif; ?>
 					<jdoc:include type="component" />
-					<?php if($belowbody == 1) : ?>
-					<jdoc:include type="modules" name="belowbody" />
-					<?php endif; ?>
+					<?php if($belowbody == 1) : ?><jdoc:include type="modules" name="belowbody" style="default" /><?php endif; ?>
 				</div>
 			
 				<?php else : ?>
 				<div class="col-md-12 mainbody">
 					<jdoc:include type="message" />
-					<?php if($abovebody == 1) : ?>
-					<jdoc:include type="modules" name="abovebody" />
-					<?php endif; ?>
+					<?php if($abovebody == 1) : ?><jdoc:include type="modules" name="abovebody" style="default" /><?php endif; ?>
 					<jdoc:include type="component" />
-					<?php if($belowbody == 1) : ?>
-					<jdoc:include type="modules" name="belowbody" />
-					<?php endif; ?>
+					<?php if($belowbody == 1) : ?><jdoc:include type="modules" name="belowbody" style="default" /><?php endif; ?>
 				</div>
 				<?php endif; ?>
+				
 			</div>
 		
 			<?php if($footer == 1) : ?>
 			<footer class="container">
 				<div class="row">
-					<jdoc:include type="modules" name="footer" style="none" />
+					<jdoc:include type="modules" name="footer" style="none"style="basic" />
 					<hr />
 					<small>
 						<?php if(($copyrighttxt != null) && ($copyright == 1)) : ?>
@@ -380,18 +378,18 @@ $cssoverride						= $this->params->get('cssoverride');
 				</div>
 			</footer>
 			<?php endif; ?>
-		</div>
+	
 		
 		<?php if ($this->countModules( 'alertbar' )) : ?>
 		<?php if($alertbar == 1) : ?>
-		<div id="alertbar">
-				<jdoc:include type="modules" name="alertbar" style="none" />
+		<div id="alertbar"><jdoc:include type="modules" name="alertbar" style="none" /></div>
+		<?php endif; ?>
+		<?php endif; ?>
+		
+		<jdoc:include type="modules" name="debug" style="basic" />
+
 		</div>
-		<?php endif; ?>
-		<?php endif; ?>
-		
-		<jdoc:include type="modules" name="debug" style="none" />
-		
+			
 		<?php		//	  Load jQuery 2 or 3 remotely	?>
 		<?php if (($jquerycdn == null) && ($jqlibrary == 1)) : ?>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -409,7 +407,7 @@ $cssoverride						= $this->params->get('cssoverride');
 		<?php 		//	 Load the local or remote Bootstrap 3 or 4 JavaScript dependency
 			 			//	 If CDN empty and load BS 3 remotely	
 			if(($bootstrapcdn == null) && ($bootstrapsource == 1)) : ?>
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 			
 			<?php 		//	 If CDN empty and load BS 4 remotely
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3)) : ?>
@@ -422,19 +420,7 @@ $cssoverride						= $this->params->get('cssoverride');
 			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 		<?php else : ?>
-		<?php endif; ?>
-				
-		<?php 		//	 Add Google Analytics tag if configured.
-			if($gacode != null) : ?>
-		<script>
-			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-			  ga('create', '<?php echo $gacode; ?>', 'auto');
-			  ga('send', 'pageview');
-		</script>
-		<?php endif; ?>
+		<?php endif; ?>	
 		
 		<?php		//	 Add custom code before closing body tag
 			if($codebeforebody != null) : ?>
