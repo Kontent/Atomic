@@ -281,8 +281,9 @@ $cssoverride						= $this->params->get('cssoverride');
 	<?php else : ?>
 		<div class="container">
 	<?php endif; ?>
-				
-	<?php if ($this->countModules( 'mobilemenu' )) : ?>
+	
+	<?php		//	 Load the mobile menu position if a module published	
+		if ($this->countModules( 'mobilemenu' )) : ?>
 		<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
 	<?php endif; ?>
 
