@@ -30,6 +30,9 @@ code,xmp {
 	margin-top: 10px;
 	margin-bottom: 0;
 }
+.row > .page-header {
+	margin-left: 15px;
+}
 
 /* Header Menu */
 .headermenu {
@@ -292,37 +295,62 @@ h4.alert-heading {
 
 }
 
+.element-invisible {
+	visibility: hidden;
+}
+
 /* Prototype template fixes  */
-.icons {
+
+body.protostar .icons {
 	float: right;
 	display: inline-block;
 }
-a.btn {
+body.protostar a.btn {
 	color: #007bff;
 }
-button.btn {
+body.protostar button.btn {
 	color: #212529;
 	background-color: #f8f9fa;
 	border-color: #c1c2c3;
+	padding: .25rem .5rem;
+	font-size: .875rem;
+	line-height: 1.5;
+	border-radius: .2rem;
 }
-.article-info.muted {
+body.protostar .article-info.muted {
 	color: #888;
 	font-size: 80%;
 }
-footer.container {
+body.protostar footer.container {
 	margin-top: 100px;
 	border-top: 1px solid #ccc;
 	padding-top: 20px;
 }
-
-
-
-
-
-
-
-
-
+body.protostar .nav.menu.nav-pills li:not(:first-child) {
+	margin: 0 0 0 30px;
+}
+body.protostar .navigation {
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	padding: 5px 0;
+	margin-bottom: 20px;
+}
+body.protostar .nav.menu.nav-pills li {
+	padding: 2px 8px;
+}
+body.protostar .navigation .current.active {
+	background-color: #e7e7e7;
+	border-radius: 4px;
+}
+body.protostar .navigation .current.active a {
+	color: #000;
+}
+body.protostar .items-leading > div {
+	margin-top: 40px;
+}
+body.protostar .search {
+	margin-top: -20px;
+}
 
 
 /* -------------- Font Awesome Icons -------------- */

@@ -259,13 +259,15 @@ $protopositions					= $this->params->get('protopositions');
 		
 	</head>
 	
-	<?php		//	 Add the menu item alias to the body ID, class, or both	?>
-	<?php if($bodymenu == 1) : ?>
-		<body class="<?php echo $active->alias; ?> ">
+	<?php		//	 Add the menu item alias to the body ID, class, or both. Add protostar fixes. 	?>
+	<?php if($bodymenu == 1) : ?>	
+		<body class="<?php echo $active->alias; ?> <?php if($protopositions == 1) : ?>protostar<?php endif; ?> ">
 	<?php elseif($bodymenu == 2) : ?>
 		<body id="<?php echo $active->alias; ?>">
 	<?php elseif($bodymenu == 3) : ?>
-		<body id="<?php echo $active->alias; ?>" class="<?php echo $active->alias; ?> ">
+		<body id="<?php echo $active->alias; ?>" class="<?php echo $active->alias; ?> <?php if($protopositions == 1) : ?>protostar<?php endif; ?> ">
+	<?php elseif($protopositions == 1) : ?>
+		<body class="protostar">
 	<?php else : ?>
 		<body>
 	<?php endif; ?>
