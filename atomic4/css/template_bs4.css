@@ -104,7 +104,6 @@ ul.nav-child.unstyled.small li {
 
 
 /* Frontend editing */
-
 .btn-group.pull-right:hover .dropdown-menu {
 	display: block;
 	right: 0;
@@ -293,6 +292,39 @@ h4.alert-heading {
 
 }
 
+/* Prototype template fixes  */
+.icons {
+	float: right;
+	display: inline-block;
+}
+a.btn {
+	color: #007bff;
+}
+button.btn {
+	color: #212529;
+	background-color: #f8f9fa;
+	border-color: #c1c2c3;
+}
+.article-info.muted {
+	color: #888;
+	font-size: 80%;
+}
+footer.container {
+	margin-top: 100px;
+	border-top: 1px solid #ccc;
+	padding-top: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
 /* -------------- Font Awesome Icons -------------- */
 
 .icon-location:before {
@@ -310,8 +342,6 @@ h4.alert-heading {
 	text-rendering:auto;
 	line-height:1
 }
-
-
 
 
 /* Component only view  */

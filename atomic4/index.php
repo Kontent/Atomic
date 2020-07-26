@@ -62,6 +62,7 @@ $codebeforehead				= $this->params->get('codebeforehead');
 $codeafterbody					= $this->params->get('codeafterbody');
 $codebeforebody				= $this->params->get('codebeforebody');
 $cssoverride						= $this->params->get('cssoverride');
+$protopositions					= $this->params->get('protopositions');
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
@@ -241,7 +242,7 @@ $cssoverride						= $this->params->get('cssoverride');
 				
 		<?php 		//	 Add Google Analytics tag if configured.
 		if($gacode != null) : ?>
-		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-504090-1"></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gacode; ?>"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
@@ -314,10 +315,16 @@ $cssoverride						= $this->params->get('cssoverride');
 			<div class="row">
 				<div class="col-md-9">
 					<nav class="navigation">
-						<div class="nav-collapse"><jdoc:include type="modules" name="navigation" style="basic" /></div>
+						<div class="nav-collapse">
+							<jdoc:include type="modules" name="navigation" style="basic" />
+							<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-1" style="none" /><?php endif; ?>
+						</div>
 					</nav>
 				</div>
-				<div class="col-md-3"><jdoc:include type="modules" name="search" style="basic" /></div>
+				<div class="col-md-3">
+					<jdoc:include type="modules" name="search" style="basic" />
+					<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-0" style="none" /><?php endif; ?>
+				</div>
 			</div>
 			<?php endif; ?>
 
@@ -325,45 +332,57 @@ $cssoverride						= $this->params->get('cssoverride');
 				<?php if(($leftbody == 1) && ($rightbody == 1)) : ?>	
 				<div class="col-md-2 leftbody">
 					<jdoc:include type="modules" name="leftbody"  style="default" />
+					<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-8" style="xhtml" /><?php endif; ?>
 				</div>
 				<div class="col-12 col-md-7 mainbody">
 					<jdoc:include type="message" />
-					<?php if($abovebody == 1) : ?><jdoc:include type="modules" name="abovebody" style="default" /><?php endif; ?>
+					<?php if($abovebody == 1) : ?><jdoc:include type="modules" name="abovebody" style="xhtml" /><?php endif; ?>
+					<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-3" style="none" /><?php endif; ?>
 					<jdoc:include type="component" />
 					<?php if($belowbody == 1) : ?><jdoc:include type="modules" name="belowbody" style="default" /><?php endif; ?>
+					<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-2" style="none" /><?php endif; ?>
 				</div>
 				<div class="col-md-3 rightbody">
 					<jdoc:include type="modules" name="rightbody" style="default" />
+					<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-7" style="default" /><?php endif; ?>
 				</div>
 			
 				<?php elseif(($leftbody == 0) && ($rightbody == 1)) : ?>
 				<div class="col-md-9 mainbody">
 					<jdoc:include type="message" />
 					<?php if($abovebody == 1) : ?><jdoc:include type="modules" name="abovebody"style="default" /><?php endif; ?>
+					<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-3" style="none" /><?php endif; ?>
 					<jdoc:include type="component" />
 					<?php if($belowbody == 1) : ?><jdoc:include type="modules" name="belowbody" style="default" /><?php endif; ?>
+					<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-2" style="none" /><?php endif; ?>
 				</div>
 				<div class="col-md-3 rightbody">
 					<jdoc:include type="modules" name="rightbody" style="default" />
+					<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-7" style="default" /><?php endif; ?>
 				</div>
 		
 				<?php elseif(($leftbody == 1) && ($rightbody == 0)) : ?>
 				<div class="col-md-3 leftbody">
 					<jdoc:include type="modules" name="leftbody" style="default" />
+					<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-8" style="xhtml" /><?php endif; ?>
 				</div>
 				<div class="col-md-9 mainbody">
 					<jdoc:include type="message" />
-					<?php if($abovebody == 1) : ?><jdoc:include type="modules" name="abovebody" style="default" /><?php endif; ?>
+					<?php if($abovebody == 1) : ?><jdoc:include type="modules" name="abovebody" style="xhtml" /><?php endif; ?>
+					<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-3" style="none" /><?php endif; ?>
 					<jdoc:include type="component" />
 					<?php if($belowbody == 1) : ?><jdoc:include type="modules" name="belowbody" style="default" /><?php endif; ?>
+					<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-2" style="none" /><?php endif; ?>
 				</div>
 			
 				<?php else : ?>
 				<div class="col-md-12 mainbody">
 					<jdoc:include type="message" />
-					<?php if($abovebody == 1) : ?><jdoc:include type="modules" name="abovebody" style="default" /><?php endif; ?>
+					<?php if($abovebody == 1) : ?><jdoc:include type="modules" name="abovebody" style="xhtml" /><?php endif; ?>
+					<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-3" style="none" /><?php endif; ?>
 					<jdoc:include type="component" />
 					<?php if($belowbody == 1) : ?><jdoc:include type="modules" name="belowbody" style="default" /><?php endif; ?>
+					<?php if($protopositions == 1) : ?><jdoc:include type="modules" name="position-2" style="none" /><?php endif; ?>
 				</div>
 				<?php endif; ?>
 				

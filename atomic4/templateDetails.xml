@@ -208,7 +208,10 @@
 				<option value="0">TPL_ATOMIC4_DISABLED</option>
 				<option value="1">TPL_ATOMIC4_ENABLED</option>
 			</field>
-			
+			<field name="protopositions" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC4_PROTO_LABEL" description="TPL_ATOMIC4_PROTO_DESC">
+				<option value="0">TPL_ATOMIC4_DISABLED</option>
+				<option value="1">TPL_ATOMIC4_ENABLED</option>
+			</field>
 			<field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC4_COPYRIGHT_LABEL" description="TPL_ATOMIC4_COPYRIGHT_DESC">
 				<option value="0">TPL_ATOMIC4_DISABLED</option>
 				<option value="1">TPL_ATOMIC4_ENABLED</option>
