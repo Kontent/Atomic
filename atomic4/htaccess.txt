@@ -1,0 +1,25 @@
+##
+# @package    Atomic
+# @copyright  Copyright (C) 2020 Ron Severdia. All rights reserved.
+# @license    GNU General Public License version 2 or later; see LICENSE.txt
+##
+
+## Add the contents of this file to your Joomla htaccess file to speed up your website.
+
+
+
+
+## Add file caching (calculated in seconds)
+
+# 90 days for image files
+<filesMatch ".(jpg|jpeg|png|gif|ico)$">
+Header set Cache-Control "max-age=7776000, public"
+</filesMatch>
+
+# 30 days for css and js
+<filesMatch ".(css|js)$">
+Header set Cache-Control "max-age=2592000, public"
+</filesMatch>
+
+
+

@@ -27,6 +27,7 @@
 		<filename>template_thumbnail.png</filename>
 		<filename>component.php</filename>
 		<filename>error.php</filename>
+		<filename>htaccess.txt</filename>
 	</files>
 
 	<positions>
