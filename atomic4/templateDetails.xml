@@ -29,7 +29,6 @@
 		<filename>error.php</filename>
 		<filename>htaccess.txt</filename>
 	</files>
-
 	<positions>
 		<position>navigation</position>
 		<position>pageheader</position>
@@ -43,12 +42,10 @@
 		<position>alertbar</position>
 		<position>mobilemenu</position>
 	</positions>
-
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.tpl_atomic4.ini</language>
 		<language tag="en-GB">en-GB/en-GB.tpl_atomic4.sys.ini</language>
 	</languages>
-	
 	<config>
 	<fields name="params">
 		<fieldset name="JOOMLA_SETTINGS">
@@ -228,5 +225,11 @@
 		</fieldset>
 		
 		</fields>
+	
 	</config>
+	
+	<updateservers>
+		<server type="extension" name="Atomic Update Site">https://raw.githubusercontent.com/Kontent/Atomic/master/atomic_update.xml</server>
+	</updateservers>
+	
 </extension>
