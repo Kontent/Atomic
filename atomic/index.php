@@ -159,11 +159,11 @@ $protopositions					= $this->params->get('protopositions');
 				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_bs4.css" type="text/css">
 		<?php endif; ?>
 		
-		<?php 		//	 Load FontAwesome 5.13.1
+		<?php 		//	 Load FontAwesome 5.14
 			if($fontawesome == 1) : ?>
-			<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
+			<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
 		<?php elseif($fontawesome == 2) : ?>
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
 		<?php endif; ?>
 						
 		<?php		//	  Load Google Fonts 	?>
