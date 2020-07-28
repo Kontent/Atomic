@@ -14,7 +14,7 @@ class JFormFieldbutton extends JFormField {
 					var base_url = window.location.href;
                     var script_id = "createcss";
                     var url = base_url.substring(0, base_url.indexOf(\'administrator\'));
-                    var page = \'templates/atomic4/ajax/ajax.php\';
+                    var page = \'templates/atomic/ajax/ajax.php\';
                     var link = url.concat(page); 
                     jQuery.ajax(
                     	{
@@ -32,7 +32,7 @@ class JFormFieldbutton extends JFormField {
 				<button id="'.$this->id.'" name="'.$this->name.'" type="button" onclick="
                     var base_url = window.location.href;
                     var url = base_url.substring(0, base_url.indexOf(\'administrator\'));
-                    var page = \'templates/atomic4/ajax/ajax.php\';
+                    var page = \'templates/atomic/ajax/ajax.php\';
                     var link = url.concat(page); 
                     jQuery.ajax(
                     	{

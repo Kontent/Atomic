@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "https://www.joomla.org/xml/dtd/2.5/template-install.dtd">
+<extension type="template" client="site" method="upgrade">
+	<name>Atomic</name>
+	<version>4.1</version>
+	<creationDate>02/28/19</creationDate>
+	<author>Ron Severdia</author>
+	<authorEmail>severdia@gmail.com</authorEmail>
+	<authorUrl>https://www.severdia.com</authorUrl>
+	<copyright>Copyright (C) 2018-2020 Ron Severdia. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<description>TPL_ATOMIC_XML_DESCRIPTION</description>
+	<files>
+		<folder>html</folder>
+		<folder>css</folder>
+		<folder>fonts</folder>
+		<folder>images</folder>
+		<folder>language</folder>
+		<folder>ajax</folder>
+		<folder>fields</folder>
+		<folder>js</folder>
+		<folder>favicons</folder>
+		<filename>index.php</filename>
+		<filename>index.html</filename>
+		<filename>templateDetails.xml</filename>
+		<filename>template_preview.png</filename>
+		<filename>template_thumbnail.png</filename>
+		<filename>component.php</filename>
+		<filename>error.php</filename>
+		<filename>htaccess.txt</filename>
+	</files>
+	<positions>
+		<position>navigation</position>
+		<position>pageheader</position>
+		<position>menu</position>
+		<position>search</position>
+		<position>leftbody</position>
+		<position>abovebody</position>
+		<position>belowbody</position>
+		<position>rightbody</position>
+		<position>footer</position>
+		<position>alertbar</position>
+		<position>mobilemenu</position>
+	</positions>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.tpl_atomic.ini</language>
+		<language tag="en-GB">en-GB/en-GB.tpl_atomic.sys.ini</language>
+	</languages>
+	<config>
+	<fields name="params">
+		<fieldset name="JOOMLA_SETTINGS">
+			<field name="sitetitle"  type="text" default="" label="JGLOBAL_TITLE" description="JFIELD_ALT_PAGE_TITLE_LABEL" filter="safehtml" />
+			<field name="sitedescription"  type="text" default="" label="JGLOBAL_DESCRIPTION" description="JGLOBAL_SUBHEADING_DESC" filter="safehtml" />
+			<field name="gacode"  type="text" default="" label="TPL_ATOMIC_GA_LABEL" description="TPL_ATOMIC_GA_DESC" filter="string" />
+			<field name="killgenerator" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_KILLGENERATOR_LABEL" description="TPL_ATOMIC_KILLGENERATOR_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			<field name="logo" type="media" label="TPL_ATOMIC_LOGO_LABEL" description="TPL_ATOMIC_LOGO_DESC" />
+		</fieldset>
+		
+		<fieldset name="CSS_SETTINGS">
+			<field name="bootstrapsource" type="list" default="0" label="TPL_ATOMIC_BOOTSTRAP_LABEL" description="TPL_ATOMIC_BOOTSTRAP_DESC">
+				<option value="0">TPL_ATOMIC_NONE</option>
+				<option value="1">TPL_ATOMIC_BS4_REMOTE</option>
+				<option value="2">TPL_ATOMIC_BS4_CUSTOM</option>
+			</field>
+			<field name="bootstrapcdn" type="textarea" label="TPL_ATOMIC_BOOTSTRAPCDN_LABEL" description="TPL_ATOMIC_BOOTSTRAPCDN_DESC" rows="4" columns="30" filter="raw" default="" />			
+		
+			<field name="bsfixjoomla" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_TEMPLATEBSFIX_LABEL" description="TPL_ATOMIC_TEMPLATEBSFIX_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			<field name="fluidcontainer" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_FLUID_LABEL" description="TPL_ATOMIC_FLUID_DESC">
+				<option value="0">TPL_ATOMIC_FIXED</option>
+				<option value="1">TPL_ATOMIC_FLUID</option>
+			</field>
+			<field name="bodymenu" type="list" default="0" label="TPL_ATOMIC_BODYMENU_LABEL" description="TPL_ATOMIC_BODYMENU_DESC">
+				<option value="0">TPL_ATOMIC_BODYMENU_OPTION_DEFAULT</option>
+				<option value="1">TPL_ATOMIC_BODYMENU_OPTION_BODYCLASS</option>
+				<option value="2">TPL_ATOMIC_BODYMENU_OPTION_BODYID</option>
+				<option value="3">TPL_ATOMIC_BODYMENU_OPTION_BODYCLASSID</option>
+			</field>
+			<field name="customcssfile" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_CUSTOMCSSFILE_LABEL" description="TPL_ATOMIC_CUSTOMCSSFILE_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+
+            <field name="cssoverride" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_CSSOVERRIDE_LABEL" description="TPL_ATOMIC_CSSOVERRIDE_DESC" filter="integer">
+				<option value="1">TPL_ATOMIC_ENABLED</option>
+				<option value="0">TPL_ATOMIC_DISABLED</option>
+			</field>
+
+			<fieldset addfieldpath="/templates/atomic4/fields">
+				<field name="" type="button" class="btn" showon="cssoverride:1"></field>
+			</fieldset>
+
+			<field name="customcsscode" type="textarea" default="" label="TPL_ATOMIC_CUSTOMCSS_LABEL" description="TPL_ATOMIC_CUSTOMCSS_DESC" rows="8" columns="40" filter="raw" />
+			
+			<field name="customdarkcsscode" type="textarea" default="" label="TPL_ATOMIC_CUSTOMDARKCSS_LABEL" description="TPL_ATOMIC_CUSTOMDARKCSS_DESC" rows="8" columns="40" filter="raw" />
+			
+			<field name="killjoomlacss" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_KILLJOOMLACSS_LABEL" description="TPL_ATOMIC_KILLJOOMLACSS_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+		</fieldset>
+		
+		<fieldset name="JAVASCRIPT_SETTINGS">
+			<field name="jqlibrary" type="list" default="0" label="TPL_ATOMIC_JQUERY_LABEL" description="TPL_ATOMIC_JQUERY_DESC">
+				<option value="0">TPL_ATOMIC_JQUERY_DEFAULT</option>
+				<option value="1">TPL_ATOMIC_JQUERY_2</option>
+				<option value="2">TPL_ATOMIC_JQUERY_3</option>
+				<option value="3">TPL_ATOMIC_NONE</option>
+			</field>
+			<field name="jqmigrate" type="list" default="0" label="TPL_ATOMIC_JQUERYMIGRATE_LABEL" description="TPL_ATOMIC_JQUERYMIGRATE_DESC">
+				<option value="0">TPL_ATOMIC_JQUERYMIGRATE_DEFAULT</option>
+				<option value="1">TPL_ATOMIC_JQUERYMIGRATE_3</option>
+				<option value="2">TPL_ATOMIC_JQUERYMIGRATE_NONE</option>
+			</field>
+			<field name="noconflict" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_NOCONFLICT_LABEL" description="TPL_ATOMIC_NOCONFLICT_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			<field name="jquerycdn" type="textarea" label="TPL_ATOMIC_JQUERYCDN_LABEL" description="TPL_ATOMIC_JQUERYCDN_DESC" rows="4" columns="30" filter="raw" default="" />
+			<field name="customjs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_CUSTOMJS_LABEL" description="TPL_ATOMIC_CUSTOMJS_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			<field name="killjoomlajs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_KILLJOOMLAJS_LABEL" description="TPL_ATOMIC_KILLJOOMLAJS_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			
+			<field name="instant" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_INSTANT_LABEL" description="TPL_ATOMIC_INSTANT_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+		</fieldset>
+		
+		<fieldset name="FONT_SETTINGS">
+			<field name="headerfont" type="list" default="0" label="TPL_ATOMIC_HEADER_FONT_LABEL" description="TPL_ATOMIC_HEADER_FONT_DESC">
+				<option value="0">TPL_ATOMIC_BOOTSTRAPFONT</option>
+				<option value="1">TPL_ATOMIC_GOOGLEFONT</option>
+			</field>
+			<field name="headerfontname"  type="text" default="" label="TPL_ATOMIC_HEADER_FONTNAME_LABEL" description="TPL_ATOMIC_HEADER_FONTNAME_DESC" filter="string" />
+			<field name="bodyfont" type="list" default="0" label="TPL_ATOMIC_BODY_FONT_LABEL" description="TPL_ATOMIC_BODY_FONT_DESC">
+				<option value="0">TPL_ATOMIC_BOOTSTRAPFONT</option>
+				<option value="1">TPL_ATOMIC_GOOGLEFONT</option>
+			</field>
+			<field name="bodyfontname"  type="text" default="" label="TPL_ATOMIC_BODY_FONTNAME_LABEL" description="TPL_ATOMIC_BODY_FONTNAME_DESC" filter="string" />
+		</fieldset>
+		
+		<fieldset name="ICON_SETTINGS">
+			<field name="loadfavicons" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_LOADFAVICONS_LABEL" description="TPL_ATOMIC_LOADFAVICONS_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			<field name="loadappleicons" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_LOADAPPLEICONS_LABEL" description="TPL_ATOMIC_LOADAPPLEICONS_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			
+			<field name="fontawesome" type="list" default="0" label="TPL_ATOMIC_FONTAWESOME_LABEL" description="TPL_ATOMIC_FONTAWESOME_DESC">
+				<option value="0">TPL_ATOMIC_NONE</option>
+				<option value="1">TPL_ATOMIC_FAREMOTEJS</option>
+				<option value="2">TPL_ATOMIC_FAREMOTECSS</option>
+				<option value="3">TPL_ATOMIC_FACUSTOM</option>
+			</field>
+			<field name="fontawesome-cdn" type="textarea" label="TPL_ATOMIC_FONTAWESOMECDN_LABEL" description="TPL_ATOMIC_FONTAWESOMECDN_DESC" rows="4" columns="30"/>
+		</fieldset>
+		
+		<fieldset name="MODULE_SETTINGS">
+			<field name="pageheader" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_PAGEHEADER_LABEL" description="TPL_ATOMIC_PAGEHEADER_DESC">
+				<option value="0">TPL_ATOMIC_DISABLED</option>
+				<option value="1">TPL_ATOMIC_ENABLED</option>
+			</field>
+			<field name="pageheadermod" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_PAGEHEADERMOD_LABEL" description="TPL_ATOMIC_PAGEHEADERMOD_DESC">
+				<option value="0">TPL_ATOMIC_DISABLED</option>
+				<option value="1">TPL_ATOMIC_ENABLED</option>
+			</field>
+			<field name="topmenu" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_TOPMENU_LABEL" description="TPL_ATOMIC_TOPMENU_DESC">
+				<option value="0">TPL_ATOMIC_DISABLED</option>
+				<option value="1">TPL_ATOMIC_ENABLED</option>
+			</field>
+			<field name="abovebody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_ABOVEBODY_LABEL" description="TPL_ATOMIC_ABOVEBODY_DESC">
+				<option value="0">TPL_ATOMIC_DISABLED</option>
+				<option value="1">TPL_ATOMIC_ENABLED</option>
+			</field>
+			<field name="leftbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_LEFTBODY_LABEL" description="TPL_ATOMIC_LEFTBODY_DESC">
+				<option value="0">TPL_ATOMIC_DISABLED</option>
+				<option value="1">TPL_ATOMIC_ENABLED</option>
+			</field>
+			<field name="rightbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_RIGHTBODY_LABEL" description="TPL_ATOMIC_RIGHTBODY_DESC">
+				<option value="0">TPL_ATOMIC_DISABLED</option>
+				<option value="1">TPL_ATOMIC_ENABLED</option>
+			</field>
+			<field name="belowbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_BELOWBODY_LABEL" description="TPL_ATOMIC_BELOWBODY_DESC">
+				<option value="0">TPL_ATOMIC_DISABLED</option>
+				<option value="1">TPL_ATOMIC_ENABLED</option>
+			</field>
+			<field name="footer" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_FOOTER_LABEL" description="TPL_ATOMIC_FOOTER_DESC">
+				<option value="0">TPL_ATOMIC_DISABLED</option>
+				<option value="1">TPL_ATOMIC_ENABLED</option>
+			</field>
+			<field name="alertbar" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_ALERTBAR_LABEL" description="TPL_ATOMIC_ALERTBAR_DESC">
+				<option value="0">TPL_ATOMIC_DISABLED</option>
+				<option value="1">TPL_ATOMIC_ENABLED</option>
+			</field>
+			<field name="protopositions" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_PROTO_LABEL" description="TPL_ATOMIC_PROTO_DESC">
+				<option value="0">TPL_ATOMIC_DISABLED</option>
+				<option value="1">TPL_ATOMIC_ENABLED</option>
+			</field>
+			<field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_COPYRIGHT_LABEL" description="TPL_ATOMIC_COPYRIGHT_DESC">
+				<option value="0">TPL_ATOMIC_DISABLED</option>
+				<option value="1">TPL_ATOMIC_ENABLED</option>
+			</field>
+			<field name="copyrighttxt" type="text" default="" label="TPL_ATOMIC_COPYRIGHTTXT_LABEL" description="TPL_ATOMIC_COPYRIGHTTXT_DESC" filter="string" />
+		</fieldset>
+		
+		<fieldset name="CUSTOM_CODE">
+			<field name="codeafterhead" type="textarea" label="TPL_ATOMIC_CODEAFTERHEAD_LABEL" description="TPL_ATOMIC_CODEAFTERHEAD_DESC" rows="4" columns="30" filter="raw" default="" />
+			<field name="codebeforehead" type="textarea" label="TPL_ATOMIC_CODEBEFOREHEAD_LABEL" description="TPL_ATOMIC_CODEBEFOREHEAD_DESC" rows="4" columns="30" filter="raw" default="" />
+			<field name="codeafterbody" type="textarea" label="TPL_ATOMIC_CODEAFTERBODY_LABEL" description="TPL_ATOMIC_CODEAFTERBODY_DESC" rows="4" columns="30" filter="raw" default="" />
+			<field name="codebeforebody" type="textarea" label="TPL_ATOMIC_CODEBEFOREBODY_LABEL" description="TPL_ATOMIC_CODEBEFOREBODY_DESC" rows="4" columns="30" filter="raw" default="" />
+		</fieldset>
+		
+		</fields>
+	
+	</config>
+	
+	<updateservers>
+		<server type="extension" name="Atomic Update Site">https://raw.githubusercontent.com/Kontent/Atomic/master/atomic_update.xml</server>
+	</updateservers>
+	
+</extension>

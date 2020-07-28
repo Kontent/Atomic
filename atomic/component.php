@@ -62,6 +62,7 @@ $codebeforehead				= $this->params->get('codebeforehead');
 $codeafterbody					= $this->params->get('codeafterbody');
 $codebeforebody				= $this->params->get('codebeforebody');
 $cssoverride						= $this->params->get('cssoverride');
+$protopositions					= $this->params->get('protopositions');
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
