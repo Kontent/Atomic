@@ -16,6 +16,6 @@
 		</tags>
 		<maintainer>Ron Severdia</maintainer>
 		<maintainerurl>http://atomic.kontentdesign.com/</maintainerurl>
-		<targetplatform name="joomla" version="3.6" />
+		<targetplatform name="joomla" version="3.9" />
 	</update>
 </updates>
