@@ -224,12 +224,12 @@
 			<field name="codebeforebody" type="textarea" label="TPL_ATOMIC_CODEBEFOREBODY_LABEL" description="TPL_ATOMIC_CODEBEFOREBODY_DESC" rows="4" columns="30" filter="raw" default="" />
 		</fieldset>
 		
-		</fields>
+		</fields>https://cdn.jsdelivr.net/Kontent/Atomic/atomic_update.xml
 	
 	</config>
 	
 	<updateservers>
-		<server type="extension" name="Atomic Update Site">https://raw.githubusercontent.com/Kontent/Atomic/master/atomic_update.xml</server>
+		<server type="extension" name="Atomic Update Site">https://kontent.github.io/Atomic/update.xml</server>
 	</updateservers>
 	
 </extension>
