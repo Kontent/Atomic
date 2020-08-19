@@ -62,6 +62,7 @@ $codebeforehead				= $this->params->get('codebeforehead');
 $codeafterbody					= $this->params->get('codeafterbody');
 $codebeforebody				= $this->params->get('codebeforebody');
 $cssoverride						= $this->params->get('cssoverride');
+$instant								= $this->params->get('instant');
 $protopositions					= $this->params->get('protopositions');
 ?>
 <!DOCTYPE html>
