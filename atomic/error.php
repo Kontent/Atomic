@@ -1,10 +1,11 @@
 <?php
 /**
  * @copyright	Copyright (C) 2020 Ron Severdia. All rights reserved.
- * @license		GNU General Public License version 2 or later
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
+
 if (!isset($this->error)) {
 	$this->error = JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 	$this->debug = false;
@@ -12,42 +13,45 @@ if (!isset($this->error)) {
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
-<head>
-	<title><?php echo $this->error->getCode(); ?> - <?php echo $this->title; ?></title>
-	<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/system/css/error.css" type="text/css" />
-</head>
-<body>
-	<div class="error">
-		<div id="outline">
-		<div id="errorboxoutline">
-			<div id="errorboxheader"><?php echo $this->error->getCode(); ?> - <?php echo $this->error->getMessage(); ?></div>
-			<div id="errorboxbody">
-			<p><strong><?php echo JText::_('JERROR_LAYOUT_NOT_ABLE_TO_VISIT'); ?></strong></p>
-			<ol>
-				<li><?php echo JText::_('JERROR_LAYOUT_AN_OUT_OF_DATE_BOOKMARK_FAVOURITE'); ?></li>
-				<li><?php echo JText::_('JERROR_LAYOUT_SEARCH_ENGINE_OUT_OF_DATE_LISTING'); ?></li>
-				<li><?php echo JText::_('JERROR_LAYOUT_MIS_TYPED_ADDRESS'); ?></li>
-				<li><?php echo JText::_('JERROR_LAYOUT_YOU_HAVE_NO_ACCESS_TO_THIS_PAGE'); ?></li>
-				<li><?php echo JText::_('JERROR_LAYOUT_REQUESTED_RESOURCE_WAS_NOT_FOUND'); ?></li>
-				<li><?php echo JText::_('JERROR_LAYOUT_ERROR_HAS_OCCURRED_WHILE_PROCESSING_YOUR_REQUEST'); ?></li>
-			</ol>
-			<p><strong><?php echo JText::_('JERROR_LAYOUT_PLEASE_TRY_ONE_OF_THE_FOLLOWING_PAGES'); ?></strong></p>
-			<ul>
-				<li><a href="<?php echo $this->baseurl; ?>/index.php" title="<?php echo JText::_('JERROR_LAYOUT_GO_TO_THE_HOME_PAGE'); ?>"><?php echo JText::_('JERROR_LAYOUT_HOME_PAGE'); ?></a></li>
-				<li><a href="<?php echo $this->baseurl; ?>/index.php?option=com_search" title="<?php echo JText::_('JERROR_LAYOUT_SEARCH_PAGE'); ?>"><?php echo JText::_('JERROR_LAYOUT_SEARCH_PAGE'); ?></a></li>
-			</ul>
-			<p><?php echo JText::_('JERROR_LAYOUT_PLEASE_CONTACT_THE_SYSTEM_ADMINISTRATOR'); ?>.</p>
-			<div id="techinfo">
-			<p><?php echo $this->error->getMessage(); ?></p>
-			<p>
-				<?php if ($this->debug) :
-					echo $this->renderBacktrace();
-					endif; ?>
-			</p>
-			</div>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+   	 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   	 	<meta name="HandheldFriendly" content="true" />
+		<meta name="apple-mobile-web-app-capable" content="YES" />
+		<meta name="robots" content="noindex">
+		<title><?php echo $this->error->getCode(); ?> - <?php echo $this->title; ?></title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+		<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
+	</head>
+	<body class="error">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<p class="text-center mt-5">
+						<span style="font-size: 6em;" class="text-danger"><i class="fas fa-pizza-slice"></i></span>
+					</p>
+					<h1 class="text-center text-danger">Oops. Looks like you're lost.</h1>
+					
+					<p class="text-center">There are a number of reasons this might have happened, but more importantly let's get you to where you want to go.</p>
+					
+					<p class="text-center"><a href="<?php echo $this->baseurl; ?>/index.php" title="Home Page">Go to the home page <i class="fas fa-external-link-alt"></i></a></p>
+					
+					<p class="text-center"><a href="javascript: history.go(-1)" title="Back to the previous page">Go back to the previous page <i class="fas fa-external-link-alt"></i></a></p>
+						
+					<p class="text-center"><a href="<?php echo $this->baseurl; ?>/index.php?option=com_search" title="Search the website">Search the website <i class="fas fa-external-link-alt"></i></a></p>
+						
+					<p class="text-center">If problems continue, please contact the Website Administrator and report the error below.</p>
+					
+					<div class="tech-info">
+					<p class="text-center text-muted">ERROR: <?php echo $this->error->getCode(); ?> - <?php echo $this->error->getMessage(); ?></p>
+					<p class="text-center text-muted"><?php echo $this->error->getMessage(); ?></p>
+					<p class="text-center text-muted">
+						<?php if ($this->debug) :
+							echo $this->renderBacktrace();
+							endif; ?>
+					</p>
+				</div>
 			</div>
 		</div>
-		</div>
-	</div>
-</body>
+	</body>
 </html>

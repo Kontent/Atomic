@@ -27,6 +27,7 @@ $bodymenu							= $this->params->get('bodymenu');
 $bootstrapsource				= $this->params->get('bootstrapsource');
 $bootstrapcdn						= $this->params->get('bootstrapcdn');
 $fontawesome						= $this->params->get('fontawesome');
+$fontawesomecdn				= $this->params->get('fontawesomecdn');
 $customcsscode					= $this->params->get('customcsscode');
 $customcssfile					= $this->params->get('customcssfile');
 $customjs							= $this->params->get('customjs');
@@ -62,6 +63,7 @@ $codebeforehead				= $this->params->get('codebeforehead');
 $codeafterbody					= $this->params->get('codeafterbody');
 $codebeforebody				= $this->params->get('codebeforebody');
 $cssoverride						= $this->params->get('cssoverride');
+$instant								= $this->params->get('instant');
 $protopositions					= $this->params->get('protopositions');
 ?>
 <!DOCTYPE html>
@@ -159,11 +161,15 @@ $protopositions					= $this->params->get('protopositions');
 				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_bs4.css" type="text/css">
 		<?php endif; ?>
 		
-		<?php 		//	 Load FontAwesome 5.13.1
+		<?php 		//	 Load FontAwesome 5.14
 			if($fontawesome == 1) : ?>
-			<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
+			<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
 		<?php elseif($fontawesome == 2) : ?>
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+		<?php elseif($fontawesome == 3) : ?>
+			<link rel="stylesheet" href="<?php echo $fontawesomecdn; ?>">
+		<?php elseif($fontawesome == 4) : ?>
+			<script defer src="<?php echo $fontawesomecdn; ?>"></script>
 		<?php endif; ?>
 						
 		<?php		//	  Load Google Fonts 	?>
