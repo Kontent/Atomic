@@ -27,6 +27,7 @@ $bodymenu							= $this->params->get('bodymenu');
 $bootstrapsource				= $this->params->get('bootstrapsource');
 $bootstrapcdn						= $this->params->get('bootstrapcdn');
 $fontawesome						= $this->params->get('fontawesome');
+$fontawesomecdn				= $this->params->get('fontawesomecdn');
 $customcsscode					= $this->params->get('customcsscode');
 $customcssfile					= $this->params->get('customcssfile');
 $customjs							= $this->params->get('customjs');
@@ -165,8 +166,12 @@ $protopositions					= $this->params->get('protopositions');
 			<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
 		<?php elseif($fontawesome == 2) : ?>
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+		<?php elseif($fontawesome == 3) : ?>
+			<link rel="stylesheet" href="<?php echo $fontawesomecdn; ?>">
+		<?php elseif($fontawesome == 4) : ?>
+			<script defer src="<?php echo $fontawesomecdn; ?>"></script>
 		<?php endif; ?>
-						
+		
 		<?php		//	  Load Google Fonts 	?>
 		<?php if(($headerfont == 1) && ($bodyfont == 1) && ($headerfontname != null) && ($bodyfontname != null)) : ?>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=<?php echo $headerfontname; ?>|<?php echo $bodyfontname; ?>">
