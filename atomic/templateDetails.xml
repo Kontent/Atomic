@@ -9,7 +9,7 @@
 	<authorUrl>https://www.severdia.com</authorUrl>
 	<copyright>Copyright (C) 2018-2020 Ron Severdia. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later</license>
-	<description>TPL_ATOMIC_XML_DESCRIPTION</description>
+	<description>Atomic is an easy-to-modify and minimal example of a Joomla template using Bootstrap, once included in Joomla 1.5.</description>
 	<files>
 		<folder>html</folder>
 		<folder>css</folder>
