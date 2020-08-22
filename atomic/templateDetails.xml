@@ -16,7 +16,6 @@
 		<folder>fonts</folder>
 		<folder>images</folder>
 		<folder>language</folder>
-		<folder>fields</folder>
 		<folder>js</folder>
 		<folder>favicons</folder>
 		<filename>index.php</filename>
@@ -80,6 +79,7 @@
 				<option value="2">TPL_ATOMIC_BODYMENU_OPTION_BODYID</option>
 				<option value="3">TPL_ATOMIC_BODYMENU_OPTION_BODYCLASSID</option>
 			</field>
+			
 			<field name="customcssfile" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_CUSTOMCSSFILE_LABEL" description="TPL_ATOMIC_CUSTOMCSSFILE_DESC">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
