@@ -3,7 +3,9 @@
 
 
 
-/* Native dark mode - Add customizations here for dark mode if browser supports it */
+
+
+/* Native dark mode - Add customizations here for dark mode if the browser supports it */
 @media(prefers-color-scheme:dark) {
 
 

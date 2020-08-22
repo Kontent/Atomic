@@ -207,13 +207,6 @@ $protopositions					= $this->params->get('protopositions');
 			</style>
 		<?php endif; ?>
 		
-		<?php		//	 Add any custom dark mode CSS from the configuration.
-			if($customcsscode != null) : ?>
-			<style>
-				@media(prefers-color-scheme:dark) {
-				<?php echo $customdarkcsscode ?>
-				}
-			</style>
 		<?php endif; ?>
 		
 		<?php		//	 Load template favicons, loaded by default
