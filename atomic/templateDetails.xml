@@ -10,13 +10,12 @@
 	<copyright>Copyright (C) 2018-2020 Ron Severdia. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later</license>
 	<description>Atomic is an easy-to-modify and minimal example of a Joomla template using Bootstrap, once included in Joomla 1.5.</description>
+	<scriptfile>script.php</scriptfile>
 	<files>
 		<folder>html</folder>
-		<folder>css</folder>
 		<folder>fonts</folder>
 		<folder>images</folder>
 		<folder>language</folder>
-		<folder>js</folder>
 		<folder>favicons</folder>
 		<filename>index.php</filename>
 		<filename>index.html</filename>
