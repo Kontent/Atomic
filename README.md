@@ -6,7 +6,6 @@ Atomic is a "skeleton" template for Joomla 3. It's a slim template with the abil
 
 It includes the following frameworks and each is customizable:
 
-
 -Bootstrap 4  
 -jQuery  
 -Google Fonts  
@@ -20,5 +19,7 @@ Above body
 Left body | Right body  
 Below body  
 Footer  
+
+If you are moving from the Protostar template, just enable the setting to activate the positions and it'll be a seamless switch.
 
 Atomic also contains ways you can add your own custom CSS using a file or directly into the configuration. You can also add custom page code and your Google Analytics ID. 
