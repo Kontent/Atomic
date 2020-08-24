@@ -109,11 +109,14 @@ $protopositions					= $this->params->get('protopositions');
 					unset($doc->_scripts[JURI::root(true) . '/media/modals/js/script.min.js']);
 					unset($doc->_scripts[JURI::root(true) . '/media/system/js/core.js']);
 					unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
+
 					if (isset($this->_script['text/javascript'])) { 
-						$this->_script['text/javascript'] = preg_replace('%window\.addEvent\    \(\'load\',\s*function\(\)\s*{\s*new\s*JCaption\(\'img.caption\'\);\s*}\);\s*%',     '', $this->_script['text/javascript']);
-						if (empty($this->_script['text/javascript']))
+						$this->_script['text/javascript'] = preg_replace('/jQuery\(window\).on\(\'load\'\,  function\(\) \{(.*);/is', '', $this->_script['text/javascript']);
+
+						if (empty($this->_script['text/javascript'])) {
 							unset($this->_script['text/javascript']);
 						}
+					}
 			?>
 		<?php endif; ?>
 		
