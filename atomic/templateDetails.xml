@@ -2,15 +2,15 @@
 <!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "https://www.joomla.org/xml/dtd/2.5/template-install.dtd">
 <extension type="template" client="site" method="upgrade">
 	<name>Atomic</name>
-	<version>4.1.0</version>
-	<creationDate>02/28/19</creationDate>
+	<version>4.1.1</version>
+	<creationDate>10/10/09</creationDate>
 	<author>Ron Severdia</author>
 	<authorEmail>severdia@gmail.com</authorEmail>
 	<authorUrl>https://www.severdia.com</authorUrl>
 	<copyright>Copyright (C) 2018-2020 Ron Severdia. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later</license>
-	<description>Atomic is an easy-to-modify and minimal example of a Joomla template using Bootstrap, once included in Joomla 1.5.</description>
-	<scriptfile>script.php</scriptfile>
+	<description>Atomic is an easy-to-modify and minimal example of a Joomla template using Bootstrap, once included in Joomla 2.5.</description>
+	<scriptfile>install.php</scriptfile>
 	<files>
 		<folder>html</folder>
 		<folder>fonts</folder>
