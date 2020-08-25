@@ -97,7 +97,7 @@ $protopositions					= $this->params->get('protopositions');
 			<?php $doc = JFactory::getDocument();
 							unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']); ?>
 		<?php else : ?>
-				<?php echo $jquerycdn ?>
+			<script src="https://<?php echo $jquerycdn ?>"></script>
 		<?php endif; ?>		
 		
 		<jdoc:include type="head" />
@@ -110,10 +110,11 @@ $protopositions					= $this->params->get('protopositions');
 					unset($doc->_scripts[JURI::root(true) . '/media/system/js/core.js']);
 					unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
 					if (isset($this->_script['text/javascript'])) { 
-						$this->_script['text/javascript'] = preg_replace('%window\.addEvent\    (\'load\',\s*function\(\)\s*{\s*new\s*JCaption\(\'img.caption\'\);\s*}\);\s*%',     '', $this->_script['text/javascript']);
-						if (empty($this->_script['text/javascript']))
+						$this->_script['text/javascript'] = preg_replace('/jQuery\(window\).on\(\'load\'\,  function\(\) \{(.*);/is', '', $this->_script['text/javascript']);
+						if (empty($this->_script['text/javascript'])) {
 							unset($this->_script['text/javascript']);
 						}
+					}
 			?>
 		<?php endif; ?>
 		
@@ -130,7 +131,7 @@ $protopositions					= $this->params->get('protopositions');
 					unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-migrate.min.js']);
 			?>
 			<?php elseif($jqmigrate = 1) : ?>
-				<script defer src="https://code.jquery.com/jquery-migrate-3.1.0.min.js" crossorigin="anonymous"></script>
+				<script defer src="https://code.jquery.com/jquery-migrate-3.3.1.min.js" crossorigin="anonymous"></script>
 		<?php endif; ?>
 		
 		<?php 		//	 Remove Joomla CSS file (Modal styles)
@@ -150,7 +151,7 @@ $protopositions					= $this->params->get('protopositions');
    	 	   	 	
 		<?php		//	 Load remote Bootstrap 4.5 CSS framework from CDN
 			if(($bootstrapcdn == null) && ($bootstrapsource == 1)) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 			<?php elseif(($bootstrapcdn == null) && ($bootstrapsource == 2)) : ?>
 				<?php echo $bootstrapcdn ?>
 			<?php else : ?>
@@ -171,7 +172,7 @@ $protopositions					= $this->params->get('protopositions');
 		<?php elseif($fontawesome == 4) : ?>
 			<script defer src="<?php echo $fontawesomecdn; ?>"></script>
 		<?php endif; ?>
-						
+		
 		<?php		//	  Load Google Fonts 	?>
 		<?php if(($headerfont == 1) && ($bodyfont == 1) && ($headerfontname != null) && ($bodyfontname != null)) : ?>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=<?php echo $headerfontname; ?>|<?php echo $bodyfontname; ?>">
@@ -207,15 +208,6 @@ $protopositions					= $this->params->get('protopositions');
 			</style>
 		<?php endif; ?>
 		
-		<?php		//	 Add any custom dark mode CSS from the configuration.
-			if($customcsscode != null) : ?>
-			<style>
-				@media(prefers-color-scheme:dark) {
-				<?php echo $customdarkcsscode ?>
-				}
-			</style>
-		<?php endif; ?>
-		
 		<?php		//	 Load template favicons, loaded by default
 			if($loadfavicons == 1) : ?>
 				<link rel="apple-touch-icon" sizes="180x180" href="/templates/<?php echo $this->template ?>/favicons/apple-touch-icon.png">
@@ -248,7 +240,7 @@ $protopositions					= $this->params->get('protopositions');
 				
 		<?php 		//	 Add Google Analytics tag if configured.
 		if($gacode != null) : ?>
-		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-504090-1"></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gacode; ?>"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
@@ -265,7 +257,7 @@ $protopositions					= $this->params->get('protopositions');
 		
 	</head>
 	
-	<?php		/* Add the menu item alias to the body ID, class, or both  */		?>
+	<?php		// Add the menu item alias to the body ID, class, or both. //		?>
 	<?php if($bodymenu == 1) : ?>
 		<body class="<?php echo $active->alias; ?> component-only ">
 	<?php elseif($bodymenu == 2) : ?>
@@ -276,13 +268,13 @@ $protopositions					= $this->params->get('protopositions');
 		<body class="component-only">
 	<?php endif; ?>
 	
-	<?php	// Add custom code after opening body tag
+	<?php		//	 Add custom code after opening body tag
 		if($codeafterbody != null) : ?>
 		<?php echo $codeafterbody;
 	?>	
 	<?php endif; ?>
 
-	<?php 		// Choose either a fixed or fluid width container
+	<?php 		//	 Choose either a fixed or fluid width container
 		if($fluidcontainer == 1) : ?>
 		<div class="container-fluid">
 	<?php else : ?>
@@ -303,31 +295,31 @@ $protopositions					= $this->params->get('protopositions');
 
 		<?php		//	 Use jQuery Migrate 3.0.1
 			if($jqmigrate == 1)  : ?>
-				<script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js" crossorigin="anonymous"></script>
+				<script src="https://code.jquery.com/jquery-migrate-3.3.1.min.js" crossorigin="anonymous"></script>
 		<?php endif; ?>
 		
-		<?php 		//	 Load the local or remote Bootstrap 3 or 4 JavaScript dependency
-			 			//	 If CDN empty and load BS 3 remotely	
+			<?php 		//	 Load the local or remote Bootstrap 3 or 4 JavaScript dependency
+			 				//	 If CDN empty and load BS 3 remotely	
 			if(($bootstrapcdn == null) && ($bootstrapsource == 1)) : ?>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 			
 			<?php 		//	 If CDN empty and load BS 4 remotely
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3)) : ?>
 			<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 			
 			<?php 		//	 If CDN empty and load BS 4 remotely, but full jQuery 3 is loaded
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3) && ($jqlibrary == 2)) : ?>
-			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 		<?php else : ?>
 		<?php endif; ?>	
 		
 		<?php		//	 Add custom code before closing body tag
 			if($codebeforebody != null) : ?>
-			<?php echo $codebeforebody;
-		?>	
+			<?php echo $codebeforebody; ?>	
 		<?php endif; ?>
 		
 		<?php		//	 Use Instant.page
