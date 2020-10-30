@@ -352,6 +352,17 @@ body.protostar .search {
 	margin-top: -20px;
 }
 
+/* Fix Protostar missing image dimensions */
+.syndicate-module img {
+	height:16px;
+	width:16px;
+} 
+img[src="raindrops.jpg"] {
+	width: 700px;
+	height: 180px;
+}
+
+
 
 /* -------------- Font Awesome Icons -------------- */
 
