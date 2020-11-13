@@ -2,7 +2,7 @@
 <!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "https://www.joomla.org/xml/dtd/2.5/template-install.dtd">
 <extension type="template" client="site" method="upgrade">
 	<name>Atomic</name>
-	<version>4.1.1</version>
+	<version>4.2.0</version>
 	<creationDate>10/10/09</creationDate>
 	<author>Ron Severdia</author>
 	<authorEmail>severdia@gmail.com</authorEmail>
