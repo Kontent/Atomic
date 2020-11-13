@@ -143,7 +143,10 @@
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
-			
+			<field name="scrollreveal" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SCROLLREVEAL_LABEL" description="TPL_ATOMIC_SCROLLREVEAL_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
 			<field name="instant" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_INSTANT_LABEL" description="TPL_ATOMIC_INSTANT_DESC">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>

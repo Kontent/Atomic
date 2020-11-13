@@ -66,6 +66,7 @@ $cssoverride						= $this->params->get('cssoverride');
 $instant								= $this->params->get('instant');
 $protopositions					= $this->params->get('protopositions');
 $bootswatch						= $this->params->get('bootswatch');
+$scrollreveal						= $this->params->get('scrollreveal');
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
@@ -133,6 +134,11 @@ $bootswatch						= $this->params->get('bootswatch');
 			?>
 			<?php elseif($jqmigrate = 1) : ?>
 				<script defer src="https://code.jquery.com/jquery-migrate-3.3.1.min.js" crossorigin="anonymous"></script>
+		<?php endif; ?>
+		
+		<?php		//	 Use Scroll Reveal
+			if($scrollreveal == 1) : ?>
+			<script src="https://unpkg.com/scrollreveal"></script>
 		<?php endif; ?>
 		
 		<?php 		//	 Remove Joomla CSS file (Modal styles)
