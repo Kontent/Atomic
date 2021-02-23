@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2020 Ron Severdia. All rights reserved.
+ * @copyright	Copyright (C) 2008-2021 Ron Severdia. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -78,7 +78,7 @@ $scrollreveal						= $this->params->get('scrollreveal');
 		<?php endif; ?>
 			
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-   	 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   	 	<meta name="viewport" content="width=device-width, initial-scale=1">
    	 	<meta name="HandheldFriendly" content="true" />
 		<meta name="apple-mobile-web-app-capable" content="YES" />
 		
@@ -156,57 +156,58 @@ $scrollreveal						= $this->params->get('scrollreveal');
 			<?php $this->setGenerator(null); ?>
 		<?php endif; ?>
    	 	   	 	
-		<?php		//	 Load local or remote Bootstrap 4.5 CSS framework, or from CDN
+		<?php		//	 Load local or remote Bootstrap 4.6 CSS framework, or from CDN
 			if(($bootstrapcdn == null) && ($bootstrapsource == 1)) : ?>
-				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 			<?php elseif(($bootstrapcdn == null) && ($bootstrapsource == 2)) : ?>
 				<?php echo $bootstrapcdn ?>
 			<?php else : ?>
 		<?php endif; ?>
 		
 		<?php 		//	 Load Bootswatch theme. Themes also include BS.
+				
 			if($bootswatch == 1) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cerulean/bootstrap.min.css" integrity="sha384-3fdgwJw17Bi87e1QQ4fsLn4rUFqWw//KU0g8TvV6quvahISRewev6/EocKNuJmEw" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/cerulean/bootstrap.min.css" integrity="sha512-u5+wLyKje1GFWkxtj9SBywNE4jmbgXUVJU24sDC4LShQksachiXuDS6syD75F414AiATXhV7eTqFO7kegoRu1g==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 2) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css" integrity="sha384-5QFXyVb+lrCzdN228VS3HmzpiE7ZVwLQtkt+0d9W43LQMzz4HBnnqvVxKg6O+04d" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/cosmo/bootstrap.min.css" integrity="sha512-PdJ/GdNpssn/PJ867hkDvYX2VHLsJoLtu1glpNDxCH7VacSGJ2FIWrOXWzBN77qV4kGdwOwXZmmznWjAsGHa0g==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 3) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/flatly/bootstrap.min.css" integrity="sha512-5bGVgbI2xuyCes5Q7colxgLChuX/2lidwyC6zFo0Fu7Nb46xf55YcMwojQel2JBxaJoa3w0d14dKek6TbGROfQ==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 4) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/journal/bootstrap.min.css" integrity="sha384-QDSPDoVOoSWz2ypaRUidLmLYl4RyoBWI44iA5agn6jHegBxZkNqgm2eHb6yZ5bYs" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/journal/bootstrap.min.css" integrity="sha512-F+JIviHiHFl2uTOrUOe3ssKWmqX725jGHse17rqA+B48PZktPE69m1ZT8r/7omHKOtScvQh6QIwxc6cZ8JacKg==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 5) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/litera/bootstrap.min.css" integrity="sha384-enpDwFISL6M3ZGZ50Tjo8m65q06uLVnyvkFO3rsoW0UC15ATBFz3QEhr3hmxpYsn" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/litera/bootstrap.min.css" integrity="sha512-wX6nlCNl4dU3nJ7LyvHnD/I3tA51vhx1QVYQYOtCHuaSQGnuSaS0Y1V0Sv2AeLjQnjbiUCn4ci6CaXdDBMEplw==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 6) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/lumen/bootstrap.min.css" integrity="sha384-GzaBcW6yPIfhF+6VpKMjxbTx6tvR/yRd/yJub90CqoIn2Tz4rRXlSpTFYMKHCifX" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/lumen/bootstrap.min.css" integrity="sha512-k7f744z7yElaeTu/FuqJGQ9G3YJ2VVN7r00mkreJCg7t0mera+rLuCd+uBuarIdTNfrI8xq/fFE9mOIbG9jeXA==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 7) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/lux/bootstrap.min.css" integrity="sha384-9+PGKSqjRdkeAU7Eu4nkJU8RFaH8ace8HGXnkiKMP9I9Te0GJ4/km3L1Z8tXigpG" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/lux/bootstrap.min.css" integrity="sha512-WuuAGQTSGG3228iS6X391fHFzL6x65yWGGLilC1XYcXY6gT/6EHofWqsjLBsunqLtq7pDzcYOjW21Nn9y9Q75g==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 8) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/materia/bootstrap.min.css" integrity="sha384-B4morbeopVCSpzeC1c4nyV0d0cqvlSAfyXVfrPJa25im5p+yEN/YmhlgQP/OyMZD" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/materia/bootstrap.min.css" integrity="sha512-7exGAnRoaHLuhukDlCpSYr0i9q0oXSzkC35uZSF2bJmnyZCrsWs3h+YZKKsLe9Tb5TfYduhNbBwvYef9XN64gA==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 9) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/minty/bootstrap.min.css" integrity="sha384-H4X+4tKc7b8s4GoMrylmy2ssQYpDHoqzPa9aKXbDwPoPUA3Ra8PA5dGzijN+ePnH" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/minty/bootstrap.min.css" integrity="sha512-cJfSWSAaQhijZtTYlN999y0ZPyzstO5T7M9ok7gBi8ad9vu9ibPDBu8gEbu/GLlRR3Tt2RAM2kTxX2H+EMicEA==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 10) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/pulse/bootstrap.min.css" integrity="sha384-L7+YG8QLqGvxQGffJ6utDKFwmGwtLcCjtwvonVZR/Ba2VzhpMwBz51GaXnUsuYbj" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/pulse/bootstrap.min.css" integrity="sha512-hsigz5HlhRSxo/G/HVgixFsjgnsPRlIcHceeAFfStolvxPxtcSNNEia0RNs8F9KqxUV2CYivxiK/53Q8Mwlm1A==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 11) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sandstone/bootstrap.min.css" integrity="sha384-zEpdAL7W11eTKeoBJK1g79kgl9qjP7g84KfK3AZsuonx38n8ad+f5ZgXtoSDxPOh" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/sandstone/bootstrap.min.css" integrity="sha512-XsxfGIdvnQW/g1t0gyABAyAw/xP51TmpK5iXG6vfNEU+5qE+nl/d+NkAKHCcvDSEmgSUJbN65SR9/eZEUkfXIA==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 12) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/simplex/bootstrap.min.css" integrity="sha384-FYrl2Nk72fpV6+l3Bymt1zZhnQFK75ipDqPXK0sOR0f/zeOSZ45/tKlsKucQyjSp" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/simplex/bootstrap.min.css" integrity="sha512-9hj+qhrmo7MUSzKG3nwkDWncL1x8e2d1wfJxufofoBMMLXlqlqvjpT0V0blusJ8CFx9fs9Ru7ICYkVrz62Q33w==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 13) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/sketchy/bootstrap.min.css" integrity="sha512-AF3OQszBqW7CeiKglwNTnTwPCbJvAo6DVXLbU37Qcw7nPxVPywkPbDCZyGpLu0xqzPeQL2GKAQ5k69hMBTI7LA==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 14) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/spacelab/bootstrap.min.css" integrity="sha384-F1AY0h4TrtJ8OCUQYOzhcFzUTxSOxuaaJ4BeagvyQL8N9mE4hrXjdDsNx249NpEc" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/spacelab/bootstrap.min.css" integrity="sha512-1gJsJyef+f5RKK96Vq34R3Lc9KJr21Ss2PcXosqp+1Z1yWpCKXL35p3E5nYxj4PPSfjFUc6elocMw9AiXrGXAQ==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 15) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/united/bootstrap.min.css" integrity="sha384-JW3PJkbqVWtBhuV/gsuyVVt3m/ecRJjwXC3gCXlTzZZV+zIEEl6AnryAriT7GWYm" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/united/bootstrap.min.css" integrity="sha512-D/XTI3HHxegvO0hcG75yd++4QyP+AM5IqkxFRu1KBhBQYwxYdWi+JP9DlBppR3GiMBXlAZWuw2qmHQWobofXQA==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 16) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/yeti/bootstrap.min.css" integrity="sha384-mLBxp+1RMvmQmXOjBzRjqqr0dP9VHU2tb3FK6VB0fJN/AOu7/y+CAeYeWJZ4b3ii" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/yeti/bootstrap.min.css" integrity="sha512-GVYbMbb9dzILPv8eNN22wE2YJtMNdPdgPCPs8Aoz9FkCRTvt2c60Tg1QYnxucm6ayz10YPiQ/btuu4UuMYdN9g==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 17) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cyborg/bootstrap.min.css" integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/cyborg/bootstrap.min.css" integrity="sha512-btcJYpZJYw8Q01/asshezM2QraXI5OMl47spBQ6yHnAHhevR2EOnWDP0VJznX8fpvtuWu289XafQpcO6I4e3+A==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 18) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/darkly/bootstrap.min.css" integrity="sha512-A/WvCV75maYUI3F3yjeSqYg0dUIepPRx14Qw8EZjJ/udG5/s3uDWLHnm1FSbYzrJg4RLdAdEm/f6+1V6AxCBJQ==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 19) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/slate/bootstrap.min.css" integrity="sha384-8iuq0iaMHpnH2vSyvZMSIqQuUnQA7QM+f6srIdlgBrTSEyd//AWNMyEaSF2yPzNQ" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/slate/bootstrap.min.css" integrity="sha512-o5yeKjohzmmY4mschw0nYnJxQJu+2xrDLeWhTG57dFRuXyzWX2630AwHExfxuFxfaBYUuRQzP7ggJJYhfRnVqw==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 20) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/solar/bootstrap.min.css" integrity="sha384-NCwXci5f5ZqlDw+m7FwZSAwboa0svoPPylIW3Nf+GBDsyVum+yArYnaFLE9UDzLd" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/solar/bootstrap.min.css" integrity="sha512-4erGAXsEsXF4aZeb9ye7RJadu03zIuEW0CzuEKgsCa3xrBj/smW1TDZ07ZiK7o5Yk96IB4iQgQ0LhqjFeHqtLg==" crossorigin="anonymous" />
 				<?php elseif($bootswatch == 21) : ?>
-				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/superhero/bootstrap.min.css" integrity="sha384-HnTY+mLT0stQlOwD3wcAzSVAZbrBp141qwfR4WfTqVQKSgmcgzk+oP0ieIyrxiFO" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/superhero/bootstrap.min.css" integrity="sha512-Slx3+m+CsW6eBV9/9EaeSkHUQfieDfx4DmpTxtJIQwE6cwbEUgFsgEXohRIxNej8rWySQwm231R+FVg89hF4Qg==" crossorigin="anonymous" />
 		<?php endif; ?>
 		
 		<?php		//	 Load the local CSS fixes for Joomla & Bootstrap 4.
@@ -216,9 +217,9 @@ $scrollreveal						= $this->params->get('scrollreveal');
 		
 		<?php 		//	 Load FontAwesome 5.14
 			if($fontawesome == 1) : ?>
-			<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+			<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js"></script>
 		<?php elseif($fontawesome == 2) : ?>
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 		<?php elseif($fontawesome == 3) : ?>
 			<link rel="stylesheet" href="<?php echo $fontawesomecdn; ?>">
 		<?php elseif($fontawesome == 4) : ?>
@@ -479,12 +480,12 @@ $scrollreveal						= $this->params->get('scrollreveal');
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3)) : ?>
 			<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
 			
 			<?php 		//	 If CDN empty and load BS 4 remotely, but full jQuery 3 is loaded
 				elseif(($bootstrapcdn == null) && ($bootstrapsource == 3) && ($jqlibrary == 2)) : ?>
 			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
 		<?php else : ?>
 		<?php endif; ?>	
 		
