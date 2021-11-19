@@ -2,7 +2,7 @@
 
 Demo: https://atomic.kontentdesign.com
 
-Atomic is a "skeleton" template for Joomla 3. It's a slim template with the ability to enable/disable the various libraries in Joomla or add your own. It's for Joomla users who want a basic starting point for creating their own custom Joomla template.
+Atomic is a "skeleton" template for Joomla 3 and 4. It's a slim template with the ability to enable/disable the various libraries in Joomla or add your own. It's for Joomla users who want a basic starting point for creating their own custom Joomla template.
 
 It includes the following frameworks and each is customizable:
 
