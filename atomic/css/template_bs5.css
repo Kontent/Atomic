@@ -30,6 +30,9 @@ code,xmp {
 	margin-top: 10px;
 	margin-bottom: 0;
 }
+.row > .page-header {
+	margin-left: 15px;
+}
 
 /* Header Menu */
 .headermenu {
@@ -43,7 +46,6 @@ code,xmp {
 .headermenu .nav.menu.mod-list li {
 	padding-right: 15px;
     padding-left: 15px;
-    margin-bottom: 16px;
 }
 .headermenu .nav > li.active a {
     border-bottom: 4px solid blue;

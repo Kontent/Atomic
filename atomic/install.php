@@ -17,7 +17,7 @@ class AtomicInstallerScript
 	 *
 	 * @return  boolean  True on success
 	 */
-	public function postflight($route, JAdapterInstance $adapter)
+	public function postflight($route, $adapter)
 	{
 		$parent = $adapter->getParent();
 		$source = $parent->getPath('source');
