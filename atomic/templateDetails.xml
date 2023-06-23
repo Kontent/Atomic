@@ -58,6 +58,11 @@
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
 			
+			<field name="atomic4positions" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_V4POSITIONS_LABEL" description="TPL_ATOMIC_V4POSITIONS_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			
 			<field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_COPYRIGHT_LABEL" description="TPL_ATOMIC_COPYRIGHT_DESC">
 				<option value="0">TPL_ATOMIC_DISABLED</option>
 				<option value="1">TPL_ATOMIC_ENABLED</option>

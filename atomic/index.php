@@ -55,6 +55,8 @@ $logo									= $this->params->get('logo');
 $scrollreveal						= $this->params->get('scrollreveal');
 $sitedescription					= $this->params->get('sitedescription');
 $sitetitle								= $this->params->get('sitetitle');
+$atomic4positions				= $this->params->get('atomic4positions');
+
 
 // Register assets
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
