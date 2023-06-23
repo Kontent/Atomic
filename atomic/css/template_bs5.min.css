@@ -1,0 +1,235 @@
+@charset "UTF-8";
+
+/* Below are the CSS styles that aren't included with Bootstrap 5. It's a good idea to keep them whether or not you use it unless you know what you're doing. */
+
+
+body, p, li {
+	font-family: var(--atomic-body-font);
+}
+h1,h2,h3,h4,h5,h6 {
+	font-family: var(--atomic-header-font);
+}
+
+
+
+/* General styles */
+
+/* Cassiopeia module positions 
+sidebar-left
+sidebar-right
+below-top
+menu
+search
+banner
+top-a
+top-b
+bottom-a
+bottom-b
+footer
+*/
+
+header, main, footer {
+	margin: 1em 0;
+}
+.container-header {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	flex-wrap: nowrap;
+}
+.container-title {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+.container-main {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: stretch;
+	gap: 20px;
+	flex-wrap: nowrap;
+	margin: 20px 0;
+}
+.container-sidebar-left {
+	flex-grow: 1;
+	flex-basis: 25%;
+}
+.container-sidebar-right {
+	flex-grow: 1;
+	flex-basis: 25%;
+}
+.container-component {
+	flex-grow: 2;
+	flex-basis: 50%;
+}
+.img-fluid img {
+	max-width: 100%;
+	height: auto;
+}
+.mod-login .form-group {
+	margin: 10px;
+}
+.mod-login__options {
+	margin-left: 10px;
+}
+.container-search {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+}
+
+.nav {
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: stretch;
+	gap: 20px;
+}
+.nav > li {
+	display: flex;
+	padding: 10px 10px 10px 0;
+}
+.nav > li > ul {
+	display: none;
+}
+.nav > li:hover > ul {
+	display: block;
+	position: absolute;
+	top: 40px;
+	background: #fff;
+	padding: 10px;
+	width: 190px;
+}
+
+
+main {
+
+}
+
+.container-banner {
+
+}
+.container-top {
+
+}
+.container-top-a {
+
+}
+.container-top-b {
+
+}
+.container-bottom {
+
+}
+
+.container-sidebar-left {
+
+}
+.container-sidebar-right {
+
+}
+
+footer {
+	text-align: center;
+	padding: 20px 10px;
+}
+
+figure.float-start img {
+	padding: 0 10px 10px 0;
+}
+figcaption {
+	font-size: .8em;
+}
+
+
+/* Cassiopeia fixes  */
+
+#mod-custom118 {
+	color: #fff;
+	padding: 10px 20px;
+}
+.mod-finder__search.input-group {
+	flex-wrap: nowrap;
+	padding: 10px;
+}
+.awesomplete {
+	width: 100%;
+}
+
+/* Text styles */
+
+
+/* Left Side Menu */
+
+
+
+/* Frontend editing */
+
+
+/* Breadcrumbs */
+
+
+/* Pagination */
+
+
+/* Search */
+
+
+/* Login */
+
+
+/* System error messages  */
+
+
+
+/* Contact form */
+
+
+
+/* Edit article button menu */
+
+
+
+/* System alerts */
+
+
+
+
+/* Inline CSS  */
+
+      
+      
+
+/* -------------- Font Awesome Icons -------------- */
+
+
+
+/* Component only view  */
+
+    
+/* Bootstrap 5 Media Queries  */
+
+/* Extra small devices (portrait phones, less than 576px)  */
+/* No media query since this is the default in Bootstrap  */
+
+/* Small devices (landscape phones, 576px and up)  */
+@media (min-width: 576px) {
+
+}
+
+/* Medium devices (tablets, 768px and up)  */
+@media (min-width: 768px) {
+
+}
+
+/* Large devices (desktops, 992px and up)  */
+@media (min-width: 992px) {
+
+}
+
+/* Extra large devices (large desktops, 1200px and up)  */
+@media (min-width: 1200px) {
+
+}
+
+

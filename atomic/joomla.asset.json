@@ -1,0 +1,28 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "atomic",
+  "version": "5.0.0",
+  "description": "This file contains details of the assets used by the Atomic 5 template",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+  	{
+      "name": "template.atomic.bs5css",
+      "description": "Bootstrap 5 fixes for Joomla 4",
+      "type": "style",
+      "uri": "templates/atomic/css/template_bs5.min.css"
+    },
+    {
+      "name": "template.atomic.css",
+      "description": "A file where a user can add their own CSS.",
+      "type": "style",
+      "uri": "templates/atomic/css/template.css",
+      "weight": 500
+    },
+    {
+      "name": "template.atomic.js",
+      "description": "The file containing the JavaScript for this template.",
+      "type": "script",
+      "uri": "templates/atomic/css/template.js"
+    }
+  ]
+}

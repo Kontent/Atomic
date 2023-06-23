@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2022 Ron Severdia. All rights reserved.
+ * @copyright	Copyright (C) 2020 Ron Severdia. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -31,7 +31,7 @@ $fontawesomecdn				= $this->params->get('fontawesomecdn');
 $customcsscode					= $this->params->get('customcsscode');
 $customcssfile					= $this->params->get('customcssfile');
 $customjs							= $this->params->get('customjs');
-$fluidcontainer						= $this->params->get('fluidcontainer');
+$fluidcontainer					= $this->params->get('fluidcontainer');
 $jqlibrary								= $this->params->get('jqlibrary');
 $jquerycdn							= $this->params->get('jquerycdn');
 $bsfixjoomla						= $this->params->get('bsfixjoomla');
@@ -39,10 +39,10 @@ $gacode								= $this->params->get('gacode');
 $pageheader						= $this->params->get('pageheader');
 $pageheadermod				= $this->params->get('pageheadermod');
 $topmenu							= $this->params->get('topmenu');
-$abovebody							= $this->params->get('abovebody');
+$abovebody						= $this->params->get('abovebody');
 $leftbody								= $this->params->get('leftbody');
 $rightbody							= $this->params->get('rightbody');
-$belowbody							= $this->params->get('belowbody');
+$belowbody						= $this->params->get('belowbody');
 $footer									= $this->params->get('footer');
 $alertbar								= $this->params->get('alertbar');
 $headerfont							= $this->params->get('headerfont');

@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+/* Below are the CSS styles that aren't included with Bootstrap 5. It's a good idea to keep them whether or not you use it unless you know what you're doing. */
+
+/* General styles */
+
+
+/* Text styles */
+
+
+/* Left Side Menu */
+
+
+
+/* Frontend editing */
+
+
+/* Breadcrumbs */
+
+
+/* Pagination */
+
+
+/* Search */
+
+
+/* Login */
+
+
+/* System error messages  */
+
+
+
+/* Contact form */
+
+
+
+/* Edit article button menu */
+
+
+
+/* System alerts */
+
+
+
+/* Prototype template fixes  */
+
+
+
+/* -------------- Font Awesome Icons -------------- */
+
+
+
+/* Component only view  */
+
+    
+/* Bootstrap 5 Media Queries  */
+
+/* Extra small devices (portrait phones, less than 576px)  */
+/* No media query since this is the default in Bootstrap  */
+
+/* Small devices (landscape phones, 576px and up)  */
+@media (min-width: 576px) {
+
+}
+
+/* Medium devices (tablets, 768px and up)  */
+@media (min-width: 768px) {
+
+}
+
+/* Large devices (desktops, 992px and up)  */
+@media (min-width: 992px) {
+
+}
+
+/* Extra large devices (large desktops, 1200px and up)  */
+@media (min-width: 1200px) {
+
+}
+
+
