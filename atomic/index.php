@@ -55,7 +55,7 @@ $logo									= $this->params->get('logo');
 $scrollreveal						= $this->params->get('scrollreveal');
 $sitedescription					= $this->params->get('sitedescription');
 $sitetitle								= $this->params->get('sitetitle');
-$atomic4positions				= $this->params->get('atomic4positions');
+$casspositions					= $this->params->get('casspositions');
 
 
 // Register assets
@@ -236,10 +236,12 @@ $wr = $wa->getRegistry();
 		<body id="<?php echo $active->alias; ?>">
 	<?php elseif($bodymenu == 3) : ?>
 		<body id="<?php echo $active->alias; ?>" class="<?php echo $active->alias; ?> ">
+	<?php elseif($casspositions == 1) : ?>
+		<body class="cassiopeia">
 	<?php else : ?>
 		<body>
 	<?php endif; ?>
-	
+		
 	<?php		//	 Add custom code after opening body tag
 		if($codeafterbody != null) : ?>
 		<?php echo $codeafterbody;
@@ -258,13 +260,11 @@ $wr = $wa->getRegistry();
 		<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
 	<?php endif; ?>
 	
-	<header>
-		 <?php if ($this->countModules('topbar')) : ?>
-			<div class="container-topbar">
-				<jdoc:include type="modules" name="topbar" style="none" />
-			</div>
-		<?php endif; ?>
-
+		<header>
+		
+		<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="topbar" style="none" /><?php endif; ?>
+		<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="below-top" style="none" /><?php endif; ?>
+		
 		<?php	if($sitedescription != null || $sitetitle != null || $logo != null) : ?>		
 			<div class="container-header">
 				<?php if($logo != null) : ?>
@@ -284,66 +284,62 @@ $wr = $wa->getRegistry();
 				</div>
 				<?php endif; ?>
 			</div>
-	<?php endif; ?>
+		<?php endif; ?>
 	
-	<?php if ($this->countModules('search')) : ?>
-		<div class="container-search">
-			<jdoc:include type="modules" name="search" style="none" />
-		</div>
-    <?php endif; ?>
-    
-	<?php if ($this->countModules('topmenu')) : ?>
-		<div class="container-menu">
-			<jdoc:include type="modules" name="topmenu" style="none" />
-		</div>
-	<?php endif; ?>
+		<?php if ($this->countModules('topmenu')) : ?>
+			<div class="row">
+				<nav class="navigation">
+					<div class="nav-collapse">
+						<jdoc:include type="modules" name="navigation" style="basic" />
+						<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="menu" style="none" /><?php endif; ?>
+					</div>
+				</nav>
+				<div class="col-md-3">
+					<jdoc:include type="modules" name="search" style="basic" />
+					<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="search" style="none" /><?php endif; ?>
+				</div>
+			</div>
+		<?php endif; ?>
 	</header>
 
     <main>
-    	 <?php if ($this->countModules('banner', true)) : ?>
-		  <div class="container-banner">
-			 	<jdoc:include type="modules" name="banner" style="none" />
-		  </div>
-  		 <?php endif; ?>
-
 		<div class="container-main">
-		
-			<?php if ($this->countModules('sidebar-left', true)) : ?>
-			<div class="container-sidebar-left">
-				 <jdoc:include type="modules" name="sidebar-left" style="card" />
-			</div>
+			<?php if ($this->countModules('leftbody', true)) : ?>
+				<div class="container-sidebar-left">
+					<jdoc:include type="modules" name="leftbody"  style="default" />
+					<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="sidebar-left" style="card" /><?php endif; ?>
+				</div>
 			<?php endif; ?>
 	
 			<div class="container-component">
 				<jdoc:include type="modules" name="breadcrumbs" style="none" />
-				<jdoc:include type="modules" name="main-top" style="card" />
+				<jdoc:include type="modules" name="abovebody" style="none" />
+				<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-top" style="card" /><?php endif; ?>
 				<jdoc:include type="message" />
 				<jdoc:include type="component" />
-				<jdoc:include type="modules" name="main-bottom" style="card" />
+				<jdoc:include type="modules" name="belowbody" style="default" />
+				<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-bottom" style="card" /><?php endif; ?>
 			</div>
 
-			<?php if ($this->countModules('sidebar-right', true)) : ?>
-			<div class="container-sidebar-right">
-				<jdoc:include type="modules" name="sidebar-right" style="card" />
-			</div>
+			<?php if ($this->countModules('rightbody', true)) : ?>
+				<div class="container-sidebar-right">
+					<jdoc:include type="modules" name="rightbody" style="card" />
+					<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="sidebar-right" style="card" /><?php endif; ?>
+				</div>
 			<?php endif; ?>
 
 		</div>
-		
-        <?php if ($this->countModules('bottom', true)) : ?>
-        <div class="container-bottom">
-            <jdoc:include type="modules" name="bottom" style="card" />
-        </div>
-        <?php endif; ?>
     
 	</main>
 
 	<?php if ($this->countModules('footer', true) or $copyright == 1) : ?>
-		<footer class="footer">
+		<footer class="container">
+			<div class="row">
 			<jdoc:include type="modules" name="footer" style="none" />
 			
 			<?php		//	Copyright
 				if($copyright == 1) : ?>
+				<hr />
 				<div class="copyright">
 					<?php if(($copyrighttxt != null) && ($copyright == 1)) : ?>
 					&copy;<?php echo date('Y'); ?> <?php echo $copyrighttxt ?>

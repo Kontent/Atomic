@@ -58,7 +58,7 @@
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
 			
-			<field name="atomic4positions" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_V4POSITIONS_LABEL" description="TPL_ATOMIC_V4POSITIONS_DESC">
+			<field name="casspositions" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_CASSPOSITIONS_LABEL" description="TPL_ATOMIC_CASSPOSITIONS_DESC">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
