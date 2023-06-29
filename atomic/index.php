@@ -11,11 +11,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
-$app   = Factory::getApplication();
-$wa    = $this->getWebAssetManager();
+$app = Factory::getApplication();
+$wa = $this->getWebAssetManager();
 
 //	Get the application object for things like displaying the site name 
-$app  = JFactory::getApplication();
+$app = JFactory::getApplication();
 $user = JFactory::getUser();
 
 //	Get the alias of the current menu item
@@ -71,7 +71,7 @@ $wr = $wa->getRegistry();
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 	<head>
-		<?php		//	 Add custom code after opening head tag
+		<?php	//	Add custom code after opening head tag
 			if($codeafterhead != null) : ?>
 			<?php echo $codeafterhead;
 			?>	
@@ -79,12 +79,12 @@ $wr = $wa->getRegistry();
 		
 		<jdoc:include type="metas" />
 		
-		<?php 		//	Remove Joomla generator tag
+		<?php	//	Remove Joomla generator tag
 			if($killgenerator	 == 1) : ?>
 			<?php $this->setMetaData('generator',''); ?>
 		<?php endif; ?>		
 		
-		<?php 		//	 Favicons
+		<?php	//	Favicons
 			if($loadfavicons == 1) : ?>
 			<link rel="apple-touch-icon" sizes="180x180" href="templates/atomic/favicons/apple-touch-icon.png">
 			<link rel="icon" type="image/png" sizes="32x32" href="templates/atomic/favicons/favicon-32x32.png">
@@ -104,7 +104,7 @@ $wr = $wa->getRegistry();
 		
     	<jdoc:include type="styles" />
     			
-		<?php 		//	 Load Bootstrap or Bootswatch theme.
+		<?php	//	Load Bootstrap or Bootswatch theme.
 			if($bootstrapsource == 1 || $bootstrapsource == 2) : ?>
 				<link rel="stylesheet" href="media/vendor/bootstrap/css/bootstrap.min.css" />
 				
@@ -136,7 +136,7 @@ $wr = $wa->getRegistry();
 				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.0/superhero/bootstrap.min.css" integrity="sha512-J0q3uYNPOZ/n9hYguPcu6W6vWeLg1auyzcHnpQ4T/yd57kHb2tCz4MpVBdvoJwWXOUjDWT9t9QdsTiMrS2XRvw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<?php endif; ?>
 		
-		<?php 		//	  Load Google Fonts
+		<?php	//	Load Google Fonts
 			if(($headerfont == 1) && ($headerfontname != null)) : ?>
 			<?php echo $headergooglefont; ?>
 		<?php endif; ?>
@@ -146,7 +146,7 @@ $wr = $wa->getRegistry();
 		
 		<style>
 			:root {
-				<?php 		//	  Define CSS variables
+				<?php	//	Define CSS variables
 					if(($headerfont == 1) && ($headerfontname != null)) : ?>
 					--atomic-header-font: <?php echo $headerfontname; ?>;
 				<?php endif; ?>
@@ -156,7 +156,7 @@ $wr = $wa->getRegistry();
 			}
 		</style>
 				
-		<?php 		//	 Load FontAwesome
+		<?php	//	Load FontAwesome
 		if($fontawesome == 1) : ?>
 			<link rel="stylesheet" href="media/vendor/fontawesome-free/css/fontawesome.min.css" />
 		<?php elseif($fontawesome == 2) : ?>
@@ -167,29 +167,29 @@ $wr = $wa->getRegistry();
 			<?php echo $fontawesomecdn; ?>
 		<?php endif; ?>
 		
-		<?php 		//	 Load BS Icons
+		<?php	//	Load BS Icons
 			if($loadbsicons == 1) : ?>
 				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 		<?php endif; ?>
 		
-		<?php 		//	 Load the RTL CSS file.
+		<?php	//	Load the RTL CSS file.
 			if($this->direction == 'rtl') : ?>
-			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_rtl.min.css" type="text/css">
+				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_rtl.min.css" type="text/css">
 		<?php endif; ?>
 		
-		<?php		//	 Load the local CSS fixes for Joomla & Bootstrap 5.
+		<?php	//	Load the local CSS fixes for Joomla & Bootstrap 5.
 			if($bsfixjoomla == 1) : ?>
 				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_bs5.min.css" type="text/css">
 		<?php endif; ?>
 		
-		<?php		//	 Load the local CSS file for custom user CSS.
+		<?php	//	Load the local CSS file for custom user CSS.
 			if($customcssfile == 1) : ?>
-			<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.min.css" type="text/css">
+				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.min.css" type="text/css">
 		<?php endif; ?>
 			
 		<jdoc:include type="scripts" />
 			
-		<?php		//	  Load jQuery	?>
+		<?php	//	Load jQuery	?>
 		<?php if (($jquerycdn == null) && ($jqlibrary == 1)) : ?>
 			<script src="media/vendor/jquery/js/jquery.min.js"></script>
 		<?php elseif (($jquerycdn == null) && ($jqlibrary == 2)) : ?>
@@ -200,23 +200,23 @@ $wr = $wa->getRegistry();
 			<script src="https://<?php echo $jquerycdn ?>"></script>
 		<?php endif; ?>
 		
-		<?php		//	 Load custom local user JavaScript
+		<?php	//	Load custom local user JavaScript
 			if($customjs == 1) : ?>
-			<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
+				<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
 		<?php endif; ?>
 		
-		<?php		//	 Use Scroll Reveal
+		<?php	//	Use Scroll Reveal
 			if($scrollreveal == 1) : ?>
-			<script src="https://unpkg.com/scrollreveal"></script>
+				<script src="https://unpkg.com/scrollreveal"></script>
 		<?php endif; ?>
 		
-		<?php		//	 Add custom code before closing head tag
+		<?php	//	Add custom code before closing head tag
 			if($codebeforehead != null) : ?>
-			<?php echo $codebeforehead;
+				<?php echo $codebeforehead;
 		?>	
 		<?php endif; ?>
 		
-		<?php 		//	 Add Google Analytics tag if configured.
+		<?php	//	Add Google Analytics tag if configured.
 		if($gacode != null) : ?>
 		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gacode; ?>"></script>
 		<script>
@@ -226,10 +226,9 @@ $wr = $wa->getRegistry();
 			gtag('config', '<?php echo $gacode; ?>');
 		</script>
 		<?php endif; ?>
-		
 	</head>
 
-	<?php		//	 Add the menu item alias to the body ID, class, or both. ?>
+	<?php	//	Add the menu item alias to the body ID, class, or both. ?>
 	<?php if($bodymenu == 1) : ?>	
 		<body class="<?php echo $active->alias; ?> ">
 	<?php elseif($bodymenu == 2) : ?>
@@ -242,38 +241,51 @@ $wr = $wa->getRegistry();
 		<body>
 	<?php endif; ?>
 		
-	<?php		//	 Add custom code after opening body tag
+	<?php	//	Add custom code after opening body tag
 		if($codeafterbody != null) : ?>
-		<?php echo $codeafterbody;
-	?>	
+		<?php echo $codeafterbody; ?>	
 	<?php endif; ?>
 
-	<?php 		//	 Fixed or fluid width container
+	<?php	//	Fixed or fluid width container
 		if($fluidcontainer == 1) : ?>
 		<div class="container-fluid">
 	<?php else : ?>
 		<div class="container">
 	<?php endif; ?>
 	
-	<?php		//	 Mobile menu
+	<?php	//	Mobile menu
 		if ($this->countModules( 'mobilemenu' )) : ?>
 		<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
 	<?php endif; ?>
 	
-		<header>
+	<header>
 		
-		<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="topbar" style="none" /><?php endif; ?>
-		<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="below-top" style="none" /><?php endif; ?>
+		<?php if($casspositions == 1) : ?>
+			<jdoc:include type="modules" name="topbar" style="none" />
+			<jdoc:include type="modules" name="below-top" style="none" />
+		<?php endif; ?>
 		
 		<?php	if($sitedescription != null || $sitetitle != null || $logo != null) : ?>		
 			<div class="container-header">
+				
+				<?php	if($alert != null || $styleswitcher != null) : ?>
+				<div class="alertbar">
+					<?php if ($this->countModules('alert')) : ?>
+						<jdoc:include type="modules" name="alert" style="basic" />
+					<?php endif; ?>
+					<?php if ($this->countModules('styleswitcher')) : ?>
+						<jdoc:include type="modules" name="styleswitcher" style="basic" />
+					<?php endif; ?>
+				</div>
+				<?php endif; ?>
+				
 				<?php if($logo != null) : ?>
 					<span id="logo">
 						<a href="<?php echo $this->baseurl; ?>"><img src="<?php echo $this->baseurl; ?>/<?php echo htmlspecialchars($logo); ?>" alt="<?php echo htmlspecialchars($this->params->get('sitetitle')); ?>" /></a>
 					</span>
 				<?php endif; ?>
 				
-				<?php	if($sitedescription != null || $sitetitle != null) : ?>		
+				<?php	if($sitedescription != null || $sitetitle != null) : ?>
 				<div class="container-title">
 					<?php if($sitetitle != null) : ?>
 						<h1><?php echo $sitetitle; ?></h1>
@@ -295,8 +307,7 @@ $wr = $wa->getRegistry();
 					</div>
 				</nav>
 				<div class="col-md-3">
-					<jdoc:include type="modules" name="search" style="basic" />
-					<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="search" style="none" /><?php endif; ?>
+					<jdoc:include type="modules" name="search" style="none" />
 				</div>
 			</div>
 		<?php endif; ?>
@@ -329,15 +340,13 @@ $wr = $wa->getRegistry();
 			<?php endif; ?>
 
 		</div>
-    
 	</main>
 
 	<?php if ($this->countModules('footer', true) or $copyright == 1) : ?>
 		<footer class="container">
 			<div class="row">
 			<jdoc:include type="modules" name="footer" style="none" />
-			
-			<?php		//	Copyright
+			<?php	//	Copyright
 				if($copyright == 1) : ?>
 				<hr />
 				<div class="copyright">
@@ -348,23 +357,12 @@ $wr = $wa->getRegistry();
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
-				
 			</footer>
 		<?php endif; ?>
-		
-		<?php		//	 Use Instant.page
-			if($instant == 1) : ?>
-			<script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"></script>
-		<?php endif; ?>
-		
-		<?php		//	 Add custom code before closing body tag
-			if($codebeforebody != null) : ?>
-			<?php echo $codebeforebody; ?>	
-		<?php endif; ?>
-					
+
 		</div>
 		
-		<?php 		//	 Load Bootstrap JS
+		<?php	//	Load Bootstrap JS
 			if($bootstrapsource == 1) : ?>
 				<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
 			<?php elseif($bootstrapsource == 2) : ?>
@@ -379,6 +377,16 @@ $wr = $wa->getRegistry();
 				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 			<?php endif; ?>
 			
-			<jdoc:include type="modules" name="debug" style="none" />
+		<?php	//	Use Instant.page
+			if($instant == 1) : ?>
+			<script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"></script>
+		<?php endif; ?>
+		
+		<?php	//	Add custom code before closing body tag
+			if($codebeforebody != null) : ?>
+			<?php echo $codebeforebody; ?>	
+		<?php endif; ?>
+		
+		<jdoc:include type="modules" name="debug" style="none" />
 	</body>
 </html>
