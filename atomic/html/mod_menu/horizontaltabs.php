@@ -4,25 +4,25 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\Utilities\ArrayHelper;
 
+// $tagId = $params->get('tag_id', '');
 $standard = ['separator', 'component', 'heading', 'url'];
 $startLevel = $params->get('startLevel');
 $endLevel = $params->get('endLevel');
 
 $attributes          = [];
-$attributes['class'] = 'nav menu vertical' . $class_sfx;
+$attributes['class'] = 'nav nav-tabs menu horizontal' . $class_sfx;
 
 if ($tagId = $params->get('tag_id', '')) {
     $attributes['id'] = $tagId;
 }
 
-?>
 
-<div <?php echo ArrayHelper::toString($attributes); ?>>
-	
+?>
+<ul <?php echo ArrayHelper::toString($attributes); ?>>
 	<?php foreach ($list as $i => &$item) { ?>
 		<?php
-    $itemParams = $item->getParams();
-			$class = 'item-' . $item->id;
+   $itemParams = $item->getParams();
+			$class = 'nav-link item-' . $item->id;
 
 			if ($item->id == $default_id) {
 				$class .= ' default';
@@ -60,13 +60,13 @@ if ($tagId = $params->get('tag_id', '')) {
 		?>
 		
 		<?php if ($item->deeper) { ?>
-			<div class="btn-group dropend">
+			<div class="btn-group">
 		<?php } ?>
 
 			<?php if (in_array($item->type, $standard)) { ?>
-				<?php require(JModuleHelper::getLayoutPath('mod_menu', 'vertical_' . $item->type)); ?>
+				<?php require(JModuleHelper::getLayoutPath('mod_menu', 'horizontaltabs_' . $item->type)); ?>
 			<?php } else { ?>
-				<?php require(JModuleHelper::getLayoutPath('mod_menu', 'vertical_url')); ?>
+				<?php require(JModuleHelper::getLayoutPath('mod_menu', 'horizontaltabs_url')); ?>
 			<?php } ?>
 
 			<?php if ($item->deeper) { ?>
@@ -74,11 +74,9 @@ if ($tagId = $params->get('tag_id', '')) {
 			<?php } ?>
 
 			<?php if ($item->shallower) { ?>
-				</ul>	
+			</ul>
 			</div>
-			
 			<?php } ?>
 	<?php } ?>
-		
-</div>
 
+</ul>

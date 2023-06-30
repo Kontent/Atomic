@@ -2,6 +2,29 @@
 
 /* Below are the CSS styles that aren't included with Bootstrap 5. It's a good idea to keep them whether or not you use it unless you know what you're doing. */
 
+:root {
+/* 
+	--atomic-body-font: var(--bs-font-sans-serif);
+	--atomic-header-font: var(--bs-font-sans-serif);
+ */
+/* 
+	--atomic-body-font: var(--bs-body-font-family);
+	--atomic-header-font: var(--bs-body-font-family);
+	
+ */
+}
+
+
+.btn-secondary {
+	--bs-btn-bg: transparent;
+	--bs-btn-border-width: 0;
+	--bs-btn-border-color: transparent;
+}
+.btn-secondary.btn:hover {
+	--bs-btn-hover-color: initial;
+	--bs-btn-hover-bg: transparent;
+	--bs-btn-hover-border-color: transparent;
+}
 
 body, p, li {
 	font-family: var(--atomic-body-font);
@@ -10,9 +33,15 @@ h1,h2,h3,h4,h5,h6 {
 	font-family: var(--atomic-header-font);
 }
 
-
-
 /* General styles */
+
+.readmore .btn.btn-secondary {
+
+}
+
+
+
+
 
 /* Cassiopeia module positions 
 sidebar-left
@@ -27,80 +56,6 @@ bottom-a
 bottom-b
 footer
 */
-
-header, main, footer {
-	margin: 1em 0;
-}
-.container-header {
-	display: flex;
-	flex-direction: row;
-	gap: 20px;
-	flex-wrap: nowrap;
-}
-.container-title {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
-}
-.container-main {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: stretch;
-	gap: 20px;
-	flex-wrap: nowrap;
-	margin: 20px 0;
-}
-.container-sidebar-left {
-	flex-grow: 1;
-	flex-basis: 25%;
-}
-.container-sidebar-right {
-	flex-grow: 1;
-	flex-basis: 25%;
-}
-.container-component {
-	flex-grow: 2;
-	flex-basis: 50%;
-}
-.img-fluid img {
-	max-width: 100%;
-	height: auto;
-}
-.mod-login .form-group {
-	margin: 10px;
-}
-.mod-login__options {
-	margin-left: 10px;
-}
-.container-search {
-	display: flex;
-	flex-wrap: nowrap;
-	justify-content: flex-end;
-}
-
-.nav {
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: stretch;
-	gap: 20px;
-}
-.nav > li {
-	display: flex;
-	padding: 10px 10px 10px 0;
-}
-.nav > li > ul {
-	display: none;
-}
-.nav > li:hover > ul {
-	display: block;
-	position: absolute;
-	top: 40px;
-	background: #fff;
-	padding: 10px;
-	width: 190px;
-}
-
 
 main {
 
@@ -122,39 +77,40 @@ main {
 
 }
 
+.container-main {
+	display: flex;
+	width: 100%;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: stretch;
+	gap: 20px;
+	padding: 1em 0;
+}
+.container-component {
+	flex-grow:3;
+	flex-basis: 60%;
+}
 .container-sidebar-left {
-
+	flex-basis: 10%; */
 }
 .container-sidebar-right {
-
+	flex-basis: 30%;
 }
 
 footer {
+	margin: 1em;
+}
+.copyright {
 	text-align: center;
-	padding: 20px 10px;
+	font-size: 80%;
+
 }
 
-figure.float-start img {
-	padding: 0 10px 10px 0;
-}
-figcaption {
-	font-size: .8em;
-}
 
 
 /* Cassiopeia fixes  */
 
-#mod-custom118 {
-	color: #fff;
-	padding: 10px 20px;
-}
-.mod-finder__search.input-group {
-	flex-wrap: nowrap;
-	padding: 10px;
-}
-.awesomplete {
-	width: 100%;
-}
+
 
 /* Text styles */
 
@@ -197,8 +153,86 @@ figcaption {
 
 /* Inline CSS  */
 
-      
-      
+
+
+
+
+
+/* Both dropdown menus  */
+
+.nav .btn-check:checked+.btn, 
+.nav .btn.active, 
+.nav .btn.show, 
+.nav .btn:first-child:active, 
+.nav :not(.btn-check)+.btn:active {
+	border-color: transparent;
+}
+.nav .dropdown-menu.show {
+	padding: 10px;
+	
+}
+
+/* Horizontal dropdown menu  */
+
+
+
+/* Vertical dropdown menu  */
+
+
+
+
+/* BS Menu fixes to be cleaned up  */
+/* 
+
+#navigation button.btn {
+    background: none;
+	border: none;
+	text-decoration: none;
+	padding: 0;
+}
+#navigation button.btn a {
+    text-decoration: none;
+    color: #CB4506;
+}
+#navigation .dropend .dropdown-toggle::after {
+    color: #CB4506 !important;
+}
+#navigation .btn-group button.btn {
+    border-bottom: 1px solid #EBEBEB;
+    padding: 6px 0 6px 0;
+    border-radius: 0;
+}
+#navigation .btn-group button.btn a {
+    padding: 0 5px 0 5px;
+}
+#navigation button.btn.btn-secondary.dropdown-toggle:hover {
+    background-color: #dae0e5;
+}
+#navigation button.btn.btn-secondary.dropdown-toggle:hover a {
+    color: #212529;
+}
+#navigation button.btn.btn-secondary.dropdown-toggle.show {
+   border-radius: 0;
+    background-color: #dae0e5;
+}
+#navigation button.btn.btn-secondary.dropdown-toggle.show a {
+    color: #212529;
+}
+#navigation .btn-group ul.dropdown-menu.show li {
+    padding: 5px 0 5px 0;
+}
+#navigation .dropdown-item {
+    background: none;
+}
+#navigation li a.active {
+    border: none;
+    color: #CB4506;
+    font-weight: bold;
+}
+ */
+
+
+
 
 /* -------------- Font Awesome Icons -------------- */
 

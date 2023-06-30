@@ -29,6 +29,7 @@
 	<positions>
 		<position>mobilemenu</position>
 		<position>topbar</position>
+		<position>header</position>
 		<position>below-top</position>
 		<position>alert</position>
 		<position>styleswitcher</position>

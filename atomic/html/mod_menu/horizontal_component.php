@@ -63,7 +63,7 @@ else
 {  
    if($item->level=='1')
    {
-     $attributes['class']='first-heading';
+     $attributes['class']='btn first-heading';
     echo "<div class='btn-group'>".JHtml::_('link', JFilterOutput::ampReplace(htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8', false)), $linktype, $attributes)."</div>";
    }
   else

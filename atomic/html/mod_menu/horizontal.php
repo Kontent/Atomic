@@ -1,12 +1,24 @@
 <?php
 defined('_JEXEC') or die;
 
-$tagId = $params->get('tag_id', '');
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\Utilities\ArrayHelper;
+
+// $tagId = $params->get('tag_id', '');
 $standard = ['separator', 'component', 'heading', 'url'];
 $startLevel = $params->get('startLevel');
 $endLevel = $params->get('endLevel');
+
+$attributes          = [];
+$attributes['class'] = 'nav menu horizontal' . $class_sfx;
+
+if ($tagId = $params->get('tag_id', '')) {
+    $attributes['id'] = $tagId;
+}
+
+
 ?>
-<div class="nav horizontal menu<?php echo $class_sfx; ?>" <?php echo $tagId ? 'id="' . $tagId . '"' : '';?> id="navigation">
+<div <?php echo ArrayHelper::toString($attributes); ?>>
 	<?php foreach ($list as $i => &$item) { ?>
 		<?php
    $itemParams = $item->getParams();

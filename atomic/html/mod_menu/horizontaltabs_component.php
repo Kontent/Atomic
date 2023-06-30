@@ -20,7 +20,7 @@ if ($item->parent && $item->level <= $startLevel) {
 }
 
 if ($item->level > $startLevel) {
-	$attributes['class'] = 'dropdown-item';
+	$attributes['class'] = ' dropdown-item';
 }
 
 $attributes['class'] .= ' ' . $class;
@@ -51,23 +51,16 @@ if ($item->menu_image) {
 
 if ($item->browserNav == 1) {
 	$attributes['target'] = '_blank';
-	$attributes['rel'] = 'noopener noreferrer';
-
-	if ($item->anchor_rel == 'nofollow') {
-		$attributes['rel'] .= ' nofollow';
-	}
 } elseif ($item->browserNav == 2) {
-	$options = 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,' . $params->get('window_open');
+	$options = 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes';
 
 	$attributes['onclick'] = "window.open(this.href, 'targetWindow', '" . $options . "'); return false;";
 }
-
 if ($item->parent && $item->level <= $startLevel) {
     echo JHtml::_('link', JFilterOutput::ampReplace(htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8', false)), $linktype, $attributes);
 }
 else
-{
-    
+{  
    if($item->level=='1')
    {
      $attributes['class']='btn first-heading';
@@ -75,7 +68,7 @@ else
    }
   else
   {
-    echo "<li>".JHtml::_('link', JFilterOutput::ampReplace(htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8', false)), $linktype, $attributes)."</li>";
+    echo '<li class="nav-item">'.JHtml::_('link', JFilterOutput::ampReplace(htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8', false)), $linktype, $attributes)."</li>";
   }
 }
-//echo JHtml::_('link', JFilterOutput::ampReplace(htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8', false)), $linktype, $attributes);
+//echo "<li id='test1'>".JHtml::_('link', JFilterOutput::ampReplace(htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8', false)), $linktype, $attributes)."</li>";

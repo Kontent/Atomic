@@ -99,14 +99,14 @@ $wr = $wa->getRegistry();
 			
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
    	 	<meta name="viewport" content="width=device-width, initial-scale=1">
-   	 	<meta name="HandheldFriendly" content="true" />
-		<meta name="apple-mobile-web-app-capable" content="YES" />
+   	 	<meta name="HandheldFriendly" content="true">
+		<meta name="apple-mobile-web-app-capable" content="YES">
 		
     	<jdoc:include type="styles" />
     			
 		<?php	//	Load Bootstrap or Bootswatch theme.
 			if($bootstrapsource == 1 || $bootstrapsource == 2) : ?>
-				<link rel="stylesheet" href="media/vendor/bootstrap/css/bootstrap.min.css" />
+				<link rel="stylesheet" href="media/vendor/bootstrap/css/bootstrap.min.css">
 				
 			<?php elseif($bootstrapsource == 3 || $bootstrapsource == 4) : ?>
 				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -144,21 +144,26 @@ $wr = $wa->getRegistry();
 			<?php echo $bodygooglefont; ?>
 		<?php endif; ?>
 		
-		<style>
-			:root {
-				<?php	//	Define CSS variables
-					if(($headerfont == 1) && ($headerfontname != null)) : ?>
-					--atomic-header-font: <?php echo $headerfontname; ?>;
-				<?php endif; ?>
-				<?php if(($bodyfont == 1) && ($bodyfontname != null)) : ?>
-				--atomic-body-font: <?php echo $bodyfontname; ?>;
-				<?php endif; ?>
-			}
-		</style>
+		<?php if(($bodyfontname != null) || ($headerfontname != null)) : ?>
+			<style>
+				:root {
+					<?php	//	Define CSS variables
+						if(($headerfont == 1) && ($headerfontname != null)) : ?>
+						--atomic-header-font: <?php echo $headerfontname; ?>;
+					<?php endif; ?>
+					<?php if(($bodyfont == 1) && ($bodyfontname != null)) : ?>
+						--atomic-body-font: <?php echo $bodyfontname; ?>;
+						--bs-font-sans-serif: var(--atomic-body-font);
+					<?php else : ?>
+						--atomic-body-font: var(--bs-font-sans-serif);
+					<?php endif; ?>
+				}
+			</style>
+		<?php endif; ?>
 				
 		<?php	//	Load FontAwesome
 		if($fontawesome == 1) : ?>
-			<link rel="stylesheet" href="media/vendor/fontawesome-free/css/fontawesome.min.css" />
+			<link rel="stylesheet" href="media/vendor/fontawesome-free/css/fontawesome.min.css">
 		<?php elseif($fontawesome == 2) : ?>
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<?php elseif($fontawesome == 3) : ?>
@@ -184,7 +189,7 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Load the local CSS file for custom user CSS.
 			if($customcssfile == 1) : ?>
-				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.min.css" type="text/css">
+				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css">
 		<?php endif; ?>
 			
 		<jdoc:include type="scripts" />
@@ -218,7 +223,7 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Add Google Analytics tag if configured.
 		if($gacode != null) : ?>
-		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gacode; ?>"></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gacode; ?>" type="module"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
@@ -265,16 +270,16 @@ $wr = $wa->getRegistry();
 			<jdoc:include type="modules" name="below-top" style="none" />
 		<?php endif; ?>
 		
-		<?php	if($sitedescription != null || $sitetitle != null || $logo != null) : ?>		
+		<div class="row">
 			<div class="container-header">
 				
-				<?php	if($alert != null || $styleswitcher != null) : ?>
+				<?php if ($this->countModules('alert', true) or $this->countModules('styleswitcher', true)) : ?>
 				<div class="alertbar">
 					<?php if ($this->countModules('alert')) : ?>
-						<jdoc:include type="modules" name="alert" style="basic" />
+						<jdoc:include type="modules" name="alert" style="none" />
 					<?php endif; ?>
 					<?php if ($this->countModules('styleswitcher')) : ?>
-						<jdoc:include type="modules" name="styleswitcher" style="basic" />
+						<jdoc:include type="modules" name="styleswitcher" style="none" />
 					<?php endif; ?>
 				</div>
 				<?php endif; ?>
@@ -295,71 +300,78 @@ $wr = $wa->getRegistry();
 					<?php endif; ?>
 				</div>
 				<?php endif; ?>
+				
+				<?php if ($this->countModules('header')) : ?>
+					<jdoc:include type="modules" name="header" style="none" />
+				<?php endif; ?>
+				
 			</div>
-		<?php endif; ?>
-	
+		</div>
+		
 		<?php if ($this->countModules('topmenu')) : ?>
 			<div class="row">
 				<nav class="navigation">
 					<div class="nav-collapse">
-						<jdoc:include type="modules" name="navigation" style="basic" />
+						<jdoc:include type="modules" name="topmenu" style="none" />
 						<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="menu" style="none" /><?php endif; ?>
 					</div>
 				</nav>
+				<?php if ($this->countModules('search')) : ?>
 				<div class="col-md-3">
 					<jdoc:include type="modules" name="search" style="none" />
 				</div>
+				<?php endif; ?>
 			</div>
 		<?php endif; ?>
 	</header>
 
     <main>
-		<div class="container-main">
-			<?php if ($this->countModules('leftbody', true)) : ?>
-				<div class="container-sidebar-left">
-					<jdoc:include type="modules" name="leftbody"  style="default" />
-					<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="sidebar-left" style="card" /><?php endif; ?>
-				</div>
-			<?php endif; ?>
+    	<div class="row">
+			<div class="container-main">
+				<?php if ($this->countModules('leftbody', true)) : ?>
+					<div class="container-sidebar-left">
+						<jdoc:include type="modules" name="leftbody"  style="none" />
+						<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="sidebar-left" style="card" /><?php endif; ?>
+					</div>
+				<?php endif; ?>
 	
-			<div class="container-component">
-				<jdoc:include type="modules" name="breadcrumbs" style="none" />
-				<jdoc:include type="modules" name="abovebody" style="none" />
-				<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-top" style="card" /><?php endif; ?>
-				<jdoc:include type="message" />
-				<jdoc:include type="component" />
-				<jdoc:include type="modules" name="belowbody" style="default" />
-				<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-bottom" style="card" /><?php endif; ?>
-			</div>
-
-			<?php if ($this->countModules('rightbody', true)) : ?>
-				<div class="container-sidebar-right">
-					<jdoc:include type="modules" name="rightbody" style="card" />
-					<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="sidebar-right" style="card" /><?php endif; ?>
+				<div class="container-component">
+					<jdoc:include type="modules" name="breadcrumbs" style="none" />
+					<jdoc:include type="modules" name="abovebody" style="none" />
+					<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-top" style="card" /><?php endif; ?>
+					<jdoc:include type="message" />
+					<jdoc:include type="component" />
+					<jdoc:include type="modules" name="belowbody" style="none" />
+					<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-bottom" style="card" /><?php endif; ?>
 				</div>
-			<?php endif; ?>
 
+				<?php if ($this->countModules('rightbody', true)) : ?>
+					<div class="container-sidebar-right">
+						<jdoc:include type="modules" name="rightbody" style="none" />
+						<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="sidebar-right" style="card" /><?php endif; ?>
+					</div>
+				<?php endif; ?>
+			</div>
 		</div>
 	</main>
 
 	<?php if ($this->countModules('footer', true) or $copyright == 1) : ?>
-		<footer class="container">
+		<footer>
 			<div class="row">
-			<jdoc:include type="modules" name="footer" style="none" />
-			<?php	//	Copyright
-				if($copyright == 1) : ?>
-				<hr />
-				<div class="copyright">
-					<?php if(($copyrighttxt != null) && ($copyright == 1)) : ?>
-					&copy;<?php echo date('Y'); ?> <?php echo $copyrighttxt ?>
-					<?php else : ?>
-					&copy;<?php echo date('Y'); ?> <?php echo htmlspecialchars($app->getCfg('sitename')); ?>
-					<?php endif; ?>
-				</div>
+				<jdoc:include type="modules" name="footer" style="none" />
+				<?php	//	Copyright
+					if($copyright == 1) : ?>
+					<div class="copyright">
+						<?php if(($copyrighttxt != null) && ($copyright == 1)) : ?>
+						&copy;<?php echo date('Y'); ?> <?php echo $copyrighttxt ?>
+						<?php else : ?>
+						&copy;<?php echo date('Y'); ?> <?php echo htmlspecialchars($app->getCfg('sitename')); ?>
+						<?php endif; ?>
+					</div>
+				<?php endif; ?>
+				</footer>
 			<?php endif; ?>
-			</footer>
-		<?php endif; ?>
-
+			</div>
 		</div>
 		
 		<?php	//	Load Bootstrap JS
