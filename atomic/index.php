@@ -151,11 +151,14 @@ $wr = $wa->getRegistry();
 						if(($headerfont == 1) && ($headerfontname != null)) : ?>
 						--atomic-header-font: <?php echo $headerfontname; ?>;
 					<?php endif; ?>
+					
 					<?php if(($bodyfont == 1) && ($bodyfontname != null)) : ?>
 						--atomic-body-font: <?php echo $bodyfontname; ?>;
-						--bs-font-sans-serif: var(--atomic-body-font);
+						--bs-body-font-family: var(--atomic-body-font);
+						--bs-btn-font-family: var(--atomic-body-font);
 					<?php else : ?>
-						--atomic-body-font: var(--bs-font-sans-serif);
+						--atomic-body-font: var(--bs-body-font-family);
+						--bs-btn-font-family: var(--bs-body-font-family);
 					<?php endif; ?>
 				}
 			</style>
@@ -326,6 +329,16 @@ $wr = $wa->getRegistry();
 	</header>
 
     <main>
+    	<?php if($casspositions == 1) : ?>
+    	<div class="row">
+    		<div class="row">
+    			<jdoc:include type="modules" name="banner" style="none" />
+    		</div>
+			<jdoc:include type="modules" name="top-a" style="none" />
+			<jdoc:include type="modules" name="top-b" style="none" />
+		</div>
+		<?php endif; ?>
+    	
     	<div class="row">
 			<div class="container-main">
 				<?php if ($this->countModules('leftbody', true)) : ?>
@@ -353,6 +366,13 @@ $wr = $wa->getRegistry();
 				<?php endif; ?>
 			</div>
 		</div>
+		
+		<?php if($casspositions == 1) : ?>
+    	<div class="row">
+			<jdoc:include type="modules" name="bottom-a" style="none" />
+			<jdoc:include type="modules" name="bottom-b" style="none" />
+		</div>
+		<?php endif; ?>		
 	</main>
 
 	<?php if ($this->countModules('footer', true) or $copyright == 1) : ?>

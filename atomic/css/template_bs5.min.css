@@ -3,15 +3,10 @@
 /* Below are the CSS styles that aren't included with Bootstrap 5. It's a good idea to keep them whether or not you use it unless you know what you're doing. */
 
 :root {
-/* 
-	--atomic-body-font: var(--bs-font-sans-serif);
-	--atomic-header-font: var(--bs-font-sans-serif);
- */
-/* 
-	--atomic-body-font: var(--bs-body-font-family);
-	--atomic-header-font: var(--bs-body-font-family);
-	
- */
+
+/* 	--bs-font-monospace */
+
+
 }
 
 
@@ -26,7 +21,7 @@
 	--bs-btn-hover-border-color: transparent;
 }
 
-body, p, li {
+body, p, li, div {
 	font-family: var(--atomic-body-font);
 }
 h1,h2,h3,h4,h5,h6 {
@@ -90,6 +85,11 @@ main {
 	flex-grow:3;
 	flex-basis: 60%;
 }
+.container-main .container-component:first-child {
+	padding: 1em;
+}
+
+
 .container-sidebar-left {
 	flex-basis: 10%; */
 }

@@ -27,26 +27,35 @@
 		<filename>htaccess.txt</filename>
 	</files>
 	<positions>
-		<position>mobilemenu</position>
-		<position>topbar</position>
-		<position>header</position>
-		<position>below-top</position>
-		<position>alert</position>
-		<position>styleswitcher</position>
-		<position>navigation</position>
-		<position>menu</position>
-		<position>search</position>
-		<position>leftbody</position>
-		<position>sidebar-left</position>
-		<position>breadcrumbs</position>
 		<position>abovebody</position>
-		<position>main-top</position>
+		<position>alert</position>
 		<position>belowbody</position>
-		<position>main-bottom</position>
-		<position>rightbody</position>
-		<position>sidebar-right</position>
-		<position>footer</position>
+		<position>breadcrumbs</position>
 		<position>debug</position>
+		<position>footer</position>
+		<position>header</position>
+		<position>leftbody</position>
+		<position>main-bottom</position>
+		<position>main-top</position>
+		<position>menu</position>
+		<position>mobilemenu</position>
+		<position>rightbody</position>
+		<position>search</position>
+		<position>styleswitcher</position>
+		<position>topmenu</position>
+		<!-- Cassiopeia positions -->
+		<position>banner</position>
+		<position>below-top</position>
+		<position>bottom-a</position>
+		<position>bottom-b</position>
+		<position>breadcrumbs</position>
+		<position>main-bottom</position>
+		<position>main-top</position>
+		<position>sidebar-left</position>
+		<position>sidebar-right</position>
+		<position>top-a</position>
+		<position>top-b</position>
+		<position>topbar</position>
 	</positions>
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.tpl_atomic.ini</language>
