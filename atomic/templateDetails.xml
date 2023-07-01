@@ -129,6 +129,11 @@
 				<option value="3">TPL_ATOMIC_BODYMENU_OPTION_BODYCLASSID</option>
 			</field>
 
+			<field name="bsthemes" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_BSTHEMES_LABEL" description="TPL_ATOMIC_BSTHEMES_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			
 		</fieldset>
 		
 		<fieldset name="JAVASCRIPT_SETTINGS">
@@ -210,11 +215,6 @@
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
 			
-			<field name="bsthemes" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_BSTHEMES_LABEL" description="TPL_ATOMIC_BSTHEMES_DESC">
-				<option value="0">TPL_ATOMIC_NO</option>
-				<option value="1">TPL_ATOMIC_YES</option>
-			</field>
-
 		</fieldset>
 		
 		<fieldset name="CUSTOM_CODE">

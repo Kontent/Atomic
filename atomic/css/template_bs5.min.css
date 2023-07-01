@@ -84,17 +84,16 @@ main {
 .container-component {
 	flex-grow:3;
 	flex-basis: 60%;
+	padding: 0 1em;
 }
-.container-main .container-component:first-child {
-	padding: 1em;
-}
-
 
 .container-sidebar-left {
-	flex-basis: 10%; */
+	flex-basis: 10%; 
+	padding: 0 1em;
 }
 .container-sidebar-right {
 	flex-basis: 30%;
+	padding: 0 1em;
 }
 
 footer {
