@@ -209,6 +209,11 @@
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
+			
+			<field name="bsthemes" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_BSTHEMES_LABEL" description="TPL_ATOMIC_BSTHEMES_DESC">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
 
 		</fieldset>
 		

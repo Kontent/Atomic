@@ -30,6 +30,7 @@ $bootstrapcdn						= $this->params->get('bootstrapcdn');
 $bootstrapsource				= $this->params->get('bootstrapsource');
 $bsfixjoomla						= $this->params->get('bsfixjoomla');
 $bsicons								= $this->params->get('bsicons');
+$bsthemes							= $this->params->get('bsthemes');
 $codeafterbody					= $this->params->get('codeafterbody');
 $codeafterhead					= $this->params->get('codeafterhead');
 $codebeforebody				= $this->params->get('codebeforebody');
@@ -208,6 +209,11 @@ $wr = $wa->getRegistry();
 			<script src="https://<?php echo $jquerycdn ?>"></script>
 		<?php endif; ?>
 		
+		<?php	//	Load BS Styleswitcher
+			if($loadbsthemes == 1) : ?>
+				<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/theme.js"></script>
+		<?php endif; ?>
+		
 		<?php	//	Load custom local user JavaScript
 			if($customjs == 1) : ?>
 				<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
@@ -276,14 +282,17 @@ $wr = $wa->getRegistry();
 		<div class="row">
 			<div class="container-header">
 				
-				<?php if ($this->countModules('alert', true) or $this->countModules('styleswitcher', true)) : ?>
+				<?php if ($this->countModules('alert', true) or ($loadbsthemes == 1)) : ?>
 				<div class="alertbar">
 					<?php if ($this->countModules('alert')) : ?>
 						<jdoc:include type="modules" name="alert" style="none" />
 					<?php endif; ?>
-					<?php if ($this->countModules('styleswitcher')) : ?>
-						<jdoc:include type="modules" name="styleswitcher" style="none" />
+					
+					<?php	//	Load BS Styleswitcher
+						if($loadbsthemes == 1) : ?>
+						<div><a id="themeBtn" href="#"class="nav-link"><i class=""></i></a></div>
 					<?php endif; ?>
+					
 				</div>
 				<?php endif; ?>
 				
