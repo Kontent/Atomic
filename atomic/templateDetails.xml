@@ -134,6 +134,8 @@
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
 			
+			<field name="bstheme" type="text" default="" label="TPL_ATOMIC_BSTHEME_LABEL" description="TPL_ATOMIC_BSTHEME_DESC" filter="string" />
+				
 		</fieldset>
 		
 		<fieldset name="JAVASCRIPT_SETTINGS">
@@ -158,6 +160,7 @@
 			<field name="headerfont" type="list" default="0" label="TPL_ATOMIC_HEADER_FONT_LABEL" description="TPL_ATOMIC_HEADER_FONT_DESC">
 				<option value="0">TPL_ATOMIC_BOOTSTRAPFONT</option>
 				<option value="1">TPL_ATOMIC_GOOGLEFONT</option>
+				<option value="2">TPL_ATOMIC_NOFONT</option>
 			</field>
 			
 			<field name="headergooglefont" type="textarea" label="TPL_ATOMIC_HEADER_FONT_LINK_LABEL" description="TPL_ATOMIC_HEADER_FONT_LINK_DESC" rows="4" columns="30" filter="raw" default="" />
@@ -167,6 +170,7 @@
 			<field name="bodyfont" type="list" default="0" label="TPL_ATOMIC_BODY_FONT_LABEL" description="TPL_ATOMIC_BODY_FONT_DESC">
 				<option value="0">TPL_ATOMIC_BOOTSTRAPFONT</option>
 				<option value="1">TPL_ATOMIC_GOOGLEFONT</option>
+				<option value="2">TPL_ATOMIC_NOFONT</option>
 			</field>
 			
 			<field name="bodygooglefont" type="textarea" label="TPL_ATOMIC_BODY_FONT_LINK_LABEL" description="TPL_ATOMIC_BODY_FONT_LINK_DESC" rows="4" columns="30" filter="raw" default="" />

@@ -30,6 +30,7 @@ $bootstrapcdn						= $this->params->get('bootstrapcdn');
 $bootstrapsource				= $this->params->get('bootstrapsource');
 $bsfixjoomla						= $this->params->get('bsfixjoomla');
 $bsicons								= $this->params->get('bsicons');
+$bstheme							= $this->params->get('bstheme');
 $bsthemes							= $this->params->get('bsthemes');
 $codeafterbody					= $this->params->get('codeafterbody');
 $codeafterhead					= $this->params->get('codeafterhead');
@@ -58,7 +59,6 @@ $sitedescription					= $this->params->get('sitedescription');
 $sitetitle								= $this->params->get('sitetitle');
 $casspositions					= $this->params->get('casspositions');
 
-
 // Register assets
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wr = $wa->getRegistry();
@@ -70,7 +70,7 @@ $wr = $wa->getRegistry();
 
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
+<html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" data-bs-theme="<?php echo $bstheme; ?>">
 	<head>
 		<?php	//	Add custom code after opening head tag
 			if($codeafterhead != null) : ?>
@@ -144,11 +144,11 @@ $wr = $wa->getRegistry();
 		<?php if(($bodyfont == 1) && ($bodyfontname != null)) : ?>
 			<?php echo $bodygooglefont; ?>
 		<?php endif; ?>
-		
-		<?php if(($bodyfontname != null) || ($headerfontname != null)) : ?>
+				
+		<?php if(($headerfont != 2) || ($bodyfont != 2)) : ?>
 			<style>
-				:root {
-					<?php	//	Define CSS variables
+			:root {
+			<?php	//	Define CSS variables
 						if(($headerfont == 1) && ($headerfontname != null)) : ?>
 						--atomic-header-font: <?php echo $headerfontname; ?>;
 					<?php endif; ?>
@@ -161,7 +161,7 @@ $wr = $wa->getRegistry();
 						--atomic-body-font: var(--bs-body-font-family);
 						--bs-btn-font-family: var(--bs-body-font-family);
 					<?php endif; ?>
-				}
+			}
 			</style>
 		<?php endif; ?>
 				
@@ -205,8 +205,9 @@ $wr = $wa->getRegistry();
 			<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 		<?php elseif (($jquerycdn == null) && ($jqlibrary == 3)) : ?>
 			<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+		<?php elseif (($jquerycdn == null) && ($jqlibrary == 4)) : ?>
+			<?php echo $jquerycdn ?>
 		<?php else : ?>
-			<script src="https://<?php echo $jquerycdn ?>"></script>
 		<?php endif; ?>
 		
 		<?php	//	Load BS Styleswitcher
@@ -272,6 +273,12 @@ $wr = $wa->getRegistry();
 		<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
 	<?php endif; ?>
 	
+	<?php	//	Hide header if nothing in it
+	 if ($this->countModules('alert', true) 
+	or ($this->countModules('header', true)) 
+	or ($this->countModules('topmenu', true)) 
+	or ($this->countModules('search', true)) 
+	or ($sitedescription != null || $sitetitle != null || $logo != null)) : ?>
 	<header>
 		
 		<?php if($casspositions == 1) : ?>
@@ -319,7 +326,7 @@ $wr = $wa->getRegistry();
 				
 			</div>
 		</div>
-		
+
 		<?php if ($this->countModules('topmenu')) : ?>
 			<div class="row">
 				<nav class="navigation">
@@ -336,7 +343,8 @@ $wr = $wa->getRegistry();
 			</div>
 		<?php endif; ?>
 	</header>
-
+	<?php endif; ?>
+		
     <main>
     	<?php if($casspositions == 1) : ?>
     	<div class="row">
