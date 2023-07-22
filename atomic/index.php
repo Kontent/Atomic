@@ -58,6 +58,7 @@ $scrollreveal						= $this->params->get('scrollreveal');
 $sitedescription					= $this->params->get('sitedescription');
 $sitetitle								= $this->params->get('sitetitle');
 $casspositions					= $this->params->get('casspositions');
+$stickyhead							= $this->params->get('stickyhead');
 
 // Register assets
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
@@ -87,14 +88,14 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Favicons
 			if($loadfavicons == 1) : ?>
-			<link rel="apple-touch-icon" sizes="180x180" href="templates/atomic/favicons/apple-touch-icon.png">
-			<link rel="icon" type="image/png" sizes="32x32" href="templates/atomic/favicons/favicon-32x32.png">
-			<link rel="icon" type="image/png" sizes="16x16" href="templates/atomic/favicons/favicon-16x16.png">
-			<link rel="manifest" href="templates/atomic/favicons/site.webmanifest">
-			<link rel="mask-icon" href="templates/atomic/favicons/safari-pinned-tab.svg" color="#5bbad5">
-			<link rel="shortcut icon" href="templates/atomic/favicons/favicon.ico">
+			<link rel="apple-touch-icon" sizes="180x180" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/favicons/apple-touch-icon.png">
+			<link rel="icon" type="image/png" sizes="32x32" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/favicons/favicon-32x32.png">
+			<link rel="icon" type="image/png" sizes="16x16" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/favicons/favicon-16x16.png">
+			<link rel="manifest" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/favicons/site.webmanifest">
+			<link rel="mask-icon" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/favicons/safari-pinned-tab.svg" color="#5bbad5">
+			<link rel="shortcut icon" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/favicons/favicon.ico">
 			<meta name="msapplication-TileColor" content="#ffffff">
-			<meta name="msapplication-config" content="templates/atomic/favicons/browserconfig.xml">
+			<meta name="msapplication-config" content="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/favicons/browserconfig.xml">
 			<meta name="theme-color" content="#ffffff">
 		<?php endif; ?>
 			
@@ -144,7 +145,7 @@ $wr = $wa->getRegistry();
 		<?php if(($bodyfont == 1) && ($bodyfontname != null)) : ?>
 			<?php echo $bodygooglefont; ?>
 		<?php endif; ?>
-				
+		
 		<?php if(($headerfont != 2) || ($bodyfont != 2)) : ?>
 			<style>
 			:root {
@@ -274,13 +275,19 @@ $wr = $wa->getRegistry();
 	<?php endif; ?>
 	
 	<?php	//	Hide header if nothing in it
-	 if ($this->countModules('alert', true) 
+	if ($this->countModules('alert', true) 
 	or ($this->countModules('header', true)) 
 	or ($this->countModules('topmenu', true)) 
 	or ($this->countModules('search', true)) 
 	or ($sitedescription != null || $sitetitle != null || $logo != null)) : ?>
-	<header>
-		
+	
+	<?php	//	Make sticky or not ?>
+	<?php if($stickyhead == 1) : ?>	
+		<header class="sticky">
+	<?php else : ?>
+		<header>
+	<?php endif; ?>
+	
 		<?php if($casspositions == 1) : ?>
 			<jdoc:include type="modules" name="topbar" style="none" />
 			<jdoc:include type="modules" name="below-top" style="none" />
