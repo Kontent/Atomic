@@ -59,6 +59,7 @@ $sitedescription					= $this->params->get('sitedescription');
 $sitetitle								= $this->params->get('sitetitle');
 $casspositions					= $this->params->get('casspositions');
 $stickyhead							= $this->params->get('stickyhead');
+$loadbsthemes = $this->params->get('bsthemes');
 
 // Register assets
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
@@ -168,7 +169,7 @@ $wr = $wa->getRegistry();
 				
 		<?php	//	Load FontAwesome
 		if($fontawesome == 1) : ?>
-			<link rel="stylesheet" href="media/vendor/fontawesome-free/css/fontawesome.min.css">
+			<link rel="stylesheet" href="media/system/css/joomla-fontawesome.min.css">
 		<?php elseif($fontawesome == 2) : ?>
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<?php elseif($fontawesome == 3) : ?>
