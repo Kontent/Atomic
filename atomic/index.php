@@ -21,6 +21,9 @@ $user = JFactory::getUser();
 //	Get the alias of the current menu item
 $active = JFactory::getApplication()->getMenu()->getActive();
 
+$version_parts = explode('.', JVERSION);
+$isJ5 = $version_parts[0] === '5';
+
 //	Assign template params
 $bodyfont							= $this->params->get('bodyfont');
 $bodyfontname					= $this->params->get('bodyfontname');
@@ -421,10 +424,20 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Load Bootstrap JS
 			if($bootstrapsource == 1) : ?>
-				<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
+				<?php if ( $isJ5 ) : ?>
+					<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/bootstrap-es5.min.js"></script>
+				<?php else : ?>
+					<script src="media/vendor/bootstrap/js/popper.min.js"></script>
+					<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
+				<?php endif; ?>
 			<?php elseif($bootstrapsource == 2) : ?>
-				<script src="media/vendor/bootstrap/js/popper.min.js"></script>
-				<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
+				<?php if ( $isJ5 ) : ?>
+					<script src="media/vendor/bootstrap/js/popper.min.js" type="module"></script>
+					<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/bootstrap-es5.min.js"></script>
+				<?php else : ?>
+					<script src="media/vendor/bootstrap/js/popper.min.js"></script>
+					<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
+				<?php endif; ?>
 			<?php elseif($bootstrapsource == 3) : ?>
 				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 			<?php elseif($bootstrapsource == 4) : ?>

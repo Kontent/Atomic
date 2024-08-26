@@ -4,8 +4,8 @@
  * Licensed under the Creative Commons Attribution 3.0 Unported License.
  */
 
-let BTN_LIGHT_CLASSES = 'fa-regular fa-sun';
-let BTN_DARK_CLASSES = 'fa-solid fa-moon';
+let BTN_LIGHT_CLASSES = 'far fa-sun';
+let BTN_DARK_CLASSES = 'fas fa-moon';
 
 (() => {
     'use strict'

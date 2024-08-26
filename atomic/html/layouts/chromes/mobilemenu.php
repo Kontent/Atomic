@@ -28,7 +28,7 @@ $headerClass = htmlspecialchars($params->get('header_class', ''), ENT_QUOTES, 'U
 
 ?>
 <<?php echo $moduleTag; ?> <?php echo ArrayHelper::toString($moduleAttribs); ?> id="mobilemenu">
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
+	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
 	<div class="collapse" id="navbarToggleExternalContent">
 		<?php if ($module->showtitle && $headerClass === 'card-title') : ?>
 			<<?php echo $headerTag; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?></<?php echo $headerTag; ?>>
