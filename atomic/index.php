@@ -340,16 +340,20 @@ $wr = $wa->getRegistry();
 
 		<?php if ($this->countModules('topmenu')) : ?>
 			<div class="row">
-				<nav class="navigation">
-					<div class="nav-collapse">
-						<jdoc:include type="modules" name="topmenu" style="none" />
-						<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="menu" style="none" /><?php endif; ?>
-					</div>
-				</nav>
 				<?php if ($this->countModules('search')) : ?>
-				<div class="col-md-3">
-					<jdoc:include type="modules" name="search" style="none" />
-				</div>
+					<div class="col-md-9">
+					<?php endif; ?>
+						<nav class="navigation">
+							<div class="nav-collapse">
+								<jdoc:include type="modules" name="topmenu" style="none" />
+								<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="menu" style="none" /><?php endif; ?>
+							</div>
+						</nav>
+					<?php if ($this->countModules('search')) : ?>
+					</div>
+					<div class="col-md-3">
+						<jdoc:include type="modules" name="search" style="none" />
+					</div>
 				<?php endif; ?>
 			</div>
 		<?php endif; ?>

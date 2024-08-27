@@ -186,7 +186,17 @@ footer {
 }
 
 /* Horizontal dropdown menu  */
-
+.menu.horizontal .nav-item {
+	position: relative;
+}
+.menu.horizontal > .nav-item.parent:hover > .dropdown-menu {
+	display: block;
+}
+.menu.horizontal .dropdown-menu .nav-item.parent:hover > .dropdown-menu {
+	display: block;
+	left: 100%;
+	top: 0;
+}
 
 
 /* Vertical dropdown menu  */
