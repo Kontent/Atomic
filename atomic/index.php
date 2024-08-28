@@ -63,6 +63,9 @@ $sitetitle								= $this->params->get('sitetitle');
 $casspositions					= $this->params->get('casspositions');
 $stickyhead							= $this->params->get('stickyhead');
 $loadbsthemes = $this->params->get('bsthemes');
+$sidebamenu = $this->params->get('sidebarmenu');
+$sidebarmenutitle = $this->params->get('sidebarmenutitle');
+$sidebarmenupos = $this->params->get('sidebarmenupos');
 
 // Register assets
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
@@ -266,6 +269,25 @@ $wr = $wa->getRegistry();
 		<?php echo $codeafterbody; ?>	
 	<?php endif; ?>
 
+	<?php if($sidebamenu): ?>
+		<div class="offcanvas offcanvas-<?php echo $sidebarmenupos ?: 'start'; ?>" data-bs-backdrop="false" data-bs-scroll="true" tabindex="-1" id="offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>" aria-labelledby="offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>Label">
+		<button class="btn btn-primary offcanvas-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>" aria-controls="offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>">
+			<span class="offcanvas-toggle-icon offcanvas-toggle-icon--close"><i class="fas fa-times"></i></span>
+			<span class="offcanvas-toggle-icon offcanvas-toggle-icon--open"><i class="fas fa-bars"></i></span>
+		</button>
+			<div class="offcanvas-content">
+				<div class="offcanvas-header">
+					<h5 class="offcanvas-title"><?php echo $sidebarmenutitle ?: 'Menu'; ?></h5>
+				</div>
+				<div class="offcanvas-body">
+				<?php if ($this->countModules( 'sidebar-menu' )) : ?>
+					<jdoc:include type="modules" name="sidebar-menu" style="none" />
+				<?php endif; ?>
+				</div>
+			</div>
+		</div>
+	<?php endif; ?>
+
 	<?php	//	Fixed or fluid width container
 		if($fluidcontainer == 1) : ?>
 		<div class="container-fluid">
@@ -273,8 +295,7 @@ $wr = $wa->getRegistry();
 		<div class="container">
 	<?php endif; ?>
 	
-	<?php	//	Mobile menu
-		if ($this->countModules( 'mobilemenu' )) : ?>
+	<?php if ($this->countModules( 'mobilemenu' )) : ?>
 		<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
 	<?php endif; ?>
 	

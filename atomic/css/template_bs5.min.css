@@ -52,6 +52,40 @@ img {
 	max-width: 100%;
 }
 
+/**
+Sidebar menu
+**/
+.offcanvas {
+	visibility: visible;
+}
+.offcanvas .offcanvas-toggle {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: auto;
+	left: 100%;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+.offcanvas-end .offcanvas-toggle {
+	right: 100%;
+	left: auto;
+	border-radius: var(--bs-btn-border-radius);
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+.offcanvas-toggle-icon {
+	display: none;
+}
+.offcanvas-toggle-icon.offcanvas-toggle-icon--open {
+	display: block;
+}
+.offcanvas.show .offcanvas-toggle-icon.offcanvas-toggle-icon--open {
+	display: none;
+}
+.offcanvas.show .offcanvas-toggle-icon.offcanvas-toggle-icon--close {
+	display: block;
+}
 
 
 /* Cassiopeia module positions 
@@ -201,6 +235,11 @@ footer {
 	display: block;
 	left: 100%;
 	top: 0;
+}
+.menu.vertical .dropdown-menu .nav-item.parent:hover > .dropdown-menu {
+	display: block;
+	left: 0;
+	top: 100%;
 }
 .menu .nav-link.active {
 	color: var(--bs-navbar-active-color);
