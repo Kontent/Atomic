@@ -40,9 +40,26 @@ if ($item->menu_icon) {
     }
 }
 $attr = '';
-$class = 'nav-link nav-item-heading ' . $anchor_css;
+$class = 'nav-item-heading ' . $anchor_css;
+if ( $item->level > 1) {
+    $class .= ' dropdown-item';
+} else {
+    $class .= ' nav-link';
+}
 if ($item->deeper) {
     $class .= ' dropdown-toggle';
+}
+
+if (in_array($item->id, $path)) {
+    $class .= ' active';
+} elseif ($item->type === 'alias') {
+    $aliasToId = $itemParams->get('aliasoptions');
+
+    if (count($path) > 0 && $aliasToId == $path[count($path) - 1]) {
+        $class .= ' active';
+    } elseif (in_array($aliasToId, $path)) {
+        $class .= ' alias-parent-active';
+    }
 }
 ?>
 <span class="<?php echo $class; ?>"<?php echo $attr; ?><?php echo $title; ?>><?php echo $linktype; ?></span>

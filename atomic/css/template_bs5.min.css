@@ -186,8 +186,11 @@ footer {
 }
 
 /* Horizontal dropdown menu  */
-.menu.horizontal .nav-item {
+.menu .nav-item {
 	position: relative;
+}
+.menu .dropdown-menu {
+	min-width: 100%;
 }
 .menu.horizontal > .nav-item.parent:hover > .dropdown-menu {
 	display: block;
@@ -196,6 +199,9 @@ footer {
 	display: block;
 	left: 100%;
 	top: 0;
+}
+.menu .nav-link.active {
+	color: var(--bs-navbar-active-color);
 }
 
 

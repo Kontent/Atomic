@@ -67,9 +67,26 @@ if ($item->browserNav == 1) {
     $attributes['onclick'] = "window.open(this.href, 'targetWindow', '" . $options . "'); return false;";
 }
 
-$attributes['class'] .= ' nav-link';
+if ( $item->level > 1) {
+    $attributes['class'] .= ' dropdown-item';
+} else {
+    $attributes['class'] .= ' nav-link';
+}
+
 if ($item->deeper) {
     $attributes['class'] .= ' dropdown-toggle';
+}
+
+if (in_array($item->id, $path)) {
+    $attributes['class'] .= ' active';
+} elseif ($item->type === 'alias') {
+    $aliasToId = $itemParams->get('aliasoptions');
+
+    if (count($path) > 0 && $aliasToId == $path[count($path) - 1]) {
+        $attributes['class'] .= ' active';
+    } elseif (in_array($aliasToId, $path)) {
+        $attributes['class'] .= ' alias-parent-active';
+    }
 }
 
 echo HTMLHelper::_('link', OutputFilter::ampReplace(htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8', false)), $linktype, $attributes);
