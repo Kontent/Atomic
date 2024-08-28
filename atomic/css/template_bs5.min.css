@@ -86,6 +86,9 @@ Sidebar menu
 .offcanvas.show .offcanvas-toggle-icon.offcanvas-toggle-icon--close {
 	display: block;
 }
+.offcanvas-content {
+	height: 100%;
+}
 
 
 /* Cassiopeia module positions 

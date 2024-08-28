@@ -271,11 +271,11 @@ $wr = $wa->getRegistry();
 
 	<?php if($sidebamenu): ?>
 		<div class="offcanvas offcanvas-<?php echo $sidebarmenupos ?: 'start'; ?>" data-bs-backdrop="false" data-bs-scroll="true" tabindex="-1" id="offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>" aria-labelledby="offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>Label">
-		<button class="btn btn-primary offcanvas-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>" aria-controls="offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>">
-			<span class="offcanvas-toggle-icon offcanvas-toggle-icon--close"><i class="fas fa-times"></i></span>
-			<span class="offcanvas-toggle-icon offcanvas-toggle-icon--open"><i class="fas fa-bars"></i></span>
-		</button>
-			<div class="offcanvas-content">
+			<button class="btn btn-primary offcanvas-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>" aria-controls="offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>">
+				<span class="offcanvas-toggle-icon offcanvas-toggle-icon--close"><i class="fas fa-times"></i></span>
+				<span class="offcanvas-toggle-icon offcanvas-toggle-icon--open"><i class="fas fa-bars"></i></span>
+			</button>
+			<div class="offcanvas-content d-flex flex-column">
 				<div class="offcanvas-header">
 					<h5 class="offcanvas-title"><?php echo $sidebarmenutitle ?: 'Menu'; ?></h5>
 				</div>
