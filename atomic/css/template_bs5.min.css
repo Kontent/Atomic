@@ -48,7 +48,9 @@ header.sticky {
   z-index: 99;
 }
 
-
+img {
+	max-width: 100%;
+}
 
 
 
@@ -192,10 +194,10 @@ footer {
 .menu .dropdown-menu {
 	min-width: 100%;
 }
-.menu.horizontal > .nav-item.parent:hover > .dropdown-menu {
+.menu > .nav-item.parent:hover > .dropdown-menu {
 	display: block;
 }
-.menu.horizontal .dropdown-menu .nav-item.parent:hover > .dropdown-menu {
+.menu .dropdown-menu .nav-item.parent:hover > .dropdown-menu {
 	display: block;
 	left: 100%;
 	top: 0;
@@ -206,8 +208,6 @@ footer {
 
 
 /* Vertical dropdown menu  */
-
-
 
 
 /* BS Menu fixes to be cleaned up  */
