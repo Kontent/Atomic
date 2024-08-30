@@ -23,49 +23,51 @@ $active = JFactory::getApplication()->getMenu()->getActive();
 
 $version_parts = explode('.', JVERSION);
 $isJ5 = $version_parts[0] === '5';
+$isJ4 = $version_parts[0] === '4';
+$isJ3 = $version_parts[0] === '3';
 
 //	Assign template params
-$bodyfont							= $this->params->get('bodyfont');
-$bodyfontname					= $this->params->get('bodyfontname');
-$bodymenu							= $this->params->get('bodymenu');
-$bodygooglefont					= $this->params->get('bodygooglefont');
-$bootstrapcdn						= $this->params->get('bootstrapcdn');
-$bootstrapsource				= $this->params->get('bootstrapsource');
-$bsfixjoomla						= $this->params->get('bsfixjoomla');
-$bsicons								= $this->params->get('bsicons');
-$bstheme							= $this->params->get('bstheme');
-$bsthemes							= $this->params->get('bsthemes');
-$codeafterbody					= $this->params->get('codeafterbody');
-$codeafterhead					= $this->params->get('codeafterhead');
-$codebeforebody				= $this->params->get('codebeforebody');
-$codebeforehead				= $this->params->get('codebeforehead');
-$copyright							= $this->params->get('copyright');
-$copyrighttxt						= $this->params->get('copyrighttxt');
-$customcssfile					= $this->params->get('customcssfile');
-$customjs							= $this->params->get('customjs');
-$fluidcontainer					= $this->params->get('fluidcontainer');
-$fontawesome						= $this->params->get('fontawesome');
-$fontawesomecdn				= $this->params->get('fontawesomecdn');
-$gacode								= $this->params->get('gacode');
-$headerfont							= $this->params->get('headerfont');
-$headergooglefont				= $this->params->get('headergooglefont');
-$headerfontname				= $this->params->get('headerfontname');
-$instant								= $this->params->get('instant');
-$jqlibrary								= $this->params->get('jqlibrary');
-$jquerycdn							= $this->params->get('jquerycdn');
-$killgenerator						= $this->params->get('killgenerator');
-$loadfavicons						= $this->params->get('loadfavicons');
-$loadbsicons						= $this->params->get('loadbsicons');
-$logo									= $this->params->get('logo');
-$scrollreveal						= $this->params->get('scrollreveal');
-$sitedescription					= $this->params->get('sitedescription');
-$sitetitle								= $this->params->get('sitetitle');
-$casspositions					= $this->params->get('casspositions');
-$stickyhead							= $this->params->get('stickyhead');
-$loadbsthemes = $this->params->get('bsthemes');
-$sidebamenu = $this->params->get('sidebarmenu');
-$sidebarmenutitle = $this->params->get('sidebarmenutitle');
-$sidebarmenupos = $this->params->get('sidebarmenupos');
+$bodyfont			= $this->params->get('bodyfont');
+$bodyfontname		= $this->params->get('bodyfontname');
+$bodymenu			= $this->params->get('bodymenu');
+$bodygooglefont		= $this->params->get('bodygooglefont');
+$bootstrapcdn		= $this->params->get('bootstrapcdn');
+$bootstrapsource	= $this->params->get('bootstrapsource');
+$bsfixjoomla		= $this->params->get('bsfixjoomla');
+$bsicons			= $this->params->get('bsicons');
+$bstheme			= $this->params->get('bstheme');
+$bsthemes			= $this->params->get('bsthemes');
+$codeafterbody		= $this->params->get('codeafterbody');
+$codeafterhead		= $this->params->get('codeafterhead');
+$codebeforebody		= $this->params->get('codebeforebody');
+$codebeforehead		= $this->params->get('codebeforehead');
+$copyright			= $this->params->get('copyright');
+$copyrighttxt		= $this->params->get('copyrighttxt');
+$customcssfile		= $this->params->get('customcssfile');
+$customjs			= $this->params->get('customjs');
+$fluidcontainer		= $this->params->get('fluidcontainer');
+$fontawesome		= $this->params->get('fontawesome');
+$fontawesomecdn		= $this->params->get('fontawesomecdn');
+$gacode				= $this->params->get('gacode');
+$headerfont			= $this->params->get('headerfont');
+$headergooglefont	= $this->params->get('headergooglefont');
+$headerfontname		= $this->params->get('headerfontname');
+$instant			= $this->params->get('instant');
+$jqlibrary			= $this->params->get('jqlibrary');
+$jquerycdn			= $this->params->get('jquerycdn');
+$killgenerator		= $this->params->get('killgenerator');
+$loadfavicons		= $this->params->get('loadfavicons');
+$loadbsicons		= $this->params->get('loadbsicons');
+$logo				= $this->params->get('logo');
+$scrollreveal		= $this->params->get('scrollreveal');
+$sitedescription	= $this->params->get('sitedescription');
+$sitetitle			= $this->params->get('sitetitle');
+$casspositions		= $this->params->get('casspositions');
+$stickyhead			= $this->params->get('stickyhead');
+$loadbsthemes		= $this->params->get('bsthemes');
+$sidebamenu			= $this->params->get('sidebarmenu');
+$sidebarmenutitle	= $this->params->get('sidebarmenutitle');
+$sidebarmenupos		= $this->params->get('sidebarmenupos');
 
 // Register assets
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
@@ -230,7 +232,7 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Use Scroll Reveal
 			if($scrollreveal == 1) : ?>
-				<script src="https://unpkg.com/scrollreveal"></script>
+				<script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
 		<?php endif; ?>
 		
 		<?php	//	Add custom code before closing head tag
@@ -449,26 +451,18 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Load Bootstrap JS
 			if($bootstrapsource == 1) : ?>
-				<!-- <?php if ( $isJ5 ) : ?>
-					<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/bootstrap-es5.min.js"></script>
+				<?php if ( $isJ5 || $isJ4 ) : ?>
+					<?php JHtml::_("bootstrap.framework"); ?>
 				<?php else : ?>
-					<script src="media/vendor/bootstrap/js/popper.min.js"></script>
 					<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
-				<?php endif; ?> -->
-				<?php 
-				JHtml::_("bootstrap.framework"); 
-				?>
+				<?php endif; ?>
 			<?php elseif($bootstrapsource == 2) : ?>
-				<?php 
-				JHtml::_("bootstrap.framework"); 
-				?>
-				<!-- <?php if ( $isJ5 ) : ?>
-					<script src="media/vendor/bootstrap/js/popper.min.js" type="module"></script>
-					<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/bootstrap-es5.min.js"></script>
+				<?php if ( $isJ5 || $isJ4 ) : ?>
+					<?php JHtml::_("bootstrap.framework"); ?>
 				<?php else : ?>
 					<script src="media/vendor/bootstrap/js/popper.min.js"></script>
 					<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
-				<?php endif; ?> -->
+				<?php endif; ?>
 			<?php elseif($bootstrapsource == 3) : ?>
 				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 			<?php elseif($bootstrapsource == 4) : ?>
