@@ -206,7 +206,11 @@ footer {
 /* Inline CSS  */
 
 
-
+/* Module search */
+.mod-finder__search.input-group .awesomplete input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
 
 
 

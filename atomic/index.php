@@ -450,15 +450,17 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Load Bootstrap JS
 			if($bootstrapsource == 1) : ?>
-				<?php if ( $isJ5 || $isJ4 ) : ?>
+				<?php if ( $isJ5 ) : ?>
 					<?php JHtml::_("bootstrap.framework"); ?>
-				<?php else : ?>
+				<?php endif; ?>
+				<?php if ( $isJ4 ) : ?>
 					<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
 				<?php endif; ?>
 			<?php elseif($bootstrapsource == 2) : ?>
-				<?php if ( $isJ5 || $isJ4 ) : ?>
+				<?php if ( $isJ5 ) : ?>
 					<?php JHtml::_("bootstrap.framework"); ?>
-				<?php else : ?>
+				<?php endif; ?>
+				<?php if ( $isJ4 ) : ?>
 					<script src="media/vendor/bootstrap/js/popper.min.js"></script>
 					<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
 				<?php endif; ?>
