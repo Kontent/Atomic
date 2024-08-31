@@ -207,9 +207,20 @@ footer {
 
 
 /* Module search */
-.mod-finder__search.input-group .awesomplete input {
+.mod-finder__search.input-group {
+	flex-wrap: nowrap;
+}
+.mod-finder__search.input-group .awesomplete input,
+.com-finder__search .input-group .awesomplete .js-finder-search-query {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+}
+/* Module search bootswatch style */
+.mod-finder__search.input-group .awesomplete {
+	flex-shrink: 1;
+}
+.mod-finder__search.input-group button {
+	flex-shrink: 0;
 }
 
 
