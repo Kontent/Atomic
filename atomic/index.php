@@ -192,7 +192,7 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Load BS Icons
 			if($loadbsicons == 1) : ?>
-				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
 		<?php endif; ?>
 		
 		<?php	//	Load the RTL CSS file.
