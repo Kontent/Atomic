@@ -126,25 +126,25 @@ $wr = $wa->getRegistry();
 				<?php echo $bootstrapcdn; ?>	
 		
 			<?php elseif($bootstrapsource == 6) : ?>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.0/cosmo/bootstrap.min.css" integrity="sha512-NLsflIDF3KkL2Ne9b7dYTkJ2/EDCe8Uo+/uat0QDDvqFOroaiZnIok2p7OHMt/iUIdQF8HVmcuuyvgzvOfU0mA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/cosmo/bootstrap.min.css" integrity="sha512-NLsflIDF3KkL2Ne9b7dYTkJ2/EDCe8Uo+/uat0QDDvqFOroaiZnIok2p7OHMt/iUIdQF8HVmcuuyvgzvOfU0mA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 				<?php elseif($bootstrapsource == 7) : ?>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.0/flatly/bootstrap.min.css" integrity="sha512-N/JRw8RFoUkWgQIpunoKtmZShzrHbs724xV4DMh+LSNjebmrgNy2dzAIUhoOqSazEZ/bLlulWy2muCxletfrsA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/flatly/bootstrap.min.css" integrity="sha512-N/JRw8RFoUkWgQIpunoKtmZShzrHbs724xV4DMh+LSNjebmrgNy2dzAIUhoOqSazEZ/bLlulWy2muCxletfrsA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 				<?php elseif($bootstrapsource == 8) : ?>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.0/minty/bootstrap.min.css" integrity="sha512-NXJDZEor7THMyky4W3o7oqua70wf7v7YDp+UfJxCLA6DJZIxksgnnpd+kQF0GsT1Mmw/VxsTGpnJcC1yapOEfw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/minty/bootstrap.min.css" integrity="sha512-NXJDZEor7THMyky4W3o7oqua70wf7v7YDp+UfJxCLA6DJZIxksgnnpd+kQF0GsT1Mmw/VxsTGpnJcC1yapOEfw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 				<?php elseif($bootstrapsource == 9) : ?>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.0/quartz/bootstrap.min.css" integrity="sha512-Wwa32vy+l32AJgZBv6XABgPyi254CmzXkvyZh+EaQWCyaoLOP4BIG00Oz8TbiRutO8VMi9VHJuy7AbFqDkF9Hw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/quartz/bootstrap.min.css" integrity="sha512-Wwa32vy+l32AJgZBv6XABgPyi254CmzXkvyZh+EaQWCyaoLOP4BIG00Oz8TbiRutO8VMi9VHJuy7AbFqDkF9Hw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 				<?php elseif($bootstrapsource == 10) : ?>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.0/spacelab/bootstrap.min.css" integrity="sha512-G5YYZX20vJvDg4huNhBOtxBSQTlonPPFTLvy2cY7F6AJ9SYNDXevQUE5O8wlHyVY1/LTt+Quk6WQ9ObbwJ3hOw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/spacelab/bootstrap.min.css" integrity="sha512-G5YYZX20vJvDg4huNhBOtxBSQTlonPPFTLvy2cY7F6AJ9SYNDXevQUE5O8wlHyVY1/LTt+Quk6WQ9ObbwJ3hOw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 				<?php elseif($bootstrapsource == 11) : ?>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.0/yeti/bootstrap.min.css" integrity="sha512-VzKni1jm9BXG761rJfi0f0Vxd2B6NGWFrpxRZlnTVnUt4HvVlpSq8jQr2J3UVH7FoglUqpLhJIAq96ulIBPbbg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/yeti/bootstrap.min.css" integrity="sha512-VzKni1jm9BXG761rJfi0f0Vxd2B6NGWFrpxRZlnTVnUt4HvVlpSq8jQr2J3UVH7FoglUqpLhJIAq96ulIBPbbg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 				<?php elseif($bootstrapsource == 12) : ?>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.0/cyborg/bootstrap.min.css" integrity="sha512-jwIqEv8o/kTBMJVtbNCBrDqhBojl0YSUam+EFpLjVOC86Ci6t4ZciTnIkelFNOik+dEQVymKGcQLiaJZNAfWRg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/cyborg/bootstrap.min.css" integrity="sha512-jwIqEv8o/kTBMJVtbNCBrDqhBojl0YSUam+EFpLjVOC86Ci6t4ZciTnIkelFNOik+dEQVymKGcQLiaJZNAfWRg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 				<?php elseif($bootstrapsource == 13) : ?>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.0/darkly/bootstrap.min.css" integrity="sha512-3xynESL0QF3ERUl9se1VJk043nWT+UzWJveifBw7kLtC226vyGINZFtmyK015F83KBSNW+67alYSY2cCj1LHOQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/darkly/bootstrap.min.css" integrity="sha512-3xynESL0QF3ERUl9se1VJk043nWT+UzWJveifBw7kLtC226vyGINZFtmyK015F83KBSNW+67alYSY2cCj1LHOQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 				<?php elseif($bootstrapsource == 14) : ?>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.0/slate/bootstrap.min.css" integrity="sha512-TSKJb47lA8eqhl9ChXTWG686i5y81CiunKEv24OsK278WJoFov2ZOf/yFTgeb3mcu1ElkNA6R3iDZH+WHbOIWw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/slate/bootstrap.min.css" integrity="sha512-TSKJb47lA8eqhl9ChXTWG686i5y81CiunKEv24OsK278WJoFov2ZOf/yFTgeb3mcu1ElkNA6R3iDZH+WHbOIWw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 				<?php elseif($bootstrapsource == 15) : ?>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.0/superhero/bootstrap.min.css" integrity="sha512-J0q3uYNPOZ/n9hYguPcu6W6vWeLg1auyzcHnpQ4T/yd57kHb2tCz4MpVBdvoJwWXOUjDWT9t9QdsTiMrS2XRvw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/superhero/bootstrap.min.css" integrity="sha512-J0q3uYNPOZ/n9hYguPcu6W6vWeLg1auyzcHnpQ4T/yd57kHb2tCz4MpVBdvoJwWXOUjDWT9t9QdsTiMrS2XRvw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<?php endif; ?>
 		
 		<?php	//	Load Google Fonts
