@@ -85,6 +85,7 @@
 		<fieldset name="CSS_SETTINGS">
 			<field name="bootstrapsource" type="list" default="2" label="TPL_ATOMIC_BOOTSTRAP_LABEL" description="TPL_ATOMIC_BOOTSTRAP_DESC">
 				<option value="0">TPL_ATOMIC_NONE</option>
+				<option value="16">TPL_ATOMIC_BS5_POP_JOOMLA5</option>
 				<option value="1">TPL_ATOMIC_BS5_JOOMLA4</option>
 				<option value="2">TPL_ATOMIC_BS5_POP_JOOMLA4</option>
 				<option value="3">TPL_ATOMIC_BS5_REMOTE</option>

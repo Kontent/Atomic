@@ -116,7 +116,7 @@ $wr = $wa->getRegistry();
     	<jdoc:include type="styles" />
     			
 		<?php	//	Load Bootstrap or Bootswatch theme.
-			if($bootstrapsource == 1 || $bootstrapsource == 2) : ?>
+			if($bootstrapsource == 1 || $bootstrapsource == 2 || $bootstrapsource == 16) : ?>
 				<link rel="stylesheet" href="media/vendor/bootstrap/css/bootstrap.min.css">
 				
 			<?php elseif($bootstrapsource == 3 || $bootstrapsource == 4) : ?>
@@ -212,9 +212,9 @@ $wr = $wa->getRegistry();
 		<?php if (($jquerycdn == null) && ($jqlibrary == 1)) : ?>
 			<script src="media/vendor/jquery/js/jquery.min.js"></script>
 		<?php elseif (($jquerycdn == null) && ($jqlibrary == 2)) : ?>
-			<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+			<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 		<?php elseif (($jquerycdn == null) && ($jqlibrary == 3)) : ?>
-			<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+			<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
 		<?php elseif (($jquerycdn == null) && ($jqlibrary == 4)) : ?>
 			<?php echo $jquerycdn ?>
 		<?php else : ?>
@@ -450,27 +450,19 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Load Bootstrap JS
 			if($bootstrapsource == 1) : ?>
-				<?php if ( $isJ5 ) : ?>
-					<?php JHtml::_("bootstrap.framework"); ?>
-				<?php endif; ?>
-				<?php if ( $isJ4 ) : ?>
-					<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
-				<?php endif; ?>
+				<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
 			<?php elseif($bootstrapsource == 2) : ?>
-				<?php if ( $isJ5 ) : ?>
-					<?php JHtml::_("bootstrap.framework"); ?>
-				<?php endif; ?>
-				<?php if ( $isJ4 ) : ?>
-					<script src="media/vendor/bootstrap/js/popper.min.js"></script>
-					<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
-				<?php endif; ?>
+				<script src="media/vendor/bootstrap/js/popper.min.js"></script>
+				<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
 			<?php elseif($bootstrapsource == 3) : ?>
-				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 			<?php elseif($bootstrapsource == 4) : ?>
-				<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js" integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 			<?php elseif($bootstrapsource >= 6 && $bootstrapsource <= 15) : ?>
-				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			<?php elseif($bootstrapsource == 16) : ?>
+				<?php HTMLHelper::_('bootstrap.framework'); ?>
 			<?php endif; ?>
 			
 		<?php	//	Use Instant.page
