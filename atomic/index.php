@@ -65,7 +65,7 @@ $sitetitle			= $this->params->get('sitetitle');
 $casspositions		= $this->params->get('casspositions');
 $stickyhead			= $this->params->get('stickyhead');
 $loadbsthemes		= $this->params->get('bsthemes');
-$sidebamenu			= $this->params->get('sidebarmenu');
+$sidebarmenu		= $this->params->get('sidebarmenu');
 $sidebarmenutitle	= $this->params->get('sidebarmenutitle');
 $sidebarmenupos		= $this->params->get('sidebarmenupos');
 
@@ -177,11 +177,15 @@ $wr = $wa->getRegistry();
 				
 		<?php	//	Load FontAwesome
 		if($fontawesome == 1) : ?>
-			<link rel="stylesheet" href="media/system/css/joomla-fontawesome.min.css">
+			<?php if (!$isJ4 && !$isJ5) : ?>
+				<link rel="stylesheet" href="media/vendor/fontawesome-free/css/fontawesome.min.css">
+			<?php else: ?>
+				<link rel="stylesheet" href="media/system/css/joomla-fontawesome.min.css">
+			<?php endif; ?>
 		<?php elseif($fontawesome == 2) : ?>
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<?php elseif($fontawesome == 3) : ?>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<?php elseif($fontawesome == 4 || $fontawesome == 5) : ?>
 			<?php echo $fontawesomecdn; ?>
 		<?php endif; ?>
@@ -271,7 +275,19 @@ $wr = $wa->getRegistry();
 		<?php echo $codeafterbody; ?>	
 	<?php endif; ?>
 
-	<?php if($sidebamenu): ?>
+
+	<?php	//	Fixed or fluid width container
+		if($fluidcontainer == 1) : ?>
+		<div class="container-fluid">
+	<?php else : ?>
+		<div class="container">
+	<?php endif; ?>
+	
+	<?php if ($this->countModules( 'mobilemenu' )) : ?>
+		<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
+	<?php endif; ?>
+	
+	<?php if($sidebarmenu): ?>
 		<div class="offcanvas offcanvas-<?php echo $sidebarmenupos ?: 'start'; ?>" data-bs-backdrop="false" data-bs-scroll="true" tabindex="-1" id="offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>" aria-labelledby="offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>Label">
 			<button class="btn btn-primary offcanvas-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>" aria-controls="offcanvas<?php echo ucfirst($sidebarmenupos) ?: 'Start'; ?>">
 				<span class="offcanvas-toggle-icon offcanvas-toggle-icon--close"><i class="fas fa-times"></i></span>
@@ -289,18 +305,6 @@ $wr = $wa->getRegistry();
 			</div>
 		</div>
 	<?php endif; ?>
-
-	<?php	//	Fixed or fluid width container
-		if($fluidcontainer == 1) : ?>
-		<div class="container-fluid">
-	<?php else : ?>
-		<div class="container">
-	<?php endif; ?>
-	
-	<?php if ($this->countModules( 'mobilemenu' )) : ?>
-		<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
-	<?php endif; ?>
-	
 	<?php	//	Hide header if nothing in it
 	if ($this->countModules('alert', true) 
 	or ($this->countModules('header', true)) 
@@ -368,8 +372,7 @@ $wr = $wa->getRegistry();
 					<?php endif; ?>
 						<nav class="navigation">
 							<div class="nav-collapse">
-								<jdoc:include type="modules" name="topmenu" style="none" />
-								<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="menu" style="none" /><?php endif; ?>
+								<jdoc:include type="modules" name="<?php echo $casspositions == 1 ? 'menu' : 'topmenu'; ?>" style="none" />
 							</div>
 						</nav>
 					<?php if ($this->countModules('search')) : ?>
