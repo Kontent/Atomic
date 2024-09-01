@@ -222,16 +222,6 @@
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
-
-			<field name="sidebarmenu" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SIDEBARMENU_LABEL" description="TPL_ATOMIC_SIDEBARMENU_DESC">
-				<option value="0">TPL_ATOMIC_NO</option>
-				<option value="1">TPL_ATOMIC_YES</option>
-			</field>
-			<field showon="sidebarmenu:1" name="sidebarmenutitle" type="text" default="Menu" label="TPL_ATOMIC_SIDEBARMENUTITLE_LABEL" description="TPL_ATOMIC_SIDEBARMENUTITLE_DESC" filter="raw" />
-			<field showon="sidebarmenu:1" name="sidebarmenupos" type="list" default="start" label="TPL_ATOMIC_SIDEBARMENUPOSITION_LABEL" description="TPL_ATOMIC_SIDEBARMENUPOSITION_DESC">
-				<option value="start">TPL_ATOMIC_SIDEBARMENUPOSITION_LEFT</option>
-				<option value="end">TPL_ATOMIC_SIDEBARMENUPOSITION_RIGHT</option>
-			</field>
 			
 		</fieldset>
 		

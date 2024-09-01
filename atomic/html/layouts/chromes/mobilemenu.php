@@ -28,11 +28,15 @@ $headerClass = htmlspecialchars($params->get('header_class', ''), ENT_QUOTES, 'U
 
 ?>
 <<?php echo $moduleTag; ?> <?php echo ArrayHelper::toString($moduleAttribs); ?> id="mobilemenu<?php echo $module->id; ?>">
-	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent<?php echo $module->id; ?>" aria-controls="navbarToggleExternalContent<?php echo $module->id; ?>" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
-	<div class="collapse" id="navbarToggleExternalContent<?php echo $module->id; ?>">
-		<?php if ($module->showtitle && $headerClass === 'card-title') : ?>
-			<<?php echo $headerTag; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?></<?php echo $headerTag; ?>>
-		<?php endif; ?>
-		<div class="contents"><?php echo $module->content; ?></div>
+	<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarToggleExternalContent<?php echo $module->id; ?>" aria-controls="navbarToggleExternalContent<?php echo $module->id; ?>" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
+	<div class="offcanvas offcanvas-start" data-bs-backdrop="true" data-bs-scroll="false" tabindex="-1" id="navbarToggleExternalContent<?php echo $module->id; ?>">
+		<div class="offcanvas-content d-flex flex-column">
+			<div class="offcanvas-body">
+				<?php if ($module->showtitle && $headerClass === 'card-title') : ?>
+					<<?php echo $headerTag; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?></<?php echo $headerTag; ?>>
+				<?php endif; ?>
+				<div class="contents"><?php echo $module->content; ?></div>
+			</div>
+		</div>
 	</div>
 </<?php echo $moduleTag; ?>>
