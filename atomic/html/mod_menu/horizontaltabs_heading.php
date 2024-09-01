@@ -48,6 +48,9 @@ if ( $item->level > 1) {
 }
 if ($item->deeper) {
     $class .= ' dropdown-toggle';
+    $attr .= ' data-bs-toggle="dropdown"';
+    $attr .= ' aria-expanded="false"';
+    $attr .= ' data-bs-auto-close="outside"';
 }
 
 if (in_array($item->id, $path)) {

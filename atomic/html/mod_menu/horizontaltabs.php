@@ -27,7 +27,13 @@ if ($tagId = $params->get('tag_id', '')) {
 <ul <?php echo ArrayHelper::toString($attributes); ?>>
 <?php foreach ($list as $i => &$item) {
     $itemParams = $item->getParams();
-    $class      = 'nav-item item-' . $item->id;
+    $class      = 'item-' . $item->id;
+    if ($item->level < 2) {
+        $class .= ' btn-group';
+    }
+    if ($item->level > 1) {
+        $class .= ' dropend';
+    }
 
     if ($item->id == $default_id) {
         $class .= ' default';

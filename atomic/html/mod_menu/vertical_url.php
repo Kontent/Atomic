@@ -75,6 +75,9 @@ if ( $item->level > 1) {
 
 if ($item->deeper) {
     $attributes['class'] .= ' dropdown-toggle';
+    $attributes['data-bs-toggle'] = 'dropdown';
+    $attributes['aria-expanded'] = 'false';
+    $attributes['data-bs-auto-close'] = 'outside';
 }
 
 if (in_array($item->id, $path)) {
