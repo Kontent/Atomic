@@ -332,6 +332,10 @@ footer {
 /* Extra small devices (portrait phones, less than 576px)  */
 /* No media query since this is the default in Bootstrap  */
 
+/* Small Phone */
+@media (min-width: 320px) {
+}
+
 /* Small devices (landscape phones, 576px and up)  */
 @media (min-width: 576px) {
 
@@ -339,7 +343,9 @@ footer {
 
 /* Medium devices (tablets, 768px and up)  */
 @media (min-width: 768px) {
-
+	.mobilemenumodule {
+		display: none;
+	}
 }
 
 /* Large devices (desktops, 992px and up)  */
@@ -351,5 +357,10 @@ footer {
 @media (min-width: 1200px) {
 
 }
+/* Extra extra large  */
+@media (min-width: 1400px) {
+
+}
+
 
 
