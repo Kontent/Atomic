@@ -64,8 +64,7 @@ $sitedescription	= $this->params->get('sitedescription');
 $sitetitle			= $this->params->get('sitetitle');
 $casspositions		= $this->params->get('casspositions');
 $stickyhead			= $this->params->get('stickyhead');
-$loadbsthemes		= $this->params->get('bsthemes');
-
+var_dump($bstheme);
 // Register assets
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wr = $wa->getRegistry();
@@ -218,7 +217,7 @@ $wr = $wa->getRegistry();
 		<?php endif; ?>
 		
 		<?php	//	Load BS Styleswitcher
-			if($loadbsthemes == 1) : ?>
+			if($bsthemes == 1) : ?>
 				<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/theme.js"></script>
 		<?php endif; ?>
 		
@@ -302,14 +301,14 @@ $wr = $wa->getRegistry();
 		<div class="row">
 			<div class="container-header">
 				
-				<?php if ($this->countModules('alert', true) or ($loadbsthemes == 1)) : ?>
+				<?php if ($this->countModules('alert', true) or ($bsthemes == 1)) : ?>
 				<div class="alertbar">
 					<?php if ($this->countModules('alert')) : ?>
 						<jdoc:include type="modules" name="alert" style="none" />
 					<?php endif; ?>
 					
 					<?php	//	Load BS Styleswitcher
-						if($loadbsthemes == 1) : ?>
+						if($bsthemes == 1) : ?>
 						<a id="themeBtn" href="#"class="nav-link"><i class=""></i></a>
 					<?php endif; ?>
 					
