@@ -317,7 +317,7 @@ $wr = $wa->getRegistry();
 				
 				<?php if($logo != null) : ?>
 					<span id="logo">
-						<a href="<?php echo $this->baseurl; ?>"><img src="<?php echo $this->baseurl; ?>/<?php echo htmlspecialchars($logo); ?>" alt="<?php echo htmlspecialchars($this->params->get('sitetitle')); ?>" /></a>
+						<a href="<?php echo $this->baseurl; ?>"><img src="<?php echo $this->baseurl; ?>/<?php echo htmlspecialchars($logo); ?>" alt="<?php echo htmlspecialchars($this->params->get('sitetitle') ?? ''); ?>" /></a>
 					</span>
 				<?php endif; ?>
 				
