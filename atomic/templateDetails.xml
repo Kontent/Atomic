@@ -182,7 +182,8 @@
 		
 			<field name="fontawesome" type="list" default="0" label="TPL_ATOMIC_FONTAWESOME_LABEL" description="TPL_ATOMIC_FONTAWESOME_DESC">
 				<option value="0">TPL_ATOMIC_NONE</option>
-				<option value="1">TPL_ATOMIC_FAJOOMLA</option>
+				<option value="6">TPL_ATOMIC_FAJOOMLA5</option>
+				<option value="1">TPL_ATOMIC_FAJOOMLA4</option>
 				<option value="2">TPL_ATOMIC_FACSSCDN</option>
 				<option value="3">TPL_ATOMIC_FAJSCDN</option>
 				<option value="4">TPL_ATOMIC_FACUSTOMCSS</option>
