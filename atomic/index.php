@@ -310,7 +310,7 @@ $wr = $wa->getRegistry();
 					
 					<?php	//	Load BS Styleswitcher
 						if($loadbsthemes == 1) : ?>
-						<div><a id="themeBtn" href="#"class="nav-link"><i class=""></i></a></div>
+						<a id="themeBtn" href="#"class="nav-link"><i class=""></i></a>
 					<?php endif; ?>
 					
 				</div>

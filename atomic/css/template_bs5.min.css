@@ -334,6 +334,9 @@ footer {
 
 /* Small Phone */
 @media (min-width: 320px) {
+	.navigation .nav {
+		display: none;
+	}
 }
 
 /* Small devices (landscape phones, 576px and up)  */
@@ -345,6 +348,9 @@ footer {
 @media (min-width: 768px) {
 	.mobilemenumodule {
 		display: none;
+	}
+	.navigation .nav {
+		display: block;
 	}
 }
 
