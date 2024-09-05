@@ -64,7 +64,7 @@ $sitedescription	= $this->params->get('sitedescription');
 $sitetitle			= $this->params->get('sitetitle');
 $casspositions		= $this->params->get('casspositions');
 $stickyhead			= $this->params->get('stickyhead');
-var_dump($bstheme);
+
 // Register assets
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wr = $wa->getRegistry();
