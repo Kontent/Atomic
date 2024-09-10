@@ -111,7 +111,7 @@ $wr = $wa->getRegistry();
     	<jdoc:include type="styles" />
     			
 		<?php	//	Load Bootstrap or Bootswatch theme.
-			if($bootstrapsource == 1 || $bootstrapsource == 2 || $bootstrapsource == 16) : ?>
+			if($bootstrapsource == 1 || $bootstrapsource == 3) : ?>
 				<link rel="stylesheet" href="media/vendor/bootstrap/css/bootstrap.min.css">
 				
 			<?php elseif($bootstrapsource == 2) : ?>
