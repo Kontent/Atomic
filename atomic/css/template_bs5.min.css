@@ -220,9 +220,6 @@ footer {
 .menu .nav-item {
 	position: relative;
 }
-.menu .dropdown-menu {
-	min-width: 100%;
-}
 .menu > .nav-item.parent:hover > .dropdown-menu {
 	display: block;
 }

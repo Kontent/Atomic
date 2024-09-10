@@ -79,17 +79,15 @@
 				<option value="1">TPL_ATOMIC_ENABLED</option>
 			</field>
 			
-			<field name="copyrighttxt" type="text" default="" label="TPL_ATOMIC_COPYRIGHTTXT_LABEL" description="TPL_ATOMIC_COPYRIGHTTXT_DESC" filter="string" />
+			<field name="copyrighttxt" showon="copyright:1" type="text" default="" label="TPL_ATOMIC_COPYRIGHTTXT_LABEL" description="TPL_ATOMIC_COPYRIGHTTXT_DESC" filter="string" />
 		</fieldset>
 		
 		<fieldset name="CSS_SETTINGS">
 			<field name="bootstrapsource" type="list" default="2" label="TPL_ATOMIC_BOOTSTRAP_LABEL" description="TPL_ATOMIC_BOOTSTRAP_DESC">
 				<option value="0">TPL_ATOMIC_NONE</option>
-				<option value="16">TPL_ATOMIC_BS5_POP_JOOMLA5</option>
+				<option value="3">TPL_ATOMIC_BS5_JOOMLA5</option>
 				<option value="1">TPL_ATOMIC_BS5_JOOMLA4</option>
-				<option value="2">TPL_ATOMIC_BS5_POP_JOOMLA4</option>
-				<option value="3">TPL_ATOMIC_BS5_REMOTE</option>
-				<option value="4">TPL_ATOMIC_BS5_POP_REMOTE</option>
+				<option value="2">TPL_ATOMIC_BS5_REMOTE</option>
 				<option value="5">TPL_ATOMIC_BS_CUSTOM</option>
 				<option value="0" disabled="true">TPL_ATOMIC_BOOTSWATCH_OPTION_LIGHT</option>
 				<option value="6">TPL_ATOMIC_BOOTSWATCH_OPTION_COSMO</option>
@@ -104,7 +102,7 @@
 				<option value="14">TPL_ATOMIC_BOOTSWATCH_OPTION_SLATE</option>
 				<option value="15">TPL_ATOMIC_BOOTSWATCH_OPTION_SUPERHERO</option>			
 			</field>
-			<field name="bootstrapcdn" type="textarea" label="TPL_ATOMIC_BOOTSTRAPCDN_LABEL" description="TPL_ATOMIC_BOOTSTRAPCDN_DESC" rows="4" columns="30" filter="raw" default="" />			
+			<field name="bootstrapcdn" showon="bootstrapsource:5" type="textarea" label="TPL_ATOMIC_BOOTSTRAPCDN_LABEL" description="TPL_ATOMIC_BOOTSTRAPCDN_DESC" rows="4" columns="30" filter="raw" default="" />			
 			
 			<field name="bsfixjoomla" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_TEMPLATEBSFIX_LABEL" description="TPL_ATOMIC_TEMPLATEBSFIX_DESC">
 				<option value="0">TPL_ATOMIC_NO</option>
@@ -146,7 +144,7 @@
 				<option value="4">TPL_ATOMIC_NONE</option>
 			</field>
 			
-			<field name="jquerycdn" type="textarea" label="TPL_ATOMIC_JQUERYCDN_LABEL" description="TPL_ATOMIC_JQUERYCDN_DESC" rows="4" columns="30" filter="raw" default="" />
+			<field name="jquerycdn" showon="jqlibrary:3" type="textarea" label="TPL_ATOMIC_JQUERYCDN_LABEL" description="TPL_ATOMIC_JQUERYCDN_DESC" rows="4" columns="30" filter="raw" default="" />
 			<field name="customjs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_CUSTOMJS_LABEL" description="TPL_ATOMIC_CUSTOMJS_DESC">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
@@ -162,7 +160,7 @@
 				<option value="2">TPL_ATOMIC_NOFONT</option>
 			</field>
 			
-			<field name="headergooglefont" type="textarea" label="TPL_ATOMIC_HEADER_FONT_LINK_LABEL" description="TPL_ATOMIC_HEADER_FONT_LINK_DESC" rows="4" columns="30" filter="raw" default="" />
+			<field name="headergooglefont" showon="headerfont:1" type="textarea" label="TPL_ATOMIC_HEADER_FONT_LINK_LABEL" description="TPL_ATOMIC_HEADER_FONT_LINK_DESC" rows="4" columns="30" filter="raw" default="" />
 			
 			<field name="headerfontname"  type="text" default="" label="TPL_ATOMIC_HEADER_FONTNAME_LABEL" description="TPL_ATOMIC_HEADER_FONTNAME_DESC" filter="string" />
 			
@@ -172,7 +170,7 @@
 				<option value="2">TPL_ATOMIC_NOFONT</option>
 			</field>
 			
-			<field name="bodygooglefont" type="textarea" label="TPL_ATOMIC_BODY_FONT_LINK_LABEL" description="TPL_ATOMIC_BODY_FONT_LINK_DESC" rows="4" columns="30" filter="raw" default="" />
+			<field name="bodygooglefont" showon="bodyfont:1" type="textarea" label="TPL_ATOMIC_BODY_FONT_LINK_LABEL" description="TPL_ATOMIC_BODY_FONT_LINK_DESC" rows="4" columns="30" filter="raw" default="" />
 						
 			<field name="bodyfontname"  type="text" default="" label="TPL_ATOMIC_BODY_FONTNAME_LABEL" description="TPL_ATOMIC_BODY_FONTNAME_DESC" filter="string" />
 			
@@ -190,7 +188,7 @@
 				<option value="5">TPL_ATOMIC_FACUSTOMJS</option>
 			</field>
 			
-			<field name="fontawesomecdn" type="textarea" label="TPL_ATOMIC_FONTAWESOMECDN_LABEL" description="TPL_ATOMIC_FONTAWESOMECDN_DESC" rows="4" columns="30"/>
+			<field name="fontawesomecdn" showon="fontawesome:5[OR]fontawesome:4" type="textarea" label="TPL_ATOMIC_FONTAWESOMECDN_LABEL" description="TPL_ATOMIC_FONTAWESOMECDN_DESC" rows="4" columns="30"/>
 			
 			<field name="loadbsicons" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_LOADBSICONS_LABEL" description="TPL_ATOMIC_LOADBSICONS_DESC">
 				<option value="0">TPL_ATOMIC_NO</option>
