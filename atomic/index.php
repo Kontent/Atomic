@@ -24,7 +24,6 @@ $active = JFactory::getApplication()->getMenu()->getActive();
 $version_parts = explode('.', JVERSION);
 $isJ5 = $version_parts[0] === '5';
 $isJ4 = $version_parts[0] === '4';
-$isJ3 = $version_parts[0] === '3';
 
 //	Assign template params
 $bodyfont			= $this->params->get('bodyfont');
@@ -339,10 +338,13 @@ $wr = $wa->getRegistry();
 			</div>
 		</div>
 
+		<?php
+		$topmenucolclass = $this->countModules('search') ? 'col-12 col-md-9' : ' col';
+		?>
 		<?php if ($this->countModules('topmenu')) : ?>
 			<div class="row">
 				<?php if ($this->countModules('search')) : ?>
-					<div class="col-md-9">
+					<div class="<?php echo $topmenucolclass; ?>">
 					<?php endif; ?>
 						<nav class="navigation">
 							<div class="nav-collapse">
@@ -351,7 +353,7 @@ $wr = $wa->getRegistry();
 						</nav>
 					<?php if ($this->countModules('search')) : ?>
 					</div>
-					<div class="col-md-3">
+					<div class="col-12 col-md-3">
 						<jdoc:include type="modules" name="search" style="none" />
 					</div>
 				<?php endif; ?>
@@ -361,49 +363,74 @@ $wr = $wa->getRegistry();
 	<?php endif; ?>
 		
     <main>
-    	<?php if($casspositions == 1) : ?>
+    	<?php if($casspositions == 1 && (
+			$this->countModules('banner', true) ||
+			$this->countModules('top-a', true) ||
+			$this->countModules('top-b', true)
+		)) : ?>
     	<div class="row">
-    		<div class="row">
-    			<jdoc:include type="modules" name="banner" style="none" />
-    		</div>
+			<div class="col">
+			<jdoc:include type="modules" name="banner" style="none" />
 			<jdoc:include type="modules" name="top-a" style="none" />
 			<jdoc:include type="modules" name="top-b" style="none" />
+			</div>
 		</div>
 		<?php endif; ?>
     	
+		<?php
+		$showsidebarleft = ($casspositions == 1 && $this->countModules('sidebar-left', true)) || ($casspositions != 1 && $this->countModules('leftbody', true)) ? true : false;
+		$showsidebarright = ($casspositions == 1 && $this->countModules('sidebar-right', true)) || ($casspositions != 1 && $this->countModules('rightbody', true)) ? true : false;
+		$componentcolclass = ' col';
+		if($showsidebarleft && $showsidebarright) :
+			$componentcolclass = ' col-12 col-lg-6';
+		elseif($showsidebarleft || $showsidebarright):
+			$componentcolclass = ' col-12 col-lg-9';
+		endif;
+		?>
     	<div class="row">
-			<div class="container-main">
-				<?php if ($this->countModules('leftbody', true)) : ?>
-					<div class="container-sidebar-left">
-						<jdoc:include type="modules" name="leftbody"  style="none" />
-						<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="sidebar-left" style="card" /><?php endif; ?>
-					</div>
-				<?php endif; ?>
-	
-				<div class="container-component">
-					<jdoc:include type="modules" name="breadcrumbs" style="none" />
-					<jdoc:include type="modules" name="abovebody" style="none" />
-					<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-top" style="card" /><?php endif; ?>
-					<jdoc:include type="message" />
-					<jdoc:include type="component" />
-					<jdoc:include type="modules" name="belowbody" style="none" />
-					<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-bottom" style="card" /><?php endif; ?>
+			<?php if($casspositions == 1 && $this->countModules('sidebar-left', true)) : ?>
+				<div class="container-sidebar-left col-12 col-lg-3">
+					<jdoc:include type="modules" name="sidebar-left" style="card" />
 				</div>
+			<?php endif; ?>
+			<?php if($casspositions != 1 && $this->countModules('leftbody', true)) : ?>
+				<div class="container-sidebar-left col-12 col-lg-3">
+					<jdoc:include type="modules" name="leftbody" style="card" />
+				</div>
+			<?php endif; ?>
 
-				<?php if ($this->countModules('rightbody', true)) : ?>
-					<div class="container-sidebar-right">
-						<jdoc:include type="modules" name="rightbody" style="none" />
-						<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="sidebar-right" style="card" /><?php endif; ?>
-					</div>
-				<?php endif; ?>
+			<div class="container-component<?php echo $componentcolclass; ?>">
+				<jdoc:include type="modules" name="breadcrumbs" style="none" />
+				<jdoc:include type="modules" name="abovebody" style="none" />
+				<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-top" style="card" /><?php endif; ?>
+				<jdoc:include type="message" />
+				<jdoc:include type="component" />
+				<jdoc:include type="modules" name="belowbody" style="none" />
+				<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-bottom" style="card" /><?php endif; ?>
 			</div>
+			
+			<?php if($casspositions == 1 && $this->countModules('sidebar-right', true)) : ?>
+				<div class="container-sidebar-right col-12 col-lg-3">
+					<jdoc:include type="modules" name="sidebar-right" style="card" />
+				</div>
+			<?php endif; ?>
+			<?php if($casspositions != 1 && $this->countModules('rightbody', true)) : ?>
+				<div class="container-sidebar-right col-12 col-lg-3">
+					<jdoc:include type="modules" name="rightbody" style="card" />
+				</div>
+			<?php endif; ?>
 		</div>
 		
-		<?php if($casspositions == 1) : ?>
+		<?php if($casspositions == 1 && $this->countModules('bottom-a', true)) : ?>
     	<div class="row">
 			<jdoc:include type="modules" name="bottom-a" style="none" />
-			<jdoc:include type="modules" name="bottom-b" style="none" />
 		</div>
+		<?php endif; ?>		
+		
+		<?php if($casspositions == 1 && $this->countModules('bottom-b', true)) : ?>
+			<div class="row">
+				<jdoc:include type="modules" name="bottom-b" style="none" />
+			</div>
 		<?php endif; ?>		
 	</main>
 
