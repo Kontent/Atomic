@@ -300,41 +300,44 @@ $wr = $wa->getRegistry();
 		<div class="row">
 			<div class="container-header">
 				
-				<?php if ($this->countModules('alert', true) or ($bsthemes == 1)) : ?>
-				<div class="alertbar">
-					<?php if ($this->countModules('alert')) : ?>
+				<?php if ($this->countModules('alert', true)) : ?>
+					<div class="alertbar">
 						<jdoc:include type="modules" name="alert" style="none" />
+					</div>
+				<?php endif; ?>
+				
+				<div class="main-header row">
+					<?php if($logo != null) : ?>
+						<div class="col d-flex">
+							<span id="logo">
+								<a href="<?php echo $this->baseurl; ?>"><img src="<?php echo $this->baseurl; ?>/<?php echo htmlspecialchars($logo); ?>" alt="<?php echo htmlspecialchars($this->params->get('sitetitle') ?? ''); ?>" /></a>
+							</span>
+					
+							<?php if($sitedescription != null || $sitetitle != null) : ?>
+								<div class="container-title">
+									<?php if($sitetitle != null) : ?>
+										<h1><?php echo $sitetitle; ?></h1>
+									<?php endif; ?>
+									<?php if($sitedescription != null) : ?>
+										<h3><?php echo $sitedescription; ?></h3>
+									<?php endif; ?>
+								</div>
+							<?php endif; ?>
+						</div>
 					<?php endif; ?>
 					
-					<?php	//	Load BS Styleswitcher
-						if($bsthemes == 1) : ?>
-						<a id="themeBtn" href="#"class="nav-link"><i class=""></i></a>
-					<?php endif; ?>
-					
+					<div class="col">
+						
+						<?php if ($this->countModules('header')) : ?>
+							<jdoc:include type="modules" name="header" style="none" />
+						<?php endif; ?>
+						
+						<?php	//	Load BS Styleswitcher
+							if($bsthemes == 1) : ?>
+							<a id="themeBtn" href="#"><i class=""></i></a>
+						<?php endif; ?>
+					</div>
 				</div>
-				<?php endif; ?>
-				
-				<?php if($logo != null) : ?>
-					<span id="logo">
-						<a href="<?php echo $this->baseurl; ?>"><img src="<?php echo $this->baseurl; ?>/<?php echo htmlspecialchars($logo); ?>" alt="<?php echo htmlspecialchars($this->params->get('sitetitle') ?? ''); ?>" /></a>
-					</span>
-				<?php endif; ?>
-				
-				<?php	if($sitedescription != null || $sitetitle != null) : ?>
-				<div class="container-title">
-					<?php if($sitetitle != null) : ?>
-						<h1><?php echo $sitetitle; ?></h1>
-					<?php endif; ?>
-					<?php if($sitedescription != null) : ?>
-						<h3><?php echo $sitedescription; ?></h3>
-					<?php endif; ?>
-				</div>
-				<?php endif; ?>
-				
-				<?php if ($this->countModules('header')) : ?>
-					<jdoc:include type="modules" name="header" style="none" />
-				<?php endif; ?>
-				
 			</div>
 		</div>
 
