@@ -162,7 +162,7 @@
 			
 			<field name="headergooglefont" showon="headerfont:1" type="textarea" label="TPL_ATOMIC_HEADER_FONT_LINK_LABEL" description="TPL_ATOMIC_HEADER_FONT_LINK_DESC" rows="4" columns="30" filter="raw" default="" />
 			
-			<field name="headerfontname"  type="text" default="" label="TPL_ATOMIC_HEADER_FONTNAME_LABEL" description="TPL_ATOMIC_HEADER_FONTNAME_DESC" filter="string" />
+			<field name="headerfontname" showon="headerfont:1" type="text" default="" label="TPL_ATOMIC_HEADER_FONTNAME_LABEL" description="TPL_ATOMIC_HEADER_FONTNAME_DESC" filter="string" />
 			
 			<field name="bodyfont" type="list" default="0" label="TPL_ATOMIC_BODY_FONT_LABEL" description="TPL_ATOMIC_BODY_FONT_DESC">
 				<option value="0">TPL_ATOMIC_BOOTSTRAPFONT</option>
@@ -172,7 +172,7 @@
 			
 			<field name="bodygooglefont" showon="bodyfont:1" type="textarea" label="TPL_ATOMIC_BODY_FONT_LINK_LABEL" description="TPL_ATOMIC_BODY_FONT_LINK_DESC" rows="4" columns="30" filter="raw" default="" />
 						
-			<field name="bodyfontname"  type="text" default="" label="TPL_ATOMIC_BODY_FONTNAME_LABEL" description="TPL_ATOMIC_BODY_FONTNAME_DESC" filter="string" />
+			<field name="bodyfontname" showon="bodyfont:1" type="text" default="" label="TPL_ATOMIC_BODY_FONTNAME_LABEL" description="TPL_ATOMIC_BODY_FONTNAME_DESC" filter="string" />
 			
 		</fieldset>
 		

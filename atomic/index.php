@@ -183,7 +183,7 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Load BS Icons
 			if($loadbsicons == 1) : ?>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<?php endif; ?>
 		
 		<?php	//	Load the RTL CSS file.
@@ -203,16 +203,15 @@ $wr = $wa->getRegistry();
 			
 		<jdoc:include type="scripts" />
 			
-		<?php	//	Load jQuery	?>
-		<?php if (($jquerycdn == null) && ($jqlibrary == 1)) : ?>
+		<?php // Load jQuery ?>
+		<?php if ($jqlibrary == 0) : ?>
 			<script src="media/vendor/jquery/js/jquery.min.js"></script>
-		<?php elseif (($jquerycdn == null) && ($jqlibrary == 2)) : ?>
+		<?php elseif ($jqlibrary == 1) : ?>
 			<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-		<?php elseif (($jquerycdn == null) && ($jqlibrary == 3)) : ?>
+		<?php elseif ($jqlibrary == 2) : ?>
 			<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
-		<?php elseif (($jquerycdn == null) && ($jqlibrary == 4)) : ?>
+		<?php elseif ($jqlibrary == 3) : ?>
 			<?php echo $jquerycdn ?>
-		<?php else : ?>
 		<?php endif; ?>
 		
 		<?php	//	Load BS Styleswitcher
@@ -227,7 +226,7 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Use Scroll Reveal
 			if($scrollreveal == 1) : ?>
-				<script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+				<script src="https://unpkg.com/browse/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
 		<?php endif; ?>
 		
 		<?php	//	Add custom code before closing head tag
@@ -238,7 +237,7 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Add Google Analytics tag if configured.
 		if($gacode != null) : ?>
-		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gacode; ?>" type="module"></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gacode; ?>"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
@@ -307,26 +306,25 @@ $wr = $wa->getRegistry();
 				<?php endif; ?>
 				
 				<div class="main-header row">
-					<?php if($logo != null) : ?>
-						<div class="col d-flex">
+					<div class="header-col header-col-left col-12 col-md-6 d-flex flex-column flex-sm-row">
+						<?php if($logo != null) : ?>
 							<span id="logo">
 								<a href="<?php echo $this->baseurl; ?>"><img src="<?php echo $this->baseurl; ?>/<?php echo htmlspecialchars($logo); ?>" alt="<?php echo htmlspecialchars($this->params->get('sitetitle') ?? ''); ?>" /></a>
 							</span>
+						<?php endif; ?>
+						<?php if($sitedescription != null || $sitetitle != null) : ?>
+							<div class="container-title">
+								<?php if($sitetitle != null) : ?>
+									<h1><?php echo $sitetitle; ?></h1>
+								<?php endif; ?>
+								<?php if($sitedescription != null) : ?>
+									<h3><?php echo $sitedescription; ?></h3>
+								<?php endif; ?>
+							</div>
+						<?php endif; ?>
+					</div>
 					
-							<?php if($sitedescription != null || $sitetitle != null) : ?>
-								<div class="container-title">
-									<?php if($sitetitle != null) : ?>
-										<h1><?php echo $sitetitle; ?></h1>
-									<?php endif; ?>
-									<?php if($sitedescription != null) : ?>
-										<h3><?php echo $sitedescription; ?></h3>
-									<?php endif; ?>
-								</div>
-							<?php endif; ?>
-						</div>
-					<?php endif; ?>
-					
-					<div class="col">
+					<div class="header-col header-col-right col-12 col-md-6">
 						
 						<?php if ($this->countModules('header')) : ?>
 							<jdoc:include type="modules" name="header" style="none" />
