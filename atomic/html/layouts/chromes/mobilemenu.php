@@ -35,11 +35,14 @@ $sidebarmenu = $template->params->get('sidebarmenu');
 <<?php echo $moduleTag; ?> <?php echo ArrayHelper::toString($moduleAttribs); ?> id="mobilemenu<?php echo $module->id; ?>">
 	<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarToggleExternalContent<?php echo $module->id; ?>" aria-controls="navbarToggleExternalContent<?php echo $module->id; ?>" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
 	<div class="offcanvas offcanvas-start" data-bs-backdrop="true" data-bs-scroll="false" tabindex="-1" id="navbarToggleExternalContent<?php echo $module->id; ?>">
+		
 		<?php if($sidebarmenu === '1') : ?>
-		<button class="btn btn-primary offcanvas-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarToggleExternalContent<?php echo $module->id; ?>">
-			<span class="offcanvas-toggle-icon offcanvas-toggle-icon--close"><i class="fas fa-times"></i></span>
-			<span class="offcanvas-toggle-icon offcanvas-toggle-icon--open"><i class="fas fa-bars"></i></span>
-		</button>
+			<button class="btn btn-primary offcanvas-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarToggleExternalContent<?php echo $module->id; ?>">
+				<span class="offcanvas-toggle-icon offcanvas-toggle-icon--close"><i class="fas fa-times"></i></span>
+				<span class="offcanvas-toggle-icon offcanvas-toggle-icon--open"><i class="fas fa-bars"></i></span>
+			</button>
+		<?php else: ?>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 		<?php endif; ?>
 		<div class="offcanvas-content d-flex flex-column">
 			<div class="offcanvas-body">
