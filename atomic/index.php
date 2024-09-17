@@ -64,6 +64,8 @@ $sitetitle			= $this->params->get('sitetitle');
 $casspositions		= $this->params->get('casspositions');
 $stickyhead			= $this->params->get('stickyhead');
 
+$containerClass = $fluidcontainer ? 'container-fluid' : 'container';
+
 // Register assets
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wr = $wa->getRegistry();
@@ -265,21 +267,28 @@ $wr = $wa->getRegistry();
 		<?php echo $codeafterbody; ?>	
 	<?php endif; ?>
 
-
-	<?php	//	Fixed or fluid width container
-		if($fluidcontainer == 1) : ?>
-		<div class="container-fluid">
-	<?php else : ?>
-		<div class="container">
-	<?php endif; ?>
-	
 	<?php if ($this->countModules( 'mobilemenu' )) : ?>
-		<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
+		<div class="mobile-menu">
+			<div class="<?php echo $containerClass; ?>">
+				<div class="row">
+					<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
+				</div>
+			</div>
+		</div>
 	<?php endif; ?>
-	
+
+	<?php if ($this->countModules('alert', true)) : ?>
+		<div class="alertbar">
+			<div class="<?php echo $containerClass; ?>">
+				<div class="row">
+					<jdoc:include type="modules" name="alert" style="none" />
+				</div>
+			</div>
+		</div>
+	<?php endif; ?>
+
 	<?php	//	Hide header if nothing in it
-	if ($this->countModules('alert', true) 
-	or ($this->countModules('header', true)) 
+	if (($this->countModules('header', true)) 
 	or ($this->countModules('topmenu', true)) 
 	or ($this->countModules('search', true)) 
 	or ($sitedescription != null || $sitetitle != null || $logo != null)) : ?>
@@ -290,21 +299,13 @@ $wr = $wa->getRegistry();
 	<?php else : ?>
 		<header>
 	<?php endif; ?>
-	
-		<?php if($casspositions == 1) : ?>
-			<jdoc:include type="modules" name="topbar" style="none" />
-			<jdoc:include type="modules" name="below-top" style="none" />
-		<?php endif; ?>
-		
-		<div class="row">
-			<div class="container-header">
-				
-				<?php if ($this->countModules('alert', true)) : ?>
-					<div class="alertbar">
-						<jdoc:include type="modules" name="alert" style="none" />
-					</div>
-				<?php endif; ?>
-				
+		<div class="<?php echo $containerClass; ?>">
+			<?php if($casspositions == 1) : ?>
+				<jdoc:include type="modules" name="topbar" style="none" />
+				<jdoc:include type="modules" name="below-top" style="none" />
+			<?php endif; ?>
+			
+			<div class="row">
 				<div class="main-header row">
 					<div class="header-col header-col-left col-12 col-md-6 d-flex flex-column flex-sm-row">
 						<?php if($logo != null) : ?>
@@ -337,32 +338,33 @@ $wr = $wa->getRegistry();
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<?php $topmenucolclass = $this->countModules('search') ? 'col-12 col-md-9' : ' col'; ?>
-		<?php if ($this->countModules('topmenu')) : ?>
-			<div class="row">
-				<?php if ($this->countModules('search')) : ?>
-					<div class="<?php echo $topmenucolclass; ?>">
-					<?php endif; ?>
-						<nav class="navigation">
-							<div class="nav-collapse">
-								<jdoc:include type="modules" name="topmenu" style="none" />
-								<?php if ($casspositions == 1): ?><jdoc:include type="modules" name="menu'" style="none" /><?php endif; ?>
-							</div>
-						</nav>
+			<?php $topmenucolclass = $this->countModules('search') ? 'col-12 col-md-9' : ' col'; ?>
+			<?php if ($this->countModules('topmenu')) : ?>
+				<div class="row">
 					<?php if ($this->countModules('search')) : ?>
-					</div>
-					<div class="col-12 col-md-3">
-						<jdoc:include type="modules" name="search" style="none" />
-					</div>
-				<?php endif; ?>
-			</div>
-		<?php endif; ?>
+						<div class="<?php echo $topmenucolclass; ?>">
+						<?php endif; ?>
+							<nav class="navigation">
+								<div class="nav-collapse">
+									<jdoc:include type="modules" name="topmenu" style="none" />
+									<?php if ($casspositions == 1): ?><jdoc:include type="modules" name="menu'" style="none" /><?php endif; ?>
+								</div>
+							</nav>
+						<?php if ($this->countModules('search')) : ?>
+						</div>
+						<div class="col-12 col-md-3">
+							<jdoc:include type="modules" name="search" style="none" />
+						</div>
+					<?php endif; ?>
+				</div>
+			<?php endif; ?>
+		</div>
 	</header>
 	<?php endif; ?>
-		
+
     <main>
+	<div class="<?php echo $containerClass; ?>">
     	<?php if($casspositions == 1 && (
 			$this->countModules('banner', true) ||
 			$this->countModules('top-a', true) ||
@@ -424,10 +426,12 @@ $wr = $wa->getRegistry();
 				<jdoc:include type="modules" name="bottom-b" style="none" />
 			</div>
 		<?php endif; ?>		
+	</div>
 	</main>
 
 	<?php if ($this->countModules('footer', true) or $copyright == 1) : ?>
 		<footer>
+			<div class="<?php echo $containerClass; ?>">
 			<div class="row">
 				<jdoc:include type="modules" name="footer" style="none" />
 				<?php	//	Copyright
@@ -443,7 +447,7 @@ $wr = $wa->getRegistry();
 				</footer>
 			<?php endif; ?>
 			</div>
-		</div>
+			</div>
 		
 		<?php	//	Load Bootstrap JS
 			if($bootstrapsource == 1) : ?>
