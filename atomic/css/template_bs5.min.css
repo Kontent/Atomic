@@ -26,6 +26,10 @@ html {
 	--bs-btn-hover-border-color: transparent;
 } */
 
+:where(p:last-of-type) {
+    margin-bottom: 0 !important;
+}
+
 body, p, li, div {
 	font-family: var(--atomic-body-font);
 }
@@ -53,7 +57,7 @@ img {
 }
 
 .header-col-right {
-	text-align: right;
+	gap: 12px;
 }
 
 /**
@@ -205,6 +209,7 @@ main {
 /* Module search bootswatch style */
 .mod-finder__search.input-group .awesomplete {
 	flex-shrink: 1;
+	width: 100%;
 }
 .mod-finder__search.input-group button {
 	flex-shrink: 0;

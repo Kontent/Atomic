@@ -304,9 +304,7 @@ $wr = $wa->getRegistry();
 				<jdoc:include type="modules" name="topbar" style="none" />
 				<jdoc:include type="modules" name="below-top" style="none" />
 			<?php endif; ?>
-			
-			<div class="row">
-				<div class="main-header row">
+				<div class="header-main row">
 					<div class="header-col header-col-left col-12 col-md-6 d-flex flex-column flex-sm-row">
 						<?php if($logo != null) : ?>
 							<span id="logo">
@@ -325,7 +323,7 @@ $wr = $wa->getRegistry();
 						<?php endif; ?>
 					</div>
 					
-					<div class="header-col header-col-right col-12 col-md-6">
+					<div class="header-col header-col-right col-12 col-md-6 d-flex justify-content-end align-items-center">
 						
 						<?php if ($this->countModules('header')) : ?>
 							<jdoc:include type="modules" name="header" style="none" />
@@ -337,11 +335,10 @@ $wr = $wa->getRegistry();
 						<?php endif; ?>
 					</div>
 				</div>
-			</div>
 
 			<?php $topmenucolclass = $this->countModules('search') ? 'col-12 col-md-9' : ' col'; ?>
 			<?php if ($this->countModules('topmenu')) : ?>
-				<div class="row">
+				<div class="header-bottom row">
 					<?php if ($this->countModules('search')) : ?>
 						<div class="<?php echo $topmenucolclass; ?>">
 						<?php endif; ?>
