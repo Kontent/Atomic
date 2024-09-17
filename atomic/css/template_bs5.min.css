@@ -53,6 +53,10 @@ img {
 	height: auto;
 }
 
+.header-col-right {
+	text-align: right;
+}
+
 /**
 Sidebar menu
 **/
@@ -180,7 +184,11 @@ main {
 
 /* System alerts */
 
-
+.alertbar {
+	text-align: center;
+	padding: 16px;
+	background-color: lightgoldenrodyellow;
+}
 
 
 /* Inline CSS  */
@@ -298,7 +306,6 @@ main {
 
 
 /* -------------- Font Awesome Icons -------------- */
-
 
 
 /* Component only view  */
