@@ -6,25 +6,11 @@
 
 }
 
-/*   Bootstrap Themes    */
-html[bs-theme="dark"] {
-	
-}
+/* General styles */
 
 html {
   scroll-behavior: smooth;
 }
-
-/* .btn-secondary {
-	--bs-btn-bg: transparent;
-	--bs-btn-border-width: 0;
-	--bs-btn-border-color: transparent;
-} */
-/* .btn-secondary.btn:hover {
-	--bs-btn-hover-color: initial;
-	--bs-btn-hover-bg: transparent;
-	--bs-btn-hover-border-color: transparent;
-} */
 
 :where(p:last-of-type) {
     margin-bottom: 0 !important;
@@ -40,32 +26,28 @@ h1,h2,h3,h4,h5,h6 {
 a {
 	text-decoration: none;
 }
-/* General styles */
 
 .readmore .btn.btn-secondary {
 
 }
 header {
-	background-color: #fff;
+	
 }
 header.sticky {
-  position: sticky;
-  top: 0;
-  z-index: 99;
+	background-color: #fff;
+	position: sticky;
+	top: 0;
+	z-index: 99;
 }
-
 img {
 	max-width: 100%;
 	height: auto;
 }
-
 .header-col-right {
 	gap: 12px;
 }
 
-/**
-Sidebar menu
-**/
+/* Sidebar menu */
 .offcanvas {
 	visibility: visible;
 }
@@ -147,8 +129,6 @@ main {
 	text-align: center;
 	font-size: 80%;
 }
-
-
 
 /* Cassiopeia fixes  */
 
@@ -313,6 +293,22 @@ main {
 
 
 /* -------------- Font Awesome Icons -------------- */
+
+
+
+/* -------------- Bootstrap Themes -------------- */
+
+html[data-bs-theme="dark"] {
+	
+}
+html[data-bs-theme="dark"] header.sticky {
+	background-color: var(--bs-body-bg);
+}
+html[data-bs-theme="dark"] .alertbar {
+	background-color: var(--bs-warning-text-emphasis);
+	color: var(--bs-body-bg);
+}
+
 
 
 /* Component only view  */

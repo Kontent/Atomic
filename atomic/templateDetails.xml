@@ -63,18 +63,21 @@
 	<fields name="params">
 		<fieldset name="JOOMLA_SETTINGS">
 			<field name="sitetitle"  type="text" default="" label="TPL_ATOMIC_PAGE_TITLE_LABEL" description="TPL_ATOMIC_PAGE_TITLE_DESC" filter="safehtml" />
+			
+			
 			<field name="sitedescription"  type="text" default="" label="TPL_ATOMIC_SUBHEADING_LABEL" description="TPL_ATOMIC_SUBHEADING_DESC" filter="safehtml" />
-			<field name="killgenerator" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_KILLGENERATOR_LABEL" description="TPL_ATOMIC_KILLGENERATOR_DESC">
+			
+			<field name="killgenerator" type="radio" class="btn-group btn-group-yesno" label="TPL_ATOMIC_KILLGENERATOR_LABEL" layout="joomla.form.field.radio.switcher" default="0" filter="integer">
+					<option value="0">TPL_ATOMIC_NO</option>
+					<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			
+			<field name="casspositions" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_CASSPOSITIONS_LABEL" description="TPL_ATOMIC_CASSPOSITIONS_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
 			
-			<field name="casspositions" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_CASSPOSITIONS_LABEL" description="TPL_ATOMIC_CASSPOSITIONS_DESC">
-				<option value="0">TPL_ATOMIC_NO</option>
-				<option value="1">TPL_ATOMIC_YES</option>
-			</field>
-			
-			<field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_COPYRIGHT_LABEL" description="TPL_ATOMIC_COPYRIGHT_DESC">
+			<field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_COPYRIGHT_LABEL" description="TPL_ATOMIC_COPYRIGHT_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_DISABLED</option>
 				<option value="1">TPL_ATOMIC_ENABLED</option>
 			</field>
@@ -83,7 +86,7 @@
 		</fieldset>
 		
 		<fieldset name="CSS_SETTINGS">
-			<field name="bootstrapsource" type="list" default="2" label="TPL_ATOMIC_BOOTSTRAP_LABEL" description="TPL_ATOMIC_BOOTSTRAP_DESC">
+			<field name="bootstrapsource" type="list" default="2" label="TPL_ATOMIC_BOOTSTRAP_LABEL" description="TPL_ATOMIC_BOOTSTRAP_DESC" layout="joomla.form.field.list">
 				<option value="0">TPL_ATOMIC_NONE</option>
 				<option value="3">TPL_ATOMIC_BS5_JOOMLA5</option>
 				<option value="1">TPL_ATOMIC_BS5_JOOMLA4</option>
@@ -102,19 +105,20 @@
 				<option value="14">TPL_ATOMIC_BOOTSWATCH_OPTION_SLATE</option>
 				<option value="15">TPL_ATOMIC_BOOTSWATCH_OPTION_SUPERHERO</option>			
 			</field>
-			<field name="bootstrapcdn" showon="bootstrapsource:5" type="textarea" label="TPL_ATOMIC_BOOTSTRAPCDN_LABEL" description="TPL_ATOMIC_BOOTSTRAPCDN_DESC" rows="4" columns="30" filter="raw" default="" />			
+			<field name="bootstrapcdn" showon="bootstrapsource:5" type="textarea" label="TPL_ATOMIC_BOOTSTRAPCDN_LABEL" description="TPL_ATOMIC_BOOTSTRAPCDN_DESC" rows="4" columns="30" filter="raw" default="" hint="Example: &#60;link href=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css&#34; rel=&#34;stylesheet&#34; integrity=&#34;sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH&#34; crossorigin=&#34;anonymous&#34;&#62;&#160;
+&#60;script src=&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js&#34; integrity=&#34;sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz&#34; crossorigin=&#34;anonymous&#34;&#62;&#60;/script&#62;" />
 			
-			<field name="bsfixjoomla" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_TEMPLATEBSFIX_LABEL" description="TPL_ATOMIC_TEMPLATEBSFIX_DESC">
+			<field name="bsfixjoomla" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_TEMPLATEBSFIX_LABEL" description="TPL_ATOMIC_TEMPLATEBSFIX_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
 			
-			<field name="fluidcontainer" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_FLUID_LABEL" description="TPL_ATOMIC_FLUID_DESC">
+			<field name="fluidcontainer" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_FLUID_LABEL" description="TPL_ATOMIC_FLUID_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_FIXED</option>
 				<option value="1">TPL_ATOMIC_FLUID</option>
 			</field>
 			
-			<field name="customcssfile" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_CUSTOMCSSFILE_LABEL" description="TPL_ATOMIC_CUSTOMCSSFILE_DESC">
+			<field name="customcssfile" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_CUSTOMCSSFILE_LABEL" description="TPL_ATOMIC_CUSTOMCSSFILE_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
@@ -126,7 +130,7 @@
 				<option value="3">TPL_ATOMIC_BODYMENU_OPTION_BODYCLASSID</option>
 			</field>
 
-			<field name="bsthemes" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_BSTHEMES_LABEL" description="TPL_ATOMIC_BSTHEMES_DESC">
+			<field name="bsthemes" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_BSTHEMES_LABEL" description="TPL_ATOMIC_BSTHEMES_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
@@ -144,8 +148,9 @@
 				<option value="4">TPL_ATOMIC_NONE</option>
 			</field>
 			
-			<field name="jquerycdn" showon="jqlibrary:3" type="textarea" label="TPL_ATOMIC_JQUERYCDN_LABEL" description="TPL_ATOMIC_JQUERYCDN_DESC" rows="4" columns="30" filter="raw" default="" />
-			<field name="customjs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_CUSTOMJS_LABEL" description="TPL_ATOMIC_CUSTOMJS_DESC">
+			<field name="jquerycdn" showon="jqlibrary:3" type="textarea" label="TPL_ATOMIC_JQUERYCDN_LABEL" description="TPL_ATOMIC_JQUERYCDN_DESC" rows="4" columns="30" filter="raw" default="" hint="Example: &#60;script src=&#34;https://code.jquery.com/jquery-3.7.1.min.js&#34; integrity=&#34;sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=&#34; crossorigin=&#34;anonymous&#34;>&#60;/script&#62;" />
+			
+			<field name="customjs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_CUSTOMJS_LABEL" description="TPL_ATOMIC_CUSTOMJS_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
@@ -158,21 +163,47 @@
 				<option value="0">TPL_ATOMIC_BOOTSTRAPFONT</option>
 				<option value="1">TPL_ATOMIC_GOOGLEFONT</option>
 				<option value="2">TPL_ATOMIC_NOFONT</option>
+				<option value="0" disabled="true">TPL_ATOMIC_GOOGLEFONT_SANSSERIF</option>
+				<option value="3">TPL_ATOMIC_GOOGLEFONT_INTER</option>
+				<option value="4">TPL_ATOMIC_GOOGLEFONT_LATO</option>
+				<option value="5">TPL_ATOMIC_GOOGLEFONT_MONSERRAT</option>
+				<option value="6">TPL_ATOMIC_GOOGLEFONT_OPENSANS</option>
+				<option value="7">TPL_ATOMIC_GOOGLEFONT_ROBOTO</option>
+				<option value="0" disabled="true">TPL_ATOMIC_GOOGLEFONT_SERIF</option>
+				<option value="8">TPL_ATOMIC_GOOGLEFONT_FRAUNCES</option>
+				<option value="9">TPL_ATOMIC_GOOGLEFONT_LIBREBASKERVILLE</option>
+				<option value="10">TPL_ATOMIC_GOOGLEFONT_MERRIWEATHER</option>
+				<option value="11">TPL_ATOMIC_GOOGLEFONT_NOTOSERIF</option>			
+				<option value="12">TPL_ATOMIC_GOOGLEFONT_UNNA</option>	
 			</field>
 			
 			<field name="headergooglefont" showon="headerfont:1" type="textarea" label="TPL_ATOMIC_HEADER_FONT_LINK_LABEL" description="TPL_ATOMIC_HEADER_FONT_LINK_DESC" rows="4" columns="30" filter="raw" default="" />
 			
-			<field name="headerfontname" showon="headerfont:1" type="text" default="" label="TPL_ATOMIC_HEADER_FONTNAME_LABEL" description="TPL_ATOMIC_HEADER_FONTNAME_DESC" filter="string" />
+			<field name="headerfontname" showon="headerfont:1" type="text" default="" label="TPL_ATOMIC_HEADER_FONTNAME_LABEL" description="TPL_ATOMIC_HEADER_FONTNAME_DESC" filter="string" hint="Example: Inter or &#34;Inter&#34;, sans-serif " />
 			
 			<field name="bodyfont" type="list" default="0" label="TPL_ATOMIC_BODY_FONT_LABEL" description="TPL_ATOMIC_BODY_FONT_DESC">
 				<option value="0">TPL_ATOMIC_BOOTSTRAPFONT</option>
 				<option value="1">TPL_ATOMIC_GOOGLEFONT</option>
 				<option value="2">TPL_ATOMIC_NOFONT</option>
+				<option value="0" disabled="true">TPL_ATOMIC_GOOGLEFONT_SANSSERIF</option>
+				<option value="3">TPL_ATOMIC_GOOGLEFONT_INTER</option>
+				<option value="4">TPL_ATOMIC_GOOGLEFONT_LATO</option>
+				<option value="5">TPL_ATOMIC_GOOGLEFONT_MONSERRAT</option>
+				<option value="6">TPL_ATOMIC_GOOGLEFONT_OPENSANS</option>
+				<option value="7">TPL_ATOMIC_GOOGLEFONT_ROBOTO</option>
+				<option value="0" disabled="true">TPL_ATOMIC_GOOGLEFONT_SERIF</option>
+				<option value="8">TPL_ATOMIC_GOOGLEFONT_FRAUNCES</option>
+				<option value="9">TPL_ATOMIC_GOOGLEFONT_LIBREBASKERVILLE</option>
+				<option value="10">TPL_ATOMIC_GOOGLEFONT_MERRIWEATHER</option>
+				<option value="11">TPL_ATOMIC_GOOGLEFONT_NOTOSERIF</option>			
+				<option value="12">TPL_ATOMIC_GOOGLEFONT_UNNA</option>	
 			</field>
 			
-			<field name="bodygooglefont" showon="bodyfont:1" type="textarea" label="TPL_ATOMIC_BODY_FONT_LINK_LABEL" description="TPL_ATOMIC_BODY_FONT_LINK_DESC" rows="4" columns="30" filter="raw" default="" />
+			<field name="bodygooglefont" showon="bodyfont:1" type="textarea" label="TPL_ATOMIC_BODY_FONT_LINK_LABEL" description="TPL_ATOMIC_BODY_FONT_LINK_DESC" rows="4" columns="30" filter="raw" default="" hint="Example: &#60;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&#62;&#160;
+&#60;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&#62;&#160;
+&#60;link href=&#34;https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&#38;display=swap&#34; rel=&#34;stylesheet&#34;&#62;" />
 						
-			<field name="bodyfontname" showon="bodyfont:1" type="text" default="" label="TPL_ATOMIC_BODY_FONTNAME_LABEL" description="TPL_ATOMIC_BODY_FONTNAME_DESC" filter="string" />
+			<field name="bodyfontname" showon="bodyfont:1" type="text" default="" label="TPL_ATOMIC_BODY_FONTNAME_LABEL" description="TPL_ATOMIC_BODY_FONTNAME_DESC" filter="string" hint="Example: Inter or &#34;Inter&#34;, sans-serif " />
 			
 		</fieldset>
 		
@@ -188,14 +219,14 @@
 				<option value="5">TPL_ATOMIC_FACUSTOMJS</option>
 			</field>
 			
-			<field name="fontawesomecdn" showon="fontawesome:5[OR]fontawesome:4" type="textarea" label="TPL_ATOMIC_FONTAWESOMECDN_LABEL" description="TPL_ATOMIC_FONTAWESOMECDN_DESC" rows="4" columns="30"/>
+			<field name="fontawesomecdn" showon="fontawesome:5[OR]fontawesome:4" type="textarea" label="TPL_ATOMIC_FONTAWESOMECDN_LABEL" description="TPL_ATOMIC_FONTAWESOMECDN_DESC" rows="4" columns="30" hint="Example: &#60;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css&#34; integrity=&#34;sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==&#34; crossorigin=&#34;anonymous&#34; referrerpolicy=&#34;no-referrer&#34; /&#62;" />
 			
-			<field name="loadbsicons" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_LOADBSICONS_LABEL" description="TPL_ATOMIC_LOADBSICONS_DESC">
+			<field name="loadbsicons" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_LOADBSICONS_LABEL" description="TPL_ATOMIC_LOADBSICONS_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
 			
-			<field name="loadfavicons" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_LOADFAVICONS_LABEL" description="TPL_ATOMIC_LOADFAVICONS_DESC">
+			<field name="loadfavicons" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_LOADFAVICONS_LABEL" description="TPL_ATOMIC_LOADFAVICONS_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
@@ -203,26 +234,26 @@
 		</fieldset>
 
 		<fieldset name="FEATURE_SETTINGS">
-			<field name="gacode"  type="text" default="" label="TPL_ATOMIC_GA_LABEL" description="TPL_ATOMIC_GA_DESC" filter="string" />
+			<field name="gacode"  type="text" default="" label="TPL_ATOMIC_GA_LABEL" description="TPL_ATOMIC_GA_DESC" filter="string" hint="Example: G-TAGID12345" />
 
 			<field name="logo" type="media" label="TPL_ATOMIC_LOGO_LABEL" description="TPL_ATOMIC_LOGO_DESC" />
 						
-			<field name="scrollreveal" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SCROLLREVEAL_LABEL" description="TPL_ATOMIC_SCROLLREVEAL_DESC">
+			<field name="scrollreveal" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SCROLLREVEAL_LABEL" description="TPL_ATOMIC_SCROLLREVEAL_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
 			
-			<field name="instant" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_INSTANT_LABEL" description="TPL_ATOMIC_INSTANT_DESC">
+			<field name="instant" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_INSTANT_LABEL" description="TPL_ATOMIC_INSTANT_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
 			
-			<field name="stickyhead" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_STICKYHEAD_LABEL" description="TPL_ATOMIC_STICKYHEAD_DESC">
+			<field name="stickyhead" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_STICKYHEAD_LABEL" description="TPL_ATOMIC_STICKYHEAD_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
 
-			<field name="sidebarmenu" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SIDEBARMENU_LABEL" description="TPL_ATOMIC_SIDEBARMENU_DESC">
+			<field name="sidebarmenu" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SIDEBARMENU_LABEL" description="TPL_ATOMIC_SIDEBARMENU_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
@@ -230,10 +261,10 @@
 		</fieldset>
 		
 		<fieldset name="CUSTOM_CODE">
-			<field name="codeafterhead" type="textarea" label="TPL_ATOMIC_CODEAFTERHEAD_LABEL" description="TPL_ATOMIC_CODEAFTERHEAD_DESC" rows="4" columns="30" filter="raw" default="" />
-			<field name="codebeforehead" type="textarea" label="TPL_ATOMIC_CODEBEFOREHEAD_LABEL" description="TPL_ATOMIC_CODEBEFOREHEAD_DESC" rows="4" columns="30" filter="raw" default="" />
-			<field name="codeafterbody" type="textarea" label="TPL_ATOMIC_CODEAFTERBODY_LABEL" description="TPL_ATOMIC_CODEAFTERBODY_DESC" rows="4" columns="30" filter="raw" default="" />
-			<field name="codebeforebody" type="textarea" label="TPL_ATOMIC_CODEBEFOREBODY_LABEL" description="TPL_ATOMIC_CODEBEFOREBODY_DESC" rows="4" columns="30" filter="raw" default="" />
+			<field name="codeafterhead" type="textarea" label="TPL_ATOMIC_CODEAFTERHEAD_LABEL" description="TPL_ATOMIC_CODEAFTERHEAD_DESC" rows="4" columns="30" filter="raw" default="" hint="&#60;style&#62;Example code&#60;/style&#62;" />
+			<field name="codebeforehead" type="textarea" label="TPL_ATOMIC_CODEBEFOREHEAD_LABEL" description="TPL_ATOMIC_CODEBEFOREHEAD_DESC" rows="4" columns="30" filter="raw" default="" hint="&#60;style&#62;Example code&#60;/style&#62;" />
+			<field name="codeafterbody" type="textarea" label="TPL_ATOMIC_CODEAFTERBODY_LABEL" description="TPL_ATOMIC_CODEAFTERBODY_DESC" rows="4" columns="30" filter="raw" default="" hint="&#60;style&#62;Example code&#60;/style&#62;" />
+			<field name="codebeforebody" type="textarea" label="TPL_ATOMIC_CODEBEFOREBODY_LABEL" description="TPL_ATOMIC_CODEBEFOREBODY_DESC" rows="4" columns="30" filter="raw" default="" hint="&#60;style&#62;Example code&#60;/style&#62;" />
 		</fieldset>
 		
 		</fields>
