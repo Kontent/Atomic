@@ -15,17 +15,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* .btn-secondary {
-	--bs-btn-bg: transparent;
-	--bs-btn-border-width: 0;
-	--bs-btn-border-color: transparent;
-} */
-/* .btn-secondary.btn:hover {
-	--bs-btn-hover-color: initial;
-	--bs-btn-hover-bg: transparent;
-	--bs-btn-hover-border-color: transparent;
-} */
-
 :where(p:last-of-type) {
     margin-bottom: 0 !important;
 }
@@ -108,85 +97,10 @@ Sidebar menu
 }
 
 
-/* Cassiopeia module positions 
-sidebar-left
-sidebar-right
-below-top
-menu
-search
-banner
-top-a
-top-b
-bottom-a
-bottom-b
-footer
-*/
-
-main {
-
-}
-
-.container-banner {
-
-}
-.container-top {
-
-}
-.container-top-a {
-
-}
-.container-top-b {
-
-}
-.container-bottom {
-
-}
-
-
 .copyright {
 	text-align: center;
 	font-size: 80%;
 }
-
-
-
-/* Cassiopeia fixes  */
-
-
-
-/* Text styles */
-
-
-/* Left Side Menu */
-
-
-
-/* Frontend editing */
-
-
-/* Breadcrumbs */
-
-
-/* Pagination */
-
-
-/* Search */
-
-
-/* Login */
-
-
-/* System error messages  */
-
-
-
-/* Contact form */
-
-
-
-/* Edit article button menu */
-
-
 
 /* System alerts */
 
@@ -195,10 +109,6 @@ main {
 	padding: 16px;
 	background-color: lightgoldenrodyellow;
 }
-
-
-/* Inline CSS  */
-
 
 /* Module search */
 .mod-finder__search.input-group {
@@ -217,8 +127,6 @@ main {
 .mod-finder__search.input-group button {
 	flex-shrink: 0;
 }
-
-
 
 /* Both dropdown menus  */
 
@@ -254,74 +162,6 @@ main {
 .menu .nav-link.active {
 	color: var(--bs-navbar-active-color);
 }
-
-
-/* Vertical dropdown menu  */
-
-
-/* BS Menu fixes to be cleaned up  */
-/* 
-
-#navigation button.btn {
-    background: none;
-	border: none;
-	text-decoration: none;
-	padding: 0;
-}
-#navigation button.btn a {
-    text-decoration: none;
-    color: #CB4506;
-}
-#navigation .dropend .dropdown-toggle::after {
-    color: #CB4506 !important;
-}
-#navigation .btn-group button.btn {
-    border-bottom: 1px solid #EBEBEB;
-    padding: 6px 0 6px 0;
-    border-radius: 0;
-}
-#navigation .btn-group button.btn a {
-    padding: 0 5px 0 5px;
-}
-#navigation button.btn.btn-secondary.dropdown-toggle:hover {
-    background-color: #dae0e5;
-}
-#navigation button.btn.btn-secondary.dropdown-toggle:hover a {
-    color: #212529;
-}
-#navigation button.btn.btn-secondary.dropdown-toggle.show {
-   border-radius: 0;
-    background-color: #dae0e5;
-}
-#navigation button.btn.btn-secondary.dropdown-toggle.show a {
-    color: #212529;
-}
-#navigation .btn-group ul.dropdown-menu.show li {
-    padding: 5px 0 5px 0;
-}
-#navigation .dropdown-item {
-    background: none;
-}
-#navigation li a.active {
-    border: none;
-    color: #CB4506;
-    font-weight: bold;
-}
- */
-
-
-
-
-/* -------------- Font Awesome Icons -------------- */
-
-
-/* Component only view  */
-
-    
-/* Bootstrap 5 Media Queries  */
-
-/* Extra small devices (portrait phones, less than 576px)  */
-/* No media query since this is the default in Bootstrap  */
 
 /* Small Phone */
 @media (min-width: 320px) {

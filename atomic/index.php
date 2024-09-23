@@ -195,12 +195,12 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Load the local CSS fixes for Joomla & Bootstrap 5.
 			if($bsfixjoomla == 1) : ?>
-				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template_bs5.min.css" type="text/css">
+				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.min.css" type="text/css">
 		<?php endif; ?>
 		
 		<?php	//	Load the local CSS file for custom user CSS.
 			if($customcssfile == 1) : ?>
-				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css">
+				<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/custom.css" type="text/css">
 		<?php endif; ?>
 			
 		<jdoc:include type="scripts" />
@@ -218,12 +218,12 @@ $wr = $wa->getRegistry();
 		
 		<?php	//	Load BS Styleswitcher
 			if($bsthemes == 1) : ?>
-				<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/theme.js"></script>
+				<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.min.js"></script>
 		<?php endif; ?>
 		
 		<?php	//	Load custom local user JavaScript
 			if($customjs == 1) : ?>
-				<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
+				<script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/custom.js"></script>
 		<?php endif; ?>
 		
 		<?php	//	Use Scroll Reveal
