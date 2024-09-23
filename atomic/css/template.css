@@ -24,9 +24,6 @@ a {
 .readmore .btn.btn-secondary {
 
 }
-header {
-	background-color: #fff;
-}
 header.sticky {
   position: sticky;
   top: 0;
