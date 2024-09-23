@@ -209,7 +209,7 @@ $wr = $wa->getRegistry();
 		<?php if ($jqlibrary == 0) : ?>
 			<script src="media/vendor/jquery/js/jquery.min.js"></script>
 		<?php elseif ($jqlibrary == 1) : ?>
-			<script   src="https://code.jquery.com/jquery-3.7.1.min.js"   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="   crossorigin="anonymous"></script>
+			<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 		<?php elseif ($jqlibrary == 2) : ?>
 			<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
 		<?php elseif ($jqlibrary == 3) : ?>

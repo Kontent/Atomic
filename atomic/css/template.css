@@ -1,16 +1,6 @@
 @charset "UTF-8";
 
 /* Below are the CSS styles that aren't included with Bootstrap 5. It's a good idea to keep them whether or not you use it unless you know what you're doing. */
-
-:root {
-
-}
-
-/*   Bootstrap Themes    */
-html[bs-theme="dark"] {
-	
-}
-
 html {
   scroll-behavior: smooth;
 }
