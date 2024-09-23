@@ -9,7 +9,7 @@ html {
     margin-bottom: 0 !important;
 }
 
-body, p, li, div {
+body {
 	font-family: var(--atomic-body-font);
 }
 h1,h2,h3,h4,h5,h6 {

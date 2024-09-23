@@ -6,6 +6,8 @@
 
 defined('_JEXEC') or die;
 
+require_once __DIR__ . '/helper.php';
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -20,10 +22,6 @@ $user = JFactory::getUser();
 
 //	Get the alias of the current menu item
 $active = JFactory::getApplication()->getMenu()->getActive();
-
-$version_parts = explode('.', JVERSION);
-$isJ5 = $version_parts[0] === '5';
-$isJ4 = $version_parts[0] === '4';
 
 //	Assign template params
 $bodyfont			= $this->params->get('bodyfont');
@@ -63,6 +61,10 @@ $sitedescription	= $this->params->get('sitedescription');
 $sitetitle			= $this->params->get('sitetitle');
 $casspositions		= $this->params->get('casspositions');
 $stickyhead			= $this->params->get('stickyhead');
+$headerfontfamily	= getGoogleFontFamily($headerfont, 'header', $headerfontname);
+$bodyfontfamily		= getGoogleFontFamily($bodyfont, 'body', $bodyfontname);
+$isheadergooglefont	= isGoogleFont($headerfont);
+$isbodygooglefont	= isGoogleFont($bodyfont);
 
 $containerClass = $fluidcontainer ? 'container-fluid' : 'container';
 
@@ -79,6 +81,22 @@ $wr = $wa->getRegistry();
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" data-bs-theme="<?php echo $bstheme; ?>">
 	<head>
+		<?php
+		// Combine conditions using logical OR (||) for efficiency
+		if ($isheadergooglefont || $isbodygooglefont) {
+			// Preconnect links once (outside nested conditionals)
+			echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . PHP_EOL;
+			echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . PHP_EOL;
+
+			// Font links based on combined conditions
+			$fontsToLoad = array_unique([$headerfont, $bodyfont]);
+			foreach ($fontsToLoad as $font) {
+				if ($font) {
+					echo getGoogleFontLink($font) . PHP_EOL;
+				}
+			}
+		}
+		?>
 		<?php	//	Add custom code after opening head tag
 			if($codeafterhead != null) : ?>
 			<?php echo $codeafterhead;
@@ -152,25 +170,23 @@ $wr = $wa->getRegistry();
 			<?php echo $bodygooglefont; ?>
 		<?php endif; ?>
 		
-		<?php if(($headerfont != 2) || ($bodyfont != 2)) : ?>
-			<style>
-			:root {
-			<?php	//	Define CSS variables
-						if(($headerfont == 1) && ($headerfontname != null)) : ?>
-						--atomic-header-font: <?php echo $headerfontname; ?>;
-					<?php endif; ?>
-					
-					<?php if(($bodyfont == 1) && ($bodyfontname != null)) : ?>
-						--atomic-body-font: <?php echo $bodyfontname; ?>;
-						--bs-body-font-family: var(--atomic-body-font);
-						--bs-btn-font-family: var(--atomic-body-font);
-					<?php else : ?>
-						--atomic-body-font: var(--bs-body-font-family);
-						--bs-btn-font-family: var(--bs-body-font-family);
-					<?php endif; ?>
+		<?php
+		if ($headerfont != 2 || $bodyfont != 2) {
+			$style = '<style>';
+			$style .= ':root {';
+
+			$style .= '--atomic-header-font: ' . ($headerfont != 2 ? $headerfontfamily: 'none') . ';';
+
+			if ($bodyfont != 2) {
+				$style .= '--atomic-body-font: ' . ($bodyfont != 0 ? $bodyfontfamily : 'var(--bs-body-font-family)') . ';';
 			}
-			</style>
-		<?php endif; ?>
+
+			$style .= '}';
+			$style .= '</style>';
+
+			echo $style;
+		}
+		?>
 				
 		<?php	//	Load FontAwesome
 		if($fontawesome == 1 || $fontawesome == 6) : ?>

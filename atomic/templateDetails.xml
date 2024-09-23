@@ -24,6 +24,7 @@
 		<filename>template_thumbnail.png</filename>
 		<filename>component.php</filename>
 		<filename>error.php</filename>
+		<filename>helper.php</filename>
 		<filename>htaccess.txt</filename>
 	</files>
 	<positions>
@@ -163,13 +164,13 @@
 				<option value="0">TPL_ATOMIC_BOOTSTRAPFONT</option>
 				<option value="1">TPL_ATOMIC_GOOGLEFONT</option>
 				<option value="2">TPL_ATOMIC_NOFONT</option>
-				<option value="0" disabled="true">TPL_ATOMIC_GOOGLEFONT_SANSSERIF</option>
+				<option value="98" disabled="true">TPL_ATOMIC_GOOGLEFONT_SANSSERIF</option>
 				<option value="3">TPL_ATOMIC_GOOGLEFONT_INTER</option>
 				<option value="4">TPL_ATOMIC_GOOGLEFONT_LATO</option>
-				<option value="5">TPL_ATOMIC_GOOGLEFONT_MONSERRAT</option>
+				<option value="5">TPL_ATOMIC_GOOGLEFONT_MONTSERRAT</option>
 				<option value="6">TPL_ATOMIC_GOOGLEFONT_OPENSANS</option>
 				<option value="7">TPL_ATOMIC_GOOGLEFONT_ROBOTO</option>
-				<option value="0" disabled="true">TPL_ATOMIC_GOOGLEFONT_SERIF</option>
+				<option value="99" disabled="true">TPL_ATOMIC_GOOGLEFONT_SERIF</option>
 				<option value="8">TPL_ATOMIC_GOOGLEFONT_FRAUNCES</option>
 				<option value="9">TPL_ATOMIC_GOOGLEFONT_LIBREBASKERVILLE</option>
 				<option value="10">TPL_ATOMIC_GOOGLEFONT_MERRIWEATHER</option>
@@ -185,13 +186,13 @@
 				<option value="0">TPL_ATOMIC_BOOTSTRAPFONT</option>
 				<option value="1">TPL_ATOMIC_GOOGLEFONT</option>
 				<option value="2">TPL_ATOMIC_NOFONT</option>
-				<option value="0" disabled="true">TPL_ATOMIC_GOOGLEFONT_SANSSERIF</option>
+				<option value="98" disabled="true">TPL_ATOMIC_GOOGLEFONT_SANSSERIF</option>
 				<option value="3">TPL_ATOMIC_GOOGLEFONT_INTER</option>
 				<option value="4">TPL_ATOMIC_GOOGLEFONT_LATO</option>
-				<option value="5">TPL_ATOMIC_GOOGLEFONT_MONSERRAT</option>
+				<option value="5">TPL_ATOMIC_GOOGLEFONT_MONTSERRAT</option>
 				<option value="6">TPL_ATOMIC_GOOGLEFONT_OPENSANS</option>
 				<option value="7">TPL_ATOMIC_GOOGLEFONT_ROBOTO</option>
-				<option value="0" disabled="true">TPL_ATOMIC_GOOGLEFONT_SERIF</option>
+				<option value="99" disabled="true">TPL_ATOMIC_GOOGLEFONT_SERIF</option>
 				<option value="8">TPL_ATOMIC_GOOGLEFONT_FRAUNCES</option>
 				<option value="9">TPL_ATOMIC_GOOGLEFONT_LIBREBASKERVILLE</option>
 				<option value="10">TPL_ATOMIC_GOOGLEFONT_MERRIWEATHER</option>
