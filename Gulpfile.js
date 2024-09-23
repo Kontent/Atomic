@@ -49,10 +49,13 @@ function watchFiles() {
 // Define default task
 exports.default = gulp.series(
     gulp.parallel(minifyCss, minifyJs),
-    watchFiles
+    watchFiles // Keep watch in the default task
 );
 
 // Define production task
 exports.build = gulp.series(
     gulp.parallel(minifyCss, minifyJs)
 );
+
+// Export watch task separately
+exports.watch = watchFiles;
