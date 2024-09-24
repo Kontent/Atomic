@@ -10,8 +10,6 @@ require_once __DIR__ . '/helper.php';
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
 
 $app = Factory::getApplication();
 $wa = $this->getWebAssetManager();
@@ -69,16 +67,6 @@ $isheadergooglefont	= isGoogleFont($headerfont);
 $isbodygooglefont	= isGoogleFont($bodyfont);
 
 $containerClass = $fluidcontainer ? 'container-fluid' : 'container';
-
-// Register assets
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wr = $wa->getRegistry();
-
-// Enable assets
-// $wa->useStyle('template.atomic.bs5css');
-// $wa->useStyle('template.atomic.css');
-// $wa->useScript('template.atomic.js');
-
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" data-bs-theme="<?php echo $bstheme; ?>">
@@ -87,14 +75,14 @@ $wr = $wa->getRegistry();
 		// Combine conditions using logical OR (||) for efficiency
 		if ($isheadergooglefont || $isbodygooglefont) {
 			// Preconnect links once (outside nested conditionals)
-			echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . PHP_EOL;
-			echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . PHP_EOL;
+			echo '<link rel="preconnect" href="https://fonts.googleapis.com">';
+			echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
 
 			// Font links based on combined conditions
 			$fontsToLoad = array_unique([$headerfont, $bodyfont]);
 			foreach ($fontsToLoad as $font) {
 				if ($font) {
-					echo getGoogleFontLink($font) . PHP_EOL;
+					echo getGoogleFontLink($font);
 				}
 			}
 		}
@@ -286,7 +274,7 @@ $wr = $wa->getRegistry();
 	<?php endif; ?>
 
 	<?php if ($sidebamenu && $this->countModules( 'sidebar-menu' )) : ?>
-		<div class="sidebar-menu offcanvas offcanvas-start" data-bs-backdrop="false" data-bs-scroll="true" tabindex="-1" id="offcanvasSidebarMenu" aria-labelledby="offcanvasSidebarMenuLabel">
+		<div class="sidebar-menu offcanvas offcanvas-<?php echo $this->direction === 'ltr' ? 'start' : 'end'; ?>" data-bs-backdrop="false" data-bs-scroll="true" tabindex="-1" id="offcanvasSidebarMenu" aria-labelledby="offcanvasSidebarMenuLabel">
 		<button class="btn btn-primary offcanvas-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebarMenu" aria-controls="offcanvasSidebarMenu">
 			<span class="offcanvas-toggle-icon offcanvas-toggle-icon--close"><i class="fas fa-times"></i></span>
 			<span class="offcanvas-toggle-icon offcanvas-toggle-icon--open"><i class="fas fa-bars"></i></span>

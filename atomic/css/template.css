@@ -55,6 +55,10 @@ Sidebar menu
     left: 100%;
     border-radius: 0;
 }
+.sidebar-menu.offcanvas-end .offcanvas-toggle {
+	right: 100%;
+	left: auto;
+}
 .sidebar-menu .offcanvas-toggle-icon {
 	display: none;
 }
