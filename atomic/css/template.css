@@ -42,41 +42,36 @@ img {
 /**
 Sidebar menu
 **/
-.offcanvas {
+.sidebar-menu {
 	visibility: visible;
+	max-width: 300px;
+	border: none;
 }
-.offcanvas .offcanvas-toggle {
+.sidebar-menu .offcanvas-toggle {
 	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	right: auto;
-	left: 100%;
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
+    top: 0;
+    bottom: 0;
+    right: auto;
+    left: 100%;
+    border-radius: 0;
 }
-.offcanvas-end .offcanvas-toggle {
-	right: 100%;
-	left: auto;
-	border-radius: var(--bs-btn-border-radius);
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
-}
-.offcanvas-toggle-icon {
+.sidebar-menu .offcanvas-toggle-icon {
 	display: none;
 }
-.offcanvas-toggle-icon.offcanvas-toggle-icon--open {
+.sidebar-menu .offcanvas-toggle-icon.offcanvas-toggle-icon--open {
 	display: block;
 }
-.offcanvas.show .offcanvas-toggle-icon.offcanvas-toggle-icon--open {
+.sidebar-menu.show .offcanvas-toggle-icon.offcanvas-toggle-icon--open {
 	display: none;
 }
-.offcanvas.show .offcanvas-toggle-icon.offcanvas-toggle-icon--close {
+.sidebar-menu.show .offcanvas-toggle-icon.offcanvas-toggle-icon--close {
 	display: block;
 }
-.offcanvas-content {
+.sidebar-menu .offcanvas-content {
 	height: 100%;
+	padding: 20px;
 }
-.offcanvas .btn-close {
+.mobilemenu-offcanvas .btn-close {
 	position: absolute;
     right: 10px;
     top: 10px;
