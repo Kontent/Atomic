@@ -60,6 +60,7 @@ $sitetitle			= $this->params->get('sitetitle');
 $casspositions		= $this->params->get('casspositions');
 $stickyhead			= $this->params->get('stickyhead');
 $sidebamenu			= $this->params->get('sidebarmenu');
+$headerbackground	= $this->params->get('headerbackground', '#ffffff');
 
 $headerfontfamily	= getGoogleFontFamily($headerfont, 'header', $headerfontname);
 $bodyfontfamily		= getGoogleFontFamily($bodyfont, 'body', $bodyfontname);
@@ -161,9 +162,10 @@ $containerClass = $fluidcontainer ? 'container-fluid' : 'container';
 		<?php endif; ?>
 		
 		<?php
-		if ($headerfont != 2 || $bodyfont != 2) {
+		if ($headerfont != 2 || $bodyfont != 2 || $headerbackground) {
 			$style = '<style>';
 			$style .= ':root {';
+			$style .= '--atomic-header-background-color: ' . $headerbackground . ';';
 
 			$style .= '--atomic-header-font: ' . ($headerfont != 2 ? $headerfontfamily: 'none') . ';';
 

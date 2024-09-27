@@ -20,9 +20,8 @@ a {
 	text-decoration: none;
 }
 /* General styles */
-
-.readmore .btn.btn-secondary {
-
+header {
+	background-color: var(--atomic-header-background-color);
 }
 header.sticky {
   position: sticky;

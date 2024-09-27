@@ -254,6 +254,8 @@
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
 
+			<field name="headerbackground" type="color" default="#fff" format="hex" label="TPL_ATOMIC_HEADER_BACKGROUND_COLOR_LABEL" description="TPL_ATOMIC_HEADER_BACKGROUND_COLOR_DESC" />
+
 			<field name="sidebarmenu" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SIDEBARMENU_LABEL" description="TPL_ATOMIC_SIDEBARMENU_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
