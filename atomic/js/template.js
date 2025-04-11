@@ -20,7 +20,8 @@ let BTN_DARK_SVG = `<svg class="svg-inline--fa fa-moon" aria-hidden="true" focus
         if (storedTheme) {
             return storedTheme
         }
-        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+        // return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+         return typeof defaultTheme !== "undefined" && defaultTheme ? defaultTheme : "light";
     }
 
     const setTheme = theme => {

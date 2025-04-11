@@ -19,28 +19,33 @@ h1,h2,h3,h4,h5,h6 {
 a {
 	text-decoration: none;
 }
+
 /* General styles */
-header {
-	background-color: var(--atomic-header-background-color);
+
+.container-title {
+	padding-top: 8px;
 }
 header.sticky {
   position: sticky;
   top: 0;
   z-index: 99;
+  background-color: var(--atomic-header-background-color);
+  /* Use scroll-margin-top on anchors if needed */
 }
-
 img {
 	max-width: 100%;
 	height: auto;
 }
-
 .header-col-right {
 	gap: 12px;
 }
+.copyright {
+	text-align: center;
+	font-size: 80%;
+}
 
-/**
-Sidebar menu
-**/
+
+/* Sidebar menu */
 .sidebar-menu {
 	visibility: visible;
 	max-width: 300px;
@@ -74,6 +79,20 @@ Sidebar menu
 	height: 100%;
 	padding: 20px;
 }
+
+/* Mobile menu */
+.mobilemenu-offcanvas .nav {
+	display: block;
+}
+.mobilemenu-offcanvas .nav li {
+	line-height: 3em;
+}
+.navbar-toggler svg {
+	margin-top: 16px;
+}
+.navbar-toggler svg {
+	height: 28px;
+}
 .mobilemenu-offcanvas .btn-close {
 	position: absolute;
     right: 10px;
@@ -81,11 +100,6 @@ Sidebar menu
 	z-index: 10;
 }
 
-
-.copyright {
-	text-align: center;
-	font-size: 80%;
-}
 
 /* System alerts */
 
@@ -96,6 +110,7 @@ Sidebar menu
 }
 
 /* Module search */
+
 .mod-finder__search.input-group {
 	flex-wrap: nowrap;
 }
@@ -113,6 +128,41 @@ Sidebar menu
 	flex-shrink: 0;
 }
 
+/* Login */
+.com-users-login__form,
+.com-users-logout__form,
+.com-users-reset__form,
+.com-users-remind__form {
+	margin:24px 0;
+}
+.com-users-login__form fieldset > *,
+.com-users-reset__form fieldset > *,
+.com-users-remind__form fieldset > * {
+	margin-bottom: 24px;
+}
+.com-users-login__form label,
+.com-users-reset__form label,
+.com-users-remind__form label  {
+	margin-bottom: 8px;
+}
+.form-control-feedback {
+	display: block;
+	color: orange;
+}
+.com-users-login__form label .star,
+.com-users-reset__form label .star,
+.com-users-remind__form label .star {
+	color: red;
+}
+button svg {
+	width: 24px;
+}
+.com-users-reset__form legend,
+.com-users-remind__form legend {
+	font-size: 16px;
+	margin-bottom: 16px;
+}
+
 /* Both dropdown menus  */
 
 .nav .btn-check:checked+.btn, 
@@ -128,6 +178,7 @@ Sidebar menu
 }
 
 /* Horizontal dropdown menu  */
+
 .menu .nav-item {
 	position: relative;
 }

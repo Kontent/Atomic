@@ -220,7 +220,7 @@
 				<option value="5">TPL_ATOMIC_FACUSTOMJS</option>
 			</field>
 			
-			<field name="fontawesomecdn" showon="fontawesome:5[OR]fontawesome:4" type="textarea" label="TPL_ATOMIC_FONTAWESOMECDN_LABEL" description="TPL_ATOMIC_FONTAWESOMECDN_DESC" rows="4" columns="30" hint="Example: &#60;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css&#34; integrity=&#34;sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==&#34; crossorigin=&#34;anonymous&#34; referrerpolicy=&#34;no-referrer&#34; /&#62;" />
+			<field name="fontawesomecdn" showon="fontawesome:5[OR]fontawesome:4" type="textarea" filter="raw" label="TPL_ATOMIC_FONTAWESOMECDN_LABEL" description="TPL_ATOMIC_FONTAWESOMECDN_DESC" rows="4" columns="30" hint="Example: &#60;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css&#34; integrity=&#34;sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==&#34; crossorigin=&#34;anonymous&#34; referrerpolicy=&#34;no-referrer&#34; /&#62;" />
 			
 			<field name="loadbsicons" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_LOADBSICONS_LABEL" description="TPL_ATOMIC_LOADBSICONS_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
@@ -254,13 +254,35 @@
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
 
-			<field name="headerbackground" type="color" default="#fff" format="hex" label="TPL_ATOMIC_HEADER_BACKGROUND_COLOR_LABEL" description="TPL_ATOMIC_HEADER_BACKGROUND_COLOR_DESC" />
+			<field name="headerbackground" type="color" default="rgb(0,0,0,0)" format="rgba" label="TPL_ATOMIC_HEADER_BACKGROUND_COLOR_LABEL" description="TPL_ATOMIC_HEADER_BACKGROUND_COLOR_DESC" />
 
 			<field name="sidebarmenu" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SIDEBARMENU_LABEL" description="TPL_ATOMIC_SIDEBARMENU_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
 			
+		</fieldset>
+		
+		<fieldset name="METADATA_SETTINGS">
+
+			<field name="socialtitle" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SOCIALTITLE_LABEL" description="TPL_ATOMIC_SOCIALTITLE_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			
+			<field name="socialdescription" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SOCIALDESCRIPTION_LABEL" description="TPL_ATOMIC_SOCIALDESCRIPTION_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			
+			<field name="socialurl" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SOCIALURL_LABEL" description="TPL_ATOMIC_SOCIALURL_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			
+			<field name="socialthumbgoogle" type="media" label="TPL_ATOMIC_SOCIALTHUMBGOOGLE_LABEL" description="TPL_ATOMIC_SOCIALTHUMBGOOGLE_DESC" />
+			<field name="socialthumbfacebook" type="media" label="TPL_ATOMIC_SOCIALTHUMBFACEBOOK_LABEL" description="TPL_ATOMIC_SOCIALTHUMBFACEBOOK_DESC" />
+			<field name="socialthumbtwitter" type="media" label="TPL_ATOMIC_SOCIALTHUMBTWITTER_LABEL" description="TPL_ATOMIC_SOCIALTHUMBTWITTER_DESC" />		
 		</fieldset>
 		
 		<fieldset name="CUSTOM_CODE">
