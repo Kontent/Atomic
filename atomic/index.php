@@ -69,7 +69,6 @@ $bootstrapcdn				= $this->params->get('bootstrapcdn');
 $bootstrapsource			= $this->params->get('bootstrapsource');
 $bsfixjoomla				= $this->params->get('bsfixjoomla');
 $bsicons					= $this->params->get('bsicons');
-$bstheme					= $this->params->get('bstheme');
 $bsthemes					= $this->params->get('bsthemes');
 $codeafterbody				= $this->params->get('codeafterbody');
 $codeafterhead				= $this->params->get('codeafterhead');
@@ -106,6 +105,29 @@ $socialthumbgoogle			= $this->params->get('socialthumbgoogle');
 $socialthumbfacebook		= $this->params->get('socialthumbfacebook');
 $socialthumbtwitter			= $this->params->get('socialthumbtwitter');
 
+$feediting       			= (int) $this->params->get('feediting', 0);
+  	$dataEditingAttr  = $feediting === 1
+    ? ' data-editing="no"'
+    : '';
+
+$theme 						= trim((string) $this->params->get('theme', ''));
+	$dataThemeAttr = $theme !== ''
+    ? ' data-theme="' . htmlspecialchars($theme, ENT_QUOTES, 'UTF-8') . '"'
+    : '';
+
+$usergroupdata = (int) $this->params->get('usergroupdata', 0);
+	if ($usergroupdata === 1 && !empty($dataUser)) {
+	  $dataUserEscaped = htmlspecialchars($dataUser, ENT_QUOTES, 'UTF-8');
+	  $dataUserAttr    = ' data-user="' . $dataUserEscaped . '"';
+	} else {
+	  $dataUserAttr = '';
+	}
+
+$bstheme					= $this->params->get('bstheme', 'auto');
+	$bstheme = in_array(strtolower($bstheme), ['light','dark','auto'])
+    ? strtolower($bstheme)
+    : 'auto';
+
 $headerfontfamily			= getGoogleFontFamily($headerfont, 'header', $headerfontname);
 $bodyfontfamily				= getGoogleFontFamily($bodyfont, 'body', $bodyfontname);
 $isheadergooglefont			= isGoogleFont($headerfont);
@@ -115,8 +137,12 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" data-bs-theme="<?php echo $bstheme; ?>">
 
+<html
+  lang="<?php echo $this->language; ?>"
+  dir="<?php echo $this->direction; ?>"
+  data-bs-theme="<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>"
+  <?php echo $dataThemeAttr . $dataEditingAttr; ?>>
 	<head>
 		<?php
 		// Combine conditions using logical OR (||) for efficiency
@@ -254,7 +280,7 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 				<link rel="stylesheet" href="media/vendor/bootstrap/css/bootstrap.min.css">
 				
 			<?php elseif($bootstrapsource == 2) : ?>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 			
 			<?php elseif($bootstrapsource == 5) : ?>
 				<?php echo $bootstrapcdn; ?>	
@@ -313,8 +339,11 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 				if ($bodyfont != 2) {
 					$style .= '--atomic-body-font: ' . ($bodyfont != 0 ? $bodyfontfamily : 'var(--bs-body-font-family)') . ';';
 				}
-			
 				$style .= '}';
+				
+				if ($feediting === 1) {
+					$style .= 'html[data-editing="no"] div.icons { display: none !important; }';
+				}
 				$style .= '</style>';
 			
 				echo $style;
@@ -326,16 +355,16 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 		if($fontawesome == 1 || $fontawesome == 6) : ?>
 			<link rel="stylesheet" href="media/system/css/joomla-fontawesome.min.css">
 		<?php elseif($fontawesome == 2) : ?>
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<?php elseif($fontawesome == 3) : ?>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js" integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" integrity="sha512-b+nQTCdtTBIRIbraqNEwsjB6UvL3UEMkXnhzd8awtCYh0Kcsjl9uEgwVFVbhoj3uu1DO1ZMacNvLoyJJiNfcvg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<?php elseif($fontawesome == 4 || $fontawesome == 5) : ?>
 			<?php echo $fontawesomecdn; ?>
 		<?php endif; ?>
 		
 		<?php	//	Load BS Icons
 			if($loadbsicons == 1) : ?>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 		<?php endif; ?>
 		
 		<?php	//	Load the RTL CSS file.
@@ -366,10 +395,12 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 			<?php echo $jquerycdn ?>
 		<?php endif; ?>
 		
-		<script>var defaultTheme = "<?php echo $bstheme; ?>";</script>
+		<script>var defaultTheme = '<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>';</script>
+		<!-- <script>var defaultTheme = "<?php echo $bstheme; ?>";</script> -->
+		
 		<?php	//	Load BS Styleswitcher
 			if($bsthemes == 1) : ?>
-				<script src="/templates/<?php echo $this->template ?>/js/template.min.js"></script>
+				<script src="/templates/<?php echo $this->template ?>/js/styleswitcher.min.js"></script>
 		<?php endif; ?>
 		
 		<?php	//	Load custom local user JavaScript
@@ -398,22 +429,26 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 			gtag('config', '<?php echo $gacode; ?>');
 		</script>
 		<?php endif; ?>
-	</head>
-
-	<?php	//	Add the menu item alias to the body ID, class, or both. ?>
-	<?php $dataUserAttr = $dataUser ? ' data-user="' . $dataUser . '"' : ''; ?>
-	<?php if ($bodymenu == 1) : ?>	
-    	<body class="<?php echo $active->alias; ?>"<?php echo $dataUserAttr; ?>>
-	<?php elseif ($bodymenu == 2) : ?>
-    	<body id="<?php echo $active->alias; ?>"<?php echo $dataUserAttr; ?>>
-	<?php elseif ($bodymenu == 3) : ?>
-    	<body id="<?php echo $active->alias; ?>" class="<?php echo $active->alias; ?>"<?php echo $dataUserAttr; ?>>
-	<?php elseif ($casspositions == 1) : ?>
-    	<body class="cassiopeia"<?php echo $dataUserAttr; ?>>
-	<?php else : ?>
-   		<body class="site <?php echo $option . ' ' . $wrapper . ' view-' . $view . ($itemid ? ' itemid-' . $itemid : '') . ($pageclass ? ' ' . $pageclass : '') . ($this->direction == 'rtl' ? ' rtl' : ''); ?>"<?php echo $dataUserAttr; ?>>
-<?php endif; ?>
 		
+	</head>
+	
+	<?php if ($bodymenu == 1) : ?>  
+	  <body class="<?php echo $active->alias; ?>"<?php echo $dataUserAttr; ?>>
+	<?php elseif ($bodymenu == 2) : ?>
+	  <body id="<?php echo $active->alias; ?>"<?php echo $dataUserAttr; ?>>
+	<?php elseif ($bodymenu == 3) : ?>
+	  <body id="<?php echo $active->alias; ?>" class="<?php echo $active->alias; ?>"<?php echo $dataUserAttr; ?>>
+	<?php elseif ($casspositions == 1) : ?>
+	  <body class="cassiopeia"<?php echo $dataUserAttr; ?>>
+	<?php else : ?>
+	  <body class="site
+		<?php echo $option . ' ' . $wrapper . ' view-' . $view
+		  . ($itemid   ? ' itemid-' . $itemid   : '')
+		  . ($pageclass? ' ' . $pageclass       : '')
+		  . ($this->direction === 'rtl' ? ' rtl' : ''); ?>"
+		<?php echo $dataUserAttr; ?>>
+	<?php endif; ?>
+
 	<?php	//	Add custom code after opening body tag
 		if($codeafterbody != null) : ?>
 		<?php echo $codeafterbody; ?>	
@@ -426,7 +461,7 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 			<span class="offcanvas-toggle-icon offcanvas-toggle-icon--open"><i class="fas fa-bars"></i></span>
 		</button>
 			<div class="offcanvas-content">
-				<jdoc:include type="modules" name="sidebar-menu" style="none" />
+				<jdoc:include type="modules" name="sidebar-menu" title="Sidebar Menu" style="none" />
 			</div>
 		</div>
 	<?php endif; ?>
@@ -435,7 +470,7 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 		<div class="mobile-menu">
 			<div class="<?php echo $containerClass; ?>">
 				<div class="row">
-					<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
+					<jdoc:include type="modules" name="mobilemenu" title="Mobile Menu" style="mobilemenu" />
 				</div>
 			</div>
 		</div>
@@ -445,7 +480,7 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 		<div class="alertbar">
 			<div class="<?php echo $containerClass; ?>">
 				<div class="row">
-					<jdoc:include type="modules" name="alert" style="none" />
+					<jdoc:include type="modules" name="alert" title="Alerts" style="none" />
 				</div>
 			</div>
 		</div>
@@ -465,8 +500,8 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 	<?php endif; ?>
 		<div class="<?php echo $containerClass; ?>">
 			<?php if($casspositions == 1) : ?>
-				<jdoc:include type="modules" name="topbar" style="none" />
-				<jdoc:include type="modules" name="below-top" style="none" />
+				<jdoc:include type="modules" name="topbar" title="Top Bar" style="none" />
+				<jdoc:include type="modules" name="below-top" title="Below Top" style="none" />
 			<?php endif; ?>
 				<div class="header-main row">
 					<div class="header-col header-col-left col-12 col-md-4 d-flex flex-column flex-sm-row">
@@ -490,12 +525,19 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 					<div class="header-col header-col-right col-12 col-md-8 d-flex justify-content-end align-items-center">
 						
 						<?php if ($this->countModules('header')) : ?>
-							<jdoc:include type="modules" name="header" style="none" />
+							<jdoc:include type="modules" name="header" title="Header" style="none" />
 						<?php endif; ?>
 						
 						<?php	//	Load BS Styleswitcher
 							if($bsthemes == 1) : ?>
-							<a id="themeBtn" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Toggle light & dark mode" aria-label="Toggle light & dark mode"><i class=""></i></a>
+							<div class="dropdown">
+								<button id="themeBtn" class="btn btn-link p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Select theme"><i class="fas fa-moon" aria-hidden="true"></i></button>
+								<ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="themeBtn">
+									<li><button class="dropdown-item d-flex align-items-center" type="button" data-theme="light" aria-pressed="false"><i class="fa-solid fa-sun fa-fw me-2"></i>Light</button></li>
+									<li><button class="dropdown-item d-flex align-items-center" type="button" data-theme="dark" aria-pressed="false"><i class="fa-solid fa-moon fa-fw me-2"></i>Dark</button></li>
+									<li><button class="dropdown-item d-flex align-items-center" type="button" data-theme="auto" aria-pressed="false"><i class="fa-solid fa-circle-half-stroke fa-fw me-2"></i>Auto</button></li>
+								</ul>
+							</div>
 						<?php endif; ?>
 					</div>
 				</div>
@@ -508,14 +550,14 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 						<?php endif; ?>
 							<nav class="navigation">
 								<div class="nav-collapse">
-									<jdoc:include type="modules" name="topmenu" style="none" />
-									<?php if ($casspositions == 1): ?><jdoc:include type="modules" name="menu'" style="none" /><?php endif; ?>
+									<jdoc:include type="modules" name="topmenu" title="Top Menu" style="none" />
+									<?php if ($casspositions == 1): ?><jdoc:include type="modules" name="menu" title="Menu" style="none" /><?php endif; ?>
 								</div>
 							</nav>
 						<?php if ($this->countModules('search')) : ?>
 						</div>
 						<div class="col-12 col-md-3">
-							<jdoc:include type="modules" name="search" style="none" />
+							<jdoc:include type="modules" name="search" title="Search" style="none" />
 						</div>
 					<?php endif; ?>
 				</div>
@@ -533,9 +575,9 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 		)) : ?>
     	<div class="row">
 			<div class="col">
-			<jdoc:include type="modules" name="banner" style="none" />
-			<jdoc:include type="modules" name="top-a" style="none" />
-			<jdoc:include type="modules" name="top-b" style="none" />
+			<jdoc:include type="modules" name="banner" title="Banner" style="none" />
+			<jdoc:include type="modules" name="top-a" title="Top A" style="none" />
+			<jdoc:include type="modules" name="top-b" title="Top B" style="none" />
 			</div>
 		</div>
 		<?php endif; ?>
@@ -553,38 +595,38 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
     	<div class="row">
 			<?php if(($casspositions == 1 && $this->countModules('sidebar-left', true)) || $this->countModules('leftbody', true)) : ?>
 				<div class="container-sidebar-left col-12 col-lg-3">
-					<jdoc:include type="modules" name="sidebar-left" style="card" />
-					<jdoc:include type="modules" name="leftbody" style="card" />
+					<jdoc:include type="modules" name="sidebar-left" title="Sidebar Left" style="card" />
+					<jdoc:include type="modules" name="leftbody" title="Body Left" style="card" />
 				</div>
 			<?php endif; ?>
 
 			<div class="container-component<?php echo $componentcolclass; ?>">
-				<jdoc:include type="modules" name="breadcrumbs" style="none" />
-				<jdoc:include type="modules" name="abovebody" style="none" />
-				<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-top" style="card" /><?php endif; ?>
+				<jdoc:include type="modules" name="breadcrumbs" title="Breadcrumbs" style="none" />
+				<jdoc:include type="modules" name="abovebody" title="Above Body" style="none" />
+				<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-top" title="Main Top" style="card" /><?php endif; ?>
 				<jdoc:include type="message" />
 				<jdoc:include type="component" />
-				<jdoc:include type="modules" name="belowbody" style="none" />
-				<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-bottom" style="card" /><?php endif; ?>
+				<jdoc:include type="modules" name="belowbody" title="Below Body" style="none" />
+				<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-bottom" title="Main Bottom" style="card" /><?php endif; ?>
 			</div>
 			
 			<?php if(($casspositions == 1 && $this->countModules('sidebar-right', true)) || $this->countModules('rightbody', true)) : ?>
 				<div class="container-sidebar-right col-12 col-lg-3">
-					<jdoc:include type="modules" name="sidebar-right" style="card" />
-					<jdoc:include type="modules" name="rightbody" style="card" />
+					<jdoc:include type="modules" name="sidebar-right" title="Sidebar Right" style="card" />
+					<jdoc:include type="modules" name="rightbody" title="Body Right" style="card" />
 				</div>
 			<?php endif; ?>
 		</div>
 		
 		<?php if($casspositions == 1 && $this->countModules('bottom-a', true)) : ?>
     	<div class="row">
-			<jdoc:include type="modules" name="bottom-a" style="none" />
+			<jdoc:include type="modules" name="bottom-a" title="Bottom A" style="none" />
 		</div>
 		<?php endif; ?>		
 		
 		<?php if($casspositions == 1 && $this->countModules('bottom-b', true)) : ?>
 			<div class="row">
-				<jdoc:include type="modules" name="bottom-b" style="none" />
+				<jdoc:include type="modules" name="bottom-b" title="Bottom B" style="none" />
 			</div>
 		<?php endif; ?>		
 	</div>
@@ -594,7 +636,7 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 		<footer>
 			<div class="<?php echo $containerClass; ?>">
 			<div class="row">
-				<jdoc:include type="modules" name="footer" style="none" />
+				<jdoc:include type="modules" name="footer" title="Footer" style="none" />
 				<?php	//	Copyright
 					if($copyright == 1) : ?>
 					<div class="copyright">
@@ -614,7 +656,7 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 			if($bootstrapsource == 1) : ?>
 				<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
 			<?php elseif($bootstrapsource == 2) : ?>
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 			<?php elseif($bootstrapsource >= 6 && $bootstrapsource <= 15) : ?>
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 			<?php elseif($bootstrapsource == 3) : ?>
@@ -631,6 +673,6 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 			<?php echo $codebeforebody; ?>	
 		<?php endif; ?>
 		
-		<jdoc:include type="modules" name="debug" style="none" />
+		<jdoc:include type="modules" name="debug" title="Debug" style="none" />
 	</body>
 </html>

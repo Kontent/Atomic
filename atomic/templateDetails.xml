@@ -84,6 +84,12 @@
 			</field>
 			
 			<field name="copyrighttxt" showon="copyright:1" type="text" default="" label="TPL_ATOMIC_COPYRIGHTTXT_LABEL" description="TPL_ATOMIC_COPYRIGHTTXT_DESC" filter="string" />
+			
+			<field name="feediting" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_FEEDITING_LABEL" description="TPL_ATOMIC_FEEDITING_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+						
 		</fieldset>
 		
 		<fieldset name="CSS_SETTINGS">
@@ -137,6 +143,8 @@
 			</field>
 			
 			<field name="bstheme" type="text" default="" label="TPL_ATOMIC_BSTHEME_LABEL" description="TPL_ATOMIC_BSTHEME_DESC" filter="string" />
+			
+			<field name="theme" type="text" default="" label="TPL_ATOMIC_THEME_LABEL" description="TPL_ATOMIC_THEME_DESC" filter="string" />
 				
 		</fieldset>
 		
@@ -257,6 +265,11 @@
 			<field name="headerbackground" type="color" default="rgb(0,0,0,0)" format="rgba" label="TPL_ATOMIC_HEADER_BACKGROUND_COLOR_LABEL" description="TPL_ATOMIC_HEADER_BACKGROUND_COLOR_DESC" />
 
 			<field name="sidebarmenu" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SIDEBARMENU_LABEL" description="TPL_ATOMIC_SIDEBARMENU_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
+				<option value="0">TPL_ATOMIC_NO</option>
+				<option value="1">TPL_ATOMIC_YES</option>
+			</field>
+			
+			<field name="usergroupdata" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_USERGROUPDATA_LABEL" description="TPL_ATOMIC_USERGROUPDATA_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 				<option value="0">TPL_ATOMIC_NO</option>
 				<option value="1">TPL_ATOMIC_YES</option>
 			</field>
