@@ -22,9 +22,6 @@ a {
 
 /* General styles */
 
-.container-title {
-	padding-top: 8px;
-}
 header.sticky {
   position: sticky;
   top: 0;
@@ -32,6 +29,11 @@ header.sticky {
   background-color: var(--atomic-header-background-color);
   /* Use scroll-margin-top on anchors if needed */
 }
+header.sticky + main {
+	margin-top: 60px;
+}
+
+
 img {
 	max-width: 100%;
 	height: auto;
@@ -96,8 +98,9 @@ img {
 .mobilemenu-offcanvas .btn-close {
 	position: absolute;
     right: 10px;
-    top: 10px;
+    top: 20px;
 	z-index: 10;
+	font-size: 18px;
 }
 
 
@@ -213,7 +216,7 @@ button svg {
 
 /* Medium devices (tablets, 768px and up)  */
 @media (min-width: 768px) {
-	.mobilemenumodule {
+	.mobile-menu {
 		display: none;
 	}
 	.navigation .nav {

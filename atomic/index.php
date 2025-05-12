@@ -11,8 +11,12 @@ require_once __DIR__ . '/helper.php';
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Layout\LayoutHelper;
 
 $app = Factory::getApplication();
+$user = Factory::getApplication()->getIdentity();
+
+// $user = JFactory::getUser();
 $input = $app->getInput();
 $wa = $this->getWebAssetManager();
 
@@ -45,8 +49,6 @@ if (!$user->guest) {
 }
 
 //	Get the application object for things like displaying the site name 
-$app = JFactory::getApplication();
-$user = JFactory::getUser();
 
 //	Get the alias of the current menu item
 $active = JFactory::getApplication()->getMenu()->getActive();
@@ -54,11 +56,11 @@ $active = JFactory::getApplication()->getMenu()->getActive();
 //	Get Joomla template variables
 $this->baseurl = JUri::base();
 $option		= $input->getCmd('option', '');
-$view			= $input->getCmd('view', '');
+$view		= $input->getCmd('view', '');
 $itemid		= $input->getCmd('Itemid', '');
-$menu			= $app->getMenu()->getActive();
-$pageclass = $menu !== null ? $menu->getParams()->get('pageclass_sfx', '') : '';
-$wrapper = $this->params->get('fluidContainer') ? 'wrapper-fluid' : 'wrapper-static';
+$menu		= $app->getMenu()->getActive();
+$pageclass 	= $menu !== null ? $menu->getParams()->get('pageclass_sfx', '') : '';
+$wrapper 	= $this->params->get('fluidContainer') ? 'wrapper-fluid' : 'wrapper-static';
 
 //	Assign template params
 $bodyfont					= $this->params->get('bodyfont');
@@ -398,9 +400,9 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 		<script>var defaultTheme = '<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>';</script>
 		<!-- <script>var defaultTheme = "<?php echo $bstheme; ?>";</script> -->
 		
-		<?php	//	Load BS Styleswitcher
+		<?php	//	Load BS Themeswitcher
 			if($bsthemes == 1) : ?>
-				<script src="/templates/<?php echo $this->template ?>/js/styleswitcher.min.js"></script>
+				<script src="/templates/<?php echo $this->template ?>/js/themeswitcher.min.js"></script>
 		<?php endif; ?>
 		
 		<?php	//	Load custom local user JavaScript
@@ -454,27 +456,13 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 		<?php echo $codeafterbody; ?>	
 	<?php endif; ?>
 
-	<?php if ($sidebarmenu && $this->countModules( 'sidebar-menu' )) : ?>
-		<div class="sidebar-menu offcanvas offcanvas-<?php echo $this->direction === 'ltr' ? 'start' : 'end'; ?>" data-bs-backdrop="false" data-bs-scroll="true" tabindex="-1" id="offcanvasSidebarMenu" aria-labelledby="offcanvasSidebarMenuLabel">
-		<button class="btn btn-primary offcanvas-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebarMenu" aria-controls="offcanvasSidebarMenu">
-			<span class="offcanvas-toggle-icon offcanvas-toggle-icon--close"><i class="fas fa-times"></i></span>
-			<span class="offcanvas-toggle-icon offcanvas-toggle-icon--open"><i class="fas fa-bars"></i></span>
-		</button>
-			<div class="offcanvas-content">
-				<jdoc:include type="modules" name="sidebar-menu" title="Sidebar Menu" style="none" />
-			</div>
-		</div>
-	<?php endif; ?>
-
-	<?php if ($this->countModules( 'mobilemenu' )) : ?>
-		<div class="mobile-menu">
-			<div class="<?php echo $containerClass; ?>">
-				<div class="row">
-					<jdoc:include type="modules" name="mobilemenu" title="Mobile Menu" style="mobilemenu" />
-				</div>
-			</div>
-		</div>
-	<?php endif; ?>
+	<?php
+		if ($sidebarmenu && $this->countModules('sidebar-menu')) :
+			echo LayoutHelper::render('sidebar.offcanvas', [
+				'direction' => $this->direction
+			]);
+		endif;
+	?>
 
 	<?php if ($this->countModules('alert', true)) : ?>
 		<div class="alertbar">
@@ -498,18 +486,24 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 	<?php else : ?>
 		<header>
 	<?php endif; ?>
-		<div class="<?php echo $containerClass; ?>">
+		<div class="<?php echo $containerClass; ?>">		
 			<?php if($casspositions == 1) : ?>
 				<jdoc:include type="modules" name="topbar" title="Top Bar" style="none" />
 				<jdoc:include type="modules" name="below-top" title="Below Top" style="none" />
 			<?php endif; ?>
-				<div class="header-main row">
-					<div class="header-col header-col-left col-12 col-md-4 d-flex flex-column flex-sm-row">
+				<div class="header-main row w-100">
+					 <div class="header-col header-col-left col-10 col-md-4 col-lg-4 d-flex align-items-center flex-wrap">
+					
+						<?php if ($this->countModules('mobilemenu')) :
+    						echo LayoutHelper::render('header.mobilemenu', ['containerClass' => $containerClass]);
+						endif; ?>
+				
 						<?php if($logo != null) : ?>
 							<span id="logo">
 								<a href="<?php echo $this->baseurl; ?>"><img src="<?php echo $this->baseurl; ?>/<?php echo htmlspecialchars($logo); ?>" alt="<?php echo htmlspecialchars($this->params->get('sitetitle') ?? ''); ?>" /></a>
 							</span>
 						<?php endif; ?>
+						
 						<?php if($sitedescription != null || $sitetitle != null) : ?>
 							<div class="container-title">
 								<?php if($sitetitle != null) : ?>
@@ -522,23 +516,15 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 						<?php endif; ?>
 					</div>
 					
-					<div class="header-col header-col-right col-12 col-md-8 d-flex justify-content-end align-items-center">
+      				<div class="header-col header-col-right col-2 col-md-8 col-lg-8 d-flex justify-content-end align-items-center">
 						
 						<?php if ($this->countModules('header')) : ?>
 							<jdoc:include type="modules" name="header" title="Header" style="none" />
 						<?php endif; ?>
 						
 						<?php	//	Load BS Styleswitcher
-							if($bsthemes == 1) : ?>
-							<div class="dropdown">
-								<button id="themeBtn" class="btn btn-link p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Select theme"><i class="fas fa-moon" aria-hidden="true"></i></button>
-								<ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="themeBtn">
-									<li><button class="dropdown-item d-flex align-items-center" type="button" data-theme="light" aria-pressed="false"><i class="fa-solid fa-sun fa-fw me-2"></i>Light</button></li>
-									<li><button class="dropdown-item d-flex align-items-center" type="button" data-theme="dark" aria-pressed="false"><i class="fa-solid fa-moon fa-fw me-2"></i>Dark</button></li>
-									<li><button class="dropdown-item d-flex align-items-center" type="button" data-theme="auto" aria-pressed="false"><i class="fa-solid fa-circle-half-stroke fa-fw me-2"></i>Auto</button></li>
-								</ul>
-							</div>
-						<?php endif; ?>
+							echo LayoutHelper::render('header.styleswitcher', ['bsthemes' => $bsthemes]);
+						?>
 					</div>
 				</div>
 
@@ -672,7 +658,8 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 			if($codebeforebody != null) : ?>
 			<?php echo $codebeforebody; ?>	
 		<?php endif; ?>
-		
-		<jdoc:include type="modules" name="debug" title="Debug" style="none" />
+		<?php if ($this->countModules('debug')) : ?>
+  			<jdoc:include type="modules" name="debug" title="Debug" style="none" />
+		<?php endif; ?>
 	</body>
 </html>

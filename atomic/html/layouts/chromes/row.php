@@ -1,13 +1,10 @@
 <?php
 
 /**
- * @package     Joomla.Site
- * @subpackage  Layout
- *
- * @copyright   (C) 2019 Open Source Matters, Inc. <https://www.joomla.org>
+ * @copyright   Copyright (C) 2005 - 2025 Ron Severdia All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
-
+ 
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
