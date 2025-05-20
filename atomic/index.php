@@ -177,14 +177,14 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 		
 		<?php	//	Favicons
 			if($loadfavicons == 1) : ?>
-			<link rel="apple-touch-icon" sizes="180x180" href="<?php echo $this->baseurl ?>templates/<?php echo $this->template ?>/favicons/apple-touch-icon.png">
-			<link rel="icon" type="image/png" sizes="32x32" href="<?php echo $this->baseurl ?>templates/<?php echo $this->template ?>/favicons/favicon-32x32.png">
-			<link rel="icon" type="image/png" sizes="16x16" href="<?php echo $this->baseurl ?>templates/<?php echo $this->template ?>/favicons/favicon-16x16.png">
-			<link rel="manifest" href="<?php echo $this->baseurl ?>templates/<?php echo $this->template ?>/favicons/site.webmanifest">
-			<link rel="mask-icon" href="<?php echo $this->baseurl ?>templates/<?php echo $this->template ?>/favicons/safari-pinned-tab.svg" color="#5bbad5">
-			<link rel="shortcut icon" href="<?php echo $this->baseurl ?>templates/<?php echo $this->template ?>/favicons/favicon.ico">
+			<link rel="apple-touch-icon" sizes="180x180" href="<?php echo $this->baseurl ?>media/templates/site/<?php echo $this->template ?>/favicons/apple-touch-icon.png">
+			<link rel="icon" type="image/png" sizes="32x32" href="<?php echo $this->baseurl ?>media/templates/site/<?php echo $this->template ?>/favicons/favicon-32x32.png">
+			<link rel="icon" type="image/png" sizes="16x16" href="<?php echo $this->baseurl ?>media/templates/site/<?php echo $this->template ?>/favicons/favicon-16x16.png">
+			<link rel="manifest" href="<?php echo $this->baseurl ?>media/templates/site/<?php echo $this->template ?>/favicons/site.webmanifest">
+			<link rel="mask-icon" href="<?php echo $this->baseurl ?>media/templates/site/<?php echo $this->template ?>/favicons/safari-pinned-tab.svg" color="#5bbad5">
+			<link rel="shortcut icon" href="<?php echo $this->baseurl ?>media/templates/site/<?php echo $this->template ?>/favicons/favicon.ico">
 			<meta name="msapplication-TileColor" content="#ffffff">
-			<meta name="msapplication-config" content="<?php echo $this->baseurl ?>templates/<?php echo $this->template ?>/favicons/browserconfig.xml">
+			<meta name="msapplication-config" content="<?php echo $this->baseurl ?>media/templates/site/<?php echo $this->template ?>/favicons/browserconfig.xml">
 			<meta name="theme-color" content="#ffffff">
 		<?php endif; ?>
 			
@@ -371,12 +371,12 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 		
 		<?php	//	Load the RTL CSS file.
 			if($this->direction == 'rtl') : ?>
-				<link rel="stylesheet" href="/templates/<?php echo $this->template ?>/css/template_rtl.min.css" type="text/css">
+				<link rel="stylesheet" href="/media/templates/site/<?php echo $this->template ?>/css/template_rtl.min.css" type="text/css">
 		<?php endif; ?>
 		
 		<?php	//	Load the local CSS fixes for Joomla & Bootstrap 5.
 			if($bsfixjoomla == 1) : ?>
-				<link rel="stylesheet" href="/templates/<?php echo $this->template ?>/css/template.min.css" type="text/css">
+				<link rel="stylesheet" href="/media/templates/site/<?php echo $this->template ?>/css/template.min.css" type="text/css">
 		<?php endif; ?>
 		
 		<?php	//	Load the local CSS file for custom user CSS.
@@ -402,7 +402,7 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 		
 		<?php	//	Load BS Themeswitcher
 			if($bsthemes == 1) : ?>
-				<script src="/templates/<?php echo $this->template ?>/js/themeswitcher.min.js"></script>
+				<script src="/media/templates/site/<?php echo $this->template ?>/js/themeswitcher.min.js"></script>
 		<?php endif; ?>
 		
 		<?php	//	Load custom local user JavaScript
