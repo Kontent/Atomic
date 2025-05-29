@@ -32,7 +32,12 @@ header.sticky {
 header.sticky + main {
 	margin-top: 60px;
 }
-
+.divider {
+	border-top: 1px solid #ccc;
+}
+.divider .separator {
+	display: none;
+}
 
 img {
 	max-width: 100%;

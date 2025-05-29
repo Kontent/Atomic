@@ -16,7 +16,6 @@ use Joomla\CMS\Layout\LayoutHelper;
 $app = Factory::getApplication();
 $user = Factory::getApplication()->getIdentity();
 
-// $user = JFactory::getUser();
 $input = $app->getInput();
 $wa = $this->getWebAssetManager();
 
@@ -106,6 +105,7 @@ $socialdescription			= $this->params->get('socialdescription');
 $socialthumbgoogle			= $this->params->get('socialthumbgoogle');
 $socialthumbfacebook		= $this->params->get('socialthumbfacebook');
 $socialthumbtwitter			= $this->params->get('socialthumbtwitter');
+$bootscolumns				= $this->params->get('bootscolumns');
 
 $feediting       			= (int) $this->params->get('feediting', 0);
   	$dataEditingAttr  = $feediting === 1
@@ -140,20 +140,14 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 ?>
 <!DOCTYPE html>
 
-<html
-  lang="<?php echo $this->language; ?>"
-  dir="<?php echo $this->direction; ?>"
-  data-bs-theme="<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>"
+<html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" data-bs-theme="<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>"
   <?php echo $dataThemeAttr . $dataEditingAttr; ?>>
 	<head>
 		<?php
-		// Combine conditions using logical OR (||) for efficiency
 		if ($isheadergooglefont || $isbodygooglefont) {
-			// Preconnect links once (outside nested conditionals)
 			echo '<link rel="preconnect" href="https://fonts.googleapis.com">';
 			echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
 
-			// Font links based on combined conditions
 			$fontsToLoad = array_unique([$headerfont, $bodyfont]);
 			foreach ($fontsToLoad as $font) {
 				if ($font) {
@@ -167,9 +161,7 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 			<?php echo $codeafterhead;
 			?>	
 		<?php endif; ?>
-		
 		<jdoc:include type="metas" />
-		
 		<?php	//	Remove Joomla generator tag
 			if($killgenerator	 == 1) : ?>
 			<?php $this->setMetaData('generator',''); ?>
@@ -192,7 +184,6 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
    	 	<meta name="viewport" content="width=device-width, initial-scale=1">
    	 	<meta name="HandheldFriendly" content="true">
 		<meta name="apple-mobile-web-app-capable" content="YES">
-
 
 		<?php
 		// Retrieve Joomla template settings (1 = Show, 0 = Hide)
@@ -279,14 +270,12 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
     			
 		<?php	//	Load Bootstrap or Bootswatch theme.
 			if($bootstrapsource == 1 || $bootstrapsource == 3) : ?>
-				<link rel="stylesheet" href="media/vendor/bootstrap/css/bootstrap.min.css">
+				<link rel="stylesheet" href="/media/vendor/bootstrap/css/bootstrap.min.css">
 				
 			<?php elseif($bootstrapsource == 2) : ?>
 				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-			
 			<?php elseif($bootstrapsource == 5) : ?>
 				<?php echo $bootstrapcdn; ?>	
-		
 			<?php elseif($bootstrapsource == 6) : ?>
 				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/cosmo/bootstrap.min.css" integrity="sha512-PU+mnI7iaSDt/G/adHVcQOX2I+K3bQ27kwHJQ1rPq5iqQvHuHSdJOUU/TmPcUsyUGrfAxK+Z4rnx/SL+qCmBNQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
 			<?php elseif($bootstrapsource == 7) : ?>
@@ -350,9 +339,7 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 			
 				echo $style;
 			}
-			
 			?>
-				
 		<?php	//	Load FontAwesome
 		if($fontawesome == 1 || $fontawesome == 6) : ?>
 			<link rel="stylesheet" href="media/system/css/joomla-fontawesome.min.css">
@@ -474,149 +461,214 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 		</div>
 	<?php endif; ?>
 
-	<?php	//	Hide header if nothing in it
-	if (($this->countModules('header', true)) 
-	or ($this->countModules('topmenu', true)) 
-	or ($this->countModules('search', true)) 
-	or ($sitedescription != null || $sitetitle != null || $logo != null)) : ?>
-	
-	<?php	//	Make sticky or not ?>
-	<?php if($stickyhead == 1) : ?>	
-		<header class="sticky">			
-	<?php else : ?>
-		<header>
-	<?php endif; ?>
-		<div class="<?php echo $containerClass; ?>">		
-			<?php if($casspositions == 1) : ?>
-				<jdoc:include type="modules" name="topbar" title="Top Bar" style="none" />
-				<jdoc:include type="modules" name="below-top" title="Below Top" style="none" />
-			<?php endif; ?>
-				<div class="header-main row w-100">
-					 <div class="header-col header-col-left col-10 col-md-4 col-lg-4 d-flex align-items-center flex-wrap">
-					
-						<?php if ($this->countModules('mobilemenu')) :
-    						echo LayoutHelper::render('header.mobilemenu', ['containerClass' => $containerClass]);
-						endif; ?>
-				
-						<?php if($logo != null) : ?>
-							<span id="logo">
-								<a href="<?php echo $this->baseurl; ?>"><img src="<?php echo $this->baseurl; ?>/<?php echo htmlspecialchars($logo); ?>" alt="<?php echo htmlspecialchars($this->params->get('sitetitle') ?? ''); ?>" /></a>
-							</span>
-						<?php endif; ?>
-						
-						<?php if($sitedescription != null || $sitetitle != null) : ?>
-							<div class="container-title">
-								<?php if($sitetitle != null) : ?>
-									<div class="site-title"><a href="<?php echo $this->baseurl; ?>"><?php echo $sitetitle; ?></a></div>
-								<?php endif; ?>
-								<?php if($sitedescription != null) : ?>
-									<p><?php echo $sitedescription; ?></p>
-								<?php endif; ?>
-							</div>
-						<?php endif; ?>
-					</div>
-					
-      				<div class="header-col header-col-right col-2 col-md-8 col-lg-8 d-flex justify-content-end align-items-center">
-						
-						<?php if ($this->countModules('header')) : ?>
-							<jdoc:include type="modules" name="header" title="Header" style="none" />
-						<?php endif; ?>
-						
-						<?php	//	Load BS Styleswitcher
-							echo LayoutHelper::render('header.styleswitcher', ['bsthemes' => $bsthemes]);
-						?>
-					</div>
-				</div>
 
-			<?php $topmenucolclass = $this->countModules('search') ? 'col-12 col-md-9' : ' col'; ?>
-			<?php if ($this->countModules('topmenu')) : ?>
-				<div class="header-bottom row">
-					<?php if ($this->countModules('search')) : ?>
-						<div class="<?php echo $topmenucolclass; ?>">
-						<?php endif; ?>
-							<nav class="navigation">
-								<div class="nav-collapse">
-									<jdoc:include type="modules" name="topmenu" title="Top Menu" style="none" />
-									<?php if ($casspositions == 1): ?><jdoc:include type="modules" name="menu" title="Menu" style="none" /><?php endif; ?>
-								</div>
-							</nav>
-						<?php if ($this->countModules('search')) : ?>
-						</div>
-						<div class="col-12 col-md-3">
-							<jdoc:include type="modules" name="search" title="Search" style="none" />
-						</div>
-					<?php endif; ?>
+
+	<?php
+	// Do we have any header at all?
+	$hasHeaderContent = $this->countModules('header', true)
+		|| $this->countModules('topmenu', true)
+		|| $this->countModules('search', true)
+		|| $logo
+		|| $sitetitle
+		|| $sitedescription;
+	
+	if ($hasHeaderContent):
+		// Sticky class?
+		$headerClass = ($stickyhead == 1) ? 'sticky' : '';
+	
+		// Brand = logo OR title OR description
+		$hasBrand = $logo || $sitetitle || $sitedescription;
+	
+		// Mobile menu independent
+		$hasMobile  = $this->countModules('mobilemenu', true);
+	?>
+	<header<?= $headerClass ? ' class="' . $headerClass . '"' : '' ?>>
+	  <div class="<?= $containerClass ?>">
+	
+		<?php if ($casspositions == 1): ?>
+		  <jdoc:include type="modules" name="topbar"     style="none" />
+		  <jdoc:include type="modules" name="below-top" style="none" />
+		<?php endif; ?>
+	
+		<div class="header-main row align-items-center w-100">
+		
+		  <?php if ($hasMobile): ?>
+			<div class="col-auto d-md-none">
+			  <?= LayoutHelper::render('header.mobilemenu', ['containerClass' => $containerClass]); ?>
+			</div>
+		  <?php endif; ?>
+	
+		  <?php if ($hasBrand): ?>
+			<div class="col-12 col-md-4 d-flex align-items-center flex-wrap">
+			  <?php if ($logo): ?>
+				<div id="logo" class="me-3">
+				  <a href="<?= $this->baseurl ?>">
+					<img src="<?= $this->baseurl . '/' . htmlspecialchars($logo) ?>"
+						 alt="<?= htmlspecialchars($sitetitle ?: '') ?>" />
+				  </a>
 				</div>
+			  <?php endif; ?>
+	
+			  <?php if ($sitetitle || $sitedescription): ?>
+				<div class="site-info">
+				  <?php if ($sitetitle): ?>
+					<div class="site-title">
+					  <a href="<?= $this->baseurl ?>"><?= $sitetitle ?></a>
+					</div>
+				  <?php endif; ?>
+				  <?php if ($sitedescription): ?>
+					<div class="site-description">
+					  <?= $sitedescription ?>
+					</div>
+				  <?php endif; ?>
+				</div>
+			  <?php endif; ?>
+			</div>
+		  <?php endif; ?>
+	
+		  <?php
+			// Right column: if there's a brand block, split 4/8; otherwise full width
+			$rightCols = $hasBrand ? 'col-12 col-md-8' : 'col-12';
+		  ?>
+		  <div class="<?= $rightCols ?> d-flex justify-content-end align-items-center">
+			<?php if ($this->countModules('header', true)): ?>
+			  <jdoc:include type="modules" name="header" style="none" />
 			<?php endif; ?>
+	
+			<?php if (!empty($bsthemes)): ?>
+			  <?= LayoutHelper::render('header.styleswitcher', ['bsthemes' => $bsthemes]); ?>
+			<?php endif; ?>
+		  </div>
 		</div>
+	
+		<?php if ($this->countModules('topmenu', true)):
+		  $navCols = $this->countModules('search', true) ? 'col-12 col-md-9' : 'col-12';
+		?>
+		  <div class="header-bottom row align-items-center">
+			<div class="<?= $navCols ?>">
+			  <nav class="navigation">
+				<div class="nav-collapse">
+				  <jdoc:include type="modules" name="topmenu" style="none" />
+				  <?php if ($casspositions == 1): ?>
+					<jdoc:include type="modules" name="menu" style="none" />
+				  <?php endif; ?>
+				</div>
+			  </nav>
+			</div>
+	
+			<?php if ($this->countModules('search', true)): ?>
+			  <div class="col-12 col-md-3">
+				<jdoc:include type="modules" name="search" style="none" />
+			  </div>
+			<?php endif; ?>
+		  </div>
+		<?php endif; ?>
+	
+	  </div>
 	</header>
 	<?php endif; ?>
 
-    <main>
-	<div class="<?php echo $containerClass; ?>">
-    	<?php if($casspositions == 1 && (
-			$this->countModules('banner', true) ||
-			$this->countModules('top-a', true) ||
-			$this->countModules('top-b', true)
-		)) : ?>
-    	<div class="row">
+	<main>
+	  <div class="<?php echo $containerClass; ?>">
+	
+		<?php if ($casspositions == 1
+		   && ($this->countModules('banner', true)
+			 || $this->countModules('top-a', true)
+			 || $this->countModules('top-b', true))
+		) : ?>
+		  <div class="row">
 			<div class="col">
-			<jdoc:include type="modules" name="banner" title="Banner" style="none" />
-			<jdoc:include type="modules" name="top-a" title="Top A" style="none" />
-			<jdoc:include type="modules" name="top-b" title="Top B" style="none" />
+			  <jdoc:include type="modules" name="banner"  style="none" />
+			  <jdoc:include type="modules" name="top-a"   style="none" />
+			  <jdoc:include type="modules" name="top-b"   style="none" />
 			</div>
-		</div>
+		  </div>
 		<?php endif; ?>
-    	
+	
 		<?php
-		$showsidebarleft = ($casspositions == 1 && $this->countModules('sidebar-left', true)) || $this->countModules('leftbody', true) ? true : false;
-		$showsidebarright = ($casspositions == 1 && $this->countModules('sidebar-right', true)) || $this->countModules('rightbody', true) ? true : false;
-		$componentcolclass = ' col';
-		if($showsidebarleft && $showsidebarright) :
-			$componentcolclass = ' col-12 col-lg-6';
-		elseif($showsidebarleft || $showsidebarright):
-			$componentcolclass = ' col-12 col-lg-9';
-		endif;
+		  $showLeft  = ($casspositions == 1 && $this->countModules('sidebar-left', true))
+					 || $this->countModules('leftbody', true);
+		  $showRight = ($casspositions == 1 && $this->countModules('sidebar-right', true))
+					 || $this->countModules('rightbody', true);
+	
+		  $columnOptions = [
+			[2, 8, 2],
+			[2, 7, 3],
+			[2, 6, 4],
+			[3, 6, 3],
+			[4, 4, 4],
+		  ];
+		  $choice = isset($bootscolumns) && array_key_exists((int)$bootscolumns, $columnOptions)
+				  ? (int)$bootscolumns
+				  : 0;
+	
+		  if ($showLeft && $showRight) {
+			list($l, $m, $r) = $columnOptions[$choice];
+			// left sidebar hidden until LG, then “l” cols
+			$leftClass  = "d-none d-lg-block col-lg-{$l}";
+			$mainClass  = "col-12 col-lg-{$m}";
+			$rightClass = "col-12 col-lg-{$r}";
+		  }
+		  elseif ($showLeft) {
+			// only left: hide on small, show 3 cols at LG
+			$leftClass = "d-none d-lg-block col-lg-3";
+			$mainClass = "col-12 col-lg-9";
+		  }
+		  elseif ($showRight) {
+			$mainClass  = "col-12 col-lg-9";
+			$rightClass = "col-12 col-lg-3";
+		  }
+		  else {
+			$mainClass = "col-12";
+		  }
 		?>
-    	<div class="row">
-			<?php if(($casspositions == 1 && $this->countModules('sidebar-left', true)) || $this->countModules('leftbody', true)) : ?>
-				<div class="container-sidebar-left col-12 col-lg-3">
-					<jdoc:include type="modules" name="sidebar-left" title="Sidebar Left" style="card" />
-					<jdoc:include type="modules" name="leftbody" title="Body Left" style="card" />
-				</div>
-			<?php endif; ?>
-
-			<div class="container-component<?php echo $componentcolclass; ?>">
-				<jdoc:include type="modules" name="breadcrumbs" title="Breadcrumbs" style="none" />
-				<jdoc:include type="modules" name="abovebody" title="Above Body" style="none" />
-				<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-top" title="Main Top" style="card" /><?php endif; ?>
-				<jdoc:include type="message" />
-				<jdoc:include type="component" />
-				<jdoc:include type="modules" name="belowbody" title="Below Body" style="none" />
-				<?php if($casspositions == 1) : ?><jdoc:include type="modules" name="main-bottom" title="Main Bottom" style="card" /><?php endif; ?>
+	
+		<div class="row">
+		  <?php if ($showLeft) : ?>
+			<div class="container-sidebar-left mt-4 <?= $leftClass; ?>">
+			  <jdoc:include type="modules" name="sidebar-left" style="card" />
+			  <jdoc:include type="modules" name="leftbody"     style="card" />
 			</div>
-			
-			<?php if(($casspositions == 1 && $this->countModules('sidebar-right', true)) || $this->countModules('rightbody', true)) : ?>
-				<div class="container-sidebar-right col-12 col-lg-3">
-					<jdoc:include type="modules" name="sidebar-right" title="Sidebar Right" style="card" />
-					<jdoc:include type="modules" name="rightbody" title="Body Right" style="card" />
-				</div>
+		  <?php endif; ?>
+	
+		  <div class="container-component mt-4 <?= $mainClass; ?>">
+			<jdoc:include type="modules" name="breadcrumbs" style="none" />
+			<jdoc:include type="modules" name="abovebody"   style="none" />
+			<?php if ($casspositions == 1) : ?>
+			  <jdoc:include type="modules" name="main-top"  style="card" />
 			<?php endif; ?>
-		</div>
-		
-		<?php if($casspositions == 1 && $this->countModules('bottom-a', true)) : ?>
-    	<div class="row">
-			<jdoc:include type="modules" name="bottom-a" title="Bottom A" style="none" />
-		</div>
-		<?php endif; ?>		
-		
-		<?php if($casspositions == 1 && $this->countModules('bottom-b', true)) : ?>
-			<div class="row">
-				<jdoc:include type="modules" name="bottom-b" title="Bottom B" style="none" />
+			<jdoc:include type="message" />
+			<jdoc:include type="component" />
+			<jdoc:include type="modules" name="belowbody"   style="none" />
+			<?php if ($casspositions == 1) : ?>
+			  <jdoc:include type="modules" name="main-bottom" style="card" />
+			<?php endif; ?>
+		  </div>
+	
+		  <?php if ($showRight) : ?>
+			<div class="container-sidebar-right mt-4 <?= $rightClass; ?>">
+			  <jdoc:include type="modules" name="sidebar-right" style="card" />
+			  <jdoc:include type="modules" name="rightbody"      style="card" />
 			</div>
-		<?php endif; ?>		
-	</div>
+		  <?php endif; ?>
+		</div>
+	
+		<?php if ($casspositions == 1 && $this->countModules('bottom-a', true)) : ?>
+		  <div class="row">
+			<jdoc:include type="modules" name="bottom-a" style="none" />
+		  </div>
+		<?php endif; ?>
+	
+		<?php if ($casspositions == 1 && $this->countModules('bottom-b', true)) : ?>
+		  <div class="row">
+			<jdoc:include type="modules" name="bottom-b" style="none" />
+		  </div>
+		<?php endif; ?>
+	
+	  </div>
 	</main>
+
+
 
 	<?php if ($this->countModules('footer', true) or $copyright == 1) : ?>
 		<footer>

@@ -65,10 +65,6 @@
 	<config>
 		<fields name="params">
 			<fieldset name="JOOMLA_SETTINGS">
-				<field name="sitetitle"  type="text" default="" label="TPL_ATOMIC_PAGE_TITLE_LABEL" description="TPL_ATOMIC_PAGE_TITLE_DESC" filter="safehtml" />
-				
-				
-				<field name="sitedescription"  type="text" default="" label="TPL_ATOMIC_SUBHEADING_LABEL" description="TPL_ATOMIC_SUBHEADING_DESC" filter="safehtml" />
 				
 				<field name="killgenerator" type="radio" class="btn-group btn-group-yesno" label="TPL_ATOMIC_KILLGENERATOR_LABEL" layout="joomla.form.field.radio.switcher" default="0" filter="integer">
 						<option value="0">TPL_ATOMIC_NO</option>
@@ -79,14 +75,7 @@
 					<option value="0">TPL_ATOMIC_NO</option>
 					<option value="1">TPL_ATOMIC_YES</option>
 				</field>
-				
-				<field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_COPYRIGHT_LABEL" description="TPL_ATOMIC_COPYRIGHT_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
-					<option value="0">TPL_ATOMIC_DISABLED</option>
-					<option value="1">TPL_ATOMIC_ENABLED</option>
-				</field>
-				
-				<field name="copyrighttxt" showon="copyright:1" type="text" default="" label="TPL_ATOMIC_COPYRIGHTTXT_LABEL" description="TPL_ATOMIC_COPYRIGHTTXT_DESC" filter="string" />
-				
+								
 				<field name="feediting" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_FEEDITING_LABEL" description="TPL_ATOMIC_FEEDITING_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 					<option value="0">TPL_ATOMIC_NO</option>
 					<option value="1">TPL_ATOMIC_YES</option>
@@ -243,30 +232,53 @@
 				</field>
 				
 			</fieldset>
-	
-			<fieldset name="FEATURE_SETTINGS">
-				<field name="gacode"  type="text" default="" label="TPL_ATOMIC_GA_LABEL" description="TPL_ATOMIC_GA_DESC" filter="string" hint="Example: G-TAGID12345" />
-	
+
+
+			<fieldset name="LAYOUT_SETTINGS">
 				<field name="logo" type="media" label="TPL_ATOMIC_LOGO_LABEL" description="TPL_ATOMIC_LOGO_DESC" />
-							
-				<field name="scrollreveal" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SCROLLREVEAL_LABEL" description="TPL_ATOMIC_SCROLLREVEAL_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
-					<option value="0">TPL_ATOMIC_NO</option>
-					<option value="1">TPL_ATOMIC_YES</option>
-				</field>
 				
-				<field name="instant" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_INSTANT_LABEL" description="TPL_ATOMIC_INSTANT_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
-					<option value="0">TPL_ATOMIC_NO</option>
-					<option value="1">TPL_ATOMIC_YES</option>
-				</field>
-				
+				<field name="sitetitle"  type="text" default="" label="TPL_ATOMIC_PAGE_TITLE_LABEL" description="TPL_ATOMIC_PAGE_TITLE_DESC" filter="safehtml" />
+				<field name="sitedescription"  type="text" default="" label="TPL_ATOMIC_SUBHEADING_LABEL" description="TPL_ATOMIC_SUBHEADING_DESC" filter="safehtml" />
+											
 				<field name="stickyhead" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_STICKYHEAD_LABEL" description="TPL_ATOMIC_STICKYHEAD_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 					<option value="0">TPL_ATOMIC_NO</option>
 					<option value="1">TPL_ATOMIC_YES</option>
 				</field>
 	
 				<field name="headerbackground" type="color" default="rgb(0,0,0,0)" format="rgba" label="TPL_ATOMIC_HEADER_BACKGROUND_COLOR_LABEL" description="TPL_ATOMIC_HEADER_BACKGROUND_COLOR_DESC" />
-	
+
+				<field name="bootscolumns" type="list" default="0" label="TPL_ATOMIC_BOOTSTRAPCOLUMNS_LABEL" description="TPL_ATOMIC_BOOTSTRAPCOLUMNS_DESC" layout="joomla.form.field.list">
+					<option value="0">2-8-2</option>
+					<option value="1">2-7-3</option>
+					<option value="2">2-6-4</option>
+					<option value="3">3-6-3</option>
+					<option value="4">4-4-4</option>
+				</field>
+
+				<field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_ATOMIC_COPYRIGHT_LABEL" description="TPL_ATOMIC_COPYRIGHT_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
+					<option value="0">TPL_ATOMIC_DISABLED</option>
+					<option value="1">TPL_ATOMIC_ENABLED</option>
+				</field>
+				
+				<field name="copyrighttxt" showon="copyright:1" type="text" default="" label="TPL_ATOMIC_COPYRIGHTTXT_LABEL" description="TPL_ATOMIC_COPYRIGHTTXT_DESC" filter="string" />
+				
 				<field name="sidebarmenu" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SIDEBARMENU_LABEL" description="TPL_ATOMIC_SIDEBARMENU_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
+					<option value="0">TPL_ATOMIC_NO</option>
+					<option value="1">TPL_ATOMIC_YES</option>
+				</field>
+				
+			</fieldset>
+			
+			
+			<fieldset name="FEATURE_SETTINGS">
+				<field name="gacode"  type="text" default="" label="TPL_ATOMIC_GA_LABEL" description="TPL_ATOMIC_GA_DESC" filter="string" hint="Example: G-TAGID12345" />
+								
+				<field name="scrollreveal" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SCROLLREVEAL_LABEL" description="TPL_ATOMIC_SCROLLREVEAL_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
+					<option value="0">TPL_ATOMIC_NO</option>
+					<option value="1">TPL_ATOMIC_YES</option>
+				</field>
+				
+				<field name="instant" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_INSTANT_LABEL" description="TPL_ATOMIC_INSTANT_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
 					<option value="0">TPL_ATOMIC_NO</option>
 					<option value="1">TPL_ATOMIC_YES</option>
 				</field>
@@ -278,6 +290,7 @@
 				
 			</fieldset>
 			
+						
 			<fieldset name="METADATA_SETTINGS">
 	
 				<field name="socialtitle" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_SOCIALTITLE_LABEL" description="TPL_ATOMIC_SOCIALTITLE_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
