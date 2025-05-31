@@ -60,6 +60,7 @@ $itemid		= $input->getCmd('Itemid', '');
 $menu		= $app->getMenu()->getActive();
 $pageclass 	= $menu !== null ? $menu->getParams()->get('pageclass_sfx', '') : '';
 $wrapper 	= $this->params->get('fluidContainer') ? 'wrapper-fluid' : 'wrapper-static';
+$root 		= JUri::root(true);
 
 //	Assign template params
 $bodyfont					= $this->params->get('bodyfont');
@@ -270,7 +271,7 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
     			
 		<?php	//	Load Bootstrap or Bootswatch theme.
 			if($bootstrapsource == 1 || $bootstrapsource == 3) : ?>
-				<link rel="stylesheet" href="/media/vendor/bootstrap/css/bootstrap.min.css">
+				<link rel="stylesheet" href="<?php echo $root ?>/media/vendor/bootstrap/css/bootstrap.min.css">
 				
 			<?php elseif($bootstrapsource == 2) : ?>
 				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
@@ -358,17 +359,17 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 		
 		<?php	//	Load the RTL CSS file.
 			if($this->direction == 'rtl') : ?>
-				<link rel="stylesheet" href="/media/templates/site/<?php echo $this->template ?>/css/template_rtl.min.css" type="text/css">
+				<link rel="stylesheet" href="<?php echo $root ?>/media/templates/site/<?php echo $this->template ?>/css/template_rtl.min.css" type="text/css">
 		<?php endif; ?>
 		
 		<?php	//	Load the local CSS fixes for Joomla & Bootstrap 5.
 			if($bsfixjoomla == 1) : ?>
-				<link rel="stylesheet" href="/media/templates/site/<?php echo $this->template ?>/css/template.min.css" type="text/css">
+				<link rel="stylesheet" href="<?php echo $root ?>/media/templates/site/<?php echo $this->template ?>/css/template.min.css" type="text/css">
 		<?php endif; ?>
 		
 		<?php	//	Load the local CSS file for custom user CSS.
 			if($customcssfile == 1) : ?>
-				<link rel="stylesheet" href="/templates/<?php echo $this->template ?>/css/custom.css" type="text/css">
+				<link rel="stylesheet" href="<?php echo $root ?>/templates/<?php echo $this->template ?>/css/custom.css" type="text/css">
 		<?php endif; ?>
 			
 		<jdoc:include type="scripts" />
@@ -389,12 +390,12 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 		
 		<?php	//	Load BS Themeswitcher
 			if($bsthemes == 1) : ?>
-				<script src="/media/templates/site/<?php echo $this->template ?>/js/themeswitcher.min.js"></script>
+				<script src="<?php echo $root ?>/media/templates/site/<?php echo $this->template ?>/js/themeswitcher.min.js"></script>
 		<?php endif; ?>
 		
 		<?php	//	Load custom local user JavaScript
 			if($customjs == 1) : ?>
-				<script src="/templates/<?php echo $this->template ?>/js/custom.js"></script>
+				<script src="<?php echo $root ?>/templates/<?php echo $this->template ?>/js/custom.js"></script>
 		<?php endif; ?>
 		
 		<?php	//	Use Scroll Reveal
