@@ -274,7 +274,7 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 				<link rel="stylesheet" href="<?php echo $root ?>/media/vendor/bootstrap/css/bootstrap.min.css">
 				
 			<?php elseif($bootstrapsource == 2) : ?>
-				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 			<?php elseif($bootstrapsource == 5) : ?>
 				<?php echo $bootstrapcdn; ?>	
 			<?php elseif($bootstrapsource == 6) : ?>
@@ -695,7 +695,7 @@ $containerClass				= $fluidcontainer ? 'container-fluid' : 'container';
 			if($bootstrapsource == 1) : ?>
 				<script src="media/vendor/bootstrap/js/bootstrap-es5.min.js"></script>
 			<?php elseif($bootstrapsource == 2) : ?>
-				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 			<?php elseif($bootstrapsource >= 6 && $bootstrapsource <= 15) : ?>
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 			<?php elseif($bootstrapsource == 3) : ?>
