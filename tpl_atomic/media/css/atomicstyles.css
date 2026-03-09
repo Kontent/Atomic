@@ -251,7 +251,7 @@ header::after {
   width: 1em;
   height: 1em;
   font-size: 1rem;
-  color: #fff;
+  color: var(--accent-primary);
 }
 
 /* Gradient text utility */

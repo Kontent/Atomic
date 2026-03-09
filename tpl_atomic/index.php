@@ -671,6 +671,9 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 				</div>
 			  <?php endif; ?>
 			  <jdoc:include type="modules" name="header" style="none" />
+			  <?php if ($hasThemeSwitch): ?>
+				<?= LayoutHelper::render('header.styleswitcher', ['bsthemes' => $bsthemes]); ?>
+			  <?php endif; ?>
 			</div>
 		  </div>
 		  <?php endif; ?>
