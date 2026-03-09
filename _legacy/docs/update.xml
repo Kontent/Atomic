@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updates>
+	<update>
+		<name>Atomic Template</name>
+		<description>Update for the Atomic template</description>
+		<element>atomic</element>
+		<type>template</type>
+		<client>0</client>
+		<version>4.1.2 </version>
+		<infourl title="Atomic Template">http://atomic.kontentdesign.com/</infourl>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/Kontent/Atomic/releases/download/v4.1.2/atomic.zip</downloadurl>
+		</downloads>
+		<tags>
+			<tag>stable</tag>
+		</tags>
+		<maintainer>Ron Severdia</maintainer>
+		<maintainerurl>http://atomic.kontentdesign.com/</maintainerurl>
+		<targetplatform name="joomla" version=".*" />
+	</update>
+</updates>
