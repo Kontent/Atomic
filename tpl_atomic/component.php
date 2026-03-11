@@ -74,7 +74,6 @@ $atomicjs         = $this->params->get('atomicjs', 0);
 $atomicstyles     = $this->params->get('atomicstyles', 0);
 $customcssfile    = $this->params->get('customcssfile');
 $customjs         = $this->params->get('customjs');
-$loadrtlcss       = $this->params->get('loadrtlcss', 1);
 $fluidcontainer   = $this->params->get('fluidcontainer');
 $fontawesome      = $this->params->get('fontawesome');
 $fontawesomecdn   = $this->params->get('fontawesomecdn');
@@ -109,10 +108,10 @@ $usergroupdata = (int) $this->params->get('usergroupdata', 0);
 	  $dataUserAttr = '';
 	}
 
-$bstheme					= $this->params->get('bstheme', 'auto');
+$bstheme					= $this->params->get('bstheme', '');
 $bsthemecustom				= trim((string) $this->params->get('bsthemecustom', ''));
 	if ($bstheme === 'custom') {
-    $bstheme = $bsthemecustom !== '' ? strtolower($bsthemecustom) : 'auto';
+    $bstheme = $bsthemecustom !== '' ? strtolower($bsthemecustom) : '';
 } elseif (!in_array($bstheme, ['light', 'dark', 'auto'])) {
     $bstheme = ''; // "None (Default)": omit data-bs-theme attribute
 } else {
@@ -241,32 +240,32 @@ $containerClass = $fluidcontainer ? 'container-fluid' : 'container';
 		<?php endif; ?>
 
 		<?php
-			if ($headerfont != 2 || $bodyfont != 2 || isset($headerbackground) || isset($bootstrapsource)) {
+			$rootParts = [];
+			$extraCSS  = [];
+
+			if ($headerbackground !== "rgba(0, 0, 0, 0)") {
+				$rootParts[] = '--atomic-header-background-color: ' . $headerbackground;
+			}
+
+			if ($headerfont != 2) {
+				$rootParts[] = '--atomic-header-font: ' . $headerfontfamily;
+			}
+
+			if ($bodyfont != 2) {
+				$rootParts[] = '--atomic-body-font: ' . ($bodyfont != 0 ? $bodyfontfamily : 'var(--bs-body-font-family)');
+			}
+
+			if ($feediting === 1) {
+				$extraCSS[] = 'html[data-editing="no"] .jmodedit, html[data-editing="no"] .jmenuedit, html[data-editing="no"] div[role="tooltip"] { display: none !important; }';
+			}
+
+			if (!empty($rootParts) || !empty($extraCSS)) {
 				$style = '<style>';
-				$style .= ':root {';
-
-				if ($bootstrapsource !== 0 && $headerbackground === "rgba(0, 0, 0, 0)") {
-					$style .= 'body header.sticky { background-color: var(--bs-body-bg); }';
+				if (!empty($rootParts)) {
+					$style .= ':root {' . implode(';', $rootParts) . ';}';
 				}
-
-				if ($headerbackground !== "rgba(0, 0, 0, 0)") {
-					$style .= '--atomic-header-background-color: ' . $headerbackground . ';';
-				} else if ($bootstrapsource === 0) {
-					$style .= '--atomic-header-background-color: rgba(0, 0, 0, 0);';
-				}
-
-				$style .= '--atomic-header-font: ' . ($headerfont != 2 ? $headerfontfamily : 'none') . ';';
-
-				if ($bodyfont != 2) {
-					$style .= '--atomic-body-font: ' . ($bodyfont != 0 ? $bodyfontfamily : 'var(--bs-body-font-family)') . ';';
-				}
-				$style .= '}';
-
-				if ($feediting === 1) {
-					$style .= 'html[data-editing="no"] div.icons { display: none !important; }';
-				}
+				$style .= implode('', $extraCSS);
 				$style .= '</style>';
-
 				echo $style;
 			}
 			?>
@@ -284,12 +283,7 @@ $containerClass = $fluidcontainer ? 'container-fluid' : 'container';
 
 		<?php	//	Load BS Icons
 			if($loadbsicons == 1) : ?>
-				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
-		<?php endif; ?>
-
-		<?php	//	Load the RTL CSS file.
-			if($loadrtlcss == 1 && $this->direction == 'rtl') : ?>
-				<link rel="stylesheet" href="<?php echo $root ?>/media/templates/site/<?php echo $this->template ?>/css/template_rtl.min.css" type="text/css">
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<?php endif; ?>
 
 		<?php	//	Load Atomic CSS.
@@ -365,7 +359,7 @@ $activeAlias     = ($active !== null) ? htmlspecialchars($active->alias, ENT_QUO
 $defaultBodyClass = 'contentpane component ' . $option . ' ' . $wrapper . ' view-' . $view
     . ($itemid    ? ' itemid-' . $itemid   : '')
     . ($pageclass ? ' ' . $pageclass       : '')
-    . ($this->direction === 'rtl' ? ' rtl' : '');
+    ;
 ?>
 <?php if ($bodymenu == 1) : // Append Class ?>
 	<body class="<?php echo trim($defaultBodyClass . ' ' . $activeAlias); ?>"<?php echo $dataUserAttr; ?>>

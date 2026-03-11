@@ -28,9 +28,7 @@ The package installs both the template and the sample data plugin. To populate y
 - **Responsive mobile menu** — Offcanvas slide-in panel supporting multiple menu modules
 - **Configurable layouts** — One, two, or three-column header, body, and footer with adjustable grid ratios
 - **Sticky header** — Optional fixed header on scroll
-- **Sidebar menu** — Optional Bootstrap offcanvas sidebar
 - **ScrollReveal** — Built-in scroll-triggered animation support
-- **RTL support** — Right-to-left language stylesheet
 - **Social media meta tags** — OpenGraph, Twitter/X, and Schema.org image support
 - **Google Analytics** — GA4 measurement ID integration
 - **Custom code injection** — Four hook points: after `<head>`, before `</head>`, after `<body>`, before `</body>`
@@ -61,7 +59,6 @@ The package installs both the template and the sample data plugin. To populate y
 | `footer` | Footer left column |
 | `footer-center` | Footer center column |
 | `footer-right` | Footer right column |
-| `sidebar-menu` | Offcanvas sidebar menu |
 | `error-403` | Custom 403 error page |
 | `error-404` | Custom 404 error page |
 | `debug` | Joomla debug position |
@@ -80,7 +77,13 @@ Columns collapse and rows disappear automatically when positions have no content
 
 ## Building from Source
 
-See [BUILD.md](BUILD.md) for instructions on building installable ZIP packages from this repository.
+Run the build script from the repository root to produce installable ZIP packages:
+
+```bash
+bash build_package.sh
+```
+
+This creates three files in the `ZIP/` folder: the full package, standalone template, and standalone sample data plugin.
 
 ## Documentation
 

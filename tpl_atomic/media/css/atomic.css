@@ -14,7 +14,6 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 
 :where(p:last-of-type) {
@@ -24,7 +23,6 @@ html {
 body {
   font-family: var(--atomic-body-font);
   min-height: 100vh;
-  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -58,6 +56,8 @@ header {
 header.sticky {
   position: sticky;
   top: 0;
+  z-index: 1040;
+  background-color: var(--atomic-header-background-color);
 }
 
 /* Theme switcher — pinned to upper-right of header */
@@ -115,44 +115,6 @@ main#main-content > .container-fluid {
 .breadcrumb {
   margin-bottom: 0;
   --bs-breadcrumb-divider: "›";
-}
-
-/* ============================================================
-   Sidebar menu
-   ============================================================ */
-
-.sidebar-menu {
-  visibility: visible;
-  max-width: 300px;
-  border: none;
-}
-.sidebar-menu .offcanvas-toggle {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: auto;
-  left: 100%;
-  border-radius: 0;
-}
-.sidebar-menu.offcanvas-end .offcanvas-toggle {
-  right: 100%;
-  left: auto;
-}
-.sidebar-menu .offcanvas-toggle-icon {
-  display: none;
-}
-.sidebar-menu .offcanvas-toggle-icon.offcanvas-toggle-icon--open {
-  display: block;
-}
-.sidebar-menu.show .offcanvas-toggle-icon.offcanvas-toggle-icon--open {
-  display: none;
-}
-.sidebar-menu.show .offcanvas-toggle-icon.offcanvas-toggle-icon--close {
-  display: block;
-}
-.sidebar-menu .offcanvas-content {
-  height: 100%;
-  padding: 20px;
 }
 
 /* ============================================================
@@ -290,6 +252,29 @@ button svg {
 }
 .blog-item + .blog-item {
   border-top: 1px solid currentColor;
+}
+
+/* ============================================================
+   Joomla frontend edit buttons
+   ============================================================ */
+
+.jmodedit .icon-edit,
+.jmenuedit .icon-edit {
+  padding-left: 0;
+}
+div[role="tooltip"] {
+  display: none;
+  position: absolute;
+  z-index: 1070;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  color: #fff;
+  background-color: var(--bs-dark, #212529);
+  border-radius: 0.25rem;
+  white-space: nowrap;
+}
+.jmodedit:hover + div[role="tooltip"] {
+  display: block;
 }
 
 /* ============================================================

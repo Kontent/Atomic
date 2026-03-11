@@ -77,7 +77,6 @@ $atomicjs					= $this->params->get('atomicjs', 0);
 $atomicstyles				= $this->params->get('atomicstyles', 0);
 $customcssfile				= $this->params->get('customcssfile');
 $customjs					= $this->params->get('customjs');
-$loadrtlcss					= $this->params->get('loadrtlcss', 1);
 $fluidcontainer				= $this->params->get('fluidcontainer');
 $fontawesome				= $this->params->get('fontawesome');
 $fontawesomecdn				= $this->params->get('fontawesomecdn');
@@ -96,7 +95,6 @@ $sitedescription			= $this->params->get('sitedescription');
 $sitetitle					= $this->params->get('sitetitle');
 $casspositions				= $this->params->get('casspositions');
 $stickyhead					= (int) $this->params->get('stickyheader', $this->params->get('stickyhead', 0));
-$sidebarmenu				= $this->params->get('sidebarmenu');
 $headerbackground			= $this->params->get('headerbackground', 'rgba(0, 0, 0, 0)');
 $bootscolumns				= $this->params->get('bootscolumns', '2-8-2');
 $headercolumns				= $this->params->get('headercolumns', '12');
@@ -120,10 +118,10 @@ $usergroupdata = (int) $this->params->get('usergroupdata', 0);
 	  $dataUserAttr = '';
 	}
 
-$bstheme					= $this->params->get('bstheme', 'auto');
+$bstheme					= $this->params->get('bstheme', '');
 $bsthemecustom				= trim((string) $this->params->get('bsthemecustom', ''));
 	if ($bstheme === 'custom') {
-    $bstheme = $bsthemecustom !== '' ? strtolower($bsthemecustom) : 'auto';
+    $bstheme = $bsthemecustom !== '' ? strtolower($bsthemecustom) : '';
 } elseif (!in_array($bstheme, ['light', 'dark', 'auto'])) {
     $bstheme = ''; // "None (Default)": omit data-bs-theme attribute
 } else {
@@ -356,27 +354,32 @@ $footerColCount = count($footerParts);
 		<?php endif; ?>
 		
 		<?php
-			if ($headerfont != 2 || $bodyfont != 2 || isset($headerbackground) || isset($bootstrapsource)) {
+			$rootParts = [];
+			$extraCSS  = [];
+
+			if ($headerbackground !== "rgba(0, 0, 0, 0)") {
+				$rootParts[] = '--atomic-header-background-color: ' . $headerbackground;
+			}
+
+			if ($headerfont != 2) {
+				$rootParts[] = '--atomic-header-font: ' . $headerfontfamily;
+			}
+
+			if ($bodyfont != 2) {
+				$rootParts[] = '--atomic-body-font: ' . ($bodyfont != 0 ? $bodyfontfamily : 'var(--bs-body-font-family)');
+			}
+
+			if ($feediting === 1) {
+				$extraCSS[] = 'html[data-editing="no"] .jmodedit, html[data-editing="no"] .jmenuedit, html[data-editing="no"] div[role="tooltip"] { display: none !important; }';
+			}
+
+			if (!empty($rootParts) || !empty($extraCSS)) {
 				$style = '<style>';
-				$style .= ':root {';
-			
-				// Custom header background color (overrides glass effect from atomic.css)
-				if ($headerbackground !== "rgba(0, 0, 0, 0)") {
-					$style .= '--atomic-header-background-color: ' . $headerbackground . ';';
+				if (!empty($rootParts)) {
+					$style .= ':root {' . implode(';', $rootParts) . ';}';
 				}
-			
-				$style .= '--atomic-header-font: ' . ($headerfont != 2 ? $headerfontfamily : 'none') . ';';
-			
-				if ($bodyfont != 2) {
-					$style .= '--atomic-body-font: ' . ($bodyfont != 0 ? $bodyfontfamily : 'var(--bs-body-font-family)') . ';';
-				}
-				$style .= '}';
-				
-				if ($feediting === 1) {
-					$style .= 'html[data-editing="no"] div.icons { display: none !important; }';
-				}
+				$style .= implode('', $extraCSS);
 				$style .= '</style>';
-			
 				echo $style;
 			}
 			?>
@@ -393,14 +396,9 @@ $footerColCount = count($footerParts);
 		
 		<?php	//	Load BS Icons
 			if($loadbsicons == 1) : ?>
-				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<?php endif; ?>
 		
-		<?php	//	Load the RTL CSS file.
-			if($loadrtlcss == 1 && $this->direction == 'rtl') : ?>
-				<link rel="stylesheet" href="<?php echo $root ?>/media/templates/site/<?php echo $this->template ?>/css/template_rtl.min.css" type="text/css">
-		<?php endif; ?>
-
 		<?php	//	Load Atomic CSS.
 			if($bsfixjoomla == 1) : ?>
 				<link rel="stylesheet" href="<?php echo $root ?>/media/templates/site/<?php echo $this->template ?>/css/atomic.min.css" type="text/css">
@@ -431,7 +429,7 @@ $footerColCount = count($footerParts);
 		
 		<?php	//	Load BS Themeswitcher
 			if($bsthemes == 1) : ?>
-		<script>var defaultTheme = '<?php echo htmlspecialchars($bstheme ?: 'light', ENT_QUOTES, 'UTF-8'); ?>';</script>
+		<script>var defaultTheme = '<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>';</script>
 				<script src="<?php echo $root ?>/media/templates/site/<?php echo $this->template ?>/js/themeswitcher.min.js"></script>
 		<?php endif; ?>
 
@@ -474,7 +472,7 @@ $activeAlias     = ($active !== null) ? htmlspecialchars($active->alias, ENT_QUO
 $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
     . ($itemid    ? ' itemid-' . $itemid   : '')
     . ($pageclass ? ' ' . $pageclass       : '')
-    . ($this->direction === 'rtl' ? ' rtl' : '');
+    ;
 ?>
 <?php if ($bodymenu == 1) : // Append Class ?>
 	<body class="<?php echo trim($defaultBodyClass . ' ' . $activeAlias); ?>"<?php echo $dataUserAttr; ?>>
@@ -498,14 +496,6 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 		if($codeafterbody != null) : ?>
 		<?php echo $codeafterbody; ?>
 	<?php endif; ?>
-
-	<?php
-		if ($sidebarmenu && $this->countModules('sidebar-menu')) :
-			echo LayoutHelper::render('sidebar.offcanvas', [
-				'direction' => $this->direction
-			]);
-		endif;
-	?>
 
 	<?php if ($this->countModules('alert', true)) : ?>
 		<div class="alertbar">
@@ -740,34 +730,57 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 					 || $this->countModules('leftbody', true);
 		  $showRight = ($casspositions == 1 && $this->countModules('sidebar-right', true))
 					 || $this->countModules('rightbody', true);
-	
-		  // Parse body column spec (string values e.g. "2-8-2", "4-8", "12")
-		  $bodyParts = array_map('intval', explode('-', (string) $bootscolumns));
 
-		  if ($showLeft && $showRight) {
-			if (count($bodyParts) >= 3) {
-			  [$l, $m, $r] = $bodyParts;
-			} else {
-			  [$l, $m, $r] = [3, 6, 3]; // sensible fallback when 2-col value chosen with both sidebars
-			}
-			$leftClass  = "d-none d-lg-block col-lg-{$l}";
-			$mainClass  = "col-12 col-lg-{$m}";
-			$rightClass = "col-12 col-lg-{$r}";
-		  }
-		  elseif ($showLeft) {
-			$sideWidth = $bodyParts[0] ?? 3;
-			$mainWidth = 12 - $sideWidth;
-			$leftClass = "d-none d-lg-block col-lg-{$sideWidth}";
-			$mainClass = "col-12 col-lg-{$mainWidth}";
-		  }
-		  elseif ($showRight) {
-			$sideWidth = $bodyParts[count($bodyParts) - 1] ?? 3;
-			$mainWidth = 12 - $sideWidth;
-			$mainClass  = "col-12 col-lg-{$mainWidth}";
-			$rightClass = "col-12 col-lg-{$sideWidth}";
-		  }
-		  else {
+		  // Parse body column spec (string values e.g. "2-8-2", "4-8", "12")
+		  $bodyParts     = array_map('intval', explode('-', (string) $bootscolumns));
+		  $bodyPartCount = count($bodyParts);
+
+		  if ($bodyPartCount === 1) {
+			// Single column — hide both sidebars
+			$showLeft  = false;
+			$showRight = false;
 			$mainClass = "col-12";
+		  } elseif ($bodyPartCount === 2) {
+			// Two-column layout
+			if ($bodyParts[0] < $bodyParts[1]) {
+			  // Left sidebar + content (e.g. 2-10, 4-8)
+			  $showRight = false;
+			  if ($showLeft) {
+				$leftClass = "d-none d-lg-block col-lg-{$bodyParts[0]}";
+				$mainClass = "col-12 col-lg-{$bodyParts[1]}";
+			  } else {
+				$mainClass = "col-12";
+			  }
+			} else {
+			  // Content + right sidebar (e.g. 8-4, 10-2)
+			  $showLeft = false;
+			  if ($showRight) {
+				$mainClass  = "col-12 col-lg-{$bodyParts[0]}";
+				$rightClass = "col-12 col-lg-{$bodyParts[1]}";
+			  } else {
+				$mainClass = "col-12";
+			  }
+			}
+		  } else {
+			// Three-column layout
+			if ($showLeft && $showRight) {
+			  [$l, $m, $r] = $bodyParts;
+			  $leftClass  = "d-none d-lg-block col-lg-{$l}";
+			  $mainClass  = "col-12 col-lg-{$m}";
+			  $rightClass = "col-12 col-lg-{$r}";
+			} elseif ($showLeft) {
+			  $sideWidth = $bodyParts[0];
+			  $mainWidth = 12 - $sideWidth;
+			  $leftClass = "d-none d-lg-block col-lg-{$sideWidth}";
+			  $mainClass = "col-12 col-lg-{$mainWidth}";
+			} elseif ($showRight) {
+			  $sideWidth = $bodyParts[2];
+			  $mainWidth = 12 - $sideWidth;
+			  $mainClass  = "col-12 col-lg-{$mainWidth}";
+			  $rightClass = "col-12 col-lg-{$sideWidth}";
+			} else {
+			  $mainClass = "col-12";
+			}
 		  }
 		?>
 	
