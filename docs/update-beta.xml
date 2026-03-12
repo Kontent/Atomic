@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <updates>
+	<!--
+		Beta update channel for Atomic template.
+		To use this channel, change your update site URL in Joomla's Extension Manager > Update Sites
+		from: https://kontent.github.io/Atomic/update.xml
+		to:   https://kontent.github.io/Atomic/update-beta.xml
+	-->
 	<update>
-		<name>Atomic Template</name>
-		<description>Update for the Atomic template</description>
+		<name>Atomic Template (Beta)</name>
+		<description>Pre-release beta update for the Atomic template</description>
 		<element>atomic</element>
 		<type>template</type>
 		<client>0</client>
@@ -12,7 +18,7 @@
 			<downloadurl type="full" format="zip">https://github.com/Kontent/Atomic/releases/download/v5.1.0/atomic.zip</downloadurl>
 		</downloads>
 		<tags>
-			<tag>stable</tag>
+			<tag>beta</tag>
 		</tags>
 		<maintainer>Ron Severdia</maintainer>
 		<maintainerurl>https://www.severdia.com</maintainerurl>

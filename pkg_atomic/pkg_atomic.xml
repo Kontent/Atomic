@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="package" method="upgrade">
+	<name>Atomic</name>
+	<packagename>atomic</packagename>
+	<version>5.1.0</version>
+	<creationDate>2026-03-07</creationDate>
+	<author>Ron Severdia</author>
+	<authorEmail>severdia@gmail.com</authorEmail>
+	<authorUrl>https://www.severdia.com</authorUrl>
+	<copyright>Copyright (C) 2009-2026 Ron Severdia</copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<description>Atomic template for Joomla with sample data plugin for quick-start content.</description>
+	<blockChildUninstall>true</blockChildUninstall>
+	<files folder="packages">
+		<file type="template" client="site" id="atomic">tpl_atomic.zip</file>
+		<file type="plugin" group="sampledata" id="atomic">plg_sampledata_atomic.zip</file>
+	</files>
+</extension>

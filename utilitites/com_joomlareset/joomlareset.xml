@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="component" method="upgrade">
+	<name>COM_JOOMLARESET</name>
+	<author>Ron Severdia</author>
+	<creationDate>2026-03</creationDate>
+	<copyright>(C) 2026 Ron Severdia. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<version>1.1.0</version>
+	<description>COM_JOOMLARESET_DESCRIPTION</description>
+	<namespace path="src">Severdia\Component\JoomlaReset</namespace>
+	<scriptfile>script.php</scriptfile>
+
+	<administration>
+		<files folder=".">
+			<folder>language</folder>
+			<folder>services</folder>
+			<folder>sql</folder>
+			<folder>src</folder>
+			<folder>tmpl</folder>
+		</files>
+		<menu img="class:warning">COM_JOOMLARESET</menu>
+	</administration>
+</extension>

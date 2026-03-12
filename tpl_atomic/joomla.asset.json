@@ -1,0 +1,25 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "atomic",
+  "version": "5.1.0",
+  "description": "This file contains details of the assets used by the Atomic template",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+  	{
+      "name": "template.atomic.bs5css",
+      "type": "style",
+      "uri": "media/templates/site/atomic/css/atomic.min.css"
+    },
+    {
+      "name": "template.atomic.css",
+      "type": "style",
+      "uri": "templates/atomic/css/template.css",
+      "weight": 500
+    },
+    {
+      "name": "template.atomic.js",
+      "type": "script",
+      "uri": "templates/atomic/js/template.js"
+    }
+  ]
+}

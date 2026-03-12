@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @package     Joomla.Site
+ * @subpackage  Templates.atomic
+ * @copyright   Copyright (C) 2008-2026 Ron Severdia. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ *
+ * Bootstrap card module chrome — used for sidebar and content area modules.
+ */
+
+defined('_JEXEC') or die;
+
+$module  = $displayData['module'];
+$params  = $displayData['params'];
+$attribs = $displayData['attribs'];
+
+if ($module->content === null || $module->content === '') {
+    return;
+}
+
+$moduleTag   = htmlspecialchars($params->get('module_tag', 'div'), ENT_QUOTES, 'UTF-8');
+$headerTag   = htmlspecialchars($params->get('header_tag', 'h3'), ENT_QUOTES, 'UTF-8');
+$headerClass = htmlspecialchars($params->get('header_class', ''), ENT_QUOTES, 'UTF-8');
+$moduleClass = htmlspecialchars($params->get('moduleclass_sfx', ''), ENT_QUOTES, 'UTF-8');
+
+// Build card-title class
+$titleClass = 'card-title';
+if ($headerClass !== '') {
+    $titleClass .= ' ' . $headerClass;
+}
+
+// Build card wrapper class
+$cardClass = 'card';
+if ($moduleClass !== '') {
+    $cardClass .= ' ' . $moduleClass;
+}
+
+?>
+<<?php echo $moduleTag; ?> class="<?php echo $cardClass; ?>">
+    <div class="card-body">
+        <?php if ($module->showtitle) : ?>
+            <<?php echo $headerTag; ?> class="<?php echo $titleClass; ?>"><?php echo $module->title; ?></<?php echo $headerTag; ?>>
+        <?php endif; ?>
+        <?php echo $module->content; ?>
+    </div>
+</<?php echo $moduleTag; ?>>
