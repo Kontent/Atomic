@@ -497,16 +497,7 @@ final class Atomic extends CMSPlugin
             $this->createCustomModule('Atomic Sidebar Info', 'leftbody', 6, 1, $sidebarInfoHtml);
 
             // --- Tags (leftbody) ---
-            $tagsHtml = '<div class="d-flex flex-wrap gap-2">'
-                . '<span class="tag">Bootstrap</span>'
-                . '<span class="tag blue">Typography</span>'
-                . '<span class="tag teal">Layout</span>'
-                . '<span class="tag amber">Modules</span>'
-                . '<span class="tag">Themes</span>'
-                . '<span class="tag blue">Fonts</span>'
-                . '</div>';
-
-            $this->createCustomModule('Atomic Tags', 'leftbody', 7, 1, $tagsHtml);
+            $this->createTagsModule('Atomic Tags', 'leftbody', 7, 1);
 
             // --- Quick Links (rightbody) ---
             $quickLinksHtml = '<ul class="list-unstyled mb-0">'
@@ -523,6 +514,9 @@ final class Atomic extends CMSPlugin
 
             $this->createCustomModule('Atomic Tip', 'rightbody', 9, 1, $tipHtml);
 
+            // --- Login (rightbody) ---
+            $this->createLoginModule('Atomic Login', 'rightbody', 10, 1);
+
             // --- Next Step (belowbody) ---
             $nextStepHtml = '<div class="glass p-3 d-flex align-items-center justify-content-between gap-3 flex-wrap">'
                 . '<div>'
@@ -532,7 +526,7 @@ final class Atomic extends CMSPlugin
                 . '<a class="btn btn-accent btn-sm" href="index.php?option=com_content&amp;view=article&amp;alias=getting-started">Getting Started Guide</a>'
                 . '</div>';
 
-            $this->createCustomModule('Atomic Next Step', 'belowbody', 10, 0, $nextStepHtml);
+            $this->createCustomModule('Atomic Next Step', 'belowbody', 11, 0, $nextStepHtml);
 
             // --- Footer ---
             $footerHtml = '<div>'
@@ -545,7 +539,7 @@ final class Atomic extends CMSPlugin
                 . '</div>'
                 . '</div>';
 
-            $this->createCustomModule('Atomic Footer', 'footer', 11, 0, $footerHtml);
+            $this->createCustomModule('Atomic Footer', 'footer', 12, 0, $footerHtml);
 
             // --- Footer Center ---
             $footerCenterHtml = '<h6>Resources</h6>'
@@ -556,7 +550,7 @@ final class Atomic extends CMSPlugin
                 . '<li><a href="#">GitHub</a></li>'
                 . '</ul>';
 
-            $this->createCustomModule('Atomic Footer Center', 'footer-center', 12, 0, $footerCenterHtml);
+            $this->createCustomModule('Atomic Footer Center', 'footer-center', 13, 0, $footerCenterHtml);
 
             // --- Footer Right ---
             $footerRightHtml = '<h6>About</h6>'
@@ -566,7 +560,7 @@ final class Atomic extends CMSPlugin
                 . '<li><a href="index.php?option=com_content&amp;view=article&amp;alias=getting-started">Getting Started</a></li>'
                 . '</ul>';
 
-            $this->createCustomModule('Atomic Footer Right', 'footer-right', 13, 0, $footerRightHtml);
+            $this->createCustomModule('Atomic Footer Right', 'footer-right', 14, 0, $footerRightHtml);
 
             $this->cleanBuffers($level);
 
@@ -633,6 +627,15 @@ final class Atomic extends CMSPlugin
                 'top-a', 'top-b', 'bottom-a', 'bottom-b',
             ], ['Atomic']);
 
+            // Apply recommended template settings
+            $this->applyTemplateSettings();
+
+            // Ensure correct featured article ordering
+            $this->fixFeaturedArticleOrdering();
+
+            // Hide page heading on the Home menu item
+            $this->setHomeMenuPageHeading();
+
             $this->cleanBuffers($level);
 
             return [
@@ -647,6 +650,164 @@ final class Atomic extends CMSPlugin
                 'message' => Text::sprintf('PLG_SAMPLEDATA_ATOMIC_STEP_FAILED', 6, $e->getMessage()),
             ];
         }
+    }
+
+    // ==================================================================
+    // Template settings & finalization helpers
+    // ==================================================================
+
+    /**
+     * Apply recommended Atomic template settings to the active template style.
+     */
+    private function applyTemplateSettings(): void
+    {
+        $db = $this->getDatabase();
+
+        // Find the Atomic template style
+        $query = $db->getQuery(true)
+            ->select([$db->quoteName('id'), $db->quoteName('params')])
+            ->from($db->quoteName('#__template_styles'))
+            ->where($db->quoteName('template') . ' = ' . $db->quote('atomic'))
+            ->where($db->quoteName('client_id') . ' = 0')
+            ->setLimit(1);
+
+        $db->setQuery($query);
+        $row = $db->loadObject();
+
+        if (!$row) {
+            return;
+        }
+
+        $params = json_decode($row->params, true) ?: [];
+
+        // Merge sample data settings
+        $sampleSettings = [
+            'headercolumns'  => '6-6',
+            'footercolumns'  => '4-4-4',
+            'bsthemes'       => '1',
+            'sitetitle'      => 'Atomic Template for Joomla',
+            'sitedescription' => 'Powerful. Flexible. SEO friendly.',
+            'logo'           => 'media/templates/site/atomic/images/logo.png',
+            'copyright'      => '1',
+        ];
+
+        foreach ($sampleSettings as $key => $value) {
+            $params[$key] = $value;
+        }
+
+        $json = json_encode($params);
+        $id   = (int) $row->id;
+
+        $query = $db->getQuery(true)
+            ->update($db->quoteName('#__template_styles'))
+            ->set($db->quoteName('params') . ' = ' . $db->quote($json))
+            ->where($db->quoteName('id') . ' = :id')
+            ->bind(':id', $id, ParameterType::INTEGER);
+
+        $db->setQuery($query);
+        $db->execute();
+
+        // Make Atomic the default site template
+        // First, unset home on all other site template styles
+        $query = $db->getQuery(true)
+            ->update($db->quoteName('#__template_styles'))
+            ->set($db->quoteName('home') . ' = 0')
+            ->where($db->quoteName('client_id') . ' = 0')
+            ->where($db->quoteName('id') . ' != :id2')
+            ->bind(':id2', $id, ParameterType::INTEGER);
+
+        $db->setQuery($query);
+        $db->execute();
+
+        // Then set Atomic as default
+        $query = $db->getQuery(true)
+            ->update($db->quoteName('#__template_styles'))
+            ->set($db->quoteName('home') . ' = 1')
+            ->where($db->quoteName('id') . ' = :id3')
+            ->bind(':id3', $id, ParameterType::INTEGER);
+
+        $db->setQuery($query);
+        $db->execute();
+    }
+
+    /**
+     * Set explicit ordering for featured articles so "Welcome to Atomic" appears first.
+     */
+    private function fixFeaturedArticleOrdering(): void
+    {
+        $db = $this->getDatabase();
+
+        $ordering = [
+            'welcome-to-atomic'        => 1,
+            'getting-started'          => 2,
+            'explore-atomic-features'  => 3,
+        ];
+
+        foreach ($ordering as $alias => $order) {
+            $a = $alias;
+
+            // Get article ID by alias
+            $query = $db->getQuery(true)
+                ->select($db->quoteName('id'))
+                ->from($db->quoteName('#__content'))
+                ->where($db->quoteName('alias') . ' = :alias')
+                ->bind(':alias', $a, ParameterType::STRING);
+
+            $db->setQuery($query);
+            $articleId = (int) $db->loadResult();
+
+            if (!$articleId) {
+                continue;
+            }
+
+            // Update ordering in the frontpage table
+            $query = $db->getQuery(true)
+                ->update($db->quoteName('#__content_frontpage'))
+                ->set($db->quoteName('ordering') . ' = ' . (int) $order)
+                ->where($db->quoteName('content_id') . ' = :id')
+                ->bind(':id', $articleId, ParameterType::INTEGER);
+
+            $db->setQuery($query);
+            $db->execute();
+        }
+    }
+
+    /**
+     * Set "Show Page Heading" to Hide on the default Home menu item.
+     */
+    private function setHomeMenuPageHeading(): void
+    {
+        $db = $this->getDatabase();
+
+        // Find the site home menu item
+        $query = $db->getQuery(true)
+            ->select([$db->quoteName('id'), $db->quoteName('params')])
+            ->from($db->quoteName('#__menu'))
+            ->where($db->quoteName('home') . ' = 1')
+            ->where($db->quoteName('client_id') . ' = 0')
+            ->setLimit(1);
+
+        $db->setQuery($query);
+        $row = $db->loadObject();
+
+        if (!$row) {
+            return;
+        }
+
+        $params = json_decode($row->params, true) ?: [];
+        $params['show_page_heading'] = 0;
+
+        $json = json_encode($params);
+        $id   = (int) $row->id;
+
+        $query = $db->getQuery(true)
+            ->update($db->quoteName('#__menu'))
+            ->set($db->quoteName('params') . ' = ' . $db->quote($json))
+            ->where($db->quoteName('id') . ' = :id')
+            ->bind(':id', $id, ParameterType::INTEGER);
+
+        $db->setQuery($query);
+        $db->execute();
     }
 
     // ==================================================================
@@ -1870,6 +2031,65 @@ final class Atomic extends CMSPlugin
             'params'     => [
                 'show_button' => 0,
                 'show_label'  => 0,
+            ],
+            'assignment' => 0,
+        ];
+
+        if (!$model->save($data)) {
+            throw new \RuntimeException($model->getError());
+        }
+    }
+
+    private function createLoginModule(string $title, string $position, int $ordering, int $showTitle): void
+    {
+        /** @var \Joomla\Component\Modules\Administrator\Model\ModuleModel $model */
+        $model = $this->getApplication()->bootComponent('com_modules')->getMVCFactory()
+            ->createModel('Module', 'Administrator', ['ignore_request' => true]);
+
+        $data = [
+            'id'         => 0,
+            'title'      => $title,
+            'module'     => 'mod_login',
+            'position'   => $position,
+            'client_id'  => 0,
+            'published'  => 1,
+            'access'     => (int) $this->getApplication()->get('access', 1),
+            'showtitle'  => $showTitle,
+            'ordering'   => $ordering,
+            'language'   => '*',
+            'params'     => [
+                'greeting'  => 1,
+                'name'      => 0,
+            ],
+            'assignment' => 0,
+        ];
+
+        if (!$model->save($data)) {
+            throw new \RuntimeException($model->getError());
+        }
+    }
+
+    private function createTagsModule(string $title, string $position, int $ordering, int $showTitle): void
+    {
+        /** @var \Joomla\Component\Modules\Administrator\Model\ModuleModel $model */
+        $model = $this->getApplication()->bootComponent('com_modules')->getMVCFactory()
+            ->createModel('Module', 'Administrator', ['ignore_request' => true]);
+
+        $data = [
+            'id'         => 0,
+            'title'      => $title,
+            'module'     => 'mod_tags_popular',
+            'position'   => $position,
+            'client_id'  => 0,
+            'published'  => 1,
+            'access'     => (int) $this->getApplication()->get('access', 1),
+            'showtitle'  => $showTitle,
+            'ordering'   => $ordering,
+            'language'   => '*',
+            'params'     => [
+                'maximum'     => 10,
+                'order_value' => 'title',
+                'layout'      => 'atomic:default',
             ],
             'assignment' => 0,
         ];

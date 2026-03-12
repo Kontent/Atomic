@@ -135,11 +135,15 @@ $isbodygooglefont   = isGoogleFont($bodyfont);
 
 $containerClass = $fluidcontainer ? 'container-fluid' : 'container';
 
+$typescale = $this->params->get('typescale', '0');
+$typescaleMap = ['1' => 'major-third', '2' => 'minor-third', '3' => 'major-second', '4' => 'minor-second'];
+$dataTypescaleAttr = isset($typescaleMap[(string) $typescale]) ? ' data-typescale="' . $typescaleMap[(string) $typescale] . '"' : '';
+
 ?>
 <!DOCTYPE html>
 
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>"<?php echo $bsthemeInitial !== '' ? ' data-bs-theme="' . htmlspecialchars($bsthemeInitial, ENT_QUOTES, 'UTF-8') . '"' : ''; ?>
-  <?php echo $dataThemeAttr . $dataEditingAttr; ?>>
+  <?php echo $dataThemeAttr . $dataEditingAttr . $dataTypescaleAttr; ?>>
 	<head>
 		<?php // Inline theme resolution — runs before any CSS to prevent flash of wrong theme.
 		if ($bstheme !== '') : ?>

@@ -30,6 +30,42 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
+/* Typescale: Major Third (1.25) */
+[data-typescale="major-third"] h1 { font-size: 3.815rem; }
+[data-typescale="major-third"] h2 { font-size: 3.052rem; }
+[data-typescale="major-third"] h3 { font-size: 2.441rem; }
+[data-typescale="major-third"] h4 { font-size: 1.953rem; }
+[data-typescale="major-third"] h5 { font-size: 1.563rem; }
+[data-typescale="major-third"] h6 { font-size: 1.25rem; }
+[data-typescale="major-third"] small { font-size: 0.8rem; }
+
+/* Typescale: Minor Third (1.2) */
+[data-typescale="minor-third"] h1 { font-size: 2.986rem; }
+[data-typescale="minor-third"] h2 { font-size: 2.488rem; }
+[data-typescale="minor-third"] h3 { font-size: 2.074rem; }
+[data-typescale="minor-third"] h4 { font-size: 1.728rem; }
+[data-typescale="minor-third"] h5 { font-size: 1.44rem; }
+[data-typescale="minor-third"] h6 { font-size: 1.2rem; }
+[data-typescale="minor-third"] small { font-size: 0.833rem; }
+
+/* Typescale: Major Second (1.125) */
+[data-typescale="major-second"] h1 { font-size: 2.027rem; }
+[data-typescale="major-second"] h2 { font-size: 1.802rem; }
+[data-typescale="major-second"] h3 { font-size: 1.602rem; }
+[data-typescale="major-second"] h4 { font-size: 1.424rem; }
+[data-typescale="major-second"] h5 { font-size: 1.266rem; }
+[data-typescale="major-second"] h6 { font-size: 1.125rem; }
+[data-typescale="major-second"] small { font-size: 0.889rem; }
+
+/* Typescale: Minor Second (1.067) */
+[data-typescale="minor-second"] h1 { font-size: 1.476rem; }
+[data-typescale="minor-second"] h2 { font-size: 1.383rem; }
+[data-typescale="minor-second"] h3 { font-size: 1.296rem; }
+[data-typescale="minor-second"] h4 { font-size: 1.215rem; }
+[data-typescale="minor-second"] h5 { font-size: 1.138rem; }
+[data-typescale="minor-second"] h6 { font-size: 1.067rem; }
+[data-typescale="minor-second"] small { font-size: 0.937rem; }
+
 img {
   max-width: 100%;
   height: auto;
@@ -67,9 +103,15 @@ header > .container-fluid {
 }
 .dropdown:has(#themeBtn) {
   position: absolute;
-  top: 10px;
+  top: 0;
+  bottom: 0;
   right: 0;
   z-index: 1;
+  display: flex;
+  align-items: center;
+}
+.dropdown:has(#themeBtn) .dropdown-menu {
+  z-index: 1060;
 }
 /* Prevent header content overlapping the pinned icon */
 header:has(#themeBtn) .header-row {
@@ -96,6 +138,10 @@ header:has(#themeBtn) .header-row {
    Main component area spacing
    ============================================================ */
 
+main#main-content {
+  position: relative;
+  z-index: 1;
+}
 main#main-content > .container,
 main#main-content > .container-fluid {
   padding-top: 1.5rem;
@@ -241,6 +287,10 @@ button svg {
 
 .pagination {
   margin-top: 2rem;
+}
+.pagenavigation .pagination {
+  display: flex;
+  gap: 0.5rem;
 }
 
 /* ============================================================

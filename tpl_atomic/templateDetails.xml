@@ -229,6 +229,14 @@
 							
 				<field name="bodyfontname" showon="bodyfont:1" type="text" default="" label="TPL_ATOMIC_BODY_FONTNAME_LABEL" description="TPL_ATOMIC_BODY_FONTNAME_DESC" filter="string" hint="Example: Inter or &#34;Inter&#34;, sans-serif " />
 
+				<field name="typescale" type="list" default="0" label="TPL_ATOMIC_TYPESCALE_LABEL" description="TPL_ATOMIC_TYPESCALE_DESC" layout="joomla.form.field.list">
+					<option value="0">TPL_ATOMIC_TYPESCALE_BOOTSTRAP</option>
+					<option value="1">TPL_ATOMIC_TYPESCALE_MAJOR_THIRD</option>
+					<option value="2">TPL_ATOMIC_TYPESCALE_MINOR_THIRD</option>
+					<option value="3">TPL_ATOMIC_TYPESCALE_MAJOR_SECOND</option>
+					<option value="4">TPL_ATOMIC_TYPESCALE_MINOR_SECOND</option>
+				</field>
+
 			</fieldset>
 
 			<fieldset name="ICON_SETTINGS">

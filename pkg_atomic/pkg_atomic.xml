@@ -15,12 +15,4 @@
 		<file type="template" client="site" id="atomic">tpl_atomic.zip</file>
 		<file type="plugin" group="sampledata" id="atomic">plg_sampledata_atomic.zip</file>
 	</files>
-	<updateservers>
-		<server type="extension" priority="1" name="Atomic Update Site">
-			https://kontent.github.io/Atomic/update.xml
-		</server>
-		<server type="extension" priority="2" name="Atomic Beta Update Site">
-			https://kontent.github.io/Atomic/update-beta.xml
-		</server>
-	</updateservers>
 </extension>
