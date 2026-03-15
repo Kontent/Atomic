@@ -77,6 +77,9 @@ class AtomicInstallerScript
 
 	private function setBetaChannel()
 	{
+		$gaUrl   = 'https://kontent.github.io/Atomic/update.xml';
+		$betaUrl = 'https://kontent.github.io/Atomic/update-beta.xml';
+
 		try {
 			$db = Factory::getDbo();
 
@@ -96,15 +99,18 @@ class AtomicInstallerScript
 				$betaEnabled = (int) $registry->get('betachannel', 0);
 			}
 
-			// Enable or disable the beta update site
+			// Swap the single update site URL between GA and beta
+			$targetUrl = $betaEnabled ? $betaUrl : $gaUrl;
+
 			$query = $db->getQuery(true)
 				->update($db->quoteName('#__update_sites'))
-				->set($db->quoteName('enabled') . ' = ' . $betaEnabled)
-				->where($db->quoteName('location') . ' = ' . $db->quote('https://kontent.github.io/Atomic/update-beta.xml'));
+				->set($db->quoteName('location') . ' = ' . $db->quote($targetUrl))
+				->where('(' . $db->quoteName('location') . ' = ' . $db->quote($gaUrl)
+					. ' OR ' . $db->quoteName('location') . ' = ' . $db->quote($betaUrl) . ')');
 			$db->setQuery($query);
 			$db->execute();
 		} catch (\Exception $e) {
-			// Silently fail — update site toggling is non-critical
+			// Silently fail — non-critical
 		}
 	}
 
