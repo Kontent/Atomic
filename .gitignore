@@ -1,5 +1,1 @@
-## These Mac files suck
 .DS_Store
-*.zip
-node_modules/
-package-lock.json
