@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atomic Template — Module Position Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf9f7;
+  --surface: #ffffff;
+  --surface-alt: #f3f1ed;
+  --text: #1a1a18;
+  --text-muted: #6b6a65;
+  --text-dim: #9c9a92;
+  --border: #e2e0d8;
+  --border-light: #eeedea;
+
+  --shared: #1d7a5f;
+  --shared-bg: #e8f5ef;
+  --shared-border: #b8dfc9;
+
+  --atomic-only: #3b6fd4;
+  --atomic-only-bg: #e6f0fc;
+  --atomic-only-border: #b5d0f0;
+
+  --cass-compat: #b05a1a;
+  --cass-compat-bg: #fdf0e3;
+  --cass-compat-border: #f0cfa3;
+
+  --font: 'DM Sans', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', 'SF Mono', monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151513;
+    --surface: #1e1e1c;
+    --surface-alt: #262624;
+    --text: #e8e6de;
+    --text-muted: #9c9a92;
+    --text-dim: #6b6a65;
+    --border: #333330;
+    --border-light: #2a2a28;
+    --shared: #5dcaa5;
+    --shared-bg: #0d2e23;
+    --shared-border: #1a4a38;
+    --atomic-only: #85b7eb;
+    --atomic-only-bg: #0c2240;
+    --atomic-only-border: #1a3a5e;
+    --cass-compat: #f0997b;
+    --cass-compat-bg: #3a1e0e;
+    --cass-compat-border: #5a3018;
+  }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+header { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+
+h1 { font-size: 1.75rem; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 0.25rem; }
+h1 span { font-weight: 300; color: var(--text-muted); }
+
+.subtitle { font-size: 0.95rem; color: var(--text-muted); max-width: 640px; }
+
+/* Legend */
+.legend { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1.5rem; }
+.legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-muted); }
+.legend-swatch { width: 14px; height: 14px; border-radius: 3px; border: 1px solid; flex-shrink: 0; }
+.legend-swatch.shared { background: var(--shared-bg); border-color: var(--shared-border); }
+.legend-swatch.atomic { background: var(--atomic-only-bg); border-color: var(--atomic-only-border); }
+.legend-swatch.cass { background: var(--cass-compat-bg); border-color: var(--cass-compat-border); }
+
+/* Toggle */
+.toggle-row {
+  display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem;
+  padding: 0.75rem 1rem; background: var(--surface-alt); border-radius: 8px; border: 1px solid var(--border-light);
+}
+.toggle-label { font-size: 0.85rem; font-weight: 500; }
+.toggle-desc { font-size: 0.78rem; color: var(--text-muted); margin-left: auto; }
+
+.switch { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+.switch input { opacity: 0; width: 100%; height: 100%; position: absolute; cursor: pointer; z-index: 1; margin: 0; }
+.switch .track { position: absolute; inset: 0; background: var(--border); border-radius: 11px; transition: background 0.2s; }
+.switch input:checked + .track { background: var(--cass-compat); }
+.switch .thumb { position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: white; border-radius: 50%; transition: transform 0.2s; pointer-events: none; }
+.switch input:checked ~ .thumb { transform: translateX(18px); }
+
+/* Wireframe */
+.wireframe {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 1rem; margin-bottom: 2rem; position: relative;
+}
+
+.region-label {
+  font-size: 0.62rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-dim); padding: 0.15rem 0.4rem; position: absolute;
+  background: var(--surface); z-index: 1;
+}
+
+/* Position blocks */
+.pos {
+  border-radius: 6px; padding: 0.35rem 0.5rem; font-family: var(--mono); font-size: 0.72rem;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  min-height: 30px; transition: all 0.25s ease; cursor: default; position: relative; line-height: 1.3;
+}
+.pos.shared { background: var(--shared-bg); border: 1px solid var(--shared-border); color: var(--shared); }
+.pos.atomic { background: var(--atomic-only-bg); border: 1px solid var(--atomic-only-border); color: var(--atomic-only); }
+.pos.cass {
+  background: var(--cass-compat-bg); border: 1px solid var(--cass-compat-border); color: var(--cass-compat);
+  opacity: 0; max-height: 0; min-height: 0; padding: 0 0.5rem; margin: 0; overflow: hidden;
+  border-width: 0; pointer-events: none;
+  transition: all 0.3s ease;
+}
+.pos.cass.visible {
+  opacity: 1; max-height: 60px; min-height: 30px; padding: 0.35rem 0.5rem;
+  border-width: 1px; pointer-events: auto;
+  margin-top: 0.5rem;
+}
+/* When a .cass is inside a flex/grid gap container, we handle margin differently */
+.cass-row { display: contents; }
+.cass-row .pos.cass.visible { margin-top: 0; }
+.cass-block { overflow: hidden; max-height: 0; transition: max-height 0.3s ease, margin 0.3s ease; margin: 0; }
+.cass-block.visible { max-height: 120px; margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.cass-block .pos.cass { opacity: 1; max-height: none; min-height: 30px; padding: 0.35rem 0.5rem; border-width: 1px; pointer-events: auto; margin: 0; }
+.cass-block.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+
+.pos .sub { display: block; font-size: 0.6rem; opacity: 0.65; margin-top: 1px; }
+.pos:hover { transform: scale(1.03); z-index: 2; }
+
+.fixed {
+  border-radius: 6px; padding: 0.3rem 0.5rem; font-size: 0.7rem; color: var(--text-dim);
+  background: var(--surface-alt); border: 1px dashed var(--border);
+  display: flex; align-items: center; justify-content: center; text-align: center; min-height: 26px;
+}
+
+/* Layout sections */
+.region {
+  padding: 0.5rem; border: 1px dashed var(--border-light); border-radius: 8px;
+  margin-bottom: 0.5rem; position: relative;
+}
+.region .region-label { top: -0.55rem; right: 0.75rem; }
+
+.gap-row { display: flex; flex-direction: column; gap: 0.5rem; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; }
+.flex-row { display: flex; gap: 0.5rem; align-items: center; }
+.flex-grow { flex: 1; }
+
+.main-grid {
+  display: grid; grid-template-columns: 140px 1fr 140px; gap: 0.5rem;
+  min-height: 100px;
+}
+.main-center { display: flex; flex-direction: column; gap: 0.5rem; }
+
+/* Mapping table */
+.map-section { margin-top: 2.5rem; }
+.map-section h2 { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th {
+  text-align: left; font-weight: 500; font-size: 0.72rem; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-muted); padding: 0.5rem 0.75rem; border-bottom: 2px solid var(--border);
+}
+td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+.pn { font-family: var(--mono); font-size: 0.78rem; }
+.pn.s { color: var(--shared); }
+.pn.a { color: var(--atomic-only); }
+.pn.c { color: var(--cass-compat); }
+.arr { color: var(--text-dim); }
+.note { color: var(--text-muted); font-size: 0.78rem; }
+.group-header td { padding: 0.85rem 0.75rem 0.35rem; font-weight: 500; font-size: 0.78rem; color: var(--text-muted); border-bottom: none; }
+
+.section-break { margin: 2.5rem 0 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.section-break h2 { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+.section-break p { font-size: 0.85rem; color: var(--text-muted); max-width: 640px; }
+
+code { font-family: var(--mono); font-size: 0.78rem; background: var(--surface-alt); padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+ol { font-size: 0.85rem; color: var(--text-muted); padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
+ol strong { color: var(--text); }
+
+@media (max-width: 640px) {
+  .main-grid { grid-template-columns: 1fr; }
+  .grid3 { grid-template-columns: 1fr; }
+  .toggle-desc { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>Atomic <span>module positions</span></h1>
+    <p class="subtitle">Interactive position map for the Atomic template for Joomla. Use this to plan your site layout or migrate from Cassiopeia.</p>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch shared"></div>Shared (works in both templates)</div>
+    <div class="legend-item"><div class="legend-swatch atomic"></div>Atomic only</div>
+    <div class="legend-item"><div class="legend-swatch cass"></div>Cassiopeia compatibility</div>
+  </div>
+
+  <div class="toggle-row">
+    <label class="switch">
+      <input type="checkbox" id="cassToggle" onchange="toggle(this.checked)">
+      <div class="track"></div>
+      <div class="thumb"></div>
+    </label>
+    <span class="toggle-label">Support Cassiopeia positions</span>
+    <span class="toggle-desc">Shows Cassiopeia-only positions that appear when compatibility is enabled in template settings</span>
+  </div>
+
+  <!-- ==================== WIREFRAME ==================== -->
+  <div class="wireframe">
+
+    <!-- ALERT -->
+    <div style="margin-bottom: 0.5rem;">
+      <div class="pos atomic">{alert}</div>
+    </div>
+
+    <!-- HEADER region -->
+    <div class="region" style="margin-bottom: 0.5rem;">
+      <span class="region-label">&lt;header&gt;</span>
+
+      <!-- Cassiopeia topbar + below-top: inside header, before header-row -->
+      <div class="cass-block" id="cass-header-top">
+        <div class="pos cass">{topbar}<span class="sub">Cassiopeia — inside header, before header row</span></div>
+        <div class="pos cass" style="margin-top: 0.5rem;">{below-top}<span class="sub">Cassiopeia — inside header, after topbar</span></div>
+      </div>
+
+      <!-- Header row: brand + header-center + header-right + switcher -->
+      <div class="flex-row" style="flex-wrap: wrap; margin-top: 0.25rem;">
+        <div class="flex-row" style="flex: 1; min-width: 200px;">
+          <div class="fixed" style="min-width: 50px;">Logo</div>
+          <div class="fixed" style="flex: 1;">Site title / description</div>
+          <div class="pos atomic" style="min-width: 70px;">{header}</div>
+        </div>
+        <div class="pos atomic" style="flex: 1; min-width: 100px;">{header-center}</div>
+        <div class="flex-row" style="flex-shrink: 0;">
+          <div class="pos atomic">{header-right}</div>
+          <div class="fixed">Switcher</div>
+        </div>
+      </div>
+
+      <!-- topmenu row (with Cassiopeia {menu} inside) -->
+      <div style="margin-top: 0.5rem;">
+        <div class="pos atomic">{topmenu}<span class="sub">Atomic main navigation</span></div>
+        <div class="pos cass" id="cass-menu">{menu}<span class="sub">Cassiopeia — renders inside the topmenu nav bar</span></div>
+      </div>
+    </div>
+
+    <!-- MOBILE MENU (offcanvas, outside header in markup) -->
+    <div style="margin-bottom: 0.5rem;">
+      <div class="pos atomic">{mobilemenu}<span class="sub">Offcanvas panel (renders outside header)</span></div>
+    </div>
+
+    <!-- ==================== MAIN region ==================== -->
+    <div class="region">
+      <span class="region-label">&lt;main&gt;</span>
+
+      <!-- Hero -->
+      <div style="margin-bottom: 0.5rem;">
+        <div class="pos atomic">{hero}</div>
+      </div>
+
+      <!-- Cassiopeia banner, top-a, top-b: after hero -->
+      <div class="cass-block" id="cass-banner-area">
+        <div class="pos cass">{banner}<span class="sub">Cassiopeia — renders after {hero}</span></div>
+        <div class="grid2" style="margin-top: 0.5rem;">
+          <div class="pos cass">{top-a}<span class="sub">Cassiopeia</span></div>
+          <div class="pos cass">{top-b}<span class="sub">Cassiopeia</span></div>
+        </div>
+      </div>
+
+      <!-- Main body area with sidebars -->
+      <div class="main-grid">
+        <!-- Left sidebar -->
+        <div class="gap-row">
+          <div class="pos atomic">{leftbody}</div>
+          <div class="pos cass" id="cass-sidebar-left">{sidebar-left}<span class="sub">Cassiopeia — same column as {leftbody}</span></div>
+        </div>
+
+        <!-- Center content (order matches index.php lines 802–819) -->
+        <div class="main-center">
+          <div class="pos shared">{breadcrumbs}</div>
+          <div class="pos atomic">{abovebody}</div>
+          <div class="pos cass" id="cass-main-top">{main-top}<span class="sub">Cassiopeia</span></div>
+          <div class="fixed" style="flex: 1; min-height: 50px;">Message / Component</div>
+          <div class="pos atomic">{belowbody}</div>
+          <div class="pos cass" id="cass-main-bottom">{main-bottom}<span class="sub">Cassiopeia</span></div>
+        </div>
+
+        <!-- Right sidebar -->
+        <div class="gap-row">
+          <div class="pos atomic">{rightbody}</div>
+          <div class="pos cass" id="cass-sidebar-right">{sidebar-right}<span class="sub">Cassiopeia — same column as {rightbody}</span></div>
+        </div>
+      </div>
+
+      <!-- Cassiopeia bottom-a, bottom-b: separate rows after body -->
+      <div class="cass-block grid2" id="cass-bottom-area">
+        <div class="pos cass">{bottom-a}<span class="sub">Cassiopeia — own row</span></div>
+        <div class="pos cass">{bottom-b}<span class="sub">Cassiopeia — own row</span></div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER region -->
+    <div class="region" style="margin-bottom: 0.5rem;">
+      <span class="region-label">&lt;footer&gt;</span>
+      <div class="grid3">
+        <div class="pos shared">{footer}</div>
+        <div class="pos atomic">{footer-center}</div>
+        <div class="pos atomic">{footer-right}</div>
+      </div>
+      <div style="margin-top: 0.5rem;">
+        <div class="fixed">Copyright</div>
+      </div>
+    </div>
+
+    <!-- DEBUG -->
+    <div class="pos shared">{debug}</div>
+
+  </div>
+
+  <!-- ==================== MAPPING TABLE ==================== -->
+  <div class="map-section">
+    <h2>Position mapping reference</h2>
+    <table>
+      <thead>
+        <tr><th>Atomic position</th><th></th><th>Cassiopeia equivalent</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <!-- Shared / mapped positions -->
+        <tr>
+          <td><span class="pn a">{hero}</span></td>
+          <td class="arr">←</td>
+          <td><span class="pn c">{banner}</span></td>
+          <td class="note">Cassiopeia {banner} content renders after Atomic's {hero} position when compatibility is on. They are not the same position — {hero} is always available, {banner} is Cassiopeia-only.</td>
+        </tr>
+        <tr>
+          <td><span class="pn a">{topmenu}</span></td>
+          <td class="arr">←</td>
+          <td><span class="pn c">{menu}</span></td>
+          <td class="note">Cassiopeia {menu} modules render inside the {topmenu} nav bar when compatibility is on.</td>
+        </tr>
+        <tr>
+          <td><span class="pn a">{leftbody}</span></td>
+          <td class="arr">←</td>
+          <td><span class="pn c">{sidebar-left}</span></td>
+          <td class="note">Both render in the left sidebar column. {leftbody} is Atomic-native (always available); {sidebar-left} only appears when Cassiopeia compatibility is on.</td>
+        </tr>
+        <tr>
+          <td><span class="pn a">{rightbody}</span></td>
+          <td class="arr">←</td>
+          <td><span class="pn c">{sidebar-right}</span></td>
+          <td class="note">Both render in the right sidebar column. {rightbody} is Atomic-native (always available); {sidebar-right} only appears when Cassiopeia compatibility is on.</td>
+        </tr>
+        <tr>
+          <td><span class="pn s">{breadcrumbs}</span></td>
+          <td class="arr">↔</td>
+          <td><span class="pn s">{breadcrumbs}</span></td>
+          <td class="note">Same name. Always rendered (not behind compatibility toggle).</td>
+        </tr>
+        <tr>
+          <td><span class="pn s">{footer}</span></td>
+          <td class="arr">↔</td>
+          <td><span class="pn s">{footer}</span></td>
+          <td class="note">Same name in both.</td>
+        </tr>
+        <tr>
+          <td><span class="pn s">{debug}</span></td>
+          <td class="arr">↔</td>
+          <td><span class="pn s">{debug}</span></td>
+          <td class="note">Same name in both.</td>
+        </tr>
+
+        <!-- Atomic-only -->
+        <tr class="group-header"><td colspan="4">Atomic-only positions (no Cassiopeia equivalent)</td></tr>
+        <tr>
+          <td><span class="pn a">{alert}</span></td><td></td><td class="note">—</td>
+          <td class="note">Top-of-page alert/notification bar. Renders before the header.</td>
+        </tr>
+        <tr>
+          <td><span class="pn a">{header}</span></td><td></td><td class="note">—</td>
+          <td class="note">Inside the header row, adjacent to logo/site title branding.</td>
+        </tr>
+        <tr>
+          <td><span class="pn a">{header-center}</span></td><td></td><td class="note">—</td>
+          <td class="note">Center column of the header row.</td>
+        </tr>
+        <tr>
+          <td><span class="pn a">{header-right}</span></td><td></td><td class="note">—</td>
+          <td class="note">Right side of the header row, before the style switcher.</td>
+        </tr>
+        <tr>
+          <td><span class="pn a">{topmenu}</span></td><td></td><td class="note">—</td>
+          <td class="note">Primary navigation bar below the header row. When Cassiopeia compatibility is on, {menu} modules also render here.</td>
+        </tr>
+        <tr>
+          <td><span class="pn a">{mobilemenu}</span></td><td></td><td class="note">—</td>
+          <td class="note">Offcanvas mobile navigation panel. Triggers a hamburger button in the header.</td>
+        </tr>
+        <tr>
+          <td><span class="pn a">{hero}</span></td><td></td><td class="note">—</td>
+          <td class="note">Full-width hero area at the top of main content, before the body columns.</td>
+        </tr>
+        <tr>
+          <td><span class="pn a">{abovebody}</span></td><td></td><td class="note">—</td>
+          <td class="note">Inside the main content column, between {breadcrumbs} and {main-top} / message output.</td>
+        </tr>
+        <tr>
+          <td><span class="pn a">{belowbody}</span></td><td></td><td class="note">—</td>
+          <td class="note">Inside the main content column, below the component output.</td>
+        </tr>
+        <tr>
+          <td><span class="pn a">{footer-center}</span></td><td></td><td class="note">—</td>
+          <td class="note">Center column of the footer (when 3-column footer layout is configured).</td>
+        </tr>
+        <tr>
+          <td><span class="pn a">{footer-right}</span></td><td></td><td class="note">—</td>
+          <td class="note">Right column of the footer.</td>
+        </tr>
+
+        <!-- Cassiopeia-only (compatibility) -->
+        <tr class="group-header"><td colspan="4">Cassiopeia-only positions (require "Support Cassiopeia positions" enabled)</td></tr>
+        <tr>
+          <td><span class="pn c">{topbar}</span></td><td class="arr">→</td><td class="note">Inside header</td>
+          <td class="note">Renders inside the header container, before the header row.</td>
+        </tr>
+        <tr>
+          <td><span class="pn c">{below-top}</span></td><td class="arr">→</td><td class="note">Inside header</td>
+          <td class="note">Renders inside the header container, after {topbar}.</td>
+        </tr>
+        <tr>
+          <td><span class="pn c">{menu}</span></td><td class="arr">→</td><td class="note">Inside topmenu nav</td>
+          <td class="note">Renders inside the {topmenu} navigation bar.</td>
+        </tr>
+        <tr>
+          <td><span class="pn c">{banner}</span></td><td class="arr">→</td><td class="note">After {hero}</td>
+          <td class="note">Renders in the main area, after the {hero} position.</td>
+        </tr>
+        <tr>
+          <td><span class="pn c">{top-a}</span></td><td class="arr">→</td><td class="note">After {banner}</td>
+          <td class="note">Renders after {banner} in the main area.</td>
+        </tr>
+        <tr>
+          <td><span class="pn c">{top-b}</span></td><td class="arr">→</td><td class="note">After {banner}</td>
+          <td class="note">Renders alongside {top-a}, after {banner}.</td>
+        </tr>
+        <tr>
+          <td><span class="pn c">{sidebar-left}</span></td><td class="arr">→</td><td class="note">Left column</td>
+          <td class="note">Renders in the same left sidebar column as {leftbody}.</td>
+        </tr>
+        <tr>
+          <td><span class="pn c">{sidebar-right}</span></td><td class="arr">→</td><td class="note">Right column</td>
+          <td class="note">Renders in the same right sidebar column as {rightbody}.</td>
+        </tr>
+        <tr>
+          <td><span class="pn c">{main-top}</span></td><td class="arr">→</td><td class="note">Center column</td>
+          <td class="note">Renders inside the main content column, after {abovebody} and before the message/component output.</td>
+        </tr>
+        <tr>
+          <td><span class="pn c">{main-bottom}</span></td><td class="arr">→</td><td class="note">Center column</td>
+          <td class="note">Renders inside the main content column, after {belowbody}.</td>
+        </tr>
+        <tr>
+          <td><span class="pn c">{bottom-a}</span></td><td class="arr">→</td><td class="note">Own row</td>
+          <td class="note">Renders as a full-width row below the body columns.</td>
+        </tr>
+        <tr>
+          <td><span class="pn c">{bottom-b}</span></td><td class="arr">→</td><td class="note">Own row</td>
+          <td class="note">Renders as a separate full-width row, below {bottom-a}.</td>
+        </tr>
+
+        <!-- Error positions -->
+        <tr class="group-header"><td colspan="4">Error page positions (both templates, used in error.php only)</td></tr>
+        <tr>
+          <td><span class="pn s">{error-403}</span></td><td class="arr">↔</td><td><span class="pn s">{error-403}</span></td>
+          <td class="note">Same name in both.</td>
+        </tr>
+        <tr>
+          <td><span class="pn s">{error-404}</span></td><td class="arr">↔</td><td><span class="pn s">{error-404}</span></td>
+          <td class="note">Same name in both.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ==================== MIGRATION CHECKLIST ==================== -->
+  <div class="section-break">
+    <h2>Migration checklist</h2>
+    <p>When moving from Cassiopeia to Atomic:</p>
+  </div>
+
+  <ol>
+    <li><strong>Enable Cassiopeia compatibility</strong> — Turn on "Support Cassiopeia positions" in Atomic's template settings. All your existing module assignments will continue to work.</li>
+    <li><strong>Understand the differences</strong> — Cassiopeia's <code>{banner}</code> is not the same as Atomic's <code>{hero}</code> — when compatibility is on, {banner} content renders after {hero}. Similarly, <code>{sidebar-left}</code> and <code>{sidebar-right}</code> render alongside <code>{leftbody}</code> and <code>{rightbody}</code>, not in place of them. <code>{menu}</code> renders inside Atomic's <code>{topmenu}</code> nav bar.</li>
+    <li><strong>Note what's Cassiopeia-only</strong> — Positions like <code>{topbar}</code>, <code>{below-top}</code>, <code>{top-a}</code>, <code>{top-b}</code>, <code>{bottom-a}</code>, <code>{bottom-b}</code>, <code>{main-top}</code>, and <code>{main-bottom}</code> only work with compatibility on. Plan to migrate these modules to Atomic-native positions when ready.</li>
+    <li><strong>Explore new positions</strong> — Atomic adds <code>{alert}</code>, <code>{abovebody}</code>, <code>{belowbody}</code>, <code>{header}</code>, <code>{header-center}</code>, <code>{header-right}</code>, <code>{mobilemenu}</code>, <code>{footer-center}</code>, and <code>{footer-right}</code> — none of which exist in Cassiopeia.</li>
+    <li><strong>Migrate gradually</strong> — Reassign modules from Cassiopeia position names to Atomic equivalents, then disable compatibility mode for a cleaner setup.</li>
+  </ol>
+
+</div>
+
+<script>
+function toggle(on) {
+  document.querySelectorAll('.pos.cass').forEach(el => el.classList.toggle('visible', on));
+  document.querySelectorAll('.cass-block').forEach(el => el.classList.toggle('visible', on));
+}
+</script>
+</body>
+</html>
