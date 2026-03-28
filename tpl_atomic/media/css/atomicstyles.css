@@ -782,6 +782,185 @@ footer .row > [class*="col"] {
 }
 
 /* ============================================================
+   Smooth Theme Transitions
+   ============================================================
+   Crossfade backgrounds, surfaces, borders, and text when
+   toggling Light ↔ Dark via data-bs-theme on <html>.
+
+   Uses the existing --transition-speed token (0.3s).
+   Easing is slightly softer than the default ease to give
+   theme switches a more deliberate feel.
+   ============================================================ */
+
+:root {
+  --theme-easing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Backgrounds & surfaces --- */
+body {
+  transition:
+    background var(--transition-speed) var(--theme-easing),
+    color var(--transition-speed) var(--theme-easing);
+}
+body::before,
+body::after {
+  transition:
+    opacity var(--transition-speed) var(--theme-easing),
+    background var(--transition-speed) var(--theme-easing);
+}
+
+header {
+  transition:
+    background-color var(--transition-speed) var(--theme-easing),
+    border-color var(--transition-speed) var(--theme-easing),
+    box-shadow var(--transition-speed) var(--theme-easing);
+}
+header::before {
+  transition:
+    background var(--transition-speed) var(--theme-easing);
+}
+header::after {
+  transition:
+    opacity var(--transition-speed) var(--theme-easing);
+}
+
+.glass {
+  transition:
+    background var(--transition-speed) var(--theme-easing),
+    border-color var(--transition-speed) var(--theme-easing),
+    box-shadow var(--transition-speed) var(--theme-easing),
+    backdrop-filter var(--transition-speed) var(--theme-easing),
+    -webkit-backdrop-filter var(--transition-speed) var(--theme-easing);
+}
+
+.container-sidebar-left .card,
+.container-sidebar-right .card {
+  transition:
+    background var(--transition-speed) var(--theme-easing),
+    border-color var(--transition-speed) var(--theme-easing),
+    box-shadow var(--transition-speed) var(--theme-easing),
+    backdrop-filter var(--transition-speed) var(--theme-easing),
+    -webkit-backdrop-filter var(--transition-speed) var(--theme-easing);
+}
+
+.navigation .dropdown-menu {
+  transition:
+    background var(--transition-speed) var(--theme-easing),
+    box-shadow var(--transition-speed) var(--theme-easing),
+    border-color var(--transition-speed) var(--theme-easing);
+}
+
+.hero::before {
+  transition:
+    background var(--transition-speed) var(--theme-easing);
+}
+
+/* --- Text color crossfade --- */
+h1, h2, h3, h4, h5, h6,
+p,
+li,
+td, th,
+figcaption,
+.lead,
+.site-description,
+.section-label,
+.feature-card p,
+.feature-card h4,
+footer h6,
+.copyright,
+.card-title,
+.container-sidebar-left .card-title,
+.container-sidebar-right .card-title {
+  transition:
+    color var(--transition-speed) var(--theme-easing);
+}
+
+/* Nav links — preserve existing hover behavior (already
+   use transition: all), just ensure the easing matches */
+.navigation .nav-link {
+  transition:
+    color var(--transition-speed) var(--theme-easing),
+    background var(--transition-speed) var(--theme-easing),
+    box-shadow var(--transition-speed) var(--theme-easing);
+}
+.navigation .dropdown-menu .dropdown-item {
+  transition:
+    color var(--transition-speed) var(--theme-easing),
+    background var(--transition-speed) var(--theme-easing);
+}
+
+/* Sidebar nav links */
+.container-sidebar-left .card .nav-link,
+.container-sidebar-right .card .nav-link,
+.container-sidebar-left .nav.menu.vertical .nav-link {
+  transition:
+    color var(--transition-speed) var(--theme-easing),
+    background var(--transition-speed) var(--theme-easing);
+}
+
+/* Footer links — already have transition: color, align easing */
+footer ul li a {
+  transition:
+    color var(--transition-speed) var(--theme-easing);
+}
+
+/* --- Borders & dividers --- */
+.divider,
+.header-bottom,
+.copyright,
+.blog-item + .blog-item,
+footer::before {
+  transition:
+    border-color var(--transition-speed) var(--theme-easing),
+    background var(--transition-speed) var(--theme-easing);
+}
+
+/* --- Tags & badges --- */
+.tag,
+.tags a.btn,
+.tags .btn-info,
+.com-content-article .badge,
+.com-content-category-blog .badge,
+.blog .badge {
+  transition:
+    background-color var(--transition-speed) var(--theme-easing),
+    border-color var(--transition-speed) var(--theme-easing),
+    color var(--transition-speed) var(--theme-easing);
+}
+
+/* --- Buttons --- */
+.btn-accent,
+.btn-secondary,
+.btn-glass {
+  transition:
+    transform var(--transition-speed) var(--theme-easing),
+    box-shadow var(--transition-speed) var(--theme-easing),
+    color var(--transition-speed) var(--theme-easing);
+}
+
+/* Icon buttons (theme switcher) */
+.atomic-iconbtn {
+  transition:
+    transform var(--transition-speed) var(--theme-easing),
+    box-shadow var(--transition-speed) var(--theme-easing);
+}
+.atomic-iconbtn i,
+.atomic-iconbtn svg {
+  transition:
+    color var(--transition-speed) var(--theme-easing);
+}
+
+/* --- Form elements (login module) --- */
+.mod-login .input-group .form-control,
+.mod-login .input-group-text,
+.mod-login .input-password-toggle {
+  transition:
+    background var(--transition-speed) var(--theme-easing),
+    border-color var(--transition-speed) var(--theme-easing),
+    color var(--transition-speed) var(--theme-easing);
+}
+
+/* ============================================================
    Responsive
    ============================================================ */
 
