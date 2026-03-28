@@ -218,23 +218,22 @@ $footerColCount = count($footerParts);
 		
 		<?php
 		//	Favicons
-		//	When enabled (1): load from template folder (custom favicons)
-		//	When disabled (0): load from media folder (default Atomic favicons)
-		if ($loadfavicons == 1) :
+		//	0 = Default: load from media folder (default Atomic favicons)
+		//	1 = Template: load from template favicons folder (custom favicons)
+		//	2 = Site: load from web root (custom favicons)
+		if ($loadfavicons == 2) :
+			$faviconBase = $root;
+		elseif ($loadfavicons == 1) :
 			$faviconBase = $root . '/templates/' . $this->template . '/favicons';
 		else :
 			$faviconBase = $root . '/media/templates/site/' . $this->template . '/favicons';
 		endif;
 		?>
-			<link rel="shortcut icon" href="<?php echo $faviconBase; ?>/favicon.ico">
-			<link rel="apple-touch-icon" sizes="180x180" href="<?php echo $faviconBase; ?>/apple-touch-icon.png">
-			<link rel="icon" type="image/png" sizes="32x32" href="<?php echo $faviconBase; ?>/favicon-32x32.png">
-			<link rel="icon" type="image/png" sizes="16x16" href="<?php echo $faviconBase; ?>/favicon-16x16.png">
-			<link rel="manifest" href="<?php echo $faviconBase; ?>/site.webmanifest">
-			<link rel="mask-icon" href="<?php echo $faviconBase; ?>/safari-pinned-tab.svg" color="#5bbad5">
-			<meta name="msapplication-TileColor" content="#ffffff">
-			<meta name="msapplication-config" content="<?php echo $faviconBase; ?>/browserconfig.xml">
-			<meta name="theme-color" content="#ffffff">
+			<link rel="icon" type="image/png" href="<?php echo $faviconBase; ?>/favicon-96x96.png" sizes="96x96" />
+			<link rel="icon" type="image/svg+xml" href="<?php echo $faviconBase; ?>/favicon.svg" />
+			<link rel="shortcut icon" href="<?php echo $faviconBase; ?>/favicon.ico" />
+			<link rel="apple-touch-icon" sizes="180x180" href="<?php echo $faviconBase; ?>/apple-touch-icon.png" />
+			<link rel="manifest" href="<?php echo $faviconBase; ?>/site.webmanifest" />
 			
    	 	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="color-scheme" content="light dark">

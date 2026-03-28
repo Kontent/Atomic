@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="template" client="site" method="upgrade">
 	<name>Atomic</name>
-	<version>5.1.0</version>
+	<version>5.1.1</version>
 	<creationDate>2009-10-10</creationDate>
 	<author>Ron Severdia</author>
 	<authorEmail>severdia@gmail.com</authorEmail>
@@ -64,8 +64,8 @@
 		<position>topbar</position>
 	</positions>
 	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.tpl_atomic.ini</language>
-		<language tag="en-GB">en-GB/en-GB.tpl_atomic.sys.ini</language>
+		<language tag="en-GB">en-GB/tpl_atomic.ini</language>
+		<language tag="en-GB">en-GB/tpl_atomic.sys.ini</language>
 	</languages>
 	<config>
 		<fields name="params" addfieldprefix="JFormField" addfieldpath="templates/atomic/html/fields">
@@ -250,9 +250,10 @@
 					<option value="1">TPL_ATOMIC_YES</option>
 				</field>
 				
-				<field name="loadfavicons" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_ATOMIC_LOADFAVICONS_LABEL" description="TPL_ATOMIC_LOADFAVICONS_DESC" layout="joomla.form.field.radio.switcher" filter="integer">
-					<option value="0">TPL_ATOMIC_NO</option>
-					<option value="1">TPL_ATOMIC_YES</option>
+				<field name="loadfavicons" type="list" default="0" label="TPL_ATOMIC_LOADFAVICONS_LABEL" description="TPL_ATOMIC_LOADFAVICONS_DESC" filter="integer">
+					<option value="0">TPL_ATOMIC_LOADFAVICONS_DEFAULT</option>
+					<option value="1">TPL_ATOMIC_LOADFAVICONS_TEMPLATE</option>
+					<option value="2">TPL_ATOMIC_LOADFAVICONS_SITE</option>
 				</field>
 				
 			</fieldset>
