@@ -7,14 +7,16 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\AuthenticationHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
-$app      = Factory::getApplication();
-$sitename = htmlspecialchars($app->get('sitename'), ENT_QUOTES, 'UTF-8');
-$logo     = $app->get('logo');
+$app          = Factory::getApplication();
+$sitename     = htmlspecialchars($app->get('sitename'), ENT_QUOTES, 'UTF-8');
+$logo         = $app->get('logo');
+$extraButtons = AuthenticationHelper::getLoginButtons('form-login');
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">

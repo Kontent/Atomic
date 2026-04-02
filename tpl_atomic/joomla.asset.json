@@ -5,10 +5,17 @@
   "description": "This file contains details of the assets used by the Atomic template",
   "license": "GPL-2.0-or-later",
   "assets": [
-  	{
+    {
       "name": "template.atomic.bs5css",
       "type": "style",
-      "uri": "media/templates/site/atomic/css/atomic.min.css"
+      "uri": "media/templates/site/atomic/css/atomic.min.css",
+      "weight": 100
+    },
+    {
+      "name": "template.atomic.atomicstyles",
+      "type": "style",
+      "uri": "media/templates/site/atomic/css/atomicstyles.min.css",
+      "weight": 200
     },
     {
       "name": "template.atomic.css",
@@ -17,9 +24,22 @@
       "weight": 500
     },
     {
+      "name": "template.atomic.themeswitcher",
+      "type": "script",
+      "uri": "media/templates/site/atomic/js/themeswitcher.min.js",
+      "weight": 100
+    },
+    {
+      "name": "template.atomic.atomicjs",
+      "type": "script",
+      "uri": "media/templates/site/atomic/js/atomic.js",
+      "weight": 200
+    },
+    {
       "name": "template.atomic.js",
       "type": "script",
-      "uri": "templates/atomic/js/template.js"
+      "uri": "templates/atomic/js/template.js",
+      "weight": 500
     }
   ]
 }

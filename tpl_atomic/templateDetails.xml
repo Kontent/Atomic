@@ -198,9 +198,29 @@
 					<option value="9">TPL_ATOMIC_GOOGLEFONT_LIBREBASKERVILLE</option>
 					<option value="10">TPL_ATOMIC_GOOGLEFONT_MERRIWEATHER</option>
 					<option value="11">TPL_ATOMIC_GOOGLEFONT_NOTOSERIF</option>			
-					<option value="12">TPL_ATOMIC_GOOGLEFONT_UNNA</option>	
+					<option value="12">TPL_ATOMIC_GOOGLEFONT_UNNA</option>
+					<option value="97" disabled="true">TPL_ATOMIC_SYSTEMFONT_GROUP</option>
+					<option value="13">TPL_ATOMIC_SYSTEMFONT_OPTION</option>
 				</field>
-				
+
+				<field name="systemFontHeader" showon="headerfont:13" type="list" default="" label="TPL_ATOMIC_SYSTEMFONT_HEADER_LABEL" description="TPL_ATOMIC_SYSTEMFONT_HEADER_DESC" layout="joomla.form.field.list">
+					<option value="">TPL_ATOMIC_SYSTEMFONT_SELECT</option>
+					<option value="system-ui, sans-serif">TPL_ATOMIC_SYSTEMFONT_SYSTEM_UI</option>
+					<option value="-apple-system, BlinkMacSystemFont, sans-serif">TPL_ATOMIC_SYSTEMFONT_APPLE</option>
+					<option value="Segoe UI, sans-serif">TPL_ATOMIC_SYSTEMFONT_SEGOE</option>
+					<option value="Roboto, sans-serif">TPL_ATOMIC_SYSTEMFONT_ROBOTO</option>
+					<option value="Helvetica Neue, Helvetica, Arial, sans-serif">TPL_ATOMIC_SYSTEMFONT_HELVETICA</option>
+					<option value="Noto Sans, sans-serif">TPL_ATOMIC_SYSTEMFONT_NOTO</option>
+					<option value="Ubuntu, sans-serif">TPL_ATOMIC_SYSTEMFONT_UBUNTU</option>
+					<option value="Cantarell, sans-serif">TPL_ATOMIC_SYSTEMFONT_CANTARELL</option>
+					<option value="Georgia, serif">TPL_ATOMIC_SYSTEMFONT_GEORGIA</option>
+					<option value="Palatino Linotype, Book Antiqua, Palatino, serif">TPL_ATOMIC_SYSTEMFONT_PALATINO</option>
+					<option value="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace">TPL_ATOMIC_SYSTEMFONT_MONOSPACE</option>
+					<option value="Lucida Console, Lucida Sans Typewriter, monospace">TPL_ATOMIC_SYSTEMFONT_LUCIDA</option>
+					<option value="Trebuchet MS, Lucida Grande, Lucida Sans Unicode, sans-serif">TPL_ATOMIC_SYSTEMFONT_TREBUCHET</option>
+					<option value="Verdana, Geneva, sans-serif">TPL_ATOMIC_SYSTEMFONT_VERDANA</option>
+				</field>
+
 				<field name="headergooglefont" showon="headerfont:1" type="textarea" label="TPL_ATOMIC_HEADER_FONT_LINK_LABEL" description="TPL_ATOMIC_HEADER_FONT_LINK_DESC" rows="4" columns="30" filter="raw" default="" />
 				
 				<field name="headerfontname" showon="headerfont:1" type="text" default="" label="TPL_ATOMIC_HEADER_FONTNAME_LABEL" description="TPL_ATOMIC_HEADER_FONTNAME_DESC" filter="string" hint="Example: Inter or &#34;Inter&#34;, sans-serif " />
@@ -220,9 +240,29 @@
 					<option value="9">TPL_ATOMIC_GOOGLEFONT_LIBREBASKERVILLE</option>
 					<option value="10">TPL_ATOMIC_GOOGLEFONT_MERRIWEATHER</option>
 					<option value="11">TPL_ATOMIC_GOOGLEFONT_NOTOSERIF</option>			
-					<option value="12">TPL_ATOMIC_GOOGLEFONT_UNNA</option>	
+					<option value="12">TPL_ATOMIC_GOOGLEFONT_UNNA</option>
+					<option value="97" disabled="true">TPL_ATOMIC_SYSTEMFONT_GROUP</option>
+					<option value="13">TPL_ATOMIC_SYSTEMFONT_OPTION</option>
 				</field>
-				
+
+				<field name="systemFontBody" showon="bodyfont:13" type="list" default="" label="TPL_ATOMIC_SYSTEMFONT_BODY_LABEL" description="TPL_ATOMIC_SYSTEMFONT_BODY_DESC" layout="joomla.form.field.list">
+					<option value="">TPL_ATOMIC_SYSTEMFONT_SELECT</option>
+					<option value="system-ui, sans-serif">TPL_ATOMIC_SYSTEMFONT_SYSTEM_UI</option>
+					<option value="-apple-system, BlinkMacSystemFont, sans-serif">TPL_ATOMIC_SYSTEMFONT_APPLE</option>
+					<option value="Segoe UI, sans-serif">TPL_ATOMIC_SYSTEMFONT_SEGOE</option>
+					<option value="Roboto, sans-serif">TPL_ATOMIC_SYSTEMFONT_ROBOTO</option>
+					<option value="Helvetica Neue, Helvetica, Arial, sans-serif">TPL_ATOMIC_SYSTEMFONT_HELVETICA</option>
+					<option value="Noto Sans, sans-serif">TPL_ATOMIC_SYSTEMFONT_NOTO</option>
+					<option value="Ubuntu, sans-serif">TPL_ATOMIC_SYSTEMFONT_UBUNTU</option>
+					<option value="Cantarell, sans-serif">TPL_ATOMIC_SYSTEMFONT_CANTARELL</option>
+					<option value="Georgia, serif">TPL_ATOMIC_SYSTEMFONT_GEORGIA</option>
+					<option value="Palatino Linotype, Book Antiqua, Palatino, serif">TPL_ATOMIC_SYSTEMFONT_PALATINO</option>
+					<option value="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace">TPL_ATOMIC_SYSTEMFONT_MONOSPACE</option>
+					<option value="Lucida Console, Lucida Sans Typewriter, monospace">TPL_ATOMIC_SYSTEMFONT_LUCIDA</option>
+					<option value="Trebuchet MS, Lucida Grande, Lucida Sans Unicode, sans-serif">TPL_ATOMIC_SYSTEMFONT_TREBUCHET</option>
+					<option value="Verdana, Geneva, sans-serif">TPL_ATOMIC_SYSTEMFONT_VERDANA</option>
+				</field>
+
 				<field name="bodygooglefont" showon="bodyfont:1" type="textarea" label="TPL_ATOMIC_BODY_FONT_LINK_LABEL" description="TPL_ATOMIC_BODY_FONT_LINK_DESC" rows="4" columns="30" filter="raw" default="" hint="Example: &#60;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&#62;&#160;
 	&#60;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&#62;&#160;
 	&#60;link href=&#34;https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&#38;display=swap&#34; rel=&#34;stylesheet&#34;&#62;" />
@@ -255,7 +295,9 @@
 					<option value="1">TPL_ATOMIC_LOADFAVICONS_TEMPLATE</option>
 					<option value="2">TPL_ATOMIC_LOADFAVICONS_SITE</option>
 				</field>
-				
+
+				<field name="maskiconcolor" type="color" default="#000000" label="TPL_ATOMIC_MASKICONCOLOR_LABEL" description="TPL_ATOMIC_MASKICONCOLOR_DESC" />
+
 			</fieldset>
 
 			</fieldset>

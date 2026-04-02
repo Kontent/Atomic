@@ -64,8 +64,8 @@ $bodyfontname				= $this->params->get('bodyfontname');
 $bodymenu					= $this->params->get('bodymenu');
 $bodygooglefont				= $this->params->get('bodygooglefont');
 $bootstrapcdn				= $this->params->get('bootstrapcdn');
-$bootstrapsource			= $this->params->get('bootstrapsource');
-$bsfixjoomla				= $this->params->get('bsfixjoomla');
+$bootstrapsource			= $this->params->get('bootstrapsource', 2);
+$bsfixjoomla				= $this->params->get('bsfixjoomla', 1);
 $bsthemes					= $this->params->get('bsthemes');
 $codeafterbody				= $this->params->get('codeafterbody');
 $codeafterhead				= $this->params->get('codeafterhead');
@@ -93,6 +93,8 @@ $logo						= $this->params->get('logo');
 $scrollreveal				= $this->params->get('scrollreveal');
 $sitedescription			= $this->params->get('sitedescription');
 $sitetitle					= $this->params->get('sitetitle');
+$systemFontHeader			= $this->params->get('systemFontHeader', '');
+$systemFontBody				= $this->params->get('systemFontBody', '');
 $casspositions				= $this->params->get('casspositions');
 $stickyhead					= (int) $this->params->get('stickyheader', $this->params->get('stickyhead', 0));
 $headerbackground			= $this->params->get('headerbackground', 'rgba(0, 0, 0, 0)');
@@ -138,8 +140,8 @@ if ($bsthemeInitial === 'auto') {
     $bsthemeInitial = 'light';
 }
 
-$headerfontfamily			= getGoogleFontFamily($headerfont, 'header', $headerfontname);
-$bodyfontfamily				= getGoogleFontFamily($bodyfont, 'body', $bodyfontname);
+$headerfontfamily			= getGoogleFontFamily($headerfont, 'header', $headerfont == 13 ? $systemFontHeader : $headerfontname);
+$bodyfontfamily				= getGoogleFontFamily($bodyfont, 'body', $bodyfont == 13 ? $systemFontBody : $bodyfontname);
 $isheadergooglefont			= isGoogleFont($headerfont);
 $isbodygooglefont			= isGoogleFont($bodyfont);
 
@@ -163,6 +165,89 @@ $headerColCount = count($headerParts);
 $footerParts    = array_map('intval', explode('-', (string) $footercolumns));
 $footerColCount = count($footerParts);
 
+// ── PreloadManager preconnect hints ─────────────────────────
+$preloadManager = $this->getPreloadManager();
+
+if ($isheadergooglefont || $isbodygooglefont) {
+	$preloadManager->preconnect('https://fonts.googleapis.com');
+	$preloadManager->preconnect('https://fonts.gstatic.com', ['crossorigin' => '']);
+}
+
+$cdnHints = [];
+if ($bootstrapsource == 2 || $loadbsicons == 1) {
+	$cdnHints[] = 'https://cdn.jsdelivr.net';
+}
+if ($fontawesome == 2 || $fontawesome == 3) {
+	$cdnHints[] = 'https://cdnjs.cloudflare.com';
+}
+if ($bootstrapsource >= 6 && $bootstrapsource <= 14) {
+	$cdnHints[] = 'https://cdn.jsdelivr.net';
+}
+if ($scrollreveal == 1) {
+	$cdnHints[] = 'https://unpkg.com';
+}
+foreach (array_unique($cdnHints) as $cdn) {
+	$preloadManager->preconnect($cdn);
+}
+
+// ── Lazy-loaded third-party stylesheets  ─────────────────────
+// Google Fonts: register built-in fonts (cases 3–12) with media="print" trick
+if ($isheadergooglefont || $isbodygooglefont) {
+	$fontsToLoad = array_unique([$headerfont, $bodyfont]);
+	foreach ($fontsToLoad as $font) {
+		if ($font && isGoogleFont($font)) {
+			$fontHtml = getGoogleFontLink($font);
+			if (preg_match('/href="([^"]+)"/', $fontHtml, $m)) {
+				$wa->registerAndUseStyle('atomic.font.' . $font, $m[1], [], [
+					'media' => 'print', 'onload' => "this.media='all'"
+				]);
+			}
+		}
+	}
+}
+
+// FontAwesome CSS (cases 1,2,6 — JS and custom snippet cases stay manual)
+if ($fontawesome == 1 || $fontawesome == 6) {
+	$wa->registerAndUseStyle('atomic.fontawesome', 'media/system/css/joomla-fontawesome.min.css', [], [
+		'media' => 'print', 'onload' => "this.media='all'"
+	]);
+} elseif ($fontawesome == 2) {
+	$wa->registerAndUseStyle('atomic.fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css', [], [
+		'integrity' => 'sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==',
+		'crossorigin' => 'anonymous', 'referrerpolicy' => 'no-referrer',
+		'media' => 'print', 'onload' => "this.media='all'"
+	]);
+}
+
+// Bootstrap Icons
+if ($loadbsicons == 1) {
+	$wa->registerAndUseStyle('atomic.bsicons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css', [], [
+		'media' => 'print', 'onload' => "this.media='all'"
+	]);
+}
+
+// ── Web Asset Manager: Atomic CSS  ───────────────────────────
+if ($bsfixjoomla == 1) {
+	$wa->useStyle('template.atomic.bs5css');
+}
+if ($atomicstyles == 1) {
+	$wa->useStyle('template.atomic.atomicstyles');
+}
+if ($customcssfile == 1) {
+	$wa->useStyle('template.atomic.css');
+}
+
+// ── Web Asset Manager: Atomic JS ────────────────────────────
+if ($bsthemes == 1) {
+	$wa->useScript('template.atomic.themeswitcher');
+}
+if ($atomicjs == 1) {
+	$wa->useScript('template.atomic.atomicjs');
+}
+if ($customjs == 1) {
+	$wa->useScript('template.atomic.js');
+}
+
 ?>
 <!DOCTYPE html>
 
@@ -173,38 +258,10 @@ $footerColCount = count($footerParts);
 		if ($bstheme !== '') : ?>
 		<script>(function(){var d=document.documentElement,s=localStorage.getItem('theme'),t=s||'<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>';if(t==='auto'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}d.setAttribute('data-bs-theme',t);})()</script>
 		<?php endif; ?>
-		<?php
-		if ($isheadergooglefont || $isbodygooglefont) {
-			echo '<link rel="preconnect" href="https://fonts.googleapis.com">';
-			echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
+		<?php // Preconnect hints and Google Font links are now handled by
+			  // PreloadManager and Web Asset Manager
+			  // in the PHP section above. ?>
 
-			$fontsToLoad = array_unique([$headerfont, $bodyfont]);
-			foreach ($fontsToLoad as $font) {
-				if ($font) {
-					echo getGoogleFontLink($font);
-				}
-			}
-		}
-
-		// Preconnect hints for other CDN resources
-		$cdnHints = [];
-		if ($bootstrapsource == 2 || $loadbsicons == 1) {
-			$cdnHints[] = 'https://cdn.jsdelivr.net';
-		}
-		if ($fontawesome == 2 || $fontawesome == 3) {
-			$cdnHints[] = 'https://cdnjs.cloudflare.com';
-		}
-		if ($bootstrapsource >= 6 && $bootstrapsource <= 14) {
-			$cdnHints[] = 'https://cdn.jsdelivr.net';
-		}
-		if ($scrollreveal == 1) {
-			$cdnHints[] = 'https://unpkg.com';
-		}
-		foreach (array_unique($cdnHints) as $cdn) {
-			echo '<link rel="preconnect" href="' . $cdn . '">';
-			echo '<link rel="dns-prefetch" href="' . $cdn . '">';
-		}
-		?>
 		<?php	//	Add custom code after opening head tag
 			if($codeafterhead != null) : ?>
 			<?php echo $codeafterhead;
@@ -229,10 +286,12 @@ $footerColCount = count($footerParts);
 			$faviconBase = $root . '/media/templates/site/' . $this->template . '/favicons';
 		endif;
 		?>
-			<link rel="icon" type="image/png" href="<?php echo $faviconBase; ?>/favicon-96x96.png" sizes="96x96" />
 			<link rel="icon" type="image/svg+xml" href="<?php echo $faviconBase; ?>/favicon.svg" />
-			<link rel="shortcut icon" href="<?php echo $faviconBase; ?>/favicon.ico" />
+			<link rel="alternate icon" type="image/png" href="<?php echo $faviconBase; ?>/favicon-96x96.png" sizes="96x96" />
+			<link rel="alternate icon" href="<?php echo $faviconBase; ?>/favicon.ico" />
 			<link rel="apple-touch-icon" sizes="180x180" href="<?php echo $faviconBase; ?>/apple-touch-icon.png" />
+			<?php $maskColor = $this->params->get('maskiconcolor', '#000000'); ?>
+			<link rel="mask-icon" href="<?php echo $faviconBase; ?>/favicon.svg" color="<?php echo htmlspecialchars($maskColor, ENT_QUOTES, 'UTF-8'); ?>" />
 			<link rel="manifest" href="<?php echo $faviconBase; ?>/site.webmanifest" />
 			
    	 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -318,8 +377,6 @@ $footerColCount = count($footerParts);
 			<meta name="twitter:card" content="summary_large_image">
 		<?php endif; ?>
 
-    	<jdoc:include type="styles" />
-    			
 		<?php	//	Load Bootstrap or Bootswatch theme.
 			if($bootstrapsource == 1 || $bootstrapsource == 3 || $bootstrapsource == 4) : ?>
 				<link rel="stylesheet" href="<?php echo $root ?>/media/vendor/bootstrap/css/bootstrap.min.css">
@@ -386,39 +443,30 @@ $footerColCount = count($footerParts);
 				echo $style;
 			}
 			?>
-		<?php	//	Load FontAwesome
-		if($fontawesome == 1 || $fontawesome == 6) : ?>
-			<link rel="stylesheet" href="<?php echo $root ?>/media/system/css/joomla-fontawesome.min.css">
-		<?php elseif($fontawesome == 2) : ?>
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-		<?php elseif($fontawesome == 3) : ?>
+		<?php	//	Load FontAwesome JS or custom snippet (CSS cases handled by Web Asset Manager)
+		if($fontawesome == 3) : ?>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/js/all.min.js" integrity="sha512-6BTOlkauINO65nLhXhthZMtepgJSghyimIalb+crKRPhvhmsCdnIuGcVbR5/aQY2A+260iC1OPy1oCdB6pSSwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<?php elseif($fontawesome == 4 || $fontawesome == 5) : ?>
 			<?php echo $fontawesomecdn; ?>
 		<?php endif; ?>
-		
-		<?php	//	Load BS Icons
-			if($loadbsicons == 1) : ?>
-				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-		<?php endif; ?>
-		
-		<?php	//	Load Atomic CSS.
-			if($bsfixjoomla == 1) : ?>
-				<link rel="stylesheet" href="<?php echo $root ?>/media/templates/site/<?php echo $this->template ?>/css/atomic.min.css" type="text/css">
-		<?php endif; ?>
 
-		<?php	//	Load Atomic styles.
-			if($atomicstyles == 1) : ?>
-				<link rel="stylesheet" href="<?php echo $root ?>/media/templates/site/<?php echo $this->template ?>/css/atomicstyles.min.css" type="text/css">
-		<?php endif; ?>
+		<?php //	Web Asset Manager outputs: lazy Google Fonts, lazy FontAwesome CSS,
+			  //	lazy BS Icons, atomic.min.css, atomicstyles.min.css, template.css,
+			  //	plus Joomla extension styles. ?>
+		<jdoc:include type="styles" />
 
-		<?php	//	Load the template CSS file.
-			if($customcssfile == 1) : ?>
-				<link rel="stylesheet" href="<?php echo $root ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css">
+		<?php // Fallback for lazy-loaded stylesheets when JavaScript is disabled ?>
+		<noscript>
+		<?php if ($fontawesome == 1 || $fontawesome == 6) : ?>
+			<link rel="stylesheet" href="<?php echo $root ?>/media/system/css/joomla-fontawesome.min.css">
+		<?php elseif ($fontawesome == 2) : ?>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 		<?php endif; ?>
+		<?php if ($loadbsicons == 1) : ?>
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+		<?php endif; ?>
+		</noscript>
 			
-		<jdoc:include type="scripts" />
-
 		<?php // Load jQuery ?>
 		<?php if ($jqlibrary == 0) : ?>
 			<script src="/media/vendor/jquery/js/jquery.min.js"></script>
@@ -429,23 +477,16 @@ $footerColCount = count($footerParts);
 		<?php elseif ($jqlibrary == 3) : ?>
 			<?php echo $jquerycdn ?>
 		<?php endif; ?>
-		
-		<?php	//	Load BS Themeswitcher
+
+		<?php	//	Theme switcher default theme (must load before themeswitcher.min.js)
 			if($bsthemes == 1) : ?>
 		<script>var defaultTheme = '<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>';</script>
-				<script src="<?php echo $root ?>/media/templates/site/<?php echo $this->template ?>/js/themeswitcher.min.js"></script>
 		<?php endif; ?>
 
-		<?php	//	Load Atomic JS
-			if($atomicjs == 1) : ?>
-				<script src="<?php echo $root ?>/media/templates/site/<?php echo $this->template ?>/js/atomic.js"></script>
-		<?php endif; ?>
+		<?php //	Web Asset Manager outputs: themeswitcher.min.js, atomic.js, template.js,
+			  //	plus Joomla core scripts. ?>
+		<jdoc:include type="scripts" />
 
-		<?php	//	Load the template JavaScript file
-			if($customjs == 1) : ?>
-				<script src="<?php echo $root ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
-		<?php endif; ?>
-		
 		<?php	//	Use Scroll Reveal
 			if($scrollreveal == 1) : ?>
 				<script src="https://unpkg.com/scrollreveal"></script>
@@ -564,7 +605,7 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 					<a href="<?= $this->baseurl ?>">
 					  <img src="<?= $this->baseurl . '/' . htmlspecialchars($logo) ?>"
 						   alt="<?= htmlspecialchars($sitetitle ?: '') ?>"
-						   fetchpriority="high" />
+						   loading="eager" decoding="async" fetchpriority="high" />
 					</a>
 				  </div>
 				<?php endif; ?>
@@ -619,7 +660,7 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 					<a href="<?= $this->baseurl ?>">
 					  <img src="<?= $this->baseurl . '/' . htmlspecialchars($logo) ?>"
 						   alt="<?= htmlspecialchars($sitetitle ?: '') ?>"
-						   fetchpriority="high" />
+						   loading="eager" decoding="async" fetchpriority="high" />
 					</a>
 				  </div>
 				<?php endif; ?>

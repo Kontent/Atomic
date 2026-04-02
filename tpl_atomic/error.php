@@ -6,204 +6,230 @@
 
 defined('_JEXEC') or die;
 
+require_once __DIR__ . '/helper.php';
+
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 if (!isset($this->error)) {
 	$this->error = new \Exception(Text::_('JERROR_ALERTNOAUTHOR'), 403);
 	$this->debug = false;
 }
 
-$code        = $this->error->getCode();
-$errorsearch = (int) $this->params->get('errorsearch', 1);
+$app  = Factory::getApplication();
+$root = Uri::root(true);
+$code = $this->error->getCode();
+
+// Template params
+$bootstrapsource  = $this->params->get('bootstrapsource', 2);
+$bootstrapcdn     = $this->params->get('bootstrapcdn');
+$bsfixjoomla      = $this->params->get('bsfixjoomla', 1);
+$atomicstyles     = $this->params->get('atomicstyles', 0);
+$errorsearch      = (int) $this->params->get('errorsearch', 1);
+$logo             = $this->params->get('logo');
+$sitetitle        = $this->params->get('sitetitle');
+$headerfont       = $this->params->get('headerfont');
+$headerfontname   = $this->params->get('headerfontname');
+$bodyfont         = $this->params->get('bodyfont');
+$bodyfontname     = $this->params->get('bodyfontname');
+$systemFontHeader = $this->params->get('systemFontHeader', '');
+$systemFontBody   = $this->params->get('systemFontBody', '');
+
+$headerfontfamily = getGoogleFontFamily($headerfont, 'header', $headerfont == 13 ? $systemFontHeader : $headerfontname);
+$bodyfontfamily   = getGoogleFontFamily($bodyfont, 'body', $bodyfont == 13 ? $systemFontBody : $bodyfontname);
+$isheadergooglefont = isGoogleFont($headerfont);
+$isbodygooglefont   = isGoogleFont($bodyfont);
+
+$bstheme        = $this->params->get('bstheme', '');
+$bsthemecustom  = trim((string) $this->params->get('bsthemecustom', ''));
+if ($bstheme === 'custom') {
+	$bstheme = $bsthemecustom !== '' ? strtolower($bsthemecustom) : '';
+} elseif (!in_array($bstheme, ['light', 'dark', 'auto'])) {
+	$bstheme = '';
+} else {
+	$bstheme = strtolower($bstheme);
+}
+$bsthemeInitial = $bstheme;
+if ($bsthemeInitial === 'auto') {
+	$bsthemeInitial = 'light';
+}
+
+// Determine error title and description
+if ($code === 403) {
+	$errorTitle = Text::_('TPL_ATOMIC_ERROR_403_TITLE');
+	$errorDesc  = Text::_('TPL_ATOMIC_ERROR_403_DESC');
+} elseif ($code === 404) {
+	$errorTitle = Text::_('TPL_ATOMIC_ERROR_404_TITLE');
+	$errorDesc  = Text::_('TPL_ATOMIC_ERROR_404_DESC');
+} else {
+	$errorTitle = $this->title;
+	$errorDesc  = htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8');
+}
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
+<html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>"<?php echo $bsthemeInitial !== '' ? ' data-bs-theme="' . htmlspecialchars($bsthemeInitial, ENT_QUOTES, 'UTF-8') . '"' : ''; ?>>
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="robots" content="noindex">
 		<title><?php echo $code; ?> - <?php echo $this->title; ?></title>
+
+		<?php if ($bstheme !== '') : ?>
+		<script>(function(){var d=document.documentElement,s=localStorage.getItem('theme'),t=s||'<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>';if(t==='auto'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}d.setAttribute('data-bs-theme',t);})()</script>
+		<?php endif; ?>
+
+		<?php
+		// Google Fonts
+		if ($isheadergooglefont || $isbodygooglefont) {
+			echo '<link rel="preconnect" href="https://fonts.googleapis.com">';
+			echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
+			$fontsToLoad = array_unique([$headerfont, $bodyfont]);
+			foreach ($fontsToLoad as $font) {
+				if ($font) {
+					echo getGoogleFontLink($font);
+				}
+			}
+		}
+		?>
+
+		<?php // Bootstrap CSS
+			if($bootstrapsource == 1 || $bootstrapsource == 3 || $bootstrapsource == 4) : ?>
+				<link rel="stylesheet" href="<?php echo $root ?>/media/vendor/bootstrap/css/bootstrap.min.css">
+			<?php elseif($bootstrapsource == 2) : ?>
+				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+			<?php elseif($bootstrapsource == 5) : ?>
+				<?php echo $bootstrapcdn; ?>
+			<?php elseif($bootstrapsource == 6) : ?>
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/cosmo/bootstrap.min.css" integrity="sha384-QOrayDhdkHbTAsh/gb0iGlDY/xHwI3sdDvyHkxnfpY20Y+Pa8aRHFXmLQYklmIx/" crossorigin="anonymous">
+			<?php elseif($bootstrapsource == 7) : ?>
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/flatly/bootstrap.min.css" integrity="sha384-MZ3pnZEBOL1wAG2nrP+M1A9LCApF229c39UC+1T3B96aI3VjuAWMeb1I99GMJacE" crossorigin="anonymous">
+			<?php elseif($bootstrapsource == 8) : ?>
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/minty/bootstrap.min.css" integrity="sha384-7cNn55KSVPdYzfuegchZCGqbVrV6ksXrmgEb1VZbPHSwQqCFDFTrQfg8MsZmSI7u" crossorigin="anonymous">
+			<?php elseif($bootstrapsource == 9) : ?>
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/spacelab/bootstrap.min.css" integrity="sha384-6O06/mG6zTPV5qcszBfW91idf95OvvBVrsSlQ23AP7bq5TYK0Gh4lmmHSf47i/B2" crossorigin="anonymous">
+			<?php elseif($bootstrapsource == 10) : ?>
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/yeti/bootstrap.min.css" integrity="sha384-OMwG/TAHy7NRQbZ6SZ/45S4g8n76iLIAkbYP8evydAdSZiO97yIyh5g2zThHlY8r" crossorigin="anonymous">
+			<?php elseif($bootstrapsource == 11) : ?>
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/cyborg/bootstrap.min.css" integrity="sha384-qxGSw6SRX7woR/PK/wbYrdowFJ2DdFQF+nwWswHGKp+jqtYAQKCvBzB/3b+Pjx6W" crossorigin="anonymous">
+			<?php elseif($bootstrapsource == 12) : ?>
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/darkly/bootstrap.min.css" integrity="sha384-t2UKecXY6tDoQIsEiNhYTaTFWmoHgQT7MV80h9huTejPYLkdgaOHv8ssDrS3Cdcw" crossorigin="anonymous">
+			<?php elseif($bootstrapsource == 13) : ?>
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/slate/bootstrap.min.css" integrity="sha384-qhrBcipvKS9sQcI3lcoXpdKNs9jmQAunazzwZW3aZeuFMoRih2NYJIDsr6XTFndn" crossorigin="anonymous">
+			<?php elseif($bootstrapsource == 14) : ?>
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/superhero/bootstrap.min.css" integrity="sha384-fU437/gCPFVIYQG5/RnXUGGh+prGONHn6C9GslvteaFVmNCeul6aHunWDz85bM78" crossorigin="anonymous">
+		<?php endif; ?>
+
+		<?php // Font CSS custom properties
+			$rootParts = [];
+			if ($headerfont != 2 && !empty($headerfontfamily)) {
+				$rootParts[] = '--atomic-header-font: ' . $headerfontfamily;
+			}
+			if ($bodyfont != 2 && !empty($bodyfontfamily)) {
+				$rootParts[] = '--atomic-body-font: ' . ($bodyfont != 0 ? $bodyfontfamily : 'var(--bs-body-font-family)');
+			}
+			if (!empty($rootParts)) {
+				echo '<style>:root {' . implode(';', $rootParts) . ';}</style>';
+			}
+		?>
+
+		<?php // Atomic CSS
+			if($bsfixjoomla == 1) : ?>
+				<link rel="stylesheet" href="<?php echo $root ?>/media/templates/site/<?php echo $this->template ?>/css/atomic.min.css" type="text/css">
+		<?php endif; ?>
+
+		<?php // Atomic styles
+			if($atomicstyles == 1) : ?>
+				<link rel="stylesheet" href="<?php echo $root ?>/media/templates/site/<?php echo $this->template ?>/css/atomicstyles.min.css" type="text/css">
+		<?php endif; ?>
+
 		<style>
-			:root {
-				--error-bg: #0b0c1a;
-				--error-text: #e8eaf0;
-				--error-muted: #7b8299;
-				--error-accent: #ff6b35;
-				--error-link: #6ea8fe;
-			}
-			* { box-sizing: border-box; margin: 0; padding: 0; }
-			html, body {
-				height: 100%;
-				background-color: var(--error-bg);
-				color: var(--error-text);
-				font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-			}
-			body {
+			.error-page {
+				min-height: 100vh;
 				display: flex;
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
-				min-height: 100vh;
 				padding: 2rem 1rem;
 				text-align: center;
-			}
-			.error-icon {
-				width: 80px;
-				height: 80px;
-				margin: 0 auto 1.5rem;
-				color: var(--error-accent);
 			}
 			.error-code {
 				font-size: clamp(5rem, 20vw, 9rem);
 				font-weight: 900;
 				letter-spacing: -0.04em;
 				line-height: 1;
-				color: var(--error-accent);
 				margin-bottom: 0.5rem;
 			}
 			.error-title {
 				font-size: clamp(1.25rem, 4vw, 1.75rem);
 				font-weight: 600;
 				margin-bottom: 1rem;
-				color: var(--error-text);
 			}
 			.error-desc {
-				font-size: 1rem;
-				color: var(--error-muted);
 				max-width: 480px;
 				margin: 0 auto 2rem;
 				line-height: 1.6;
 			}
-			.error-links {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 0.75rem;
-				justify-content: center;
-				margin-bottom: 2rem;
-			}
-			.error-links a {
-				color: var(--error-link);
-				text-decoration: none;
-				padding: 0.5rem 1.25rem;
-				border: 1px solid rgba(110, 168, 254, 0.35);
-				border-radius: 0.5rem;
-				font-size: 0.9rem;
-				transition: background 0.15s, border-color 0.15s;
-			}
-			.error-links a:hover {
-				background: rgba(110, 168, 254, 0.1);
-				border-color: var(--error-link);
-			}
-			.error-tech {
-				margin-top: 2rem;
-				font-size: 0.8rem;
-				color: var(--error-muted);
-				opacity: 0.7;
-			}
-			/* Search form */
 			.error-search {
 				max-width: 420px;
 				width: 100%;
 				margin: 0 auto 2rem;
 			}
-			.error-search form {
-				display: flex;
-				gap: 0.5rem;
+			.error-logo {
+				max-height: 60px;
+				width: auto;
+				margin-bottom: 1.5rem;
 			}
-			.error-search input[type="search"] {
-				flex: 1;
-				background: rgba(255,255,255,0.08);
-				border: 1px solid rgba(255,255,255,0.15);
-				border-radius: 0.5rem;
-				color: var(--error-text);
-				padding: 0.5rem 0.875rem;
-				font-size: 0.9rem;
-				outline: none;
-			}
-			.error-search input[type="search"]::placeholder { color: var(--error-muted); }
-			.error-search input[type="search"]:focus { border-color: var(--error-link); }
-			.error-search button {
-				background: var(--error-accent);
-				border: none;
-				border-radius: 0.5rem;
-				color: #fff;
-				padding: 0.5rem 1rem;
-				font-size: 0.9rem;
-				cursor: pointer;
-				white-space: nowrap;
-			}
-			.error-search button:hover { opacity: 0.88; }
-			/* Stars background */
-			.stars {
-				position: fixed;
-				inset: 0;
-				z-index: -1;
-				overflow: hidden;
-			}
-			.stars::before, .stars::after {
-				content: '';
-				position: absolute;
-				inset: 0;
-				background-image:
-					radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
-					radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
-					radial-gradient(1.5px 1.5px at 50% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
-					radial-gradient(1px 1px at 10% 90%, rgba(255,255,255,0.5) 0%, transparent 100%),
-					radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
-					radial-gradient(1px 1px at 35% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
-					radial-gradient(1px 1px at 65% 85%, rgba(255,255,255,0.5) 0%, transparent 100%),
-					radial-gradient(1px 1px at 5% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
-					radial-gradient(1px 1px at 75% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
-					radial-gradient(1px 1px at 45% 55%, rgba(255,255,255,0.3) 0%, transparent 100%);
-			}
-			.stars::after {
-				background-image:
-					radial-gradient(1px 1px at 25% 65%, rgba(255,255,255,0.5) 0%, transparent 100%),
-					radial-gradient(1px 1px at 70% 25%, rgba(255,255,255,0.4) 0%, transparent 100%),
-					radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.6) 0%, transparent 100%),
-					radial-gradient(1px 1px at 85% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
-					radial-gradient(1.5px 1.5px at 55% 35%, rgba(255,255,255,0.4) 0%, transparent 100%),
-					radial-gradient(1px 1px at 40% 90%, rgba(255,255,255,0.5) 0%, transparent 100%),
-					radial-gradient(1px 1px at 95% 50%, rgba(255,255,255,0.3) 0%, transparent 100%);
+			.error-debug {
+				text-align: left;
+				max-width: 800px;
+				overflow: auto;
+				font-family: monospace;
+				font-size: 0.75rem;
 			}
 		</style>
 	</head>
-	<body>
-		<div class="stars" aria-hidden="true"></div>
+	<body class="error-page">
 
-		<svg class="error-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-			<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(255,107,53,0.12)"/>
-			<line x1="12" y1="9" x2="12" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-			<line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-		</svg>
+		<?php // Logo ?>
+		<?php if (!empty($logo)) : ?>
+			<img src="<?php echo $this->baseurl . '/' . htmlspecialchars($logo) ?>"
+				 alt="<?php echo htmlspecialchars($sitetitle ?: '') ?>"
+				 class="error-logo" loading="eager" decoding="async" />
+		<?php endif; ?>
 
-		<div class="error-code"><?php echo $code; ?></div>
-		<h1 class="error-title"><?php echo $this->title; ?></h1>
-		<p class="error-desc"><?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></p>
+		<div class="error-code text-body-emphasis"><?php echo $code; ?></div>
+		<h1 class="error-title"><?php echo $errorTitle; ?></h1>
+		<p class="error-desc text-body-secondary"><?php echo $errorDesc; ?></p>
+
+		<?php // Error-specific module position ?>
+		<?php if ($code === 403) : ?>
+			<jdoc:include type="modules" name="error-403" style="none" />
+		<?php elseif ($code === 404) : ?>
+			<jdoc:include type="modules" name="error-404" style="none" />
+		<?php endif; ?>
 
 		<?php if ($errorsearch) : ?>
 		<div class="error-search">
-			<form action="<?php echo $this->baseurl; ?>/index.php" method="get" role="search">
+			<form action="<?php echo $this->baseurl; ?>/index.php" method="get" role="search" class="d-flex gap-2">
 				<input type="hidden" name="option" value="com_finder">
 				<input type="hidden" name="view" value="search">
-				<input type="search" name="q" placeholder="Search the site&hellip;" aria-label="Search">
-				<button type="submit">Search</button>
+				<input type="search" name="q" class="form-control" placeholder="<?php echo Text::_('TPL_ATOMIC_ERROR_SEARCH_PLACEHOLDER'); ?>" aria-label="<?php echo Text::_('TPL_ATOMIC_ERROR_SEARCH_LABEL'); ?>">
+				<button type="submit" class="btn btn-primary text-nowrap"><?php echo Text::_('TPL_ATOMIC_ERROR_SEARCH_BUTTON'); ?></button>
 			</form>
 		</div>
 		<?php endif; ?>
 
-		<nav class="error-links" aria-label="Navigation options">
-			<a href="<?php echo $this->baseurl; ?>/index.php">Home</a>
-			<a href="#" onclick="history.length > 1 ? history.back() : window.location.href='<?php echo $this->baseurl; ?>/index.php'; return false;">Go back</a>
+		<nav class="d-flex flex-wrap gap-2 justify-content-center mb-4" aria-label="<?php echo Text::_('TPL_ATOMIC_ERROR_NAV_LABEL'); ?>">
+			<a href="<?php echo $this->baseurl; ?>/index.php" class="btn btn-outline-secondary"><?php echo Text::_('TPL_ATOMIC_ERROR_HOME'); ?></a>
+			<a href="#" onclick="history.length > 1 ? history.back() : window.location.href='<?php echo $this->baseurl; ?>/index.php'; return false;" class="btn btn-outline-secondary"><?php echo Text::_('TPL_ATOMIC_ERROR_GOBACK'); ?></a>
 		</nav>
 
-		<div class="error-tech">
-			ERROR <?php echo $code; ?>
-			<?php if ($this->debug) : ?>
-				<div style="margin-top:1rem; text-align:left; max-width:800px; background:rgba(255,255,255,0.05); padding:1rem; border-radius:0.5rem; font-family:monospace; font-size:0.75rem; overflow:auto;">
-					<?php echo $this->renderBacktrace(); ?>
-				</div>
-			<?php endif; ?>
-		</div>
+		<?php if ($this->debug) : ?>
+			<div class="error-debug bg-body-tertiary p-3 rounded mb-3">
+				<?php echo $this->renderBacktrace(); ?>
+			</div>
+		<?php endif; ?>
+
 	</body>
 </html>

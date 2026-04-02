@@ -40,6 +40,9 @@ function getGoogleFontFamily($fontval, $pos, $customfontname = '') {
         case 12:
             $fontfamily = '"Unna", serif';
             break;
+        case 13:
+            $fontfamily = $customfontname;
+            break;
         default:
             $fontfamily = $pos === 'body' ? 'var(--bs-body-font-family)' : '';
     endswitch;
