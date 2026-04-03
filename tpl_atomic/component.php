@@ -141,7 +141,7 @@ $typescale = $this->params->get('typescale', '0');
 $typescaleMap = ['1' => 'major-third', '2' => 'minor-third', '3' => 'major-second', '4' => 'minor-second'];
 $dataTypescaleAttr = isset($typescaleMap[(string) $typescale]) ? ' data-typescale="' . $typescaleMap[(string) $typescale] . '"' : '';
 
-// ── PreloadManager preconnect hints  ─────────────────────────
+// ── PreloadManager preconnect hints ─────────────────────────
 $preloadManager = $this->getPreloadManager();
 
 if ($isheadergooglefont || $isbodygooglefont) {
@@ -196,7 +196,7 @@ if ($loadbsicons == 1) {
 	]);
 }
 
-// ── Web Asset Manager: Atomic CSS/JS ────────────────────────
+// ── Web Asset Manager: Atomic CSS/JS  ────────────────────────
 if ($bsfixjoomla == 1) {
 	$wa->useStyle('template.atomic.bs5css');
 }
@@ -228,7 +228,7 @@ if ($customjs == 1) {
 		<script>(function(){var d=document.documentElement,s=localStorage.getItem('theme'),t=s||'<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>';if(t==='auto'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}d.setAttribute('data-bs-theme',t);})()</script>
 		<?php endif; ?>
 		<?php // Preconnect hints and Google Font links are now handled by
-			  // PreloadManager and Web Asset Manager 
+			  // PreloadManager and Web Asset Manager
 			  // in the PHP section above. ?>
 
 		<?php	//	Add custom code after opening head tag

@@ -64,7 +64,7 @@ class AtomicInstallerScript
 			$styleId = (int) $db->loadResult();
 
 			if ($styleId) {
-				$settingsUrl = Uri::root() . 'administrator/index.php?option=com_templates&view=style&layout=edit&id=' . $styleId;
+				$settingsUrl = Uri::root() . 'administrator/index.php?option=com_templates&view=styles&client_id=0';
 				Factory::getApplication()->enqueueMessage(
 					'Atomic template installed successfully. <a href="' . $settingsUrl . '">Open template settings &rsaquo;</a>',
 					'success'

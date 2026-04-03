@@ -190,7 +190,7 @@ foreach (array_unique($cdnHints) as $cdn) {
 	$preloadManager->preconnect($cdn);
 }
 
-// ── Lazy-loaded third-party stylesheets  ─────────────────────
+// ── Lazy-loaded third-party stylesheets ─────────────────────
 // Google Fonts: register built-in fonts (cases 3–12) with media="print" trick
 if ($isheadergooglefont || $isbodygooglefont) {
 	$fontsToLoad = array_unique([$headerfont, $bodyfont]);
