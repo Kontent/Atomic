@@ -37,6 +37,11 @@ The package installs both the template and the sample data plugin. To populate y
 - **Favicon set** — Default icons for Android, Apple, Microsoft, and standard browsers
 - **Component-only view** — Stripped-down rendering for modals, print views, and embeds
 - **Automatic updates** — Integrates with Joomla's built-in update system, with optional beta channel
+- **Web Asset Manager** — CSS and JS assets managed through Joomla's WAM with weighted load ordering
+- **Lazy stylesheet loading** — Google Fonts, Font Awesome, and Bootstrap Icons load non-render-blocking via `media="print"` swap with `<noscript>` fallbacks
+- **PreloadManager** — Automatic `preconnect` hints for CDN origins (Google Fonts, jsDelivr, cdnflare, unpkg)
+- **Error pages** — Bootstrap-styled 403/404 pages with theme support, search form, module positions, and localized strings
+- **Offline page** — Maintenance mode login with multi-factor authentication support
 
 ## Module Positions
 
