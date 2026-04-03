@@ -1,12 +1,13 @@
 <?php
 /**
+ * @package    Atomic
+ * @copyright	 (c) 2009-2026 Ron Severdia. All rights reserved.
+ * @license		 GNU General Public License version 2 or later; see LICENSE.txt
+ *
  * Mobile menu chrome — offcanvas panel only.
  * Rendered outside the header (at body level) so it is not constrained
  * by the header's stacking context.  The matching trigger button is
  * hardcoded inside the header in index.php.
- *
- * @copyright   Copyright (C) 2005 - 2026 Ron Severdia All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;

@@ -1,10 +1,9 @@
 <?php
 
 /**
- * @package     Joomla.Site
- * @subpackage  Templates.atomic
- * @copyright   Copyright (C) 2008-2026 Ron Severdia. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @package    Atomic
+ * @copyright	 (c) 2009-2026 Ron Severdia. All rights reserved.
+ * @license		 GNU General Public License version 2 or later; see LICENSE.txt
  *
  * Bootstrap card module chrome — used for sidebar and content area modules.
  */

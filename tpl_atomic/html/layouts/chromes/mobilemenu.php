@@ -1,13 +1,14 @@
 <?php
 /**
+ * @package    Atomic
+ * @copyright	 (c) 2009-2026 Ron Severdia. All rights reserved.
+ * @license		 GNU General Public License version 2 or later; see LICENSE.txt
+ *
  * Mobile menu chrome — offcanvas panel only.
  * This chrome now renders only the offcanvas panel (identical to the
  * "mobilemenupanel" chrome). The trigger button is hardcoded in index.php
  * inside the header. Rendering the panel outside the header avoids
  * stacking-context issues caused by backdrop-filter on the header.
- *
- * @copyright   Copyright (C) 2005 - 2026 Ron Severdia All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;

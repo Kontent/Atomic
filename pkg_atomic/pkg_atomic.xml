@@ -2,7 +2,7 @@
 <extension type="package" method="upgrade">
 	<name>Atomic</name>
 	<packagename>atomic</packagename>
-	<version>5.1.0</version>
+	<version>5.2.0</version>
 	<creationDate>2026-03-07</creationDate>
 	<author>Ron Severdia</author>
 	<authorEmail>severdia@gmail.com</authorEmail>
