@@ -96,26 +96,14 @@ header.sticky {
   background-color: var(--atomic-header-background-color);
 }
 
-/* Theme switcher — pinned to upper-right of header */
-header > .container,
-header > .container-fluid {
-  position: relative;
-}
+/* Theme switcher — flows inline within the header flex row */
 .dropdown:has(#themeBtn) {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
   z-index: 1;
   display: flex;
   align-items: center;
 }
 .dropdown:has(#themeBtn) .dropdown-menu {
   z-index: 1060;
-}
-/* Prevent header content overlapping the pinned icon */
-header:has(#themeBtn) .header-row {
-  padding-right: 44px;
 }
 
 /* ============================================================
