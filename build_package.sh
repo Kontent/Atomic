@@ -75,6 +75,19 @@ rm -f "$PKG_ZIP"
 (cd "$WORK_DIR" && zip -r "$PKG_ZIP" . "${EXCLUDES[@]}" -q)
 echo "  -> $PKG_ZIP"
 
+# ── 4. Update SHA-256 checksum in update XML files ────────────────
+echo ""
+echo "[4/4] Updating SHA-256 checksums in update XML files..."
+PKG_SHA256=$(shasum -a 256 "$PKG_ZIP" | awk '{print $1}')
+DOCS_DIR="$SCRIPT_DIR/docs"
+
+for XML_FILE in "$DOCS_DIR/update.xml" "$DOCS_DIR/update-beta.xml"; do
+	if [ -f "$XML_FILE" ]; then
+		sed -i '' "s|<sha256>[^<]*</sha256>|<sha256>${PKG_SHA256}</sha256>|" "$XML_FILE"
+		echo "  -> Updated $(basename "$XML_FILE")"
+	fi
+done
+
 # ── Summary ────────────────────────────────────────────────────────
 echo ""
 echo "========================================"
@@ -83,6 +96,8 @@ echo "========================================"
 echo ""
 echo "  Package (install this):"
 echo "    $PKG_ZIP"
+echo ""
+echo "  SHA-256: $PKG_SHA256"
 echo ""
 echo "  Standalone ZIPs (also in $OUT_DIR):"
 echo "    tpl_atomic_${TPL_VERSION}.zip"
