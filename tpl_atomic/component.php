@@ -198,14 +198,8 @@ if ($loadbsicons == 1) {
 }
 
 // ── Web Asset Manager: Atomic CSS/JS  ────────────────────────
-if ($bsfixjoomla == 1) {
-	$wa->useStyle('template.atomic.bs5css');
-}
 if ($atomicstyles == 1) {
 	$wa->useStyle('template.atomic.atomicstyles');
-}
-if ($customcssfile == 1) {
-	$wa->useStyle('template.atomic.css');
 }
 
 if ($bsthemes == 1) {
@@ -334,9 +328,15 @@ if ($customjs == 1) {
 		<?php endif; ?>
 
 		<?php //	Web Asset Manager outputs: lazy Google Fonts, lazy FontAwesome CSS,
-			  //	lazy BS Icons, atomic.min.css, atomicstyles.min.css, template.css,
-			  //	plus Joomla extension styles. ?>
+			  //	lazy BS Icons, atomicstyles.min.css, plus Joomla extension styles. ?>
 		<jdoc:include type="styles" />
+
+		<?php if ($bsfixjoomla == 1) : ?>
+		<link rel="stylesheet" href="<?php echo $root; ?>/media/templates/site/atomic/css/atomic.min.css">
+		<?php endif; ?>
+		<?php if ($customcssfile == 1) : ?>
+		<link rel="stylesheet" href="<?php echo $root; ?>/templates/atomic/css/template.css">
+		<?php endif; ?>
 
 		<?php // Fallback for lazy-loaded stylesheets when JavaScript is disabled ?>
 		<noscript>

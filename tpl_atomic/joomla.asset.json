@@ -6,22 +6,10 @@
   "license": "GPL-2.0-or-later",
   "assets": [
     {
-      "name": "template.atomic.bs5css",
-      "type": "style",
-      "uri": "media/templates/site/atomic/css/atomic.min.css",
-      "weight": 800
-    },
-    {
       "name": "template.atomic.atomicstyles",
       "type": "style",
       "uri": "media/templates/site/atomic/css/atomicstyles.min.css",
-      "weight": 810
-    },
-    {
-      "name": "template.atomic.css",
-      "type": "style",
-      "uri": "templates/atomic/css/template.css",
-      "weight": 900
+      "weight": 200
     },
     {
       "name": "template.atomic.themeswitcher",

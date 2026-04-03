@@ -228,14 +228,11 @@ if ($loadbsicons == 1) {
 }
 
 // ── Web Asset Manager: Atomic CSS  ───────────────────────────
-if ($bsfixjoomla == 1) {
-	$wa->useStyle('template.atomic.bs5css');
-}
+// atomic.min.css, atomicstyles.min.css, and template.css are loaded
+// manually after <jdoc:include type="styles" /> so they always appear
+// last, after any third-party extension stylesheets.
 if ($atomicstyles == 1) {
 	$wa->useStyle('template.atomic.atomicstyles');
-}
-if ($customcssfile == 1) {
-	$wa->useStyle('template.atomic.css');
 }
 
 // ── Web Asset Manager: Atomic JS ────────────────────────────
@@ -452,9 +449,17 @@ if ($customjs == 1) {
 		<?php endif; ?>
 
 		<?php //	Web Asset Manager outputs: lazy Google Fonts, lazy FontAwesome CSS,
-			  //	lazy BS Icons, atomic.min.css, atomicstyles.min.css, template.css,
-			  //	plus Joomla extension styles. ?>
+			  //	lazy BS Icons, atomicstyles.min.css, plus Joomla extension styles. ?>
 		<jdoc:include type="styles" />
+
+		<?php //	atomic.min.css and template.css are loaded outside WAM so they
+			  //	always appear after any third-party extension stylesheets. ?>
+		<?php if ($bsfixjoomla == 1) : ?>
+		<link rel="stylesheet" href="<?php echo $root; ?>/media/templates/site/atomic/css/atomic.min.css">
+		<?php endif; ?>
+		<?php if ($customcssfile == 1) : ?>
+		<link rel="stylesheet" href="<?php echo $root; ?>/templates/atomic/css/template.css">
+		<?php endif; ?>
 
 		<?php // Fallback for lazy-loaded stylesheets when JavaScript is disabled ?>
 		<noscript>
