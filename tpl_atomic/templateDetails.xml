@@ -318,6 +318,8 @@
 				<field name="headercolumns" type="list" default="12" label="TPL_ATOMIC_HEADERCOLUMNS_LABEL" description="TPL_ATOMIC_HEADERCOLUMNS_DESC" layout="joomla.form.field.list">
 					<option value="12">TPL_ATOMIC_COLUMNS_12</option>
 					<option value="6-6">TPL_ATOMIC_COLUMNS_6_6</option>
+					<option value="4-8">TPL_ATOMIC_COLUMNS_4_8</option>
+					<option value="2-10">TPL_ATOMIC_COLUMNS_2_10</option>
 					<option value="4-4-4">TPL_ATOMIC_COLUMNS_4_4_4</option>
 				</field>
 

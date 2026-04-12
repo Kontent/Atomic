@@ -641,7 +641,7 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 			<?php endif; ?>
 		  </div>
 		  <div class="col-12 col-md-<?php echo $headerParts[2]; ?>">
-			<div class="d-flex align-items-center gap-3 ms-auto flex-wrap justify-content-end">
+			<div class="d-none d-md-flex align-items-center gap-3 ms-auto flex-wrap justify-content-end">
 			  <?php if ($hasHeaderRight): ?>
 				<jdoc:include type="modules" name="header-right" style="none" />
 			  <?php endif; ?>
@@ -691,7 +691,7 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 			</div>
 		  </div>
 		  <div class="col-12 col-md-<?php echo $headerParts[1]; ?>">
-			<div class="d-flex align-items-center gap-3 ms-auto flex-wrap justify-content-end">
+			<div class="d-none d-md-flex align-items-center gap-3 ms-auto flex-wrap justify-content-end">
 			  <?php if ($hasHeaderRight): ?>
 				<jdoc:include type="modules" name="header-right" style="none" />
 			  <?php endif; ?>
@@ -741,15 +741,9 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 	<?php endif; ?>
 
 	<?php // Mobile menu offcanvas panel — rendered outside header to avoid stacking context issues ?>
+	<?php // The "mobilemenu" chrome provides the offcanvas wrapper; do NOT add one here. ?>
 	<?php if ($hasMobile): ?>
-	<div class="offcanvas mobilemenu-offcanvas offcanvas-start" data-bs-backdrop="true" data-bs-scroll="false" tabindex="-1" id="mobilemenuOffcanvas" aria-labelledby="mobilemenuLabel">
-		<div class="offcanvas-header">
-			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-		</div>
-		<div class="offcanvas-body">
-			<jdoc:include type="modules" name="mobilemenu" style="none" />
-		</div>
-	</div>
+		<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
 	<?php endif; ?>
 
 	<main id="main-content">
@@ -844,7 +838,7 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 			</div>
 		  <?php endif; ?>
 	
-		  <div class="container-component mt-4 <?= $mainClass; ?>">
+		  <div class="container-component mt-md-4 <?= $mainClass; ?>">
 			<jdoc:include type="modules" name="breadcrumbs" style="none" />
 			<?php if ($this->countModules('abovebody', true)) : ?>
 			<div class="module-position-abovebody mb-3">
