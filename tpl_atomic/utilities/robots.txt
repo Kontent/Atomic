@@ -1,4 +1,41 @@
-# Disallow Rules for AI bot training
+# ==========================================================================
+# Atomic Template for Joomla — robots.txt
+# Copyright (C) 2009-2026 Ron Severdia. All rights reserved.
+# ==========================================================================
+#
+# If the Joomla site is installed within a subfolder (e.g. www.example.com/joomla/)
+# this file MUST be moved to the site root (www.example.com/robots.txt)
+# AND the subfolder name MUST be prefixed to every Disallow path below,
+# e.g. "Disallow: /joomla/administrator/".
+#
+# For more information on the robots.txt standard, see:
+#   https://www.robotstxt.org/orig.html
+
+# --------------------------------------------------------------------------
+# Default rules — Joomla internal directories that should not be indexed
+# --------------------------------------------------------------------------
+User-agent: *
+Disallow: /administrator/
+Disallow: /api/
+Disallow: /bin/
+Disallow: /cache/
+Disallow: /cli/
+Disallow: /components/
+Disallow: /includes/
+Disallow: /installation/
+Disallow: /language/
+Disallow: /layouts/
+Disallow: /libraries/
+Disallow: /logs/
+Disallow: /modules/
+Disallow: /plugins/
+Disallow: /tmp/
+Disallow: /*?option=com_users*
+Disallow: /*?task=user.logout*
+
+# --------------------------------------------------------------------------
+# AI / LLM training crawlers — opt out of being used as training data
+# --------------------------------------------------------------------------
 
 User-agent: Amazonbot
 Disallow: /
@@ -10,6 +47,8 @@ User-agent: Applebot-Extended
 Disallow: /
 
 User-agent: AwarioRssBot
+Disallow: /
+
 User-agent: AwarioSmartBot
 Disallow: /
 
@@ -56,6 +95,8 @@ User-agent: magpie-crawler
 Disallow: /
 
 User-agent: Meta-ExternalAgent
+Disallow: /
+
 User-agent: meta-externalagent
 Disallow: /
 
@@ -75,6 +116,8 @@ User-agent: omgilibot
 Disallow: /
 
 User-agent: peer39_crawler
+Disallow: /
+
 User-agent: peer39_crawler/1.0
 Disallow: /
 
@@ -90,3 +133,487 @@ Disallow: /
 User-agent: TurnitinBot
 Disallow: /
 
+User-agent: YouBot
+Disallow: /
+
+# --------------------------------------------------------------------------
+# Aggressive SEO / backlink / market-intel crawlers
+# These hammer sites for commercial data mining with little SEO benefit.
+# --------------------------------------------------------------------------
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: MegaIndex.ru
+Disallow: /
+
+User-agent: SEOkicks-Robot
+Disallow: /
+
+User-agent: SEOkicks
+Disallow: /
+
+User-agent: Barkrowler
+Disallow: /
+
+User-agent: serpstatbot
+Disallow: /
+
+User-agent: BacklinkCrawler
+Disallow: /
+
+User-agent: Backlink-Ceck
+Disallow: /
+
+User-agent: BacklinksExtendedBot
+Disallow: /
+
+User-agent: AspiegelBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: BrandVerity
+Disallow: /
+
+User-agent: Brandwatch
+Disallow: /
+
+User-agent: BuiltWith
+Disallow: /
+
+User-agent: TurnitinBot
+Disallow: /
+
+User-agent: Seekport
+Disallow: /
+
+User-agent: sentibot
+Disallow: /
+
+User-agent: sentryBot
+Disallow: /
+
+User-agent: Sogou
+Disallow: /
+
+User-agent: YandexBot
+Disallow: /
+
+User-agent: 360Spider
+Disallow: /
+
+# --------------------------------------------------------------------------
+# Vulnerability scanners & well-known malicious UAs
+# (Not expected to honor robots.txt, but listed for completeness and to
+#  make server-side log review easier. Real blocking should happen in
+#  .htaccess — see the matching utilities/htaccess.txt.)
+# --------------------------------------------------------------------------
+
+User-agent: Acunetix
+Disallow: /
+
+User-agent: nikto
+Disallow: /
+
+User-agent: sqlmap
+Disallow: /
+
+User-agent: nessus
+Disallow: /
+
+User-agent: Openvas
+Disallow: /
+
+User-agent: fimap
+Disallow: /
+
+User-agent: dirbuster
+Disallow: /
+
+User-agent: whatweb
+Disallow: /
+
+User-agent: masscan
+Disallow: /
+
+User-agent: zgrab
+Disallow: /
+
+User-agent: CensysInspect
+Disallow: /
+
+User-agent: Expanse
+Disallow: /
+
+User-agent: zmeu
+Disallow: /
+
+User-agent: FHscan
+Disallow: /
+
+User-agent: ZmEu
+Disallow: /
+
+# --------------------------------------------------------------------------
+# Site rippers / offline browsers / email harvesters
+# --------------------------------------------------------------------------
+
+User-agent: HTTrack
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: WebReaper
+Disallow: /
+
+User-agent: WebStripper
+Disallow: /
+
+User-agent: WebZIP
+Disallow: /
+
+User-agent: SiteSnagger
+Disallow: /
+
+User-agent: Xenu
+Disallow: /
+
+User-agent: Offline Explorer
+Disallow: /
+
+User-agent: Teleport
+Disallow: /
+
+User-agent: TeleportPro
+Disallow: /
+
+User-agent: EmailCollector
+Disallow: /
+
+User-agent: EmailSiphon
+Disallow: /
+
+User-agent: EmailWolf
+Disallow: /
+
+User-agent: ExtractorPro
+Disallow: /
+
+User-agent: Harvest
+Disallow: /
+
+User-agent: autoemailspider
+Disallow: /
+
+# --------------------------------------------------------------------------
+# Other noisy bots commonly seen in access logs
+# --------------------------------------------------------------------------
+
+User-agent: 80legs
+Disallow: /
+
+User-agent: 404checker
+Disallow: /
+
+User-agent: AdsTxtCrawlerTP
+Disallow: /
+
+User-agent: Aipbot
+Disallow: /
+
+User-agent: AllSubmitter
+Disallow: /
+
+User-agent: Alligator
+Disallow: /
+
+User-agent: Anarchie
+Disallow: /
+
+User-agent: BackDoorBot
+Disallow: /
+
+User-agent: Badass
+Disallow: /
+
+User-agent: BlackWidow
+Disallow: /
+
+User-agent: Bolt
+Disallow: /
+
+User-agent: BotALot
+Disallow: /
+
+User-agent: Buddy
+Disallow: /
+
+User-agent: BuiltBotTough
+Disallow: /
+
+User-agent: Bullseye
+Disallow: /
+
+User-agent: BunnySlippers
+Disallow: /
+
+User-agent: Cegbfeieh
+Disallow: /
+
+User-agent: CheeseBot
+Disallow: /
+
+User-agent: CherryPicker
+Disallow: /
+
+User-agent: ChinaClaw
+Disallow: /
+
+User-agent: CopyRightCheck
+Disallow: /
+
+User-agent: cosmos
+Disallow: /
+
+User-agent: Crescent
+Disallow: /
+
+User-agent: discobot
+Disallow: /
+
+User-agent: DittoSpyder
+Disallow: /
+
+User-agent: EirGrabber
+Disallow: /
+
+User-agent: EroCrawler
+Disallow: /
+
+User-agent: FairAd Client
+Disallow: /
+
+User-agent: Flaming AttackBot
+Disallow: /
+
+User-agent: Foobot
+Disallow: /
+
+User-agent: Gaisbot
+Disallow: /
+
+User-agent: GetRight
+Disallow: /
+
+User-agent: Go-Ahead-Got-It
+Disallow: /
+
+User-agent: grub-client
+Disallow: /
+
+User-agent: GT::WWW
+Disallow: /
+
+User-agent: heritrix
+Disallow: /
+
+User-agent: HMView
+Disallow: /
+
+User-agent: humanlinks
+Disallow: /
+
+User-agent: IlseBot
+Disallow: /
+
+User-agent: Indy Library
+Disallow: /
+
+User-agent: InfoNaviRobot
+Disallow: /
+
+User-agent: InterGET
+Disallow: /
+
+User-agent: Iria
+Disallow: /
+
+User-agent: JennyBot
+Disallow: /
+
+User-agent: JetCar
+Disallow: /
+
+User-agent: JOC Web Spider
+Disallow: /
+
+User-agent: larbin
+Disallow: /
+
+User-agent: LeechFTP
+Disallow: /
+
+User-agent: LexiBot
+Disallow: /
+
+User-agent: libWeb
+Disallow: /
+
+User-agent: libwww
+Disallow: /
+
+User-agent: LinkextractorPro
+Disallow: /
+
+User-agent: LinkScan/8.1a Unix
+Disallow: /
+
+User-agent: LinkWalker
+Disallow: /
+
+User-agent: lwp-trivial
+Disallow: /
+
+User-agent: Mata Hari
+Disallow: /
+
+User-agent: Microsoft.URL Control
+Disallow: /
+
+User-agent: Mister PiX
+Disallow: /
+
+User-agent: NetAnts
+Disallow: /
+
+User-agent: NICErsPRO
+Disallow: /
+
+User-agent: Ninja
+Disallow: /
+
+User-agent: Nutch
+Disallow: /
+
+User-agent: Openfind
+Disallow: /
+
+User-agent: PageGrabber
+Disallow: /
+
+User-agent: Papa Foto
+Disallow: /
+
+User-agent: pavuk
+Disallow: /
+
+User-agent: pcBrowser
+Disallow: /
+
+User-agent: psbot
+Disallow: /
+
+User-agent: QueryN Metasearch
+Disallow: /
+
+User-agent: RepoMonkey
+Disallow: /
+
+User-agent: RMA
+Disallow: /
+
+User-agent: SpankBot
+Disallow: /
+
+User-agent: spanner
+Disallow: /
+
+User-agent: SpeedDownload
+Disallow: /
+
+User-agent: Sqworm
+Disallow: /
+
+User-agent: SuperBot
+Disallow: /
+
+User-agent: SuperHTTP
+Disallow: /
+
+User-agent: Surfbot
+Disallow: /
+
+User-agent: TightTwatBot
+Disallow: /
+
+User-agent: Titan
+Disallow: /
+
+User-agent: True_Robot
+Disallow: /
+
+User-agent: turingos
+Disallow: /
+
+User-agent: URLy Warning
+Disallow: /
+
+User-agent: VCI
+Disallow: /
+
+User-agent: Web Image Collector
+Disallow: /
+
+User-agent: WebAuto
+Disallow: /
+
+User-agent: WebBandit
+Disallow: /
+
+User-agent: WebEnhancer
+Disallow: /
+
+User-agent: WebmasterWorldForumBot
+Disallow: /
+
+User-agent: WebSauger
+Disallow: /
+
+User-agent: Website Quester
+Disallow: /
+
+User-agent: Webster Pro
+Disallow: /
+
+User-agent: WebWhacker
+Disallow: /
+
+User-agent: wget
+Disallow: /
+
+User-agent: Widow
+Disallow: /
+
+User-agent: WWW-Collector-E
+Disallow: /
+
+User-agent: Xaldon WebSpider
+Disallow: /
+
+User-agent: Zeus
+Disallow: /

@@ -4,12 +4,215 @@
 # @license    GNU General Public License version 2 or later; see LICENSE.txt
 ##
 
-## Add the contents of this file to your Joomla htaccess file to speed up your website.
+## Add the contents of this file to your Joomla .htaccess file to speed up and
+## harden your website. These rules supplement (not replace) Joomla's own
+## .htaccess rewrite rules and are safe to append to the end of that file.
 
 
 
-## Add compression for SEO and Page Speed improvement
-## Note you can also add "defer" to your script tags in the index.php file
+##################################################################
+## 1. SECURITY HEADERS
+##################################################################
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+  # Uncomment HSTS only after confirming the full site (and subdomains you care
+  # about) are served exclusively over HTTPS:
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+## Disable inline JavaScript when SVG files are opened directly
+<FilesMatch "\.svg$">
+  <IfModule mod_headers.c>
+    Header always set Content-Security-Policy "script-src 'none'"
+  </IfModule>
+</FilesMatch>
+
+## Disable directory listings (belt-and-suspenders with Joomla's Options -Indexes)
+<IfModule mod_autoindex.c>
+  IndexIgnore *
+</IfModule>
+
+
+##################################################################
+## 2. BLOCK COMMON EXPLOIT / RECON PATHS
+##################################################################
+
+# Block WordPress-style scans (this is a Joomla site)
+RedirectMatch 404 ^/wp-
+RedirectMatch 404 ^/wordpress
+RedirectMatch 404 ^/xmlrpc\.php$
+
+# Block source-control / build-tool file exposure
+RedirectMatch 404 /\.git(/|$)
+RedirectMatch 404 /\.svn(/|$)
+RedirectMatch 404 /\.hg(/|$)
+RedirectMatch 404 /\.bzr(/|$)
+RedirectMatch 404 /\.env$
+RedirectMatch 404 /\.DS_Store$
+RedirectMatch 404 /composer\.(json|lock)$
+RedirectMatch 404 /package(-lock)?\.json$
+RedirectMatch 404 /yarn\.lock$
+RedirectMatch 404 /Gemfile(\.lock)?$
+RedirectMatch 404 /phpunit(\.xml(\.dist)?)?$
+
+# Block PHP files under /.well-known/ (common backdoor-planting spot, e.g. nastar.php)
+RedirectMatch 403 ^/\.well-known/.*\.php$
+
+# Block probes for temp, backup, and staging directories
+RedirectMatch 403 ^/(backup|backups|bak|old|db|database|dump|dumps|sql|mysql|temp|tmp|test|tests|dev|staging|stage|new|beta)/?$
+
+# Block direct access to Joomla sensitive files
+<FilesMatch "^(configuration\.php|\.htaccess|\.htpasswd|web\.config|htaccess\.txt)$">
+  Require all denied
+</FilesMatch>
+
+# Block targeted Joomla Astroid installTemplate exploit
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{QUERY_STRING} astroid=installTemplate [NC]
+  RewriteRule .* - [F,L]
+
+  # Block common SQLi / RFI / LFI patterns in query strings
+  RewriteCond %{QUERY_STRING} (\.\./){2,}            [NC,OR]
+  RewriteCond %{QUERY_STRING} (union[\s+]+select)    [NC,OR]
+  RewriteCond %{QUERY_STRING} (concat[\s+]*\()       [NC,OR]
+  RewriteCond %{QUERY_STRING} (benchmark[\s+]*\()    [NC,OR]
+  RewriteCond %{QUERY_STRING} (sleep[\s+]*\([\s+]*[0-9]) [NC,OR]
+  RewriteCond %{QUERY_STRING} (passthru|shell_exec|system|phpinfo)[\s+]*\( [NC,OR]
+  RewriteCond %{QUERY_STRING} (\bfile_get_contents\b|\bfopen\b)\( [NC,OR]
+  RewriteCond %{QUERY_STRING} (=|%3D)(php|https?|ftp|data|file)(:|%3A)// [NC]
+  RewriteRule .* - [F,L]
+
+  # Block requests with no User-Agent AND no Referer hitting dynamic endpoints
+  # (legitimate browsers always send a UA)
+  RewriteCond %{HTTP_USER_AGENT} ^-?$
+  RewriteCond %{REQUEST_URI}     \.(php|cgi|pl)$ [NC]
+  RewriteRule .* - [F,L]
+</IfModule>
+
+
+##################################################################
+## 3. BLOCK BAD BOTS, SCANNERS, AND SCRAPERS
+##################################################################
+
+<IfModule mod_setenvif.c>
+  # Vulnerability scanners
+  SetEnvIfNoCase User-Agent "Acunetix"        bad_bot
+  SetEnvIfNoCase User-Agent "nikto"           bad_bot
+  SetEnvIfNoCase User-Agent "sqlmap"          bad_bot
+  SetEnvIfNoCase User-Agent "nessus"          bad_bot
+  SetEnvIfNoCase User-Agent "Openvas"         bad_bot
+  SetEnvIfNoCase User-Agent "fimap"           bad_bot
+  SetEnvIfNoCase User-Agent "dirbuster"       bad_bot
+  SetEnvIfNoCase User-Agent "gobuster"        bad_bot
+  SetEnvIfNoCase User-Agent "ffuf"            bad_bot
+  SetEnvIfNoCase User-Agent "wfuzz"           bad_bot
+  SetEnvIfNoCase User-Agent "jbrofuzz"        bad_bot
+  SetEnvIfNoCase User-Agent "whatweb"         bad_bot
+  SetEnvIfNoCase User-Agent "nuclei"          bad_bot
+  SetEnvIfNoCase User-Agent "masscan"         bad_bot
+  SetEnvIfNoCase User-Agent "zgrab"           bad_bot
+  SetEnvIfNoCase User-Agent "CensysInspect"   bad_bot
+  SetEnvIfNoCase User-Agent "Expanse"         bad_bot
+  SetEnvIfNoCase User-Agent "zmeu"            bad_bot
+  SetEnvIfNoCase User-Agent "FHscan"          bad_bot
+
+  # Generic HTTP libraries (usually automated/scraping)
+  SetEnvIfNoCase User-Agent "Go-http-client"  bad_bot
+  SetEnvIfNoCase User-Agent "libwww-perl"     bad_bot
+  SetEnvIfNoCase User-Agent "libwww"          bad_bot
+  SetEnvIfNoCase User-Agent "PECL::HTTP"      bad_bot
+  SetEnvIfNoCase User-Agent "HTTP::Lite"      bad_bot
+  SetEnvIfNoCase User-Agent "WWW-Mechanize"   bad_bot
+  SetEnvIfNoCase User-Agent "Python-urllib"   bad_bot
+  SetEnvIfNoCase User-Agent "pycurl"          bad_bot
+  SetEnvIfNoCase User-Agent "Jakarta"         bad_bot
+  SetEnvIfNoCase User-Agent "Indy Library"    bad_bot
+  # NOTE: "curl" and "wget" are intentionally NOT blocked by UA because many
+  # cron jobs and monitoring tools rely on them.
+
+  # Aggressive SEO / content scrapers
+  SetEnvIfNoCase User-Agent "AhrefsBot"       bad_bot
+  SetEnvIfNoCase User-Agent "SemrushBot"      bad_bot
+  SetEnvIfNoCase User-Agent "MJ12bot"         bad_bot
+  SetEnvIfNoCase User-Agent "DotBot"          bad_bot
+  SetEnvIfNoCase User-Agent "BLEXBot"         bad_bot
+  SetEnvIfNoCase User-Agent "MegaIndex"       bad_bot
+  SetEnvIfNoCase User-Agent "SEOkicks"        bad_bot
+  SetEnvIfNoCase User-Agent "Barkrowler"      bad_bot
+  SetEnvIfNoCase User-Agent "serpstatbot"     bad_bot
+  SetEnvIfNoCase User-Agent "DataForSeoBot"   bad_bot
+  SetEnvIfNoCase User-Agent "Sogou"           bad_bot
+  SetEnvIfNoCase User-Agent "YandexBot"       bad_bot
+  SetEnvIfNoCase User-Agent "PetalBot"        bad_bot
+
+  # Site rippers / download managers
+  SetEnvIfNoCase User-Agent "HTTrack"         bad_bot
+  SetEnvIfNoCase User-Agent "WebCopier"       bad_bot
+  SetEnvIfNoCase User-Agent "WebReaper"       bad_bot
+  SetEnvIfNoCase User-Agent "WebStripper"     bad_bot
+  SetEnvIfNoCase User-Agent "WebZIP"          bad_bot
+  SetEnvIfNoCase User-Agent "SiteSnagger"     bad_bot
+  SetEnvIfNoCase User-Agent "Xenu"            bad_bot
+  SetEnvIfNoCase User-Agent "Wget/1\.\d"      bad_bot_version_only
+  SetEnvIfNoCase User-Agent "Offline Explorer" bad_bot
+  SetEnvIfNoCase User-Agent "Teleport"        bad_bot
+
+  # AI training scrapers (block by default — adjust as needed)
+  SetEnvIfNoCase User-Agent "GPTBot"          bad_bot
+  SetEnvIfNoCase User-Agent "ChatGPT-User"    bad_bot
+  SetEnvIfNoCase User-Agent "OAI-SearchBot"   bad_bot
+  SetEnvIfNoCase User-Agent "ClaudeBot"       bad_bot
+  SetEnvIfNoCase User-Agent "Claude-Web"      bad_bot
+  SetEnvIfNoCase User-Agent "anthropic-ai"    bad_bot
+  SetEnvIfNoCase User-Agent "PerplexityBot"   bad_bot
+  SetEnvIfNoCase User-Agent "CCBot"           bad_bot
+  SetEnvIfNoCase User-Agent "Bytespider"      bad_bot
+  SetEnvIfNoCase User-Agent "Amazonbot"       bad_bot
+  SetEnvIfNoCase User-Agent "Applebot-Extended" bad_bot
+  SetEnvIfNoCase User-Agent "Google-Extended" bad_bot
+  SetEnvIfNoCase User-Agent "Meta-ExternalAgent" bad_bot
+  SetEnvIfNoCase User-Agent "FacebookBot"     bad_bot
+  SetEnvIfNoCase User-Agent "cohere-ai"       bad_bot
+  SetEnvIfNoCase User-Agent "Diffbot"         bad_bot
+  SetEnvIfNoCase User-Agent "ImagesiftBot"    bad_bot
+
+  # Email harvesters / spambots
+  SetEnvIfNoCase User-Agent "EmailCollector"  bad_bot
+  SetEnvIfNoCase User-Agent "EmailSiphon"     bad_bot
+  SetEnvIfNoCase User-Agent "EmailWolf"       bad_bot
+  SetEnvIfNoCase User-Agent "ExtractorPro"    bad_bot
+  SetEnvIfNoCase User-Agent "Harvest"         bad_bot
+  SetEnvIfNoCase User-Agent "autoemailspider" bad_bot
+
+  # Suspicious / fake user agents seen in the wild
+  SetEnvIfNoCase User-Agent "^-?$"            bad_bot
+  SetEnvIfNoCase User-Agent "^Mozilla/4\.0 \(compatible; MSIE [5-9]\.0"  bad_bot
+  SetEnvIfNoCase User-Agent "^Mozilla/5\.0 \(compatible; MSIE 5\.0"      bad_bot
+</IfModule>
+
+<IfModule mod_authz_core.c>
+  <RequireAll>
+    Require all granted
+    Require not env bad_bot
+  </RequireAll>
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order allow,deny
+  Allow from all
+  Deny from env=bad_bot
+</IfModule>
+
+
+##################################################################
+## 4. COMPRESSION (SEO & Page Speed)
+##################################################################
+
+## You can also add "defer" to your script tags in the index.php file
 
 <IfModule mod_deflate.c>
   # Compress HTML, CSS, JavaScript, Text, XML and fonts
@@ -43,37 +246,56 @@
 </IfModule>
 
 
-## Add caching for SEO and Page Speed improvement (calculated in seconds)
+##################################################################
+## 5. BROWSER CACHING (SEO & Page Speed)
+##################################################################
 
 # Three months for image files
-<filesMatch ".(jpg|jpeg|png|gif|ico)$">
-Header set Cache-Control "max-age=7884000, public"
+<filesMatch ".(jpg|jpeg|png|gif|ico|webp|svg)$">
+  Header set Cache-Control "max-age=7884000, public"
 </filesMatch>
 
-# One month for css and js
+# One month for CSS and JS
 <filesMatch ".(css|js)$">
-Header set Cache-Control "max-age=2628000, public"
+  Header set Cache-Control "max-age=2628000, public"
+</filesMatch>
+
+# One year for fonts
+<filesMatch ".(woff|woff2|ttf|otf|eot)$">
+  Header set Cache-Control "max-age=31536000, public"
 </filesMatch>
 
 # Seven days for other files
 <filesMatch ".(pdf|flv|swf)$">
-Header set Cache-Control "max-age=604800, public"
+  Header set Cache-Control "max-age=604800, public"
 </filesMatch>
 
 
 ## EXPIRES HEADER CACHING ##
- <IfModule mod_expires.c>
- ExpiresActive On
- ExpiresByType image/jpg "access 1 year"
- ExpiresByType image/jpeg "access 1 year"
- ExpiresByType image/gif "access 1 year"
- ExpiresByType image/png "access 1 year"
- ExpiresByType text/css "access 1 month"
- ExpiresByType application/pdf "access 1 month"
- ExpiresByType application/javascript "access 1 month"
- ExpiresByType application/x-javascript "access 1 month"
- ExpiresByType application/x-shockwave-flash "access 1 month"
- ExpiresByType image/x-icon "access 1 year"
- ExpiresDefault "access 7 days"
- </IfModule>
- ## EXPIRES HEADER CACHING ##
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg                 "access plus 1 year"
+  ExpiresByType image/jpeg                "access plus 1 year"
+  ExpiresByType image/gif                 "access plus 1 year"
+  ExpiresByType image/png                 "access plus 1 year"
+  ExpiresByType image/webp                "access plus 1 year"
+  ExpiresByType image/svg+xml             "access plus 1 year"
+  ExpiresByType image/x-icon              "access plus 1 year"
+  ExpiresByType image/vnd.microsoft.icon  "access plus 1 year"
+  ExpiresByType font/ttf                  "access plus 1 year"
+  ExpiresByType font/otf                  "access plus 1 year"
+  ExpiresByType font/woff                 "access plus 1 year"
+  ExpiresByType font/woff2                "access plus 1 year"
+  ExpiresByType application/font-woff     "access plus 1 year"
+  ExpiresByType video/webm                "access plus 1 year"
+  ExpiresByType video/mp4                 "access plus 1 year"
+  ExpiresByType video/mpeg                "access plus 1 year"
+  ExpiresByType text/css                  "access plus 1 month"
+  ExpiresByType text/javascript           "access plus 1 month"
+  ExpiresByType application/javascript    "access plus 1 month"
+  ExpiresByType application/x-javascript  "access plus 1 month"
+  ExpiresByType application/pdf           "access plus 1 month"
+  ExpiresByType application/x-shockwave-flash "access plus 1 month"
+  ExpiresDefault                          "access plus 7 days"
+</IfModule>
+## EXPIRES HEADER CACHING ##
