@@ -10,6 +10,15 @@
 #
 # For more information on the robots.txt standard, see:
 #   https://www.robotstxt.org/orig.html
+#
+# NOTE: robots.txt is advisory — well-behaved bots honor it, malicious bots
+# do not. Real blocking belongs in .htaccess (see utilities/htaccess.txt).
+#
+# --------------------------------------------------------------------------
+# Sitemap reference — uncomment and replace with your site's sitemap URL.
+# Major search engines (Google, Bing, Yandex) will discover it from here.
+# --------------------------------------------------------------------------
+# Sitemap: https://www.example.com/sitemap.xml
 
 # --------------------------------------------------------------------------
 # Default rules — Joomla internal directories that should not be indexed
@@ -37,7 +46,13 @@ Disallow: /*?task=user.logout*
 # AI / LLM training crawlers — opt out of being used as training data
 # --------------------------------------------------------------------------
 
+User-agent: AI2Bot
+Disallow: /
+
 User-agent: Amazonbot
+Disallow: /
+
+User-agent: Amzn-SearchBot
 Disallow: /
 
 User-agent: anthropic-ai
@@ -70,6 +85,9 @@ Disallow: /
 User-agent: cohere-ai
 Disallow: /
 
+User-agent: cohere-training-data-crawler
+Disallow: /
+
 User-agent: DataForSeoBot
 Disallow: /
 
@@ -88,7 +106,13 @@ Disallow: /
 User-agent: GPTBot
 Disallow: /
 
+User-agent: iaskspider
+Disallow: /
+
 User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: kagibot
 Disallow: /
 
 User-agent: magpie-crawler
@@ -97,7 +121,7 @@ Disallow: /
 User-agent: Meta-ExternalAgent
 Disallow: /
 
-User-agent: meta-externalagent
+User-agent: MistralAI
 Disallow: /
 
 User-agent: NewsNow
@@ -130,7 +154,25 @@ Disallow: /
 User-agent: Scrapy
 Disallow: /
 
+User-agent: Sidetrade indexer bot
+Disallow: /
+
+User-agent: ThinkBot
+Disallow: /
+
+User-agent: TikTokSpider
+Disallow: /
+
+User-agent: Timpibot
+Disallow: /
+
 User-agent: TurnitinBot
+Disallow: /
+
+User-agent: Velen Crawler
+Disallow: /
+
+User-agent: Webzio-Extended
 Disallow: /
 
 User-agent: YouBot
@@ -193,9 +235,6 @@ User-agent: Brandwatch
 Disallow: /
 
 User-agent: BuiltWith
-Disallow: /
-
-User-agent: TurnitinBot
 Disallow: /
 
 User-agent: Seekport
@@ -263,9 +302,6 @@ User-agent: zmeu
 Disallow: /
 
 User-agent: FHscan
-Disallow: /
-
-User-agent: ZmEu
 Disallow: /
 
 # --------------------------------------------------------------------------
@@ -603,8 +639,10 @@ Disallow: /
 User-agent: WebWhacker
 Disallow: /
 
-User-agent: wget
-Disallow: /
+# NOTE: "wget" is intentionally NOT blocked — many legitimate cron jobs,
+# uptime monitors, and CI pipelines rely on it. The utility .htaccess takes
+# the same stance. If you want to disallow human "wget -m" mirror runs,
+# block at the firewall by IP instead.
 
 User-agent: Widow
 Disallow: /

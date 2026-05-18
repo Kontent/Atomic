@@ -18,10 +18,21 @@
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), interest-cohort=()"
+
   # Uncomment HSTS only after confirming the full site (and subdomains you care
-  # about) are served exclusively over HTTPS:
-  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  # about) are served exclusively over HTTPS. Drop `preload` if you don't plan
+  # to submit to https://hstspreload.org/ — once preloaded, removal is slow.
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # CSP starter — Report-Only is safe to enable by default; it flags violations
+  # in the browser console without breaking anything. Tighten the policy and
+  # switch to Content-Security-Policy (enforced) once you've reviewed reports.
+  Header always set Content-Security-Policy-Report-Only "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self'; object-src 'none'; base-uri 'self';"
+
+  # Hide server/PHP fingerprints from response headers
+  Header unset X-Powered-By
+  Header unset Server
 </IfModule>
 
 ## Disable inline JavaScript when SVG files are opened directly
@@ -44,7 +55,7 @@
 # Block WordPress-style scans (this is a Joomla site)
 RedirectMatch 404 ^/wp-
 RedirectMatch 404 ^/wordpress
-RedirectMatch 404 ^/xmlrpc\.php$
+RedirectMatch 403 (?i)^/(xmlrpc\.php|wp-login\.php|wp-admin/?)$
 
 # Block source-control / build-tool file exposure
 RedirectMatch 404 /\.git(/|$)
@@ -59,24 +70,75 @@ RedirectMatch 404 /yarn\.lock$
 RedirectMatch 404 /Gemfile(\.lock)?$
 RedirectMatch 404 /phpunit(\.xml(\.dist)?)?$
 
+# Block cloud-credential, SSH, and host-config file probes
+RedirectMatch 404 (?i)/\.(aws|npmrc|htpasswd|netrc|dockerenv|kube|ssh)(/|$)
+RedirectMatch 404 (?i)/(phpinfo|php|info|i|test)\.php$
+RedirectMatch 404 (?i)/wp-config(-(old|backup|sample))?\.php
+
 # Block PHP files under /.well-known/ (common backdoor-planting spot, e.g. nastar.php)
 RedirectMatch 403 ^/\.well-known/.*\.php$
 
 # Block probes for temp, backup, and staging directories
 RedirectMatch 403 ^/(backup|backups|bak|old|db|database|dump|dumps|sql|mysql|temp|tmp|test|tests|dev|staging|stage|new|beta)/?$
 
-# Block direct access to Joomla sensitive files
-<FilesMatch "^(configuration\.php|\.htaccess|\.htpasswd|web\.config|htaccess\.txt)$">
+# Block known recon/exploit paths from scanners-in-the-wild (return 410 Gone
+# to discourage retries):
+#   /Readme.txt           — Chinese scanner CMS-fingerprint pull
+#   /dayrui/              — dayrui/Fcms scanner fingerprint
+#   /assets/plugins/elfinder — CVE-2021-32682 elFinder RCE probe
+#   /administrator/manifests — Joomla manifest-leak probe
+#   /phpmyadmin           — universal admin-panel probe
+RedirectMatch 410 (?i)^/(Readme\.txt|dayrui|phpmyadmin|administrator/manifests|assets/plugins/elfinder)
+
+# Block direct access to Joomla sensitive files. configuration.php is the
+# Joomla equivalent of wp-config.php (database credentials live here).
+<FilesMatch "^(configuration\.php|\.htaccess|\.htpasswd|web\.config|htaccess\.txt|\.user\.ini|.*\.(bak|sql|swp|swo|log|ini|conf|old|orig|save|tar|tar\.gz|zip|rar))$">
   Require all denied
 </FilesMatch>
 
-# Block targeted Joomla Astroid installTemplate exploit
+# Block external access to Joomla's cron.php (CLI/cron should run via PHP CLI,
+# not the web). Comment out if you've configured webcron via an external service.
+<Files "cron.php">
+  Require all denied
+</Files>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
+
+  # ---- HTTPS enforcement ----
+  # Uncomment once you've confirmed a valid TLS certificate covers every
+  # hostname this site answers to. Leaving HSTS off (above) AND this rule off
+  # is fine; turning HSTS on while this is off is a footgun.
+  # RewriteCond %{HTTPS} !=on
+  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # ---- Bot early-block ----
+  # Block bots flagged via the bad_bot env (set in Section 3 below) BEFORE
+  # any redirect runs. Apache's order/deny + RequireAll run at the
+  # authorization phase, which is AFTER mod_rewrite's URL-translation phase,
+  # so a canonical-host 301 (e.g. non-www → www) would otherwise fire before
+  # the bot is denied. This guard short-circuits at the rewrite phase.
+  RewriteCond %{ENV:bad_bot} =1
+  RewriteRule .* - [F,L]
+
+  # ---- Referrer-spam / log-poisoning filter ----
+  # Spoofed referrers like www.google.net, www.yandex.net, binance.com show
+  # up in awstats/analytics to bait clicks. Block on sight.
+  RewriteCond %{HTTP_REFERER} (google|yandex|baidu|yahoo|bing)\.net [NC,OR]
+  RewriteCond %{HTTP_REFERER} (semalt|kambasoft|savetubevideo|buttons-for-website)\.com [NC,OR]
+  RewriteCond %{HTTP_REFERER} (dayrui|Readme\.txt|usingjoomlabook\.com) [NC]
+  RewriteRule .* - [F,L]
+
+  # ---- WordPress author enumeration ----
+  # Scanners spray ?author=N indiscriminately; pointless on Joomla.
+  RewriteCond %{QUERY_STRING} (^|&)author=\d+ [NC]
+  RewriteRule .* - [F,L]
+
+  # ---- Targeted Joomla Astroid installTemplate exploit ----
   RewriteCond %{QUERY_STRING} astroid=installTemplate [NC]
   RewriteRule .* - [F,L]
 
-  # Block common SQLi / RFI / LFI patterns in query strings
+  # ---- Common SQLi / RFI / LFI / RCE patterns in query strings ----
   RewriteCond %{QUERY_STRING} (\.\./){2,}            [NC,OR]
   RewriteCond %{QUERY_STRING} (union[\s+]+select)    [NC,OR]
   RewriteCond %{QUERY_STRING} (concat[\s+]*\()       [NC,OR]
@@ -84,11 +146,15 @@ RedirectMatch 403 ^/(backup|backups|bak|old|db|database|dump|dumps|sql|mysql|tem
   RewriteCond %{QUERY_STRING} (sleep[\s+]*\([\s+]*[0-9]) [NC,OR]
   RewriteCond %{QUERY_STRING} (passthru|shell_exec|system|phpinfo)[\s+]*\( [NC,OR]
   RewriteCond %{QUERY_STRING} (\bfile_get_contents\b|\bfopen\b)\( [NC,OR]
-  RewriteCond %{QUERY_STRING} (=|%3D)(php|https?|ftp|data|file)(:|%3A)// [NC]
+  RewriteCond %{QUERY_STRING} (=|%3D)(php|https?|ftp|data|file)(:|%3A)// [NC,OR]
+  RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+  RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2}) [OR]
+  RewriteCond %{QUERY_STRING} base64_(en|de)code[^(]*\([^)]*\) [NC]
   RewriteRule .* - [F,L]
 
-  # Block requests with no User-Agent AND no Referer hitting dynamic endpoints
-  # (legitimate browsers always send a UA)
+  # ---- No-UA requests against dynamic endpoints ----
+  # Legitimate browsers always send a User-Agent. An empty UA hitting a
+  # PHP/CGI/Perl script is almost always a scripted exploit attempt.
   RewriteCond %{HTTP_USER_AGENT} ^-?$
   RewriteCond %{REQUEST_URI}     \.(php|cgi|pl)$ [NC]
   RewriteRule .* - [F,L]
@@ -149,6 +215,13 @@ RedirectMatch 403 ^/(backup|backups|bak|old|db|database|dump|dumps|sql|mysql|tem
   SetEnvIfNoCase User-Agent "Sogou"           bad_bot
   SetEnvIfNoCase User-Agent "YandexBot"       bad_bot
   SetEnvIfNoCase User-Agent "PetalBot"        bad_bot
+  SetEnvIfNoCase User-Agent "AspiegelBot"     bad_bot
+  SetEnvIfNoCase User-Agent "Seekport"        bad_bot
+  SetEnvIfNoCase User-Agent "BrandVerity"     bad_bot
+  SetEnvIfNoCase User-Agent "BuiltWith"       bad_bot
+  SetEnvIfNoCase User-Agent "TikTokSpider"    bad_bot
+  # SetEnvIfNoCase is case-insensitive — one entry covers all case variants
+  SetEnvIfNoCase User-Agent "ThinkBot"        bad_bot
 
   # Site rippers / download managers
   SetEnvIfNoCase User-Agent "HTTrack"         bad_bot
@@ -158,9 +231,10 @@ RedirectMatch 403 ^/(backup|backups|bak|old|db|database|dump|dumps|sql|mysql|tem
   SetEnvIfNoCase User-Agent "WebZIP"          bad_bot
   SetEnvIfNoCase User-Agent "SiteSnagger"     bad_bot
   SetEnvIfNoCase User-Agent "Xenu"            bad_bot
-  SetEnvIfNoCase User-Agent "Wget/1\.\d"      bad_bot_version_only
   SetEnvIfNoCase User-Agent "Offline Explorer" bad_bot
   SetEnvIfNoCase User-Agent "Teleport"        bad_bot
+  # NOTE: "Wget" and "curl" are intentionally NOT blocked by UA — many
+  # legitimate cron jobs and uptime monitors rely on them.
 
   # AI training scrapers (block by default — adjust as needed)
   SetEnvIfNoCase User-Agent "GPTBot"          bad_bot
@@ -173,13 +247,25 @@ RedirectMatch 403 ^/(backup|backups|bak|old|db|database|dump|dumps|sql|mysql|tem
   SetEnvIfNoCase User-Agent "CCBot"           bad_bot
   SetEnvIfNoCase User-Agent "Bytespider"      bad_bot
   SetEnvIfNoCase User-Agent "Amazonbot"       bad_bot
+  SetEnvIfNoCase User-Agent "Amzn-SearchBot"  bad_bot
   SetEnvIfNoCase User-Agent "Applebot-Extended" bad_bot
   SetEnvIfNoCase User-Agent "Google-Extended" bad_bot
   SetEnvIfNoCase User-Agent "Meta-ExternalAgent" bad_bot
   SetEnvIfNoCase User-Agent "FacebookBot"     bad_bot
   SetEnvIfNoCase User-Agent "cohere-ai"       bad_bot
+  SetEnvIfNoCase User-Agent "cohere-training-data-crawler" bad_bot
   SetEnvIfNoCase User-Agent "Diffbot"         bad_bot
   SetEnvIfNoCase User-Agent "ImagesiftBot"    bad_bot
+  SetEnvIfNoCase User-Agent "MistralAI"       bad_bot
+  SetEnvIfNoCase User-Agent "AI2Bot"          bad_bot
+  SetEnvIfNoCase User-Agent "Timpibot"        bad_bot
+  SetEnvIfNoCase User-Agent "iaskspider"      bad_bot
+  SetEnvIfNoCase User-Agent "kagibot"         bad_bot
+  SetEnvIfNoCase User-Agent "Webzio-Extended" bad_bot
+  SetEnvIfNoCase User-Agent "Velen Crawler"   bad_bot
+  SetEnvIfNoCase User-Agent "Sidetrade indexer bot" bad_bot
+  SetEnvIfNoCase User-Agent "YouBot"          bad_bot
+  SetEnvIfNoCase User-Agent "FriendlyCrawler" bad_bot
 
   # Email harvesters / spambots
   SetEnvIfNoCase User-Agent "EmailCollector"  bad_bot
