@@ -740,10 +740,18 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 	</header>
 	<?php endif; ?>
 
-	<?php // Mobile menu offcanvas panel — rendered outside header to avoid stacking context issues ?>
-	<?php // The "mobilemenu" chrome provides the offcanvas wrapper; do NOT add one here. ?>
+	<?php // Mobile menu offcanvas panel — rendered outside header to avoid stacking context issues.
+	      // The wrapper is emitted once here so any number of modules in the
+	      // "mobilemenu" position render together inside the same offcanvas. ?>
 	<?php if ($hasMobile): ?>
-		<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
+		<div class="offcanvas mobilemenu-offcanvas offcanvas-start" data-bs-backdrop="true" data-bs-scroll="false" tabindex="-1" id="mobilemenuOffcanvas" aria-labelledby="mobilemenuLabel">
+			<div class="offcanvas-header">
+				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+			</div>
+			<div class="offcanvas-body">
+				<jdoc:include type="modules" name="mobilemenu" style="mobilemenu" />
+			</div>
+		</div>
 	<?php endif; ?>
 
 	<main id="main-content">
