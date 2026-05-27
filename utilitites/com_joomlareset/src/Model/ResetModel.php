@@ -93,13 +93,19 @@ class ResetModel extends BaseDatabaseModel
 				$this->executeSqlFile($sqlFile, $prefix);
 			}
 
-			// Phase 4: Clear checked_out flags on all tables that have them
+			// Phase 4: Populate #__schemas so Joomla's Database Fix tool knows
+			// which migrations have been "applied". Without this it tries to
+			// replay every migration from scratch on a freshly reset database
+			// and fails because the tables already exist at the current version.
+			$this->populateSchemas();
+
+			// Phase 5: Clear checked_out flags on all tables that have them
 			$this->clearCheckedOut();
 
-			// Phase 5: Restore admin user
+			// Phase 6: Restore admin user
 			$this->restoreAdminUser($adminData, $adminGroupMap);
 
-			// Phase 6: Re-register this component
+			// Phase 7: Re-register this component
 			$this->registerSelf($prefix);
 
 			return ['success' => true, 'error' => ''];
@@ -159,6 +165,132 @@ class ResetModel extends BaseDatabaseModel
 		$db->setQuery('SHOW TABLES LIKE ' . $db->quote($prefix . '%'));
 
 		return $db->loadColumn() ?: [];
+	}
+
+	/**
+	 * Populate the #__schemas table with the latest known migration version
+	 * for every extension on disk that ships SQL update files.
+	 *
+	 * Joomla's "Database → Fix" tool reads #__schemas to decide which
+	 * migration files still need to run for each extension. Our reset
+	 * recreates the tables at their current version but leaves #__schemas
+	 * empty, so without this step Joomla would try to replay every
+	 * migration ever shipped and fail on the first one that conflicts
+	 * with the already-correct schema.
+	 */
+	private function populateSchemas(): void
+	{
+		$db = $this->getDatabase();
+
+		foreach ($this->findMigrationDirs() as $candidate) {
+			[$type, $element, $folder, $clientId, $dir] = $candidate;
+
+			$latest = $this->getLatestMigrationVersion($dir);
+
+			if ($latest === null) {
+				continue;
+			}
+
+			// Look up extension_id for this entry.
+			$query = $db->getQuery(true)
+				->select($db->quoteName('extension_id'))
+				->from($db->quoteName('#__extensions'))
+				->where($db->quoteName('type') . ' = ' . $db->quote($type))
+				->where($db->quoteName('element') . ' = ' . $db->quote($element))
+				->where($db->quoteName('client_id') . ' = ' . (int) $clientId);
+
+			if ($folder !== '') {
+				$query->where($db->quoteName('folder') . ' = ' . $db->quote($folder));
+			} else {
+				$query->where($db->quoteName('folder') . " = ''");
+			}
+
+			$db->setQuery($query);
+			$extensionId = (int) $db->loadResult();
+
+			if (!$extensionId) {
+				continue;
+			}
+
+			try {
+				$query = $db->getQuery(true)
+					->insert($db->quoteName('#__schemas'))
+					->columns($db->quoteName(['extension_id', 'version_id']))
+					->values((int) $extensionId . ',' . $db->quote($latest));
+
+				$db->setQuery($query);
+				$db->execute();
+			} catch (\Exception $e) {
+				// Already populated for this extension — leave whatever's there alone.
+				continue;
+			}
+		}
+	}
+
+	/**
+	 * Locate every directory on disk that holds Joomla migration SQL files.
+	 *
+	 * Returns rows of [type, element, folder, client_id, absolute_dir].
+	 * `folder` is only meaningful for plugins (group name); empty otherwise.
+	 */
+	private function findMigrationDirs(): array
+	{
+		$result = [];
+
+		// Admin components
+		foreach (glob(JPATH_ADMINISTRATOR . '/components/*/sql/updates/mysql', GLOB_ONLYDIR) ?: [] as $dir) {
+			$element  = basename(\dirname($dir, 3));
+			$result[] = ['component', $element, '', 1, $dir];
+		}
+
+		// Site components (rare but possible)
+		foreach (glob(JPATH_ROOT . '/components/*/sql/updates/mysql', GLOB_ONLYDIR) ?: [] as $dir) {
+			$element  = basename(\dirname($dir, 3));
+			$result[] = ['component', $element, '', 0, $dir];
+		}
+
+		// Plugins (folder = plugin group, element = plugin name)
+		foreach (glob(JPATH_ROOT . '/plugins/*/*/sql/updates/mysql', GLOB_ONLYDIR) ?: [] as $dir) {
+			$element  = basename(\dirname($dir, 3));
+			$folder   = basename(\dirname($dir, 4));
+			$result[] = ['plugin', $element, $folder, 0, $dir];
+		}
+
+		// Admin modules
+		foreach (glob(JPATH_ADMINISTRATOR . '/modules/*/sql/updates/mysql', GLOB_ONLYDIR) ?: [] as $dir) {
+			$element  = basename(\dirname($dir, 3));
+			$result[] = ['module', $element, '', 1, $dir];
+		}
+
+		// Site modules
+		foreach (glob(JPATH_ROOT . '/modules/*/sql/updates/mysql', GLOB_ONLYDIR) ?: [] as $dir) {
+			$element  = basename(\dirname($dir, 3));
+			$result[] = ['module', $element, '', 0, $dir];
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Return the highest-versioned migration filename (without .sql extension)
+	 * in the given directory, or null if the directory has no SQL files.
+	 *
+	 * Joomla names migration files with a version-like prefix
+	 * (e.g. "5.4.6-2025-10-15.sql"), so version_compare gives the right order.
+	 */
+	private function getLatestMigrationVersion(string $dir): ?string
+	{
+		$files = glob($dir . '/*.sql') ?: [];
+
+		if (empty($files)) {
+			return null;
+		}
+
+		$versions = array_map(static fn ($f) => basename($f, '.sql'), $files);
+
+		usort($versions, 'version_compare');
+
+		return end($versions);
 	}
 
 	/**

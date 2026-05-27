@@ -2,7 +2,7 @@
 <extension type="package" method="upgrade">
 	<name>Atomic</name>
 	<packagename>atomic</packagename>
-	<version>5.2.0</version>
+	<version>5.3.0</version>
 	<creationDate>2026-03-07</creationDate>
 	<author>Ron Severdia</author>
 	<authorEmail>severdia@gmail.com</authorEmail>
@@ -15,4 +15,7 @@
 		<file type="template" client="site" id="atomic">tpl_atomic.zip</file>
 		<file type="plugin" group="sampledata" id="atomic">plg_sampledata_atomic.zip</file>
 	</files>
+	<updateservers>
+		<server type="extension" priority="1" name="Atomic Update Site">https://kontent.github.io/Atomic/update.xml</server>
+	</updateservers>
 </extension>

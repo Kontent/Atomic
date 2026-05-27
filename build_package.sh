@@ -46,7 +46,7 @@ echo "----------------------------------------"
 
 # ── 1. Build standalone template ZIP ───────────────────────────────
 echo ""
-echo "[1/3] Building standalone template ZIP..."
+echo "[1/4] Building standalone template ZIP..."
 TPL_ZIP="$OUT_DIR/tpl_atomic_${TPL_VERSION}.zip"
 rm -f "$TPL_ZIP"
 (cd "$TPL_SRC" && zip -r "$TPL_ZIP" . "${EXCLUDES[@]}" -q)
@@ -54,7 +54,7 @@ echo "  -> $TPL_ZIP"
 
 # ── 2. Build plugin ZIP ───────────────────────────────────────────
 echo ""
-echo "[2/3] Building sample data plugin ZIP..."
+echo "[2/4] Building sample data plugin ZIP..."
 PLG_ZIP="$OUT_DIR/plg_sampledata_atomic_${PLG_VERSION}.zip"
 rm -f "$PLG_ZIP"
 (cd "$PLG_SRC" && zip -r "$PLG_ZIP" . "${EXCLUDES[@]}" -q)
@@ -62,7 +62,7 @@ echo "  -> $PLG_ZIP"
 
 # ── 3. Assemble package ZIP ───────────────────────────────────────
 echo ""
-echo "[3/3] Assembling package ZIP..."
+echo "[3/4] Assembling package ZIP..."
 
 # Create package structure in temp dir
 mkdir -p "$WORK_DIR/packages"
@@ -75,15 +75,42 @@ rm -f "$PKG_ZIP"
 (cd "$WORK_DIR" && zip -r "$PKG_ZIP" . "${EXCLUDES[@]}" -q)
 echo "  -> $PKG_ZIP"
 
-# ── 4. Update SHA-256 checksum in update XML files ────────────────
+# ── 4. Update SHA-256 checksums in update XML files ───────────────
 echo ""
 echo "[4/4] Updating SHA-256 checksums in update XML files..."
+TPL_SHA256=$(shasum -a 256 "$TPL_ZIP" | awk '{print $1}')
 PKG_SHA256=$(shasum -a 256 "$PKG_ZIP" | awk '{print $1}')
 DOCS_DIR="$SCRIPT_DIR/docs"
 
+# Update each <update> block's <sha256> based on its <element>.
+# Template block (element=atomic) gets TPL_SHA256.
+# Package block  (element=pkg_atomic) gets PKG_SHA256.
 for XML_FILE in "$DOCS_DIR/update.xml" "$DOCS_DIR/update-beta.xml"; do
 	if [ -f "$XML_FILE" ]; then
-		sed -i '' "s|<sha256>[^<]*</sha256>|<sha256>${PKG_SHA256}</sha256>|" "$XML_FILE"
+		TPL_SHA="$TPL_SHA256" PKG_SHA="$PKG_SHA256" XML="$XML_FILE" python3 <<'PYEOF'
+import os, re
+path = os.environ['XML']
+tpl_sha = os.environ['TPL_SHA']
+pkg_sha = os.environ['PKG_SHA']
+sha_for = {'atomic': tpl_sha, 'pkg_atomic': pkg_sha}
+with open(path) as f:
+    content = f.read()
+def repl(match):
+    block = match.group(0)
+    el = re.search(r'<element>([^<]+)</element>', block)
+    if not el:
+        return block
+    new_sha = sha_for.get(el.group(1))
+    if not new_sha:
+        return block
+    if re.search(r'<sha256>[^<]*</sha256>', block):
+        return re.sub(r'<sha256>[^<]*</sha256>', f'<sha256>{new_sha}</sha256>', block)
+    # No existing sha256 tag — insert one before <downloads>.
+    return re.sub(r'(\s*)<downloads>', rf'\1<sha256>{new_sha}</sha256>\1<downloads>', block, count=1)
+content = re.sub(r'<update>[\s\S]*?</update>', repl, content)
+with open(path, 'w') as f:
+    f.write(content)
+PYEOF
 		echo "  -> Updated $(basename "$XML_FILE")"
 	fi
 done
