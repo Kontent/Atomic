@@ -159,7 +159,7 @@ main#main-content > .container-fluid {
   display: block;
 }
 .mobilemenu-offcanvas .nav li {
-  line-height: 3em;
+  line-height: 2em;
 }
 .mobilemenu-offcanvas .nav .dropdown-menu {
   position: static;
