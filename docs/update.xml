@@ -17,6 +17,6 @@
 		</tags>
 		<maintainer>Ron Severdia</maintainer>
 		<maintainerurl>https://www.severdia.com</maintainerurl>
-		<targetplatform name="joomla" version="(4|5|6)\." />
+		<targetplatform name="joomla" version="(4|5|6|7)\." />
 	</update>
 </updates>

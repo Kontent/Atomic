@@ -47,7 +47,7 @@ $info = $this->resetInfo;
 								<tr>
 									<th scope="row"><?php echo Text::_('COM_JOOMLARESET_SQL_SET'); ?></th>
 									<td>
-										<span class="badge bg-secondary">Joomla <?php echo $info['joomla_major']; ?></span>
+										<span class="badge bg-secondary">Joomla <?php echo $this->escape($info['joomla_major']); ?></span>
 									</td>
 								</tr>
 								<tr>
@@ -68,6 +68,17 @@ $info = $this->resetInfo;
 								</tr>
 							</tbody>
 						</table>
+
+						<?php if (!empty($info['tables'])) : ?>
+							<details class="mb-3">
+								<summary><?php echo Text::sprintf('COM_JOOMLARESET_SHOW_TABLES', count($info['tables'])); ?></summary>
+								<ul class="mt-2 mb-0 small font-monospace" style="max-height: 300px; overflow-y: auto;">
+									<?php foreach ($info['tables'] as $tableName) : ?>
+										<li><?php echo $this->escape($tableName); ?></li>
+									<?php endforeach; ?>
+								</ul>
+							</details>
+						<?php endif; ?>
 
 						<div class="alert alert-warning">
 							<h5><?php echo Text::_('COM_JOOMLARESET_WILL_DESTROY'); ?></h5>
@@ -97,6 +108,13 @@ $info = $this->resetInfo;
 								<label class="form-check-label fw-bold text-danger" for="confirm_reset">
 									<?php echo Text::_('COM_JOOMLARESET_CONFIRM_CHECKBOX'); ?>
 								</label>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label fw-bold" for="confirm_text">
+									<?php echo Text::_('COM_JOOMLARESET_TYPE_RESET_LABEL'); ?>
+								</label>
+								<input type="text" class="form-control" id="confirm_text" name="confirm_text" value="" autocomplete="off" spellcheck="false" style="max-width: 240px;">
 							</div>
 
 							<button type="submit" class="btn btn-danger btn-lg" id="reset-button" disabled>
@@ -133,13 +151,29 @@ $info = $this->resetInfo;
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 	var checkbox = document.getElementById('confirm_reset');
+	var confirmText = document.getElementById('confirm_text');
 	var button = document.getElementById('reset-button');
 
-	if (checkbox && button) {
-		checkbox.addEventListener('change', function() {
-			button.disabled = !this.checked;
-		});
+	function updateButtonState() {
+		if (!button) {
+			return;
+		}
+
+		var checked = checkbox && checkbox.checked;
+		var typed = confirmText && confirmText.value.trim() === 'RESET';
+
+		button.disabled = !(checked && typed);
 	}
+
+	if (checkbox) {
+		checkbox.addEventListener('change', updateButtonState);
+	}
+
+	if (confirmText) {
+		confirmText.addEventListener('input', updateButtonState);
+	}
+
+	updateButtonState();
 
 	var form = document.getElementById('reset-form');
 	if (form) {

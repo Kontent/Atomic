@@ -782,6 +782,92 @@ footer .row > [class*="col"] {
 }
 
 /* ============================================================
+   Atomic Cards — card-grid blog layouts (com_content)
+   ============================================================
+   Decorated look for the "Atomic Cards" category blog and
+   featured layouts (html/com_content). Glass surfaces, accent
+   hover states, and consistent image cropping.
+   ============================================================ */
+
+.atomic-cards .atomic-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  transition:
+    transform var(--transition-speed) ease,
+    border-color var(--transition-speed) ease,
+    box-shadow var(--transition-speed) ease,
+    background var(--transition-speed) var(--theme-easing);
+}
+.atomic-cards .atomic-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-primary);
+  box-shadow: 0 12px 32px rgba(99, 102, 241, 0.2);
+}
+.atomic-cards .atomic-card .card-title {
+  margin-bottom: 0.5rem;
+}
+.atomic-cards .atomic-card .card-title a {
+  color: var(--text-primary);
+}
+.atomic-cards .atomic-card .card-title a:hover {
+  color: var(--accent-primary);
+}
+.atomic-cards .atomic-card-intro {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+.atomic-cards .atomic-card-info .article-info {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+.atomic-cards .atomic-card .readmore .btn {
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+}
+.atomic-cards .atomic-cards-links,
+.atomic-cards .atomic-cards-children {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+/* ============================================================
+   Articles module layouts (mod_articles*)
+   ============================================================
+   Decorated look for the cards and list module layouts. The
+   cards layout reuses the Atomic Cards styling above; this
+   block only themes the module meta line and the compact list.
+   ============================================================ */
+
+.atomic-cards-module .atomic-card-date,
+.atomic-cards-module .atomic-card-category,
+.atomic-cards-module .atomic-card-hits {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+.atomic-articles-list-item + .atomic-articles-list-item {
+  border-top-color: var(--glass-border);
+}
+.atomic-articles-list-thumb img {
+  border: 1px solid var(--glass-border);
+}
+.atomic-articles-list-title {
+  color: var(--text-primary);
+}
+.atomic-articles-list-title:hover {
+  color: var(--accent-primary);
+}
+.atomic-articles-list-date {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+/* ============================================================
    Smooth Theme Transitions
    ============================================================
    Crossfade backgrounds, surfaces, borders, and text when

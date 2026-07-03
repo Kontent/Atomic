@@ -10,12 +10,21 @@ namespace Severdia\Component\JoomlaReset\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Table\Asset;
 use Joomla\CMS\Version;
 use Joomla\Database\DatabaseInterface;
 
 class ResetModel extends BaseDatabaseModel
 {
+	/**
+	 * Placeholder created_user_id written by the seed rows in
+	 * sql/j5/supports.sql and sql/j6/supports.sql (#__categories inserts).
+	 * Must stay in sync with those files.
+	 */
+	private const SEED_USER_ID = 42;
+
 	/**
 	 * Get info for the admin UI: Joomla version, admin user, table count.
 	 */
@@ -38,6 +47,7 @@ class ResetModel extends BaseDatabaseModel
 			'admin_user'      => $admin ? $admin->username : '(none found)',
 			'admin_email'     => $admin ? $admin->email : '',
 			'table_count'     => count($tables),
+			'tables'          => $tables,
 			'supported'       => in_array((int) $major, [5, 6], true),
 		];
 	}
@@ -157,14 +167,21 @@ class ResetModel extends BaseDatabaseModel
 
 	/**
 	 * Get all tables matching the Joomla prefix.
+	 *
+	 * Uses getTableList() with a str_starts_with() filter instead of
+	 * SHOW TABLES LIKE: '_' is a single-character LIKE wildcard, so a
+	 * prefix like 'jos_' would also match unrelated 'josX...' tables.
 	 */
 	private function getJoomlaTables(string $prefix): array
 	{
 		$db = $this->getDatabase();
 
-		$db->setQuery('SHOW TABLES LIKE ' . $db->quote($prefix . '%'));
+		$tables = array_filter(
+			$db->getTableList(),
+			static fn ($table) => str_starts_with($table, $prefix)
+		);
 
-		return $db->loadColumn() ?: [];
+		return array_values($tables);
 	}
 
 	/**
@@ -221,7 +238,13 @@ class ResetModel extends BaseDatabaseModel
 				$db->setQuery($query);
 				$db->execute();
 			} catch (\Exception $e) {
-				// Already populated for this extension — leave whatever's there alone.
+				// Already populated for this extension (expected dup-key) — leave whatever's there alone.
+				$this->logWarning(sprintf(
+					'Could not record schema version for extension #%d: %s',
+					$extensionId,
+					$e->getMessage()
+				));
+
 				continue;
 			}
 		}
@@ -311,7 +334,13 @@ class ResetModel extends BaseDatabaseModel
 				$db->setQuery($query);
 				$db->execute();
 			} catch (\Exception $e) {
-				// Table may not exist or lack the column — skip silently
+				// Table may not exist or lack the column — skip, but record why
+				$this->logWarning(sprintf(
+					'Skipped clearing checked_out on %s: %s',
+					$table,
+					$e->getMessage()
+				));
+
 				continue;
 			}
 		}
@@ -495,31 +524,84 @@ class ResetModel extends BaseDatabaseModel
 			$db->execute();
 		}
 
-		// Update default category created_user_id (defaults use 42 as placeholder)
+		// Update default category created_user_id (seed SQL uses a placeholder id)
 		$query = $db->getQuery(true)
 			->update($db->quoteName('#__categories'))
 			->set($db->quoteName('created_user_id') . ' = ' . (int) $admin->id)
-			->where($db->quoteName('created_user_id') . ' = 42');
+			->where($db->quoteName('created_user_id') . ' = ' . self::SEED_USER_ID);
 
 		$db->setQuery($query);
 		$db->execute();
 
-		// Add asset entry for the admin user
-		$query = $db->getQuery(true)
-			->insert($db->quoteName('#__assets'))
-			->columns($db->quoteName(['parent_id', 'lft', 'rgt', 'level', 'name', 'title', 'rules']))
-			->values(implode(',', [
-				1,
-				0,
-				0,
-				1,
-				$db->quote('com_users.user.' . (int) $admin->id),
-				$db->quote($admin->name),
-				$db->quote('{}'),
-			]));
+		if ((int) $db->getAffectedRows() === 0) {
+			$this->logWarning(sprintf(
+				'No category rows changed for seed user id %d — the seed SQL may have changed, the default categories are missing, or the values already matched.',
+				self::SEED_USER_ID
+			));
+		}
 
-		$db->setQuery($query);
-		$db->execute();
+		// Add asset entry for the admin user via the Asset table so the
+		// nested-set (lft/rgt/level) stays valid.
+		try {
+			// Core parents user assets under the com_users component asset;
+			// fall back to the root asset if it is missing post-reset.
+			$parent   = new Asset($db);
+			$parentId = $parent->loadByName('com_users') ? (int) $parent->id : 0;
+
+			if (!$parentId) {
+				$parentId = (int) $parent->getRootId();
+			}
+
+			if (!$parentId) {
+				throw new \RuntimeException('No parent asset found for the admin user asset.');
+			}
+
+			$asset        = new Asset($db);
+			$asset->name  = 'com_users.user.' . (int) $admin->id;
+			$asset->title = (string) $admin->name;
+			$asset->rules = '{}';
+			// setLocation() only records the intent — parent_id must be set
+			// explicitly or check() rejects the row (core Table::store() does the same)
+			$asset->parent_id = $parentId;
+			$asset->setLocation($parentId, 'last-child');
+
+			if (!$asset->check() || !$asset->store()) {
+				throw new \RuntimeException($asset->getError() ?: 'Asset store() failed.');
+			}
+		} catch (\Throwable $e) {
+			// Cosmetic step — never let it fail the reset. Fall back to the
+			// legacy raw INSERT (placeholder lft/rgt) and log why.
+			$this->logWarning('Falling back to raw #__assets INSERT for the admin user asset: ' . $e->getMessage());
+
+			$query = $db->getQuery(true)
+				->insert($db->quoteName('#__assets'))
+				->columns($db->quoteName(['parent_id', 'lft', 'rgt', 'level', 'name', 'title', 'rules']))
+				->values(implode(',', [
+					1,
+					0,
+					0,
+					1,
+					$db->quote('com_users.user.' . (int) $admin->id),
+					$db->quote($admin->name),
+					$db->quote('{}'),
+				]));
+
+			$db->setQuery($query);
+			$db->execute();
+		}
+	}
+
+	/**
+	 * Log a WARNING without ever letting a logging failure (e.g. an
+	 * unwritable log directory) abort a reset that is already in progress.
+	 */
+	private function logWarning(string $message): void
+	{
+		try {
+			Log::add($message, Log::WARNING, 'com_joomlareset');
+		} catch (\Throwable $e) {
+			// Logging must never break the reset flow.
+		}
 	}
 
 	/**

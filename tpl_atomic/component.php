@@ -5,12 +5,16 @@
  * @license		 GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+// Escaping convention: dynamic output is escaped with htmlspecialchars(..., ENT_QUOTES, 'UTF-8')
+// at the point of definition where possible. Only the documented Super-Admin raw-HTML params
+// (bootstrapcdn, jquerycdn, headergooglefont, bodygooglefont, fontawesomecdn) and the four
+// custom-code hooks (codeafterhead/codebeforehead/codeafterbody/codebeforebody) echo raw.
+
 defined('_JEXEC') or die;
 
 require_once __DIR__ . '/helper.php';
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Helper\UserGroupsHelper;
 
@@ -18,14 +22,7 @@ $app   = Factory::getApplication();
 $input = $app->getInput();
 $wa    = $this->getWebAssetManager();
 
-//	Get user group for attribute
-
-function sanitizeForDataAttrComp($string) {
-    $string = strtolower($string);
-    $string = preg_replace('/[^a-z0-9]+/', '-', $string);
-    $string = preg_replace('/-+/', '-', $string);
-    return trim($string, '-');
-}
+//	Get user group for attribute (sanitizeForDataAttr lives in helper.php)
 
 $user     = $app->getIdentity();
 $dataUser = '';
@@ -39,7 +36,7 @@ if (!$user->guest) {
 
         if (isset($allGroups[$highestGroupId])) {
             $groupTitle = $allGroups[$highestGroupId]->title;
-            $sanitized  = sanitizeForDataAttrComp($groupTitle);
+            $sanitized  = sanitizeForDataAttr($groupTitle);
             $dataUser   = 'user-' . $sanitized;
         }
     }
@@ -55,7 +52,7 @@ $itemid    = $input->getCmd('Itemid', '');
 $menu      = $app->getMenu()->getActive();
 $pageclass = $menu !== null ? $menu->getParams()->get('pageclass_sfx', '') : '';
 $wrapper   = $this->params->get('fluidContainer') ? 'wrapper-fluid' : 'wrapper-static';
-$root      = Uri::root(true);
+$root      = htmlspecialchars((string) Uri::root(true), ENT_QUOTES, 'UTF-8');
 
 //	Assign template params
 $bodyfont         = $this->params->get('bodyfont');
@@ -65,7 +62,6 @@ $bodygooglefont   = $this->params->get('bodygooglefont');
 $bootstrapcdn     = $this->params->get('bootstrapcdn');
 $bootstrapsource  = $this->params->get('bootstrapsource', 2);
 $bsfixjoomla      = $this->params->get('bsfixjoomla', 1);
-$bsicons          = $this->params->get('bsicons');
 $bsthemes         = $this->params->get('bsthemes');
 $codeafterbody    = $this->params->get('codeafterbody');
 $codeafterhead    = $this->params->get('codeafterhead');
@@ -78,15 +74,15 @@ $customjs         = $this->params->get('customjs');
 $fluidcontainer   = $this->params->get('fluidcontainer');
 $fontawesome      = $this->params->get('fontawesome');
 $fontawesomecdn   = $this->params->get('fontawesomecdn');
-$gacode           = $this->params->get('gacode');
+$gacode           = preg_replace('/[^A-Za-z0-9\-]/', '', (string) $this->params->get('gacode'));
 $headerfont       = $this->params->get('headerfont');
 $headergooglefont = $this->params->get('headergooglefont');
 $headerfontname   = $this->params->get('headerfontname');
-$headerbackground = $this->params->get('headerbackground', '#ffffff');
+// CSS-value whitelist: emitted inside an inline <style> block, so restrict to color syntax
+$headerbackground = preg_replace('/[^a-zA-Z0-9#(),.%\/\s-]/', '', (string) $this->params->get('headerbackground', 'rgba(0, 0, 0, 0)'));
 $jqlibrary        = $this->params->get('jqlibrary');
 $jquerycdn        = $this->params->get('jquerycdn');
 $killgenerator    = $this->params->get('killgenerator');
-$loadfavicons     = $this->params->get('loadfavicons');
 $loadbsicons      = $this->params->get('loadbsicons');
 $scrollreveal     = $this->params->get('scrollreveal');
 $systemFontHeader = $this->params->get('systemFontHeader', '');
@@ -114,7 +110,9 @@ $usergroupdata = (int) $this->params->get('usergroupdata', 0);
 $bstheme					= $this->params->get('bstheme', '');
 $bsthemecustom				= trim((string) $this->params->get('bsthemecustom', ''));
 	if ($bstheme === 'custom') {
-    $bstheme = $bsthemecustom !== '' ? strtolower($bsthemecustom) : '';
+    // Conservative case-preserving whitelist: value is reused in the data-bs-theme
+    // attribute and the defaultTheme JS string; excludes quotes/backslashes/angle brackets
+    $bstheme = $bsthemecustom !== '' ? preg_replace('/[^A-Za-z0-9._:-]/', '', $bsthemecustom) : '';
 } elseif (!in_array($bstheme, ['light', 'dark', 'auto'])) {
     $bstheme = ''; // "None (Default)": omit data-bs-theme attribute
 } else {
@@ -219,6 +217,10 @@ if ($customjs == 1) {
   <?php echo $dataThemeAttr . $dataEditingAttr . $dataTypescaleAttr; ?>>
 	<head>
 		<?php // Inline theme resolution — runs before any CSS to prevent flash of wrong theme.
+			  // Deliberately stays inline-in-place (NOT a WAM inline asset): the no-flash
+			  // guarantee requires it to execute before any stylesheet, and WAM inline
+			  // scripts render later in <head>. Strict-CSP sites should allow it via a
+			  // hash or the core HTTP Headers plugin's inline-script handling.
 		if ($bstheme !== '') : ?>
 		<script>(function(){var d=document.documentElement,s=localStorage.getItem('theme'),t=s||'<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>';if(t==='auto'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}d.setAttribute('data-bs-theme',t);})()</script>
 		<?php endif; ?>
@@ -228,7 +230,7 @@ if ($customjs == 1) {
 
 		<?php	//	Add custom code after opening head tag
 			if($codeafterhead != null) : ?>
-			<?php echo $codeafterhead;
+			<?php echo $codeafterhead; // Intentional raw output: Super-Admin custom-code hook
 			?>
 		<?php endif; ?>
 
@@ -241,17 +243,12 @@ if ($customjs == 1) {
 
    	 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<?php
-		// Get Joomla's dynamic page title and meta description
-		$doc             = $app->getDocument();
-		$pageTitle       = $doc->getTitle();
-		$metaDescription = $doc->getMetaData('description');
-
-		// Get the full current page URL
-		$currentPageURL = Uri::getInstance()->toString();
-		?>
-
 		<?php	//	Load Bootstrap or Bootswatch theme.
+				//	Deliberately manual (NOT migrated to WAM): the WAM styles block renders
+				//	at <jdoc:include type="styles" /> — after the raw Google-font params and
+				//	the inline :root style — while Bootstrap must stay first; and inside WAM
+				//	only dependencies (not weights) hard-guarantee ordering against unknown
+				//	extension styles, so bootstrap-before-extension-styles cannot be proven.
 			if($bootstrapsource == 1 || $bootstrapsource == 3 || $bootstrapsource == 4) : ?>
 				<link rel="stylesheet" href="<?php echo $root ?>/media/vendor/bootstrap/css/bootstrap.min.css">
 
@@ -259,7 +256,7 @@ if ($customjs == 1) {
 				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
 			<?php elseif($bootstrapsource == 5) : ?>
-				<?php echo $bootstrapcdn; ?>
+				<?php echo $bootstrapcdn; // Intentional raw output: Super-Admin raw-HTML param ?>
 
 			<?php elseif($bootstrapsource == 6) : ?>
 				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/cosmo/bootstrap.min.css" integrity="sha384-QOrayDhdkHbTAsh/gb0iGlDY/xHwI3sdDvyHkxnfpY20Y+Pa8aRHFXmLQYklmIx/" crossorigin="anonymous">
@@ -283,10 +280,10 @@ if ($customjs == 1) {
 
 		<?php	//	Load Google Fonts
 			if(($headerfont == 1) && ($headerfontname != null)) : ?>
-			<?php echo $headergooglefont; ?>
+			<?php echo $headergooglefont; // Intentional raw output: Super-Admin raw-HTML param ?>
 		<?php endif; ?>
 		<?php if(($bodyfont == 1) && ($bodyfontname != null)) : ?>
-			<?php echo $bodygooglefont; ?>
+			<?php echo $bodygooglefont; // Intentional raw output: Super-Admin raw-HTML param ?>
 		<?php endif; ?>
 
 		<?php
@@ -324,13 +321,15 @@ if ($customjs == 1) {
 		if($fontawesome == 3) : ?>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/js/all.min.js" integrity="sha512-6BTOlkauINO65nLhXhthZMtepgJSghyimIalb+crKRPhvhmsCdnIuGcVbR5/aQY2A+260iC1OPy1oCdB6pSSwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<?php elseif($fontawesome == 4 || $fontawesome == 5) : ?>
-			<?php echo $fontawesomecdn; ?>
+			<?php echo $fontawesomecdn; // Intentional raw output: Super-Admin raw-HTML param ?>
 		<?php endif; ?>
 
 		<?php //	Web Asset Manager outputs: lazy Google Fonts, lazy FontAwesome CSS,
 			  //	lazy BS Icons, atomicstyles.min.css, plus Joomla extension styles. ?>
 		<jdoc:include type="styles" />
 
+		<?php //	atomic.min.css and template.css are loaded outside WAM so they
+			  //	always appear after any third-party extension stylesheets. ?>
 		<?php if ($bsfixjoomla == 1) : ?>
 		<link rel="stylesheet" href="<?php echo $root; ?>/media/templates/site/atomic/css/atomic.min.css">
 		<?php endif; ?>
@@ -350,24 +349,35 @@ if ($customjs == 1) {
 		<?php endif; ?>
 		</noscript>
 
-		<?php // Load jQuery ?>
+		<?php	//	Load jQuery manually, BEFORE the WAM scripts block, so scripts that
+				//	use jQuery without declaring a web-asset dependency keep working
+				//	(kept out of WAM deliberately — order preservation over migration). ?>
 		<?php if ($jqlibrary == 0) : ?>
-			<script src="<?php echo $root ?>/media/vendor/jquery/js/jquery.min.js"></script>
+			<script src="<?php echo $root; ?>/media/vendor/jquery/js/jquery.min.js"></script>
 		<?php elseif ($jqlibrary == 1) : ?>
 			<script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha384-fgGyf7Mo7DURSOMnOy7ed+dkq5Job205Gnzu6QIg0BOHKaqt4D76Dt8VlDCzcMHV" crossorigin="anonymous"></script>
 		<?php elseif ($jqlibrary == 2) : ?>
 			<script src="https://code.jquery.com/jquery-4.0.0.slim.min.js" integrity="sha384-tcspKDb5tWvyRCOWzevlAeQgHeEzYdUHJpcgnIhcP9w4CnfD7DLAcS+k9QzLbRJO" crossorigin="anonymous"></script>
-		<?php elseif ($jqlibrary == 3) : ?>
-			<?php echo $jquerycdn ?>
+		<?php endif; ?>
+		<?php if ($jqlibrary == 3) : ?>
+			<?php echo $jquerycdn; // Intentional raw output: Super-Admin raw-HTML param ?>
 		<?php endif; ?>
 
-		<?php	//	Theme switcher default theme (must load before themeswitcher.min.js)
-			if($bsthemes == 1) : ?>
-		<script>var defaultTheme = '<?php echo htmlspecialchars($bstheme ?: 'light', ENT_QUOTES, 'UTF-8'); ?>';</script>
-		<?php endif; ?>
+		<?php	//	Theme switcher default theme — a WAM inline asset pinned directly before
+				//	themeswitcher.min.js (its only consumer), so the core HTTP Headers (CSP)
+				//	plugin can nonce it.
+			if($bsthemes == 1) :
+				$wa->addInlineScript(
+					"var defaultTheme = '" . htmlspecialchars($bstheme ?: 'light', ENT_QUOTES, 'UTF-8') . "';",
+					['position' => 'before'],
+					[],
+					['template.atomic.themeswitcher']
+				);
+			endif; ?>
 
-		<?php //	Web Asset Manager outputs: themeswitcher.min.js, atomic.js, template.js,
-			  //	plus Joomla core scripts. ?>
+		<?php //	Web Asset Manager outputs: jQuery, defaultTheme inline + themeswitcher.min.js,
+			  //	atomic.js, template.js, Bootstrap component scripts (Joomla-vendor cases),
+			  //	GA4 inline bootstrap, plus Joomla core scripts. ?>
 		<jdoc:include type="scripts" />
 
 		<?php	//	Use Scroll Reveal
@@ -377,11 +387,14 @@ if ($customjs == 1) {
 
 		<?php	//	Add custom code before closing head tag
 			if($codebeforehead != null) : ?>
-				<?php echo $codebeforehead;
+				<?php echo $codebeforehead; // Intentional raw output: Super-Admin custom-code hook
 		?>
 		<?php endif; ?>
 
-		<?php	//	Add Google Analytics tag if configured.
+		<?php	//	Add Google Analytics tag if configured. Kept manual, AFTER the
+				//	codebeforehead hook, so consent-mode defaults injected via that hook
+				//	keep running before the gtag queue initializes (strict-CSP sites can
+				//	allow this block via hash or Joomla's core HTTP Headers plugin).
 		if($gacode != null) : ?>
 		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gacode; ?>"></script>
 		<script>
@@ -398,7 +411,7 @@ if ($customjs == 1) {
 $activeAlias     = ($active !== null) ? htmlspecialchars($active->alias, ENT_QUOTES, 'UTF-8') : '';
 $defaultBodyClass = 'contentpane component ' . $option . ' ' . $wrapper . ' view-' . $view
     . ($itemid    ? ' itemid-' . $itemid   : '')
-    . ($pageclass ? ' ' . $pageclass       : '')
+    . ($pageclass ? ' ' . htmlspecialchars($pageclass, ENT_QUOTES, 'UTF-8') : '')
     ;
 ?>
 <?php if ($bodymenu == 1) : // Append Class ?>
@@ -421,7 +434,7 @@ $defaultBodyClass = 'contentpane component ' . $option . ' ' . $wrapper . ' view
 
 	<?php	//	Add custom code after opening body tag
 		if($codeafterbody != null) : ?>
-		<?php echo $codeafterbody; ?>
+		<?php echo $codeafterbody; // Intentional raw output: Super-Admin custom-code hook ?>
 	<?php endif; ?>
 
 	<?php if ($this->countModules('alert', true)) : ?>
@@ -446,13 +459,18 @@ $defaultBodyClass = 'contentpane component ' . $option . ' ' . $wrapper . ' view
 				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 			<?php elseif($bootstrapsource >= 6 && $bootstrapsource <= 14) : ?>
 				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-			<?php elseif($bootstrapsource == 3 || $bootstrapsource == 4) : ?>
-				<?php HTMLHelper::_('bootstrap.framework'); ?>
-		<?php endif; ?>
+			<?php elseif($bootstrapsource == 3 || $bootstrapsource == 4) :
+				// Same component list the deprecated HTMLHelper::_('bootstrap.framework')
+				// enabled internally (removed in J7); the core web assets render in the
+				// head scripts block via <jdoc:include type="scripts" />, exactly as before.
+				foreach (['alert', 'button', 'carousel', 'collapse', 'dropdown', 'modal', 'offcanvas', 'popover', 'scrollspy', 'tab', 'toast'] as $bsComponent) {
+					$wa->useScript('bootstrap.' . $bsComponent);
+				}
+		endif; ?>
 
 		<?php	//	Add custom code before closing body tag
 			if($codebeforebody != null) : ?>
-			<?php echo $codebeforebody; ?>
+			<?php echo $codebeforebody; // Intentional raw output: Super-Admin custom-code hook ?>
 		<?php endif; ?>
 
 	<?php if ($this->countModules('debug')) : ?>

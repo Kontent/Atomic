@@ -5,12 +5,23 @@
  * @license		 GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+/**
+ * Joomla compatibility: no deprecated Joomla 4-only APIs are used; the
+ * Bootstrap and Font Awesome sources are version-mapped via install.php and
+ * the custom bootstrapsource/fontawesome fields. Verified on Joomla 4/5/6;
+ * the update feed also opens Joomla 7.
+ */
+
+// Escaping convention: dynamic output is escaped with htmlspecialchars(..., ENT_QUOTES, 'UTF-8')
+// at the point of definition where possible. Only the documented Super-Admin raw-HTML params
+// (bootstrapcdn, jquerycdn, headergooglefont, bodygooglefont, fontawesomecdn) and the four
+// custom-code hooks (codeafterhead/codebeforehead/codeafterbody/codebeforebody) echo raw.
+
 defined('_JEXEC') or die;
 
 require_once __DIR__ . '/helper.php';
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Layout\LayoutHelper;
@@ -20,14 +31,7 @@ $app   = Factory::getApplication();
 $input = $app->getInput();
 $wa    = $this->getWebAssetManager();
 
-//	Get user group for attribute
-
-function sanitizeForDataAttr($string) {
-    $string = strtolower($string);
-    $string = preg_replace('/[^a-z0-9]+/', '-', $string);
-    $string = preg_replace('/-+/', '-', $string);
-    return trim($string, '-');
-}
+//	Get user group for attribute (sanitizeForDataAttr lives in helper.php)
 
 $user     = $app->getIdentity();
 $dataUser = '';
@@ -57,7 +61,7 @@ $itemid    = $input->getCmd('Itemid', '');
 $menu      = $app->getMenu()->getActive();
 $pageclass = $menu !== null ? $menu->getParams()->get('pageclass_sfx', '') : '';
 $wrapper   = $this->params->get('fluidContainer') ? 'wrapper-fluid' : 'wrapper-static';
-$root      = Uri::root(true);
+$root      = htmlspecialchars((string) Uri::root(true), ENT_QUOTES, 'UTF-8');
 
 //	Assign template params
 $bodyfont					= $this->params->get('bodyfont');
@@ -81,7 +85,7 @@ $customjs					= $this->params->get('customjs');
 $fluidcontainer				= $this->params->get('fluidcontainer');
 $fontawesome				= $this->params->get('fontawesome');
 $fontawesomecdn				= $this->params->get('fontawesomecdn');
-$gacode						= $this->params->get('gacode');
+$gacode						= preg_replace('/[^A-Za-z0-9\-]/', '', (string) $this->params->get('gacode'));
 $headerfont					= $this->params->get('headerfont');
 $headergooglefont			= $this->params->get('headergooglefont');
 $headerfontname				= $this->params->get('headerfontname');
@@ -90,18 +94,20 @@ $jquerycdn					= $this->params->get('jquerycdn');
 $killgenerator				= $this->params->get('killgenerator');
 $loadfavicons				= $this->params->get('loadfavicons');
 $loadbsicons				= $this->params->get('loadbsicons');
-$logo						= $this->params->get('logo');
+$logo						= htmlspecialchars((string) $this->params->get('logo'), ENT_QUOTES, 'UTF-8');
 $scrollreveal				= $this->params->get('scrollreveal');
-$sitedescription			= $this->params->get('sitedescription');
-$sitetitle					= $this->params->get('sitetitle');
+// double_encode=false: stored entities like &copy; keep rendering (back-compat); tags still neutralized
+$sitedescription			= htmlspecialchars((string) $this->params->get('sitedescription'), ENT_QUOTES, 'UTF-8', false);
+$sitetitle					= htmlspecialchars((string) $this->params->get('sitetitle'), ENT_QUOTES, 'UTF-8', false);
 $systemFontHeader			= $this->params->get('systemFontHeader', '');
 $systemFontBody				= $this->params->get('systemFontBody', '');
 $casspositions				= $this->params->get('casspositions');
 $stickyhead					= (int) $this->params->get('stickyheader', $this->params->get('stickyhead', 0));
-$headerbackground			= $this->params->get('headerbackground', 'rgba(0, 0, 0, 0)');
+// CSS-value whitelist: emitted inside an inline <style> block, so restrict to color syntax
+$headerbackground			= preg_replace('/[^a-zA-Z0-9#(),.%\/\s-]/', '', (string) $this->params->get('headerbackground', 'rgba(0, 0, 0, 0)'));
 $bootscolumns				= $this->params->get('bootscolumns', '2-8-2');
-$headercolumns				= $this->params->get('headercolumns', '12');
-$footercolumns				= $this->params->get('footercolumns', '12');
+$headercolumns				= atomicValidateColumns((string) $this->params->get('headercolumns', '12'), '12');
+$footercolumns				= atomicValidateColumns((string) $this->params->get('footercolumns', '12'), '12');
 
 $feediting       			= (int) $this->params->get('feediting', 0);
   	$dataEditingAttr  = $feediting === 1
@@ -124,7 +130,9 @@ $usergroupdata = (int) $this->params->get('usergroupdata', 0);
 $bstheme					= $this->params->get('bstheme', '');
 $bsthemecustom				= trim((string) $this->params->get('bsthemecustom', ''));
 	if ($bstheme === 'custom') {
-    $bstheme = $bsthemecustom !== '' ? strtolower($bsthemecustom) : '';
+    // Conservative case-preserving whitelist: value is reused in the data-bs-theme
+    // attribute and the defaultTheme JS string; excludes quotes/backslashes/angle brackets
+    $bstheme = $bsthemecustom !== '' ? preg_replace('/[^A-Za-z0-9._:-]/', '', $bsthemecustom) : '';
 } elseif (!in_array($bstheme, ['light', 'dark', 'auto'])) {
     $bstheme = ''; // "None (Default)": omit data-bs-theme attribute
 } else {
@@ -157,6 +165,9 @@ $legacyBodyMap = ['0' => '2-8-2', '1' => '2-7-3', '2' => '2-6-4', '3' => '3-6-3'
 if (array_key_exists((string) $bootscolumns, $legacyBodyMap)) {
 	$bootscolumns = $legacyBodyMap[(string) $bootscolumns];
 }
+// Guard the explode('-') consumers against malformed stored values (after the
+// legacy map so pre-5.1 integer values are translated first)
+$bootscolumns = atomicValidateColumns((string) $bootscolumns, '2-8-2');
 
 // Parse header column spec
 $headerParts    = array_map('intval', explode('-', (string) $headercolumns));
@@ -253,6 +264,10 @@ if ($customjs == 1) {
   <?php echo $dataThemeAttr . $dataEditingAttr . $dataTypescaleAttr; ?>>
 	<head>
 		<?php // Inline theme resolution — runs before any CSS to prevent flash of wrong theme.
+			  // Deliberately stays inline-in-place (NOT a WAM inline asset): the no-flash
+			  // guarantee requires it to execute before any stylesheet, and WAM inline
+			  // scripts render later in <head>. Strict-CSP sites should allow it via a
+			  // hash or the core HTTP Headers plugin's inline-script handling.
 		if ($bstheme !== '') : ?>
 		<script>(function(){var d=document.documentElement,s=localStorage.getItem('theme'),t=s||'<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>';if(t==='auto'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}d.setAttribute('data-bs-theme',t);})()</script>
 		<?php endif; ?>
@@ -262,8 +277,8 @@ if ($customjs == 1) {
 
 		<?php	//	Add custom code after opening head tag
 			if($codeafterhead != null) : ?>
-			<?php echo $codeafterhead;
-			?>	
+			<?php echo $codeafterhead; // Intentional raw output: Super-Admin custom-code hook
+			?>
 		<?php endif; ?>
 		<jdoc:include type="metas" />
 		<?php	//	Remove Joomla generator tag
@@ -307,11 +322,11 @@ if ($customjs == 1) {
 		$socialthumbtwitter = $this->params->get('socialthumbtwitter', '');
 		
 		// Get Joomla’s dynamic page title and meta description
-		$pageTitle       = $this->title;
-		$metaDescription = $this->description;
+		$pageTitle       = htmlspecialchars((string) $this->title, ENT_QUOTES, 'UTF-8');
+		$metaDescription = htmlspecialchars((string) $this->description, ENT_QUOTES, 'UTF-8');
 
 		// Get the full current page URL
-		$currentPageURL = Uri::getInstance()->toString();
+		$currentPageURL = htmlspecialchars((string) Uri::getInstance()->toString(), ENT_QUOTES, 'UTF-8');
 		
 		// Base URL from template (for cleaning relative image URLs)
 		$baseurl = $this->baseurl;
@@ -332,10 +347,10 @@ if ($customjs == 1) {
 			return '';
 		}
 		
-		// Clean image URLs
-		$socialthumbgoogle = cleanImageURL($socialthumbgoogle, $baseurl);
-		$socialthumbfacebook = cleanImageURL($socialthumbfacebook, $baseurl);
-		$socialthumbtwitter = cleanImageURL($socialthumbtwitter, $baseurl);
+		// Clean image URLs, then escape for the meta-tag attribute context
+		$socialthumbgoogle = htmlspecialchars((string) cleanImageURL($socialthumbgoogle, $baseurl), ENT_QUOTES, 'UTF-8');
+		$socialthumbfacebook = htmlspecialchars((string) cleanImageURL($socialthumbfacebook, $baseurl), ENT_QUOTES, 'UTF-8');
+		$socialthumbtwitter = htmlspecialchars((string) cleanImageURL($socialthumbtwitter, $baseurl), ENT_QUOTES, 'UTF-8');
 		?>
 		
 		<?php if ($socialtitle) : ?>
@@ -376,13 +391,18 @@ if ($customjs == 1) {
 		<?php endif; ?>
 
 		<?php	//	Load Bootstrap or Bootswatch theme.
+				//	Deliberately manual (NOT migrated to WAM): the WAM styles block renders
+				//	at <jdoc:include type="styles" /> — after the raw Google-font params and
+				//	the inline :root style — while Bootstrap must stay first; and inside WAM
+				//	only dependencies (not weights) hard-guarantee ordering against unknown
+				//	extension styles, so bootstrap-before-extension-styles cannot be proven.
 			if($bootstrapsource == 1 || $bootstrapsource == 3 || $bootstrapsource == 4) : ?>
 				<link rel="stylesheet" href="<?php echo $root ?>/media/vendor/bootstrap/css/bootstrap.min.css">
 				
 			<?php elseif($bootstrapsource == 2) : ?>
 				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 			<?php elseif($bootstrapsource == 5) : ?>
-				<?php echo $bootstrapcdn; ?>	
+				<?php echo $bootstrapcdn; // Intentional raw output: Super-Admin raw-HTML param ?>
 			<?php elseif($bootstrapsource == 6) : ?>
 				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/cosmo/bootstrap.min.css" integrity="sha384-QOrayDhdkHbTAsh/gb0iGlDY/xHwI3sdDvyHkxnfpY20Y+Pa8aRHFXmLQYklmIx/" crossorigin="anonymous">
 			<?php elseif($bootstrapsource == 7) : ?>
@@ -405,10 +425,10 @@ if ($customjs == 1) {
 		
 		<?php	//	Load Google Fonts
 			if(($headerfont == 1) && ($headerfontname != null)) : ?>
-			<?php echo $headergooglefont; ?>
+			<?php echo $headergooglefont; // Intentional raw output: Super-Admin raw-HTML param ?>
 		<?php endif; ?>
 		<?php if(($bodyfont == 1) && ($bodyfontname != null)) : ?>
-			<?php echo $bodygooglefont; ?>
+			<?php echo $bodygooglefont; // Intentional raw output: Super-Admin raw-HTML param ?>
 		<?php endif; ?>
 		
 		<?php
@@ -445,7 +465,7 @@ if ($customjs == 1) {
 		if($fontawesome == 3) : ?>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/js/all.min.js" integrity="sha512-6BTOlkauINO65nLhXhthZMtepgJSghyimIalb+crKRPhvhmsCdnIuGcVbR5/aQY2A+260iC1OPy1oCdB6pSSwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<?php elseif($fontawesome == 4 || $fontawesome == 5) : ?>
-			<?php echo $fontawesomecdn; ?>
+			<?php echo $fontawesomecdn; // Intentional raw output: Super-Admin raw-HTML param ?>
 		<?php endif; ?>
 
 		<?php //	Web Asset Manager outputs: lazy Google Fonts, lazy FontAwesome CSS,
@@ -473,24 +493,35 @@ if ($customjs == 1) {
 		<?php endif; ?>
 		</noscript>
 			
-		<?php // Load jQuery ?>
+		<?php	//	Load jQuery manually, BEFORE the WAM scripts block, so scripts that
+				//	use jQuery without declaring a web-asset dependency keep working
+				//	(kept out of WAM deliberately — order preservation over migration). ?>
 		<?php if ($jqlibrary == 0) : ?>
-			<script src="/media/vendor/jquery/js/jquery.min.js"></script>
+			<script src="<?php echo $root; ?>/media/vendor/jquery/js/jquery.min.js"></script>
 		<?php elseif ($jqlibrary == 1) : ?>
 			<script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha384-fgGyf7Mo7DURSOMnOy7ed+dkq5Job205Gnzu6QIg0BOHKaqt4D76Dt8VlDCzcMHV" crossorigin="anonymous"></script>
 		<?php elseif ($jqlibrary == 2) : ?>
 			<script src="https://code.jquery.com/jquery-4.0.0.slim.min.js" integrity="sha384-tcspKDb5tWvyRCOWzevlAeQgHeEzYdUHJpcgnIhcP9w4CnfD7DLAcS+k9QzLbRJO" crossorigin="anonymous"></script>
-		<?php elseif ($jqlibrary == 3) : ?>
-			<?php echo $jquerycdn ?>
+		<?php endif; ?>
+		<?php if ($jqlibrary == 3) : ?>
+			<?php echo $jquerycdn; // Intentional raw output: Super-Admin raw-HTML param ?>
 		<?php endif; ?>
 
-		<?php	//	Theme switcher default theme (must load before themeswitcher.min.js)
-			if($bsthemes == 1) : ?>
-		<script>var defaultTheme = '<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>';</script>
-		<?php endif; ?>
+		<?php	//	Theme switcher default theme — a WAM inline asset pinned directly before
+				//	themeswitcher.min.js (its only consumer), so the core HTTP Headers (CSP)
+				//	plugin can nonce it.
+			if($bsthemes == 1) :
+				$wa->addInlineScript(
+					"var defaultTheme = '" . htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8') . "';",
+					['position' => 'before'],
+					[],
+					['template.atomic.themeswitcher']
+				);
+			endif; ?>
 
-		<?php //	Web Asset Manager outputs: themeswitcher.min.js, atomic.js, template.js,
-			  //	plus Joomla core scripts. ?>
+		<?php //	Web Asset Manager outputs: jQuery, defaultTheme inline + themeswitcher.min.js,
+			  //	atomic.js, template.js, Bootstrap component scripts (Joomla-vendor cases),
+			  //	GA4 inline bootstrap, plus Joomla core scripts. ?>
 		<jdoc:include type="scripts" />
 
 		<?php	//	Use Scroll Reveal
@@ -500,11 +531,14 @@ if ($customjs == 1) {
 		
 		<?php	//	Add custom code before closing head tag
 			if($codebeforehead != null) : ?>
-				<?php echo $codebeforehead;
-		?>	
+				<?php echo $codebeforehead; // Intentional raw output: Super-Admin custom-code hook
+		?>
 		<?php endif; ?>
 		
-		<?php	//	Add Google Analytics tag if configured.
+		<?php	//	Add Google Analytics tag if configured. Kept manual, AFTER the
+				//	codebeforehead hook, so consent-mode defaults injected via that hook
+				//	keep running before the gtag queue initializes (strict-CSP sites can
+				//	allow this block via hash or Joomla's core HTTP Headers plugin).
 		if($gacode != null) : ?>
 		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gacode; ?>"></script>
 		<script>
@@ -521,7 +555,7 @@ if ($customjs == 1) {
 $activeAlias     = ($active !== null) ? htmlspecialchars($active->alias, ENT_QUOTES, 'UTF-8') : '';
 $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
     . ($itemid    ? ' itemid-' . $itemid   : '')
-    . ($pageclass ? ' ' . $pageclass       : '')
+    . ($pageclass ? ' ' . htmlspecialchars($pageclass, ENT_QUOTES, 'UTF-8') : '')
     ;
 ?>
 <?php if ($bodymenu == 1) : // Append Class ?>
@@ -544,7 +578,7 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 
 	<?php	//	Add custom code after opening body tag
 		if($codeafterbody != null) : ?>
-		<?php echo $codeafterbody; ?>
+		<?php echo $codeafterbody; // Intentional raw output: Super-Admin custom-code hook ?>
 	<?php endif; ?>
 
 	<?php if ($this->countModules('alert', true)) : ?>
@@ -609,8 +643,8 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 				<?php if ($logo): ?>
 				  <div id="logo" class="flex-shrink-0">
 					<a href="<?= $this->baseurl ?>">
-					  <img src="<?= $this->baseurl . '/' . htmlspecialchars($logo) ?>"
-						   alt="<?= htmlspecialchars($sitetitle ?: '') ?>"
+					  <img src="<?= $this->baseurl . '/' . $logo ?>"
+						   alt="<?= $sitetitle ?>"
 						   loading="eager" decoding="async" fetchpriority="high" />
 					</a>
 				  </div>
@@ -664,8 +698,8 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 				<?php if ($logo): ?>
 				  <div id="logo" class="flex-shrink-0">
 					<a href="<?= $this->baseurl ?>">
-					  <img src="<?= $this->baseurl . '/' . htmlspecialchars($logo) ?>"
-						   alt="<?= htmlspecialchars($sitetitle ?: '') ?>"
+					  <img src="<?= $this->baseurl . '/' . $logo ?>"
+						   alt="<?= $sitetitle ?>"
 						   loading="eager" decoding="async" fetchpriority="high" />
 					</a>
 				  </div>
@@ -934,10 +968,10 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 						$sitename = htmlspecialchars($app->get('sitename'));
 						switch ((string) $copyright) {
 							case '2': // Year & custom notice
-								echo '&copy;' . $year . ' ' . ($copyrighttxt ?: $sitename);
+								echo '&copy;' . $year . ' ' . (!empty($copyrighttxt) ? htmlspecialchars($copyrighttxt, ENT_QUOTES, 'UTF-8', false) : $sitename);
 								break;
 							case '3': // Custom notice only
-								echo ($copyrighttxt ?: ('&copy;' . $year . ' ' . $sitename));
+								echo (!empty($copyrighttxt) ? htmlspecialchars($copyrighttxt, ENT_QUOTES, 'UTF-8', false) : ('&copy;' . $year . ' ' . $sitename));
 								break;
 							default: // '1' or legacy → Year & site title
 								echo '&copy;' . $year . ' ' . $sitename;
@@ -958,13 +992,18 @@ $defaultBodyClass = 'site ' . $option . ' ' . $wrapper . ' view-' . $view
 				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 			<?php elseif($bootstrapsource >= 6 && $bootstrapsource <= 14) : ?>
 				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-			<?php elseif($bootstrapsource == 3 || $bootstrapsource == 4) : ?>
-				<?php HTMLHelper::_('bootstrap.framework'); ?>
-			<?php endif; ?>
+			<?php elseif($bootstrapsource == 3 || $bootstrapsource == 4) :
+				// Same component list the deprecated HTMLHelper::_('bootstrap.framework')
+				// enabled internally (removed in J7); the core web assets render in the
+				// head scripts block via <jdoc:include type="scripts" />, exactly as before.
+				foreach (['alert', 'button', 'carousel', 'collapse', 'dropdown', 'modal', 'offcanvas', 'popover', 'scrollspy', 'tab', 'toast'] as $bsComponent) {
+					$wa->useScript('bootstrap.' . $bsComponent);
+				}
+			endif; ?>
 			
 		<?php	//	Add custom code before closing body tag
 			if($codebeforebody != null) : ?>
-			<?php echo $codebeforebody; ?>	
+			<?php echo $codebeforebody; // Intentional raw output: Super-Admin custom-code hook ?>
 		<?php endif; ?>
 		<?php if ($this->countModules('debug')) : ?>
   			<jdoc:include type="modules" name="debug" title="Debug" style="none" />

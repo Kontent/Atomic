@@ -19,8 +19,11 @@ if (!isset($this->error)) {
 }
 
 $app  = Factory::getApplication();
-$root = Uri::root(true);
-$code = $this->error->getCode();
+$root = htmlspecialchars((string) Uri::root(true), ENT_QUOTES, 'UTF-8');
+$code = (int) $this->error->getCode();
+
+// Escaped once for reuse in the <title> tag and the generic error heading
+$safeTitle = htmlspecialchars((string) $this->title, ENT_QUOTES, 'UTF-8');
 
 // Template params
 $bootstrapsource  = $this->params->get('bootstrapsource', 2);
@@ -28,8 +31,8 @@ $bootstrapcdn     = $this->params->get('bootstrapcdn');
 $bsfixjoomla      = $this->params->get('bsfixjoomla', 1);
 $atomicstyles     = $this->params->get('atomicstyles', 0);
 $errorsearch      = (int) $this->params->get('errorsearch', 1);
-$logo             = $this->params->get('logo');
-$sitetitle        = $this->params->get('sitetitle');
+$logo             = htmlspecialchars((string) $this->params->get('logo'), ENT_QUOTES, 'UTF-8');
+$sitetitle        = htmlspecialchars((string) $this->params->get('sitetitle'), ENT_QUOTES, 'UTF-8');
 $headerfont       = $this->params->get('headerfont');
 $headerfontname   = $this->params->get('headerfontname');
 $bodyfont         = $this->params->get('bodyfont');
@@ -45,7 +48,9 @@ $isbodygooglefont   = isGoogleFont($bodyfont);
 $bstheme        = $this->params->get('bstheme', '');
 $bsthemecustom  = trim((string) $this->params->get('bsthemecustom', ''));
 if ($bstheme === 'custom') {
-	$bstheme = $bsthemecustom !== '' ? strtolower($bsthemecustom) : '';
+	// Conservative case-preserving whitelist: value is reused in the data-bs-theme
+	// attribute and the inline theme script; excludes quotes/backslashes/angle brackets
+	$bstheme = $bsthemecustom !== '' ? preg_replace('/[^A-Za-z0-9._:-]/', '', $bsthemecustom) : '';
 } elseif (!in_array($bstheme, ['light', 'dark', 'auto'])) {
 	$bstheme = '';
 } else {
@@ -64,7 +69,7 @@ if ($code === 403) {
 	$errorTitle = Text::_('TPL_ATOMIC_ERROR_404_TITLE');
 	$errorDesc  = Text::_('TPL_ATOMIC_ERROR_404_DESC');
 } else {
-	$errorTitle = $this->title;
+	$errorTitle = $safeTitle;
 	$errorDesc  = htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8');
 }
 ?>
@@ -74,7 +79,7 @@ if ($code === 403) {
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="robots" content="noindex">
-		<title><?php echo $code; ?> - <?php echo $this->title; ?></title>
+		<title><?php echo $code; ?> - <?php echo $safeTitle; ?></title>
 
 		<?php if ($bstheme !== '') : ?>
 		<script>(function(){var d=document.documentElement,s=localStorage.getItem('theme'),t=s||'<?php echo htmlspecialchars($bstheme, ENT_QUOTES, 'UTF-8'); ?>';if(t==='auto'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}d.setAttribute('data-bs-theme',t);})()</script>
@@ -100,7 +105,7 @@ if ($code === 403) {
 			<?php elseif($bootstrapsource == 2) : ?>
 				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 			<?php elseif($bootstrapsource == 5) : ?>
-				<?php echo $bootstrapcdn; ?>
+				<?php echo $bootstrapcdn; // Intentional raw output: Super-Admin raw-HTML param ?>
 			<?php elseif($bootstrapsource == 6) : ?>
 				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/cosmo/bootstrap.min.css" integrity="sha384-QOrayDhdkHbTAsh/gb0iGlDY/xHwI3sdDvyHkxnfpY20Y+Pa8aRHFXmLQYklmIx/" crossorigin="anonymous">
 			<?php elseif($bootstrapsource == 7) : ?>
@@ -194,8 +199,8 @@ if ($code === 403) {
 
 		<?php // Logo ?>
 		<?php if (!empty($logo)) : ?>
-			<img src="<?php echo $this->baseurl . '/' . htmlspecialchars($logo) ?>"
-				 alt="<?php echo htmlspecialchars($sitetitle ?: '') ?>"
+			<img src="<?php echo $this->baseurl . '/' . $logo ?>"
+				 alt="<?php echo $sitetitle ?>"
 				 class="error-logo" loading="eager" decoding="async" />
 		<?php endif; ?>
 

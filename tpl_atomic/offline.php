@@ -16,7 +16,7 @@ use Joomla\CMS\Uri\Uri;
 
 $app          = Factory::getApplication();
 $sitename     = htmlspecialchars($app->get('sitename'), ENT_QUOTES, 'UTF-8');
-$logo         = $app->get('logo');
+$logo         = htmlspecialchars((string) $app->get('logo'), ENT_QUOTES, 'UTF-8');
 $extraButtons = AuthenticationHelper::getLoginButtons('form-login');
 ?>
 <!DOCTYPE html>
@@ -40,7 +40,7 @@ $extraButtons = AuthenticationHelper::getLoginButtons('form-login');
                 <?php echo HTMLHelper::_('image', $app->get('offline_image'), $sitename, [], false, 0); ?>
             <?php endif; ?>
             <?php if ($app->get('display_offline_message', 1) == 1 && str_replace(' ', '', $app->get('offline_message')) != '') : ?>
-                <p><?php echo $app->get('offline_message'); ?></p>
+                <p><?php echo $app->get('offline_message'); // Intentional raw output: Super-Admin global config (matches Joomla core offline.php) ?></p>
             <?php elseif ($app->get('display_offline_message', 1) == 2) : ?>
                 <p><?php echo Text::_('JOFFLINE_MESSAGE'); ?></p>
             <?php endif; ?>
@@ -62,22 +62,23 @@ $extraButtons = AuthenticationHelper::getLoginButtons('form-login');
                             ?>
                             <div class="mod-login__submit form-group">
                                 <button type="button"
-                                        class="btn btn-secondary w-100 mt-4 <?php echo $button['class'] ?? '' ?>"
+                                        class="btn btn-secondary w-100 mt-4 <?php echo htmlspecialchars((string) ($button['class'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"
                                 <?php foreach ($dataAttributeKeys as $key) : ?>
-                                    <?php echo $key ?>="<?php echo $button[$key] ?>"
+                                    <?php echo $key ?>="<?php echo htmlspecialchars((string) $button[$key], ENT_QUOTES, 'UTF-8') ?>"
                                 <?php endforeach; ?>
                                 <?php if ($button['onclick']) : ?>
+                                    <?php // Intentional raw output: auth-plugin-supplied inline JS (matches Joomla core offline.php) ?>
                                     onclick="<?php echo $button['onclick'] ?>"
                                 <?php endif; ?>
                                 title="<?php echo Text::_($button['label']) ?>"
-                                id="<?php echo $button['id'] ?>"
+                                id="<?php echo htmlspecialchars((string) $button['id'], ENT_QUOTES, 'UTF-8') ?>"
                                 >
                                 <?php if (!empty($button['icon'])) : ?>
-                                    <span class="<?php echo $button['icon'] ?>"></span>
+                                    <span class="<?php echo htmlspecialchars((string) $button['icon'], ENT_QUOTES, 'UTF-8') ?>"></span>
                                 <?php elseif (!empty($button['image'])) : ?>
-                                    <?php echo $button['image']; ?>
+                                    <?php echo $button['image']; // Intentional raw output: auth-plugin-supplied HTML (matches Joomla core offline.php) ?>
                                 <?php elseif (!empty($button['svg'])) : ?>
-                                    <?php echo $button['svg']; ?>
+                                    <?php echo $button['svg']; // Intentional raw output: auth-plugin-supplied SVG (matches Joomla core offline.php) ?>
                                 <?php endif; ?>
                                 <?php echo Text::_($button['label']) ?>
                                 </button>

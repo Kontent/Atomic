@@ -71,8 +71,21 @@ class AtomicInstallerScript
 					'success'
 				);
 			}
-		} catch (\Exception $e) {
+		} catch (\Throwable $e) {
 			// Non-critical — silently skip
+		}
+	}
+
+	/**
+	 * Queue a warning for the admin without letting a missing application
+	 * abort postflight (e.g. CLI installs).
+	 */
+	private function enqueueWarning($message)
+	{
+		try {
+			Factory::getApplication()->enqueueMessage($message, 'warning');
+		} catch (\Throwable $e) {
+			// No application available — nothing more we can do
 		}
 	}
 
@@ -110,8 +123,55 @@ class AtomicInstallerScript
 					. ' OR ' . $db->quoteName('location') . ' = ' . $db->quote($betaUrl) . ')');
 			$db->setQuery($query);
 			$db->execute();
-		} catch (\Exception $e) {
-			// Silently fail — non-critical
+		} catch (\Throwable $e) {
+			// Non-critical — warn and continue so postflight completes
+			$this->enqueueWarning('Atomic: could not sync the update channel: ' . $e->getMessage());
+		}
+	}
+
+	/**
+	 * Read-modify-write a single param on every Atomic site template style.
+	 * $shouldSet receives each style's params Registry and returns true when
+	 * the param should be written for that style — the fresh-install vs
+	 * update semantics of each caller live entirely in that callback, so an
+	 * update never clobbers a user's chosen value. The rebuilt params string
+	 * is JSON-validated before writing; an invalid result skips the write
+	 * and queues a warning instead of corrupting the style.
+	 */
+	private function updateTemplateParams(string $key, $value, callable $shouldSet): void
+	{
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true)
+			->select([$db->quoteName('id'), $db->quoteName('params')])
+			->from($db->quoteName('#__template_styles'))
+			->where($db->quoteName('template') . ' = ' . $db->quote('atomic'))
+			->where($db->quoteName('client_id') . ' = 0');
+		$db->setQuery($query);
+		$styles = $db->loadObjectList();
+
+		foreach ($styles as $style) {
+			$registry = new \Joomla\Registry\Registry($style->params);
+
+			if (!$shouldSet($registry)) {
+				continue;
+			}
+
+			$registry->set($key, $value);
+			$paramsJson = $registry->toString();
+
+			json_decode($paramsJson);
+
+			if (json_last_error() !== JSON_ERROR_NONE) {
+				$this->enqueueWarning('Atomic: skipped saving the ' . $key . ' setting for style ' . (int) $style->id . ' — the updated params did not encode as valid JSON.');
+				continue;
+			}
+
+			$updateQuery = $db->getQuery(true)
+				->update($db->quoteName('#__template_styles'))
+				->set($db->quoteName('params') . ' = ' . $db->quote($paramsJson))
+				->where($db->quoteName('id') . ' = ' . (int) $style->id);
+			$db->setQuery($updateQuery);
+			$db->execute();
 		}
 	}
 
@@ -135,36 +195,19 @@ class AtomicInstallerScript
 			// Values that are Joomla-version-specific (not CDN/Custom/Bootswatch)
 			$versionSpecific = [1, 3, 4];
 
-			$db    = Factory::getDbo();
-			$query = $db->getQuery(true)
-				->select([$db->quoteName('id'), $db->quoteName('params')])
-				->from($db->quoteName('#__template_styles'))
-				->where($db->quoteName('template') . ' = ' . $db->quote('atomic'))
-				->where($db->quoteName('client_id') . ' = 0');
-			$db->setQuery($query);
-			$styles = $db->loadObjectList();
+			$isFreshInstall = in_array($route, ['install', 'discover_install']);
 
-			foreach ($styles as $style) {
-				$registry = new \Joomla\Registry\Registry($style->params);
-				$current  = (int) $registry->get('bootstrapsource', -1);
-
-				// Set when: fresh install, first run (no prior value),
-				// or current value is a wrong-version local option.
+			// Set when: fresh install, first run (no prior value),
+			// or current value is a wrong-version local option.
+			$this->updateTemplateParams('bootstrapsource', $bsDefault, static function ($registry) use ($isFreshInstall, $versionSpecific, $bsDefault) {
+				$current      = (int) $registry->get('bootstrapsource', -1);
 				$wrongVersion = in_array($current, $versionSpecific) && $current !== $bsDefault;
 
-				if (in_array($route, ['install', 'discover_install']) || $current === -1 || $wrongVersion) {
-					$registry->set('bootstrapsource', $bsDefault);
-
-					$updateQuery = $db->getQuery(true)
-						->update($db->quoteName('#__template_styles'))
-						->set($db->quoteName('params') . ' = ' . $db->quote($registry->toString()))
-						->where($db->quoteName('id') . ' = ' . (int) $style->id);
-					$db->setQuery($updateQuery);
-					$db->execute();
-				}
-			}
-		} catch (\Exception $e) {
-			// Silently fail — non-critical
+				return $isFreshInstall || $current === -1 || $wrongVersion;
+			});
+		} catch (\Throwable $e) {
+			// Non-critical — warn and continue so postflight completes
+			$this->enqueueWarning('Atomic: could not set the default Bootstrap source: ' . $e->getMessage());
 		}
 	}
 
@@ -181,33 +224,17 @@ class AtomicInstallerScript
 			// Map Joomla major version → fontawesome value (local vendor)
 			$faDefault = $major >= 5 ? 6 : 1;
 
-			$db    = Factory::getDbo();
-			$query = $db->getQuery(true)
-				->select([$db->quoteName('id'), $db->quoteName('params')])
-				->from($db->quoteName('#__template_styles'))
-				->where($db->quoteName('template') . ' = ' . $db->quote('atomic'))
-				->where($db->quoteName('client_id') . ' = 0');
-			$db->setQuery($query);
-			$styles = $db->loadObjectList();
+			$isFreshInstall = in_array($route, ['install', 'discover_install']);
 
-			foreach ($styles as $style) {
-				$registry = new \Joomla\Registry\Registry($style->params);
-				$current  = (int) $registry->get('fontawesome', -1);
+			// Set on fresh install, first run (no value stored), or if still "None"
+			$this->updateTemplateParams('fontawesome', $faDefault, static function ($registry) use ($isFreshInstall) {
+				$current = (int) $registry->get('fontawesome', -1);
 
-				// Set on fresh install, first run (no value stored), or if still "None"
-				if (in_array($route, ['install', 'discover_install']) || $current === -1 || $current === 0) {
-					$registry->set('fontawesome', $faDefault);
-
-					$updateQuery = $db->getQuery(true)
-						->update($db->quoteName('#__template_styles'))
-						->set($db->quoteName('params') . ' = ' . $db->quote($registry->toString()))
-						->where($db->quoteName('id') . ' = ' . (int) $style->id);
-					$db->setQuery($updateQuery);
-					$db->execute();
-				}
-			}
-		} catch (\Exception $e) {
-			// Silently fail — non-critical
+				return $isFreshInstall || $current === -1 || $current === 0;
+			});
+		} catch (\Throwable $e) {
+			// Non-critical — warn and continue so postflight completes
+			$this->enqueueWarning('Atomic: could not set the default Font Awesome source: ' . $e->getMessage());
 		}
 	}
 
@@ -222,28 +249,12 @@ class AtomicInstallerScript
 		}
 
 		try {
-			$db    = Factory::getDbo();
-			$query = $db->getQuery(true)
-				->select([$db->quoteName('id'), $db->quoteName('params')])
-				->from($db->quoteName('#__template_styles'))
-				->where($db->quoteName('template') . ' = ' . $db->quote('atomic'))
-				->where($db->quoteName('client_id') . ' = 0');
-			$db->setQuery($query);
-			$styles = $db->loadObjectList();
-
-			foreach ($styles as $style) {
-				$registry = new \Joomla\Registry\Registry($style->params);
-				$registry->set('atomicstyles', 1);
-
-				$updateQuery = $db->getQuery(true)
-					->update($db->quoteName('#__template_styles'))
-					->set($db->quoteName('params') . ' = ' . $db->quote($registry->toString()))
-					->where($db->quoteName('id') . ' = ' . (int) $style->id);
-				$db->setQuery($updateQuery);
-				$db->execute();
-			}
-		} catch (\Exception $e) {
-			// Silently fail — non-critical
+			$this->updateTemplateParams('atomicstyles', 1, static function () {
+				return true;
+			});
+		} catch (\Throwable $e) {
+			// Non-critical — warn and continue so postflight completes
+			$this->enqueueWarning('Atomic: could not enable Atomic styles: ' . $e->getMessage());
 		}
 	}
 
@@ -255,8 +266,9 @@ class AtomicInstallerScript
 		];
 
 		foreach ($folders as $folder) {
-			if (!is_dir($folder)) {
-				mkdir($folder, 0755, true);
+			// Second is_dir() guards against a concurrent process creating the folder
+			if (!is_dir($folder) && !@mkdir($folder, 0755, true) && !is_dir($folder)) {
+				$this->enqueueWarning('Atomic: could not create folder ' . $folder . '. Custom CSS/JS files will be unavailable until it exists.');
 			}
 		}
 	}
@@ -287,7 +299,10 @@ class AtomicInstallerScript
 
 		foreach ($files as $source) {
 			$target = $destination . '/' . basename($source);
-			copy($source, $target);
+
+			if (!@copy($source, $target)) {
+				$this->enqueueWarning('Atomic: could not copy ' . basename($source) . ' to ' . $destination);
+			}
 		}
 
 		return true;
@@ -295,8 +310,8 @@ class AtomicInstallerScript
 
 	private function ensureCustomFile($filePath, $type)
 	{
-		if (!file_exists($filePath)) {
-			file_put_contents($filePath, "/* Custom " . $type . " File */\n");
+		if (!file_exists($filePath) && @file_put_contents($filePath, "/* Custom " . $type . " File */\n") === false) {
+			$this->enqueueWarning('Atomic: could not create ' . $filePath);
 		}
 	}
 }

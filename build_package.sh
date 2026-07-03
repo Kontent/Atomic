@@ -22,6 +22,18 @@ TPL_VERSION=$(sed -n 's/.*<version>\([^<]*\)<\/version>.*/\1/p' "$TPL_SRC/templa
 PLG_VERSION=$(sed -n 's/.*<version>\([^<]*\)<\/version>.*/\1/p' "$PLG_SRC/atomic.xml" | head -1)
 PKG_VERSION=$(sed -n 's/.*<version>\([^<]*\)<\/version>.*/\1/p' "$PKG_SRC/pkg_atomic.xml" | head -1)
 
+# ── Version-consistency check (fail early on mismatch) ─────────────
+if [ -z "$TPL_VERSION" ] || [ -z "$PLG_VERSION" ] || [ -z "$PKG_VERSION" ]; then
+	echo "ERROR: Could not read a <version> from one or more manifests:" >&2
+	echo "       template=$TPL_VERSION plugin=$PLG_VERSION package=$PKG_VERSION" >&2
+	exit 1
+fi
+if [ "$TPL_VERSION" != "$PKG_VERSION" ]; then
+	echo "ERROR: Template ($TPL_VERSION) and package ($PKG_VERSION) versions differ." >&2
+	echo "       The update feed advertises a single version — bump both before building." >&2
+	exit 1
+fi
+
 # ── Common zip exclusions ──────────────────────────────────────────
 EXCLUDES=(-x "*.DS_Store" -x "__MACOSX/*" -x ".git/*")
 

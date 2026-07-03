@@ -293,6 +293,77 @@ button svg {
 }
 
 /* ============================================================
+   Atomic Cards blog layouts (com_content)
+   ============================================================
+   Baseline styling for the "Atomic Cards" category blog and
+   featured layouts so the card grid works with plain Bootstrap
+   when the optional Atomic styles layer is disabled.
+   ============================================================ */
+
+/* Grid items are cards — neutralize the stacked blog-item rules */
+.atomic-cards .blog-item {
+  padding: 0;
+}
+.atomic-cards .blog-item + .blog-item {
+  border-top: 0;
+}
+
+/* Consistent image cropping for equal-height cards */
+.atomic-cards .atomic-card-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.atomic-cards .items-leading .atomic-card-img {
+  aspect-ratio: 21 / 9;
+}
+.atomic-cards .atomic-card .card-title a {
+  text-decoration: none;
+}
+.atomic-cards .atomic-card .atomic-card-readmore .readmore {
+  margin-bottom: 0;
+}
+.atomic-cards .atomic-cards-subcategories li {
+  margin-bottom: 0.25rem;
+}
+
+/* ============================================================
+   Articles module layouts (mod_articles*)
+   ============================================================
+   Baseline styling for the cards and list layouts the template
+   provides for the core Articles modules (Advanced > Layout).
+   The cards layout reuses the Atomic Cards classes above; the
+   compact list gets a small square thumbnail.
+   ============================================================ */
+
+.atomic-cards-module .atomic-card-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  margin-bottom: 0.5rem;
+}
+.atomic-articles-list {
+  margin-bottom: 0;
+}
+.atomic-articles-list-item {
+  padding: 0.625rem 0;
+}
+.atomic-articles-list-item + .atomic-articles-list-item {
+  border-top: 1px solid var(--bs-border-color, #dee2e6);
+}
+.atomic-articles-list-thumb img {
+  display: block;
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: cover;
+  border-radius: 0.375rem;
+}
+.atomic-articles-list-title {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ============================================================
    Joomla frontend edit buttons
    ============================================================ */
 

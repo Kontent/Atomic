@@ -30,6 +30,55 @@
   # switch to Content-Security-Policy (enforced) once you've reviewed reports.
   Header always set Content-Security-Policy-Report-Only "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self'; object-src 'none'; base-uri 'self';"
 
+  # ----------------------------------------------------------------
+  # OPT-IN: a concrete policy matched to Atomic's actual external surface.
+  # Everything below is deliberately commented out — nothing here is ever
+  # applied automatically. Review it, trim it to the sources your template
+  # settings actually use, then enable ONE of the two headers (and remove
+  # the generic Report-Only header above so the two don't overlap).
+  #
+  # CDN origins the Atomic template settings can load from:
+  #   cdn.jsdelivr.net          Bootstrap/Bootswatch CSS+JS, Bootstrap Icons
+  #                             (bootstrapsource=2 or 6-14, loadbsicons=1)
+  #   cdnjs.cloudflare.com      Font Awesome CSS or JS (fontawesome=2 or 3)
+  #   fonts.googleapis.com      Google Fonts stylesheets (headerfont/bodyfont
+  #                             values 1 and 3-12)
+  #   fonts.gstatic.com         Google Fonts font files
+  #   code.jquery.com           jQuery from CDN (jqlibrary=1 or 2)
+  #   unpkg.com                 ScrollReveal (scrollreveal=1)
+  #   www.googletagmanager.com  GA4 loader gtag.js (gacode set)
+  #   *.google-analytics.com    GA4 measurement hits, including the regional
+  #   *.analytics.google.com    endpoints (region1.google-analytics.com etc.)
+  #
+  # THE INLINE-SCRIPT/STYLE STORY — read this before enforcing anything.
+  # Atomic itself emits inline code on every page:
+  #   - the pre-paint theme-resolution IIFE and the `var defaultTheme`
+  #     snippet are inline <script> blocks in the <head>;
+  #   - the :root { --atomic-* } design-token block is an inline <style>;
+  #   - the lazy-stylesheet trick onload="this.media='all'" is an inline
+  #     event handler, which CSP also treats as inline script.
+  # A static .htaccess header cannot issue per-request nonces, so this
+  # snippet takes the simplest honest route: 'unsafe-inline' in both
+  # script-src and style-src. If you want a stricter nonce-based policy,
+  # do NOT set CSP here — enable Joomla's core "System - HTTP Headers"
+  # plugin instead, which generates nonces for inline assets it manages.
+  #
+  # Step 1 — enable the tailored policy in Report-Only mode and watch the
+  # browser console / report endpoint for violations:
+  # Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com code.jquery.com unpkg.com www.googletagmanager.com; style-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com fonts.googleapis.com; font-src 'self' fonts.gstatic.com cdn.jsdelivr.net cdnjs.cloudflare.com; img-src 'self' data: www.googletagmanager.com *.google-analytics.com; connect-src 'self' *.google-analytics.com *.analytics.google.com www.googletagmanager.com; frame-ancestors 'self'; object-src 'none'; base-uri 'self';"
+  #
+  # Step 2 — once the console is clean, switch to the enforced header:
+  # Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com code.jquery.com unpkg.com www.googletagmanager.com; style-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com fonts.googleapis.com; font-src 'self' fonts.gstatic.com cdn.jsdelivr.net cdnjs.cloudflare.com; img-src 'self' data: www.googletagmanager.com *.google-analytics.com; connect-src 'self' *.google-analytics.com *.analytics.google.com www.googletagmanager.com; frame-ancestors 'self'; object-src 'none'; base-uri 'self';"
+  #
+  # Trim what you don't use: drop unpkg.com if ScrollReveal is off, drop
+  # code.jquery.com if jQuery comes from Joomla or is disabled, drop the
+  # Google entries if you use neither Google Fonts nor GA. If you filled in
+  # any of the Custom snippet fields (Bootstrap, jQuery, Font Awesome,
+  # Google Fonts, Custom Code), add those hosts to the matching directives.
+  # Extensions and embedded content (maps, videos, form services) may need
+  # further origins — that is what the Report-Only step is for.
+  # ----------------------------------------------------------------
+
   # Hide server/PHP fingerprints from response headers
   Header unset X-Powered-By
   Header unset Server

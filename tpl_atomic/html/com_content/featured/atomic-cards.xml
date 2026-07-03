@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="TPL_ATOMIC_COM_CONTENT_FEATURED_VIEW_CARDS_TITLE" option="TPL_ATOMIC_COM_CONTENT_FEATURED_VIEW_CARDS_OPTION">
+		<message>
+			<![CDATA[TPL_ATOMIC_COM_CONTENT_FEATURED_VIEW_CARDS_DESC]]>
+		</message>
+	</layout>
+	<!-- Add fields to the parameters object for the layout. -->
+	<fields name="params">
+		<fieldset name="blog_layout" label="JGLOBAL_BLOG_LAYOUT_OPTIONS">
+			<field
+				name="featured_categories"
+				type="category"
+				label="JCATEGORY"
+				extension="com_content"
+				multiple="true"
+				layout="joomla.form.field.list-fancy-select"
+			/>
+
+			<field
+				name="layout_type"
+				type="hidden"
+				default="blog"
+			/>
+
+			<field
+				name="num_leading_articles"
+				type="number"
+				label="JGLOBAL_NUM_LEADING_ARTICLES_LABEL"
+				useglobal="true"
+				filter="integer"
+				min="0"
+			/>
+
+			<field
+				name="num_intro_articles"
+				type="number"
+				label="JGLOBAL_NUM_INTRO_ARTICLES_LABEL"
+				useglobal="true"
+				filter="integer"
+				min="0"
+			/>
+
+			<field
+				name="num_columns"
+				type="list"
+				label="JGLOBAL_NUM_COLUMNS_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</field>
+
+			<field
+				name="num_links"
+				type="number"
+				label="JGLOBAL_NUM_LINKS_LABEL"
+				useglobal="true"
+				filter="integer"
+				min="0"
+			/>
+
+			<field
+				name="orderby_sec"
+				type="list"
+				label="JGLOBAL_ARTICLE_ORDER_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="front">JGLOBAL_FEATURED_ORDERING</option>
+				<option value="rdate">JGLOBAL_MOST_RECENT_FIRST</option>
+				<option value="date">JGLOBAL_OLDEST_FIRST</option>
+				<option value="alpha">JGLOBAL_TITLE_ALPHABETICAL</option>
+				<option value="ralpha">JGLOBAL_TITLE_REVERSE_ALPHABETICAL</option>
+				<option value="author">JGLOBAL_AUTHOR_ALPHABETICAL</option>
+				<option value="rauthor">JGLOBAL_AUTHOR_REVERSE_ALPHABETICAL</option>
+				<option value="hits">JGLOBAL_MOST_HITS</option>
+				<option value="rhits">JGLOBAL_LEAST_HITS</option>
+				<option value="random">JGLOBAL_RANDOM_ORDER</option>
+				<option value="order">JGLOBAL_ARTICLE_MANAGER_ORDER</option>
+			</field>
+
+			<field
+				name="order_date"
+				type="list"
+				label="JGLOBAL_ORDERING_DATE_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="created">JGLOBAL_CREATED</option>
+				<option value="modified">JGLOBAL_MODIFIED</option>
+				<option value="published">JGLOBAL_PUBLISHED</option>
+			</field>
+
+			<field
+				name="show_pagination"
+				type="list"
+				label="JGLOBAL_PAGINATION_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+				<option value="2">JGLOBAL_AUTO</option>
+			</field>
+
+			<field
+				name="show_pagination_results"
+				type="list"
+				label="JGLOBAL_PAGINATION_RESULTS_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+		</fieldset>
+
+		<fieldset name="article_display" label="JGLOBAL_ARTICLE_DISPLAY_OPTIONS">
+			<field
+				name="show_title"
+				type="list"
+				label="JGLOBAL_SHOW_TITLE_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="link_titles"
+				type="list"
+				label="JGLOBAL_LINKED_TITLES_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="show_category"
+				type="list"
+				label="JGLOBAL_SHOW_CATEGORY_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="show_author"
+				type="list"
+				label="JGLOBAL_SHOW_AUTHOR_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="show_create_date"
+				type="list"
+				label="JGLOBAL_SHOW_CREATE_DATE_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="show_modify_date"
+				type="list"
+				label="JGLOBAL_SHOW_MODIFY_DATE_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="show_publish_date"
+				type="list"
+				label="JGLOBAL_SHOW_PUBLISH_DATE_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="show_hits"
+				type="list"
+				label="JGLOBAL_SHOW_HITS_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="show_tags"
+				type="list"
+				label="JGLOBAL_SHOW_TAGS_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="show_readmore"
+				type="list"
+				label="JGLOBAL_SHOW_READ_MORE_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="show_readmore_title"
+				type="list"
+				label="JGLOBAL_SHOW_READ_MORE_TITLE_LABEL"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+		</fieldset>
+	</fields>
+</metadata>
